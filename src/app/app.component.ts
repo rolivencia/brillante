@@ -19,4 +19,8 @@ export class AppComponent {
         this.authenticationService.logout();
         this.router.navigate(['/login']);
     }
+
+    get welcomeName() {
+      return `🙋 ${this.currentUser.firstName}`;
+    }
 }
