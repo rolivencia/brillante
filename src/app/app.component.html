@@ -7,15 +7,18 @@
   </div>
   <div class="navbar-nav">
     <a class="nav-item nav-link" routerLink="/">Dashboard</a>
+    <a class="nav-item nav-link" routerLink="/repair">Reparaciones</a>
+    <a class="nav-item nav-link disabled">Caja</a>
+    <a class="nav-item nav-link disabled">Stock</a>
     <a class="nav-item nav-link" (click)="logout()">Salir</a>
   </div>
 </nav>
 
 <!-- main app container -->
 <div class="jumbotron">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-6 offset-sm-3">
+      <div class="col-sm-10 offset-sm-1">
         <alert></alert>
         <router-outlet></router-outlet>
       </div>

@@ -1,26 +1,36 @@
-﻿import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+﻿import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthenticationService} from './_services';
+import {User} from './_models';
+import {RepairService} from '@app/_services/repair.service';
+import * as moment from 'moment';
+import {Moment} from 'moment';
 
-import { AuthenticationService } from './_services';
-import { User } from './_models';
+@Component(
+  {
+    selector: 'app-brillante',
+    templateUrl: 'app.component.html',
+    styleUrls: ['./app.component.scss']
+  })
+export class AppComponent implements OnInit {
+  currentUser: User;
 
-@Component({ selector: 'app', templateUrl: 'app.component.html' })
-export class AppComponent {
-    currentUser: User;
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
-    constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService
-    ) {
-        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    }
+  ngOnInit() {
+  }
 
-    logout() {
-        this.authenticationService.logout();
-        this.router.navigate(['/login']);
-    }
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 
-    get welcomeName() {
-      return `🙋 ${this.currentUser.firstName}`;
-    }
+  get welcomeName() {
+    return `🙋 ${this.currentUser.firstName}`;
+  }
 }

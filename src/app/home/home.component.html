@@ -1,19 +1,24 @@
-﻿<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+﻿<div class="card text-white bg-primary mb-3" (click)="goTo('repair')">
   <div class="card-body">
     <h5 class="card-title">🔧 Gestión de Reparaciones</h5>
     <p class="card-text">Ingresar al menú de gestión de reparaciones</p>
   </div>
 </div>
 
-<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+<div class="card text-white bg-success mb-3" (click)="notImplemented('cash')">
   <div class="card-body">
     <h5 class="card-title">💵 Gestión de Caja</h5>
     <p class="card-text">Ingresar al menú de gestión de caja</p>
   </div>
 </div>
 
-<h1>Hi {{currentUser.firstName}}!</h1>
-<p>You're logged in with Angular 7!!</p>
+<div class="card text-white bg-info mb-3" (click)="notImplemented('stock')">
+  <div class="card-body">
+    <h5 class="card-title">📱 Gestión de Stock</h5>
+    <p class="card-text">Ingresar al menú de gestión de stock</p>
+  </div>
+</div>
+
 <h3>All registered users:</h3>
 <ul>
     <li *ngFor="let user of users">
