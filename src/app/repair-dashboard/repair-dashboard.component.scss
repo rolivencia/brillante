@@ -6,10 +6,20 @@
   @extend .ml-1;
 }
 
-.wj-flexgrid {
-  font-size: 0.75rem;
+#grid-container {
   height: 600px;
 }
+
+.alert h3 {
+  margin-top: 15rem !important;
+}
+
+.wj-flexgrid {
+  @extend #grid-container;
+  font-size: 0.75rem;
+}
+
+
 
 .card-body {
   height: 768px;

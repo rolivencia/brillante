@@ -6,7 +6,10 @@ import { User } from '@app/_models';
 import {UserService, AuthenticationService, AlertService} from '@app/_services';
 import {Router} from '@angular/router';
 
-@Component({ templateUrl: 'home.component.html' })
+@Component(
+  { templateUrl: 'home.component.html',
+    styleUrls: ['./home.component.scss']
+  })
 export class HomeComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;

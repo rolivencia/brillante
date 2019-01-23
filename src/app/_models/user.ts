@@ -5,5 +5,5 @@
     firstName: string;
     lastName: string;
     token: string;
-    gender: string;
+    avatar: string;
 }

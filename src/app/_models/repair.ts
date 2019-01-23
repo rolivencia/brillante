@@ -35,4 +35,8 @@ export class RepairLegacy {
   public seniaReparacion: string;
   public status: string;
   public tipoEquipoId: number;
+  public nombreApellidoCliente: string;
+  public emailCliente: string;
+  public telefonoCliente: string | number;
+  public costoReparacion: string;
 }
