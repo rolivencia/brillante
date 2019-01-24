@@ -4,15 +4,17 @@ import {RepairService} from '@app/_services/repair.service';
 import {RepairLegacy} from '@app/_models';
 import * as moment from 'moment';
 import {CollectionView} from 'wijmo/wijmo';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-repair-dashboard',
   templateUrl: './repair-dashboard.component.html',
   styleUrls: ['./repair-dashboard.component.scss']
 })
+
 export class RepairDashboardComponent implements OnInit {
 
-  constructor(private repairService: RepairService) { }
+  constructor(private repairService: RepairService, private modalService: NgbModal) { }
 
   selectedRepairData: RepairLegacy;
   gridData: any;
@@ -76,6 +78,7 @@ export class RepairDashboardComponent implements OnInit {
         this.gridData = data;
         this.gridCollection = new CollectionView(this.gridData.data);
         this.gridCollection.pageSize = this.pageSize;
+        this.gridCollection.currentItem = null;
       },
       error => console.error(error)
     );
@@ -97,6 +100,25 @@ export class RepairDashboardComponent implements OnInit {
   goToUpdate(repairId: number) {
     const redirectTo = 'http://brillante.rolivencia.xyz/fix-vista-de-actualizacion/?repairId=' + repairId;
     window.open(redirectTo, 'blank');
+  }
+
+  delete(id: number) {
+    this.repairService.delete(id).subscribe(
+      data => console.log(data.message),
+      error => console.error(error.message),
+      () => {
+        this.modalService.dismissAll();
+        this.getGridData(this.showFinished);
+      }
+    );
+  }
+
+  update(repair: RepairLegacy) {
+    // TODO: Implement this method
+  }
+
+  open(content) {
+    this.modalService.open(content);
   }
 
 }

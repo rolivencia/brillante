@@ -78,14 +78,14 @@
               </wj-collection-view-pager>
             </div>
             <div class="col-12 col-md-6 text-right">
-              <button class="btn btn-sm btn-outline-primary h-100" (click)="getGridData(showFinished)">Actualizar 🔄</button>
+              <button class="btn btn-sm btn-outline-primary h-100" (click)="getGridData(showFinished)">🔄 Actualizar Lista </button>
 
               <div class="btn-group btn-group-toggle h-100">
                 <label class="ml-2 btn btn-sm btn-outline-success" ngbButtonLabel>
                   <input type="checkbox" [(ngModel)]="showFinished" ngbButton>
                   <ng-container *ngIf="showFinished">✅</ng-container>
                   <ng-container *ngIf="!showFinished">❌</ng-container>
-                  Ver completados
+                  Ver Completados
                 </label>
               </div>
 
@@ -101,12 +101,13 @@
     <div class="card">
       <div class="card-body">
         <ng-container *ngIf="selectedRepairData">
-          <div class="row">
-            <div class="col-6">
-              <p class="mb-0"><strong>ID: </strong> {{ selectedRepairData.repairId }}</p>
+          <div class="row no-gutters">
+            <div class="col-5">
+              <p class="mb-0"><strong>ID Reparación: </strong> {{ selectedRepairData.repairId }}</p>
             </div>
-            <div class="col-6 text-right">
-              <button class="btn btn-sm btn-primary" (click)="goToUpdate(selectedRepairData.repairId)">Actualizar</button>
+            <div class="col-7 text-right">
+              <button class="btn btn-sm btn-primary" (click)="goToUpdate(selectedRepairData.repairId)"> 🛠️ Actualizar  </button>
+              <button type="button" class="ml-3 btn btn-sm btn-danger" (click)="open(deleteModal)"> ❌ Eliminar </button>
             </div>
           </div>
           <hr>
@@ -136,3 +137,35 @@
     </div>
   </div>
 </div>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <p><b>¿Está seguro de que desea borrar la reparación?</b></p>
+    <p class="mb-0"><strong>ID Reparación: </strong> {{ selectedRepairData.repairId }}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-secondary" (click)="modal.close('Cancel')">⬅️️ Cancelar</button>
+    <button class="ml-3 btn btn-sm btn-danger" (click)="delete(selectedRepairData.repairId)">❌ Eliminar</button>
+  </div>
+</ng-template>
+
+<ng-template #updateModal let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <p><b>¿Está seguro de que desea borrar la reparación?</b></p>
+    <p class="mb-0"><strong>ID Reparación: </strong> {{ selectedRepairData.repairId }}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-secondary" (click)="modal.close('Cancel')">⬅️ Cancelar</button>
+    <button class="ml-3 btn btn-sm btn-primary" (click)="update()">🛠 Actualizar</button>
+  </div>
+</ng-template>
