@@ -15,6 +15,14 @@ wjcCore.setLicenseKey('988775697861712#B05eulUMp9WMJh6T0VUS5BTQCF6RrcWWhRXSGp7Rp
 export class AppComponent implements OnInit {
   currentUser: User;
 
+  routingLinks = [
+    {label: 'Inicio', link: 'inicio', enabled: true},
+    {label: 'Clientes', link: 'clientes', enabled: false},
+    {label: 'Reparaciones', link: 'reparaciones', enabled: true},
+    {label: 'Caja', link: 'caja', enabled: false},
+    {label: 'Stock', link: 'stock', enabled: false}
+  ];
+
   // FIXME: Remove this and apply real checking of the user/pass controlling with the Wordpress Database
   private usersList: User[] = [
     {
@@ -37,10 +45,8 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 

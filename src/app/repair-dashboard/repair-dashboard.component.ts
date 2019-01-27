@@ -3,7 +3,7 @@ import {Moment} from 'moment';
 import {RepairService} from '@app/_services/repair.service';
 import {RepairLegacy} from '@app/_models';
 import * as moment from 'moment';
-import {CollectionView} from 'wijmo/wijmo';
+import {CollectionView, SortDescription} from 'wijmo/wijmo';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -79,6 +79,8 @@ export class RepairDashboardComponent implements OnInit {
         this.gridCollection = new CollectionView(this.gridData.data);
         this.gridCollection.pageSize = this.pageSize;
         this.gridCollection.currentItem = null;
+        const sortDescription = new SortDescription('fechaUltimaActualizacion', false);
+        this.gridCollection.sortDescriptions.push(sortDescription);
       },
       error => console.error(error)
     );

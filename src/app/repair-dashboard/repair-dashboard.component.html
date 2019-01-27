@@ -126,8 +126,8 @@
           <p><strong>Última Actualización: </strong>{{ selectedRepairData.fechaUltimaActualizacion }}</p>
           <p *ngIf="selectedRepairData.fechaReparacionTerminada"><strong>Fecha de Término: </strong>{{ selectedRepairData.fechaReparacionTerminada }}</p>
           <hr>
-          <p><strong>Costo de Reparación: </strong>$ {{ selectedRepairData.costoReparacion }}</p>
-          <p><strong>Precio de Reparación: </strong>$ {{ selectedRepairData.precioReparacion }}</p>
+          <p><strong>Costo de Reparación: </strong>{{ selectedRepairData.costoReparacion }}</p>
+          <p><strong>Precio de Reparación: </strong>{{ selectedRepairData.precioReparacion }}</p>
         </ng-container>
         <ng-container *ngIf="!selectedRepairData">
           <p>Seleccione una reparación de la grilla</p>
