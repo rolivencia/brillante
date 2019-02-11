@@ -45,7 +45,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     RepairService,
 
     // provider used to create fake backend
-    fakeBackendProvider
+    // fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
