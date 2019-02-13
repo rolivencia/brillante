@@ -26,6 +26,10 @@ app.use(jwt());
 // api routes
 app.use('/users', require('./server/users/users.controller'));
 
+//serve current port
+app.get('/backend', (req, res) => {
+  res.json({url: process.env.BACKEND_URL})
+});
 
 // // start server
 // const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
