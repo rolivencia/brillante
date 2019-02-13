@@ -28,7 +28,9 @@ app.use('/users', require('./server/users/users.controller'));
 
 //serve current port
 app.get('/backend', (req, res) => {
-  res.json({url: process.env.BACKEND_URL ? process.env.BACKEND_URL : 'http://localhost:4000'});
+  res.json(
+    {url: process.env.BACKEND_URL ? process.env.BACKEND_URL : 'http://localhost:4000'},
+    {env: process.env});
 });
 
 // // start server
@@ -40,5 +42,5 @@ app.get('/backend', (req, res) => {
 // Start the app by listening on the default Heroku port
 const port = process.env.PORT ? process.env.PORT : 4000;
 const server = app.listen(port, function () {
-    console.log('Server listening on port ' + port);
+  console.log('Server listening on port ' + port);
 });
