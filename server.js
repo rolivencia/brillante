@@ -28,9 +28,10 @@ app.use('/users', require('./server/users/users.controller'));
 
 //serve current port
 app.get('/backend', (req, res) => {
-  res.json(
+  res.json([
     {url: process.env.BACKEND_URL ? process.env.BACKEND_URL : 'http://localhost:4000'},
-    {env: process.env});
+    {env: process.env}
+    ]);
 });
 
 // // start server
