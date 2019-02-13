@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:4000'
+  apiUrl: 'http://localhost:80'
   // apiUrl: 'http://107.180.46.153:4000'
-  apiUrl: 'https://brillante-server.herokuapp.com'
+  // apiUrl: 'https://brillante-server.herokuapp.com'
 };
 
 /*
