@@ -30,7 +30,7 @@ const users =  [
     id: 3,
     token: '',
     avatar: '🧑🏻'
-  },
+  }
 ];
 
 module.exports = {
@@ -43,6 +43,7 @@ async function authenticate({ username, password }) {
   if (user) {
     const token = jwt.sign({ sub: user.id }, config.secret);
     const { password, ...userWithoutPassword } = user;
+    console.log(`User: ${username} is logged in`);
     return {
       ...userWithoutPassword,
       token
