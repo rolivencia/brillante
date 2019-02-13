@@ -3,12 +3,15 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const jwt = require('_helpers/jwt');
-const errorHandler = require('_helpers/error-handler');
-
+const jwt = require('server/_helpers/jwt');
+const errorHandler = require('server/_helpers/error-handler');
+const path = require ('path');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+
+// global error handler
+app.use(errorHandler);
 
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/brillante'));
@@ -21,10 +24,8 @@ app.get('/*', function(req,res) {
 app.use(jwt());
 
 // api routes
-app.use('/users', require('./users/users.controller'));
+app.use('/users', require('./server/users/users.controller'));
 
-// global error handler
-app.use(errorHandler);
 
 // // start server
 // const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
@@ -33,7 +34,7 @@ app.use(errorHandler);
 // });
 
 // Start the app by listening on the default Heroku port
-const port = 80;
+const port = process.env.PORT ? process.env.PORT : 4000;
 const server = app.listen(port, function () {
     console.log('Server listening on port ' + port);
 });
