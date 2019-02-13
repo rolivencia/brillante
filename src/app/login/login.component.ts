@@ -23,19 +23,6 @@ export class LoginComponent implements OnInit {
     private http: HttpClient
   ) {
 
-    // Grab the backend URL and port before logging in
-    this.http.get<any>(window.location.origin + '/backend')
-      .subscribe(
-        urlBackend => {
-          sessionStorage.setItem('url_backend', urlBackend.url);
-          environment.apiUrl = urlBackend.url;
-        },
-        () => {
-          console.log('Can´t find the backend URL');
-          sessionStorage.setItem('url_backend', '');
-        }
-      );
-
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
