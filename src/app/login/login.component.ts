@@ -28,9 +28,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         urlBackend => {
           sessionStorage.setItem('url_backend', urlBackend.url);
-          if (environment.production) {
-            environment.apiUrl = urlBackend.url;
-          }
+          environment.apiUrl = urlBackend.url;
         },
         () => {
           console.log('Can´t find the backend URL');
