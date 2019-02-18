@@ -73,6 +73,18 @@ export class ClientDashboardComponent implements OnInit {
     window.open(redirectTo, 'blank');
   }
 
+  getGridData() {
+    this.clientService.getAllLegacy().subscribe(
+      data => {
+        this.clientGridData = data;
+        this.clientGridCollection = new CollectionView(this.clientGridData.data);
+        this.clientGridCollection.pageSize = this.pageSize;
+        this.clientGridCollection.currentItem = null;
+      },
+      error => console.error(error)
+    );
+  }
+
   private getUserRepairs(clientData: any) {
     this.repairService.getByClientIdLegacy(clientData.personId).subscribe(
       data => {
@@ -80,18 +92,6 @@ export class ClientDashboardComponent implements OnInit {
         this.repairGridCollection = new CollectionView(this.repairGridData.data);
         this.repairGridCollection.currentItem = this.repairGridCollection.items[0];
         this.getRepairDetails(this.repairGridCollection.currentItem);
-      },
-      error => console.error(error)
-    );
-  }
-
-  private getGridData() {
-    this.clientService.getAllLegacy().subscribe(
-      data => {
-        this.clientGridData = data;
-        this.clientGridCollection = new CollectionView(this.clientGridData.data);
-        this.clientGridCollection.pageSize = this.pageSize;
-        this.clientGridCollection.currentItem = null;
       },
       error => console.error(error)
     );
