@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Moment} from 'moment';
-import {RepairService} from '@app/_services/repair.service';
-import {RepairLegacy} from '@app/_models';
+import {RepairService} from '../../_services/repair.service';
+import {RepairLegacy} from '../../_models/index';
 import * as moment from 'moment';
 import {CollectionView, SortDescription} from 'wijmo/wijmo';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -98,7 +98,7 @@ export class RepairDashboardComponent implements OnInit {
     this.selectedRepairData = item;
   }
 
-  // TODO: Update to internal link after the update is migrated to Angular app
+  // FIXME: Update to internal link after the update is migrated to Angular app
   goToUpdate(repairId: number) {
     const redirectTo = 'http://brillante.rolivencia.xyz/fix-vista-de-actualizacion/?repairId=' + repairId;
     window.open(redirectTo, 'blank');
