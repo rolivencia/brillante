@@ -1,0 +1,122 @@
+.h3-carrito
+{
+    font-size: 18px;
+    font-weight: 300;
+    margin: 0 0 10px 0;
+}
+.h3-carrito a
+{
+    font-size: 14px;
+    float: right;
+}
+.h3-carrito a:hover
+{
+    text-decoration: none;
+}
+.h3-carrito strong
+{
+    font-weight: 400;
+}
+.contenedor-tabla
+{
+    background: #fff !important;
+    overflow: hidden;
+    padding: 20px;
+    box-shadow: 0 0 2px #c4c4c4;
+}
+.tabla-carrito
+{
+    margin: 20px 0 20px 0;
+    width: 100%;
+}
+.tabla-carrito thead th
+{
+    background: #f1f1f1;
+}
+.tabla-carrito thead tr th,
+.tabla-carrito tbody tr td
+{
+    font-size: 15px;
+    padding: 10px;
+    font-weight: 300;
+    position: relative;
+}
+.tabla-carrito tbody tr td,
+.tabla-carrito tr td
+{
+    border-top: solid 1px #ececec !important;
+}
+.fondo-gris
+{
+    background: #f1f1f1;
+}
+.tabla-carrito td
+{
+    padding: 10px;
+}
+.pago-aprobado
+{
+    float: right;
+    right: 10px;
+    position: absolute;
+    top: 5px;
+    width: auto;
+}
+.aclaraciones
+{
+    border: solid 1px #d9d9d9 !important;
+    border-radius: 3px;
+    margin: 10px 0 0 0;
+    padding: 10px !important;
+}
+.ul-notas
+{
+    border-bottom: solid 1px #d9d9d9;
+    list-style: none;
+    padding: 0 15px 0 0;
+    width: 100%;
+}
+.nota-texto, 
+.nota-texto
+{
+    color: #333;
+    text-align: left !important;
+    position: relative;
+}
+.boton-nota-borrar
+{
+    color: #ff0000;
+    position: absolute;
+    right: -10px;
+    top: 0;
+}
+.ajax-cargando
+{
+    display: none;
+}
+.nota-fecha
+{
+    color: #0060f1 !important;
+    font-size: 12px !important;
+}
+.estado-pedido
+{
+    right: 0;
+    position: absolute;
+    bottom: 10px;
+    min-width: 300px;
+}
+.estado-pedido label
+{
+    position: absolute;
+    top: 0;
+    width: 45%;
+}
+.estado-pedido .pedido-enviado
+{
+    left: 0;
+}
+.estado-pedido .pedido-retirado
+{
+    right: 0;
+}

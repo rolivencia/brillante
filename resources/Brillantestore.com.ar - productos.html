@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Productos</title>
+    <meta name="description" content="Productos" />
+    <meta name="keywords" content="Productos" />
+    <meta name="rating" content="general" />
+    <meta name="revisit-after" content="60 days" />
+    <meta name="author" content="Brillante Store" />
+    <meta name="designer" content="Ockam.biz" />
+    <meta name="robots" content="index,follow" />
+    <link rel="icon" type="image/png" href="/imagenes/favicon-3.png" />
+
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+
+    <!-- Google Fonts -->
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900|Barlow+Semi+Condensed:400,500,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="css/front-end/tema/ionicons.min.css" />
+    <link href="css/front-end/fonts/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="css/front-end/tema/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="js/front-end/plugins/magnific-popup.css" rel="stylesheet" />
+    <link href="css/front-end/tema/animate.css" rel="stylesheet" />
+    <link href="js/front-end/tema/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link href="js/front-end/tema/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="css/front-end/theme.css?v=2845366" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="css/front-end/layout.css?v=6916792">
+    <script src="js/front-end/tema/jquery-3.3.1.slim.min.js"></script>
+
+</head>
+
+<body class="productos">
+    <section id="MainHeader" class="MainHeader">
+        <div class="container">
+            <div class="nav-row">
+                <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
+
+                    <div class="brand-container">
+                        <button class="d-sm-none" type="button" id="MainMenu_OpenBtn"><i class="fal fa-bars"></i></button>
+                        <a class="navbar-brand" href="/">
+						<img src="imagenes/tema/logo_brillante.png" alt="image">
+					</a>
+                    </div>
+
+                    <a class="whatsapp" href="https://api.whatsapp.com/send?phone=543425360966&text=%C2%A1Hola!%20me%20contacto%20con%20ustedes%20para%20hacerles%20una%20consulta%20sobre%20sus%20servicios.%20Desde%20ya%20muchas%20gracias"><i class="fab fa-whatsapp" target="_blank"></i><span><b>¡Clickea</b> y comunicate!</span></a>
+
+                    <ul class="nav justify-content-end align-items-center nav-sup">
+                        <li><a href="#nav-login-dialog" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text">INGRESAR</a>
+                            <li><a href="#nav-account-dialog" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text">REGISTRATE</a></li>
+                            <li><a href="#nav-login-dialog" data-effect="mfp-move-from-top" class="btn btn-default d-sm-none popup-text"><i class= "far fa-user"></i></a></li>
+
+                            <li><button type="button" id="SearchMenu_OpenBtn" class="btn btn-default"><i class= "far fa-search"></i></button></li>
+                            <li><a href="/carrito" class="btn btn-default"><i class="far fa-shopping-cart"></i></a></li>
+                    </ul>
+                </nav>
+                <div id="MainMenu">
+                    <div id="MainMenu_overlay"></div>
+                    <div id="MainMenu_CloseBtn"><i class="fal fa-chevron-left"></i></div>
+                    <div id="MainMenu_MenuContainer">
+                        <nav class="navbar-light nav-main" id="MainMenu_Nav">
+                            <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/productos/accesorios">Productos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/productos/celulares">Celulares</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/reparaciones">Reparaciones</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="/servicios">Servicio a empresas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="/noticias">Novedades</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="/contacto-y-ubicacion">Contacto</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div id="SearchMenu" class="">
+                    <div id="SearchMenu_overlay"></div>
+                    <div id="SearchMenu_TopBar">
+                        <form name="f-buscador" id="f-buscador" method="get" class="buscador" action="/productos/buscar/" role="search">
+                            <div class="input-group">
+                                <input name="cadena" id="cadena" value="" class="form-control campo-buscador" placeholder="buscar">
+                                <div class="input-group-append">
+                                    <button class="btn btn-default boton-buscar" type="submit"><i class="far fa-search"></i></button>
+                                    <button type="button" id="SearchMenu_CloseBtn"><i class="fal fa-angle-left"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <div class="modal fade" id="carrito-mensaje" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4>&nbsp;</h4>
+                </div>
+                <div class="modal-body">
+                    <i class="fa fa-check icono-ok"></i>
+                    <h2>Producto Agregado</h2>
+                    <p>Se agrego un nuevo producto al carrito</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/carrito" class="btn btn-success">Ver Carrito</a>
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Seguir Comprando</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="global-wrapper clearfix" id="global-wrapper">
+        <div class="mfp-with-anim mfp-hide mfp-dialog clearfix" id="nav-login-dialog">
+            <h3 class="widget-title">Ingreso de Usuario</h3>
+            <p>Bienvenido de nuevo!</p>
+            <hr />
+            <form name="usuario-login" id="usuario-login" action="" method="post">
+                <div class="alert alert-danger alert-dismissable mensaje-error">
+                    <a href="#" class="close boton-cerrar" data-cerrar="mensaje-error" aria-label="close">&times;</a>
+                    <div class="texto">
+                        <strong>Ups!</strong> Datos incorrectos
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Correo</label>
+                    <input class="form-control" type="text" name="correo-ajax" id="correo-ajax" />
+                </div>
+                <div class="form-group">
+                    <label>Clave</label>
+                    <input class="form-control" type="password" name="clave-ajax" id="clave-ajax" />
+                </div>
+                <input class="btn btn-primary boton-login" type="submit" value="Ingresar" />
+                <br />
+                <div class="ajax-login">
+                    <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Ingresando...
+                </div>
+            </form>
+
+            <div class="gap gap-small"></div>
+            <ul class="list-inline botones-login">
+                <li>
+                    <a href="#nav-account-dialog" class="popup-text boton-crear-usuario"><i class="fa fa-pencil-square-o"></i> Crear Cuenta</a>
+                </li>
+                <li>
+                    <a href="/olvido-clave" class="boton-olvido-clave">Olvidaste tu clave?</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mfp-with-anim mfp-hide mfp-dialog clearfix" id="nav-account-dialog">
+            <h3 class="widget-title">Crear una cuenta</h3>
+            <p>Creá una cuenta y comenzá a comprar en nuestra tienda!</p>
+            <hr />
+            <div class="alert alert-danger alert-dismissable registro-mensaje-error">
+                <a href="#" class="close boton-cerrar" data-cerrar="registro-mensaje-error" aria-label="close">&times;</a>
+                <div class="texto">
+                    <strong>Ups!</strong> Todos los campos son obligatorios
+                </div>
+            </div>
+            <form name="usuario-registro" id="usuario-registro" action="" method="post">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="reg-nombre" id="reg-nombre" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" name="reg-apellido" id="reg-apellido" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>DNI</label>
+                    <input type="text" name="reg-dni" id="reg-dni" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Correo</label>
+                    <input type="text" name="reg-correo" id="reg-correo" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Clave</label>
+                    <input type="password" name="reg-clave" id="reg-clave" class="form-control" />
+                </div>
+                <input class="btn btn-primary boton-crear-cuenta" type="submit" value="Crear Cuenta" />
+                <br />
+                <div class="ajax-login">
+                    <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Procesando datos...
+                </div>
+            </form>
+            <div class="gap gap-small"></div>
+        </div>
+
+        <!--nav class="navbar navbar-inverse navbar-main-white navbar-main menu-navegacion">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse"><span class="sr-only">Main Menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-nav-collapse">
+                    <ul class="nav navbar-nav menu-principal">
+                        
+                        <li class="dropdown"><a href="/productos"><i class="fa fa-fire-extinguisher"></i> Productos<i class="drop-caret" data-toggle="dropdown"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-category">
+                                                                                                <li>
+                                <a href="/productos/accesorios"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Accesorios</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/audio"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Audio</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/auriculares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Auriculares</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/cables"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cables</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/cargadores"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cargadores</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/celulares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Celulares</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/fundas"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Fundas</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/precios-regalados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>¡Precios regalados!</a>
+                                </li>
+                                                                <li>
+                                <a href="/productos/templados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Templados</a>
+                                </li>
+                                                                <li>
+                                <a href="/carteleria"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cartelería y Señalética</a>
+                                </li>
+                                                            </ul>
+                        </li>
+                        <li>
+                            <a href="/tienda" ><i class="fa fa-shopping-cart"></i> Tienda</a>
+                        </li>
+                            
+                    </ul>
+                    
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown contenedor-boton-usuario">
+                            	<li><a href="/usuario" class="btn btn-sm btn-light d-none d-sm-block" >INGRESAR</a>
+					<li><a href="/registro" class="btn btn-sm btn-light d-none d-sm-block">REGISTRATE</a></li>
+					<li><a href="/usuario" id="UserMenu_OpenBtn" class="btn btn-default d-sm-none"><i class= "far fa-user"></i></a></li>
+                        </li>
+                        <li class="dropdown">
+                            <a href="/carrito" class="fa fa-shopping-cart"></a>
+                            <ul class="dropdown-menu dropdown-menu-shipping-cart">
+                                                  
+                            </ul>                                                
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav-->
+
+
+        <section class="heroImage">
+            <div class="owl-carousel owl-theme">
+                <div class="item"><img src="imagenes/tema/slides/productos.jpg" alt=""></div>
+            </div>
+        </section>
+        <br />
+
+
+        <section class="product_grid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-3 col-md-2">
+                        <aside class="category-filters">
+                            <nav class="category-filters-section">
+
+                                <ul class="cateogry-filters-list">
+
+                                    <li>
+                                        <h6>Categorías</h6>
+                                    </li>
+
+                                    <li class="_active">
+                                        <a href="/productos/accesorios">Accesorios <span class="count">(9)</span> </a>
+                                    </li>
+
+
+                                    <li class="_active">
+                                        <a href="/productos/audio">Audio <span class="count">(4)</span> </a>
+                                    </li>
+
+
+                                    <li class="_active">
+                                        <a href="/productos/auriculares">Auriculares <span class="count">(2)</span> </a>
+                                    </li>
+
+
+                                    <li class="_active">
+                                        <a href="/productos/cables">Cables <span class="count">(8)</span> </a>
+                                    </li>
+
+
+                                    <li class="_active">
+                                        <a href="/productos/cargadores">Cargadores <span class="count">(21)</span> </a>
+                                    </li>
+
+
+
+
+                                    <li class="_active">
+                                        <a href="/productos/fundas">Fundas <span class="count">(58)</span> </a>
+                                    </li>
+
+
+                                    <li class="_active">
+                                        <a href="/productos/precios-regalados">¡Precios regalados! <span class="count">(5)</span> </a>
+                                    </li>
+
+
+                                    <li class="_active">
+                                        <a href="/productos/templados">Templados <span class="count">(16)</span> </a>
+                                    </li>
+
+                                </ul>
+                                <br>
+                                <br>
+                                <ul class="cateogry-filters-list">
+                                    <li>
+                                        <h6>Marcas</h6>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/apple/"> Apple <span class="count">(5)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/anker/"> Anker <span class="count">(4)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/incipio/"> Incipio <span class="count">(3)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/spigen/"> Spigen <span class="count">(3)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/griffin/"> Griffin <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/iluv/"> iLuv <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/samsung/"> Samsung <span class="count">(2)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/belkin/"> Belkin <span class="count">(8)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/case-mate/"> Case Mate <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/tech-21/"> Tech 21 <span class="count">(3)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/caselogy/"> Caselogy <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/twelve-south/"> Twelve South <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/ewtec/"> Ewtec <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/pure-gear/"> Pure Gear <span class="count">(2)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/mophie/"> Mophie <span class="count">(3)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/ringke/"> Ringke <span class="count">(3)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/jbl/"> JBL <span class="count">(4)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/philips/"> Philips <span class="count">(1)</span></a>
+                                    </li>
+                                    <li class="_active">
+                                        <a href="/productos/genericos/"> Genéricos <span class="count">(3)</span></a>
+                                    </li>
+                                </ul>
+
+                            </nav>
+                        </aside>
+                    </div>
+                    <div class="col-12 col-sm-9 col-md-10">
+                        <div class="row no-gutters">
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-226.png" alt="3D Samsung S8">
+                                    <div class="badge badge-secondary">3D Samsung S8</div>
+                                    <div class="hovercard">
+
+                                        <h6>3D Samsung S8</h6>
+
+                                        <p>$950</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/187-3d-samsung-s8" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-187" data-idProducto="187">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-225.png" alt="5D iPhone 7 Plus/8 Plus">
+                                    <div class="badge badge-secondary">5D iPhone 7 Plus/8 Plus</div>
+                                    <div class="hovercard">
+
+                                        <h6>5D iPhone 7 Plus/8 Plus</h6>
+
+                                        <p>$950</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/186-5d-iphone-7-plus8-plus" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-186" data-idProducto="186">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-224.png" alt="5D iPhone 7/8">
+                                    <div class="badge badge-secondary">5D iPhone 7/8</div>
+                                    <div class="hovercard">
+
+                                        <h6>5D iPhone 7/8</h6>
+
+                                        <p>$850</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/185-5d-iphone-78" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-185" data-idProducto="185">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-90.png" alt="Aux Cable">
+                                    <div class="badge badge-secondary">Aux Cable</div>
+                                    <div class="hovercard">
+
+                                        <h6>Aux Cable</h6>
+
+                                        <p>$1590</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/73-aux-cable" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-73" data-idProducto="73">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-119.png" alt="Bareley there refined protection iPhone 6 plus">
+                                    <div class="badge badge-secondary">Bareley there refined protection iPhone 6 plus</div>
+                                    <div class="hovercard">
+
+                                        <h6>Bareley there refined protection iPhone 6 plus</h6>
+
+                                        <p>$1750</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/98-bareley-there-refined-protection-iphone-6-plus" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-98" data-idProducto="98">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-102.png" alt="Car universal support">
+                                    <div class="badge badge-secondary">Car universal support</div>
+                                    <div class="hovercard">
+
+                                        <h6>Car universal support</h6>
+
+                                        <p>$2350</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/85-car-universal-support" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-85" data-idProducto="85">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-158.png" alt="CHARGE 3">
+                                    <div class="badge badge-secondary">CHARGE 3</div>
+                                    <div class="hovercard">
+
+                                        <h6>CHARGE 3</h6>
+
+                                        <p>$8750</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/129-charge-3" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-129" data-idProducto="129">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-220.png" alt="Charge SYNC cable">
+                                    <div class="badge badge-secondary">Charge SYNC cable</div>
+                                    <div class="hovercard">
+
+                                        <h6>Charge SYNC cable</h6>
+
+                                        <p>$1950</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/87-charge-sync-cable" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-87" data-idProducto="87">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-66.png" alt="CO- MOLDED IMPACT ABSORBING CASE iPhone 6/6s">
+                                    <div class="badge badge-secondary">CO- MOLDED IMPACT ABSORBING CASE iPhone 6/6s</div>
+                                    <div class="hovercard">
+
+                                        <h6>CO- MOLDED IMPACT ABSORBING CASE iPhone 6/6s</h6>
+
+                                        <p>$1900</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/53-co-molded-impact-absorbing-case-iphone-66s" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-53" data-idProducto="53">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-84.png" alt="Dual material protecction case iPhone 7 plus">
+                                    <div class="badge badge-secondary">Dual material protecction case iPhone 7 plus</div>
+                                    <div class="hovercard">
+
+                                        <h6>Dual material protecction case iPhone 7 plus</h6>
+
+                                        <p>$2250</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/67-dual-material-protecction-case-iphone-7-plus" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-67" data-idProducto="67">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-159.png" alt="E55BT">
+                                    <div class="badge badge-secondary">E55BT</div>
+                                    <div class="hovercard">
+
+                                        <h6>E55BT</h6>
+
+                                        <p>$6390</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/130-e55bt" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-130" data-idProducto="130">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-123.png" alt="Evo Mesh iPhone 7 Plus">
+                                    <div class="badge badge-secondary">Evo Mesh iPhone 7 Plus</div>
+                                    <div class="hovercard">
+
+                                        <h6>Evo Mesh iPhone 7 Plus</h6>
+
+                                        <p>$2400</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/102-evo-mesh-iphone-7-plus" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-102" data-idProducto="102">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-122.png" alt="Evo Mesh Sport iPhone 6">
+                                    <div class="badge badge-secondary">Evo Mesh Sport iPhone 6</div>
+                                    <div class="hovercard">
+
+                                        <h6>Evo Mesh Sport iPhone 6</h6>
+
+                                        <p>$1900</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/101-evo-mesh-sport-iphone-6" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-101" data-idProducto="101">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-121.png" alt="Evo Mesh Sport iPhone 6 Plus">
+                                    <div class="badge badge-secondary">Evo Mesh Sport iPhone 6 Plus</div>
+                                    <div class="hovercard">
+
+                                        <h6>Evo Mesh Sport iPhone 6 Plus</h6>
+
+                                        <p>$1950</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/100-evo-mesh-sport-iphone-6-plus" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-100" data-idProducto="100">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-223.png" alt="Fast charge ultra thin">
+                                    <div class="badge badge-secondary">Fast charge ultra thin</div>
+                                    <div class="hovercard">
+
+                                        <h6>Fast charge ultra thin</h6>
+
+                                        <p>$2600</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/184-fast-charge-ultra-thin" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-184" data-idProducto="184">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-88.png" alt="GripCase iPhone 6">
+                                    <div class="badge badge-secondary">GripCase iPhone 6</div>
+                                    <div class="hovercard">
+
+                                        <h6>GripCase iPhone 6</h6>
+
+                                        <p>$1900</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/71-gripcase-iphone-6" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-71" data-idProducto="71">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-56.png" alt="HDMI to HDMI">
+                                    <div class="badge badge-secondary">HDMI to HDMI</div>
+                                    <div class="hovercard">
+
+                                        <h6>HDMI to HDMI</h6>
+
+                                        <p>$4250</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/44-hdmi-to-hdmi" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-44" data-idProducto="44">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="product_component">
+                                    <img src="imagenes-s/productos/productos-imagen-125.png" alt="iPhone 6 / 6s">
+                                    <div class="badge badge-secondary">iPhone 6 / 6s</div>
+                                    <div class="hovercard">
+
+                                        <h6>iPhone 6 / 6s</h6>
+
+                                        <p>$1900</p>
+                                        <!--small>o 12 cuotas de $65.00</small-->
+                                        <div class="btns">
+                                            <a href="/103-iphone-6-6s" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+
+                                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-103" data-idProducto="103">	<span>AGREGAR</span> <i class="far fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="product_grid_pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-9 col-md-10 offset-sm-3 offset-md-2">
+                        <div class="row no-gutters">
+                            <div class="col-12 col-md-6">
+                                <p class="category-pagination-sign">50 productos encontrados. Mostrando 1 - 18</p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <nav>
+                                    <ul class="pagination category-pagination pull-right">
+                                        <li class="disabled"><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                                        <li>
+                                            <a class="active" ">1</a></li>
+                                                        <li><a  href="/productos/?p=2 ">2</a></li>
+                                                        <li><a  href="/productos/?p=3 ">3</a></li>
+                                                        <li><a href="/productos/?p=2 "><i class="fa fa-chevron-right "></i></a></li>
+                        </ul>
+                                            </nav>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+</section>
+<br>
+
+
+           
+           	<section class="MainFooter ">
+		<div class="container ">
+			<div class="row ">
+				<div class="col-12 col-sm-6 col-md-4 ">
+					<ul class="nav flex-column ">
+						<li class="nav-item ">
+								<a href="/productos/accesorios ">Productos</a>
+							</li>
+							<li class="nav-item ">
+								<a href="/productos/celulares ">Celulares</a>
+							</li>
+							<li class="nav-item ">
+								<a href="/reparaciones ">Reparaciones</a>
+							</li>
+							<li class="nav-item ">
+								<a  href="/servicios ">Servicio a empresas</a>
+							</li>
+							<li class="nav-item ">
+								<a  href="/novedades ">Novedades</a>
+							</li>
+							<li class="nav-item ">
+								<a  href="/contacto-y-ubicacion ">Contacto</a>
+							</li>
+					</ul>
+				</div>
+				<div class="col-12 col-sm-6 col-md-4 ">
+					<address>
+						25 de Mayo 3567 - Santa Fe
+						<br>(342) 4123234
+						<br>(342) 5-360-966
+					</address>
+				</div>
+				<div class="col-12 col-sm-6 col-md-4 ">
+					<div class="rrss_icons ">
+						<ul>
+							<li><a href="https://www.instagram.com/brillantestore/ "><i class="fab fa-instagram "></i></a></li>
+							<li><a href="https://www.facebook.com/brillantestore.santafe/ "><i class="fab fa-facebook "></i></a></li>
+							<li><a href=" "><i class="fab fa-youtube "></i></a></li>
+						</ul>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="copy ">
+		<div class="container ">
+			<div class="row ">
+				<div class="col-12 ">
+					<hr>
+				</div>
+				<div class="col-12 col-sm-6 text-center text-sm-right ">
+					<a href="http://www.alma.com.ar " id="footerAlma " class="footerAlmaLogo "><strong>Alma, agencia de publicidad en Rosario</strong></a>
+				</div>
+				<div class="col-12 col-sm-6 text-secondary text-center text-sm-right ">
+					&copy; 2018 Brillante
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+	
+	<script src="js/front-end/tema/popper.min.js"></script>
+        <script src="css/front-end/tema/bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/front-end/plugins/jquery.magnific-popup.js"></script>
+        <script src="js/front-end/tema/OwlCarousel2-2.3.4/dist/owl.carousel.js"></script>
+
+        <script src="js/front-end/tema/theme.js"></script>
+        <script src="js/front-end/varios/sha1.js"></script>
+        <script type="text/javascript" src="js/front-end/brillantestore.js"></script>
+
+    	</body>    
+</html>
