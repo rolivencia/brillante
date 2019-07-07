@@ -16,7 +16,7 @@ export class RepairDashboardComponent implements OnInit {
 
   constructor(private repairService: RepairService, private modalService: NgbModal) { }
 
-  selectedRepairData: RepairLegacy;
+  private _selectedRepairData: RepairLegacy = null;
   gridData: any;
   gridCollection: CollectionView;
   pageSize = 22;
@@ -95,7 +95,11 @@ export class RepairDashboardComponent implements OnInit {
   }
 
   getRepairDetails(item) {
-    this.selectedRepairData = item;
+    this._selectedRepairData = item;
+  }
+
+  get selectedRepairData() {
+    return this._selectedRepairData;
   }
 
   // FIXME: Update to internal link after the update is migrated to Angular app

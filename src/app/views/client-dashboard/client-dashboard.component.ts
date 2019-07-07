@@ -11,14 +11,16 @@ import {GlobalService} from '@app/_services/global.service';
   styleUrls: ["./client-dashboard.component.scss"]
 })
 export class ClientDashboardComponent implements OnInit {
-  // selectedClientData: ClientLegacy;
-  selectedClientData: any;
+  // _selectedClientData: ClientLegacy;
+
   selectedRepairData: RepairLegacy;
   clientGridData: any;
   repairGridData: any;
   clientGridCollection: CollectionView;
   repairGridCollection: CollectionView;
   pageSize = 22;
+
+  private _selectedClientData: any = null;
 
   clientColumns: any[] = [
     { header: "ID", binding: "personId", width: 50 },
@@ -48,14 +50,16 @@ export class ClientDashboardComponent implements OnInit {
   }
 
   getClientDetails(item) {
-    this.selectedClientData = item;
+    this._selectedClientData = item;
     this.repairGridCollection = null;
-    if (this.selectedClientData) {
-      this.getUserRepairs(this.selectedClientData);
+    if (this._selectedClientData) {
+      this.getUserRepairs(this._selectedClientData);
     }
   }
 
-
+  get selectedClientData() {
+    return this._selectedClientData;
+  }
 
   update(clientData: any) {
     // TODO: Implementar método
