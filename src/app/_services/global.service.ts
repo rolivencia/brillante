@@ -7,7 +7,8 @@ import {HttpHeaders} from '@angular/common/http';
 export class GlobalService {
 
   private _httpHeaders = new HttpHeaders({'Content-Type':  'application/x-www-form-urlencoded'});
-  private _webApiUrl = `http://brillante.rolivencia.xyz/api/fix`;
+  private _legacySiteUrl = `http://brillante.rolivencia.xyz/`;
+  private _webApiUrl = `${this._legacySiteUrl}api/fix`;
 
   constructor() { }
 
@@ -25,5 +26,13 @@ export class GlobalService {
 
   set webApiUrl(value: string) {
     this._webApiUrl = value;
+  }
+
+  get legacySiteUrl(): string {
+    return this._legacySiteUrl;
+  }
+
+  set legacySiteUrl(value: string) {
+    this._legacySiteUrl = value;
   }
 }

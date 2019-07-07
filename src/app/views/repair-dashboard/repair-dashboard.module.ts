@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RepairDashboardRoutingModule} from './repair-dashboard-routing.module';
-import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import {WjInputModule} from 'wijmo/wijmo.angular2.input';
@@ -12,7 +11,6 @@ import {RepairDashboardComponent} from '@app/views/repair-dashboard/repair-dashb
 @NgModule({
   declarations: [RepairDashboardComponent],
   imports: [
-    BrowserModule,
     CommonModule,
     FormsModule,
     NgbDatepickerModule,

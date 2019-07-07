@@ -9,18 +9,12 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   {
     path: 'repair',
-    loadChildren: () =>
-      import('./views/repair-dashboard/repair-dashboard.module').then(
-        m => m.RepairDashboardModule
-      ),
+    loadChildren: './views/repair-dashboard/repair-dashboard.module#RepairDashboardModule',
     canActivate: [AuthGuard]
   },
   {
     path: 'client',
-    loadChildren: () =>
-      import('./views/client-dashboard/client-dashboard.module').then(
-        m => ClientDashboardModule
-      ),
+    loadChildren: './views/client-dashboard/client-dashboard.module#ClientDashboardModule',
     canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },

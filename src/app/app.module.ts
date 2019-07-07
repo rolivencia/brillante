@@ -11,23 +11,15 @@ import {routing} from './app.routing';
 import {AlertComponent} from './_components';
 import {HomeComponent} from './home';
 import {LoginComponent} from './login';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RegisterComponent} from './register';
 import {RepairService} from '@app/_services/repair.service';
-import {WjGridFilterModule} from 'wijmo/wijmo.angular2.grid.filter';
-import {WjGridModule} from 'wijmo/wijmo.angular2.grid';
-import {WjInputModule} from 'wijmo/wijmo.angular2.input';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,
     ReactiveFormsModule,
-    WjInputModule,
-    WjGridModule,
-    WjGridFilterModule,
     routing
   ],
   declarations: [
