@@ -1,27 +1,27 @@
-﻿import {RouterModule, Routes} from '@angular/router';
-
-import {HomeComponent} from './home';
-import {LoginComponent} from './login';
-import {AuthGuard} from './_guards';
-import {ClientDashboardModule} from '@app/views/client-dashboard/client-dashboard.module';
+﻿import { RouterModule, Routes } from "@angular/router";
+import { DashboardComponent } from "./dashboard";
+import { LoginComponent } from "./login";
+import { AuthGuard } from "./_guards";
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "", component: DashboardComponent, canActivate: [AuthGuard] },
   {
-    path: 'repair',
-    loadChildren: './views/repair-dashboard/repair-dashboard.module#RepairDashboardModule',
+    path: "repair",
+    loadChildren:
+      "./dashboard/repair-dashboard/repair-dashboard.module#RepairDashboardModule",
     canActivate: [AuthGuard]
   },
   {
-    path: 'client',
-    loadChildren: './views/client-dashboard/client-dashboard.module#ClientDashboardModule',
+    path: "client",
+    loadChildren:
+      "./dashboard/client-dashboard/client-dashboard.module#ClientDashboardModule",
     canActivate: [AuthGuard]
   },
-  { path: 'login', component: LoginComponent },
+  { path: "login", component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
 
   // otherwise redirect to home
-  { path: '**', redirectTo: '' }
+  { path: "**", redirectTo: "" }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

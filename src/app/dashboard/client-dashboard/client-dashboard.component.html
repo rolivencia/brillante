@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-8">
+    <div class="card h-100">
+      <div class="card-body">
+        <div id="client-grid-container">
+          <div
+            class="alert alert-info h-100 text-center"
+            *ngIf="!clientGridCollection"
+          >
+            <h3>Cargando...</h3>
+          </div>
+
+          <wj-flex-grid
+            *ngIf="clientGridCollection"
+            [itemsSource]="clientGridCollection"
+            [selectionMode]="'Row'"
+            [headersVisibility]="'Column'"
+            [autoGenerateColumns]="false"
+            [allowResizing]="'Columns'"
+            [showSelectedHeaders]="'Row'"
+            [isReadOnly]="true"
+            (selectionChanged)="
+              getClientDetails(clientGridCollection.currentItem)
+            "
+          >
+            <wj-flex-grid-filter></wj-flex-grid-filter>
+            <wj-flex-grid-column
+              *ngFor="let column of clientColumns"
+              [width]="column.width"
+              [binding]="column.binding"
+              [header]="column.header"
+              [visible]="true"
+            >
+            </wj-flex-grid-column>
+          </wj-flex-grid>
+        </div>
+
+        <p></p>
+
+        <div class="footer-controls row">
+          <div class="col-12 col-md-6">
+            <wj-collection-view-pager [cv]="clientGridCollection">
+            </wj-collection-view-pager>
+          </div>
+          <div class="col-12 col-md-6 text-right">
+            <button
+              class="btn btn-sm btn-outline-primary h-100"
+              (click)="getGridData()"
+            >
+              🔄 Actualizar Lista
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <ng-container *ngIf="selectedClientData">
+          <div class="row no-gutters">
+            <div class="col-5">
+              <p class="mb-0">
+                <strong>ID Cliente: </strong> {{ selectedClientData.personId }}
+              </p>
+            </div>
+            <div class="col-7 text-right">
+              <button
+                class="btn btn-sm btn-primary"
+                (click)="update(selectedClientData)"
+              >
+                💾️ Actualizar
+              </button>
+              <button
+                type="button"
+                class="ml-3 btn btn-sm btn-danger"
+                (click)="delete(selectedClientData)"
+              >
+                ❌ Eliminar
+              </button>
+            </div>
+          </div>
+          <hr />
+          <p>
+            <strong>Nombre Completo: </strong>
+            {{
+              selectedClientData.firstName + " " + selectedClientData.lastName
+            }}
+          </p>
+          <p><strong>DNI: </strong> {{ selectedClientData.dni }}</p>
+          <p>
+            <strong>Teléfono 1: </strong> {{ selectedClientData.telephone }}
+          </p>
+          <p>
+            <strong>Teléfono 2: </strong>
+            {{ selectedClientData.secondaryTelephone }}
+          </p>
+          <p><strong>eMail: </strong> {{ selectedClientData.email }}</p>
+          <p><strong>Dirección: </strong> {{ selectedClientData.address }}</p>
+          <hr />
+        </ng-container>
+
+        <div
+          id="repair-loading-alert"
+          class="alert alert-info d-flex justify-content-center align-items-center"
+          *ngIf="selectedClientData && !repairGridCollection"
+        >
+          <h4>Cargando...</h4>
+        </div>
+
+        <ng-container
+          *ngIf="
+            selectedClientData &&
+            repairGridCollection &&
+            repairGridCollection.itemCount
+          "
+        >
+          <div id="repair-grid-container">
+            <wj-flex-grid
+              [itemsSource]="repairGridCollection"
+              [selectionMode]="'Row'"
+              [headersVisibility]="'Column'"
+              [autoGenerateColumns]="false"
+              [allowResizing]="'Columns'"
+              [showSelectedHeaders]="'Row'"
+              [isReadOnly]="true"
+              (selectionChanged)="
+                getRepairDetails(repairGridCollection.currentItem)
+              "
+            >
+              <wj-flex-grid-filter></wj-flex-grid-filter>
+              <wj-flex-grid-column
+                *ngFor="let column of repairColumns"
+                [width]="column.width"
+                [binding]="column.binding"
+                [header]="column.header"
+                [visible]="true"
+              >
+              </wj-flex-grid-column>
+            </wj-flex-grid>
+          </div>
+
+          <hr class="mt-2 mb-2" />
+
+          <div class="footer-controls row" *ngIf="selectedRepairData">
+            <div class="col-12 text-right">
+              <button
+                class="btn btn-sm btn-primary h-100"
+                (click)="goToUpdate(selectedRepairData.repairId)"
+              >
+                🛠️ Ver en Reparaciones
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="!selectedClientData">
+          <p>Seleccione un cliente de la grilla</p>
+          <hr />
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

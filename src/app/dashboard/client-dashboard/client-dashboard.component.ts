@@ -3,7 +3,7 @@ import { ClientService } from "@app/_services/client.service";
 import { RepairService } from "@app/_services/repair.service";
 import { CollectionView, SortDescription } from "wijmo/wijmo";
 import { RepairLegacy } from "@app/_models";
-import {GlobalService} from '@app/_services/global.service';
+import { GlobalService } from "@app/_services/global.service";
 
 @Component({
   selector: "app-client-dashboard",

@@ -1,28 +1,10 @@
 ﻿<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-  <div class="text-white pr-3">
-    <button type="button" class="btn btn-lg btn-outline-light">
-      {{ welcomeName }}
-    </button>
-  </div>
-  <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/">Inicio</a>
-    <a class="nav-item nav-link" routerLink="/client">Clientes</a>
-    <a class="nav-item nav-link" routerLink="/repair">Reparaciones</a>
-    <a class="nav-item nav-link disabled">Caja</a>
-    <a class="nav-item nav-link disabled">Stock</a>
-    <a class="nav-item nav-link" (click)="logout()">Salir</a>
-  </div>
-</nav>
+<app-header></app-header>
 
 <!-- main app container -->
 <div class="jumbotron">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-10 offset-sm-1">
-        <app-alert></app-alert>
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+  <div id="app-container" class="container">
+    <app-alert></app-alert>
+    <router-outlet></router-outlet>
   </div>
 </div>

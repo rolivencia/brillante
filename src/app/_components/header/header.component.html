@@ -1,0 +1,33 @@
+<section id="main-header">
+  <div class="container">
+    <nav
+      class="row navbar navbar-expand-lg justify-content-between navbar-light brand-navbar"
+    >
+      <div class="brand-container pr-3">
+        <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
+          <i class="fal fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="">
+          <img src="assets/img/logo.png" alt="image" />
+        </a>
+      </div>
+
+      <div *ngIf="currentUser" class="pr-3">
+        <button type="button" class="btn btn-lg btn-link">
+          {{ welcomeName }}
+        </button>
+      </div>
+      <div class="navbar-nav">
+        <a
+          *ngFor="let link of routerLinks"
+          class="nav-item"
+          class="nav-link"
+          [ngClass]="{ disabled: !link.enabled, active: link.enabled }"
+          [routerLink]="link.route"
+          >{{ link.label }}</a
+        >
+        <a class="pl-5 nav-item nav-link" (click)="logout()">Salir</a>
+      </div>
+    </nav>
+  </div>
+</section>

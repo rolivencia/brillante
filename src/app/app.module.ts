@@ -9,10 +9,11 @@ import { AppComponent } from "./app.component";
 import { routing } from "./app.routing";
 
 import { AlertComponent } from "./_components";
-import { HomeComponent } from "./home";
+import { DashboardComponent } from "./dashboard";
 import { LoginComponent } from "./login";
 import { RegisterComponent } from "./register";
 import { RepairService } from "@app/_services/repair.service";
+import { HeaderComponent } from "./_components/header/header.component";
 
 @NgModule({
   imports: [
@@ -25,9 +26,11 @@ import { RepairService } from "@app/_services/repair.service";
   declarations: [
     AlertComponent,
     AppComponent,
-    HomeComponent,
+    HeaderComponent,
+    DashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HeaderComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

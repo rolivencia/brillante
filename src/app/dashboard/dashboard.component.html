@@ -27,7 +27,6 @@
     <div class="card-body">
       <h5 class="card-title">📱 Gestión de Stock</h5>
       <p class="card-text">Ingresar al menú de gestión de stock</p>
-
     </div>
     <div class="card-footer bg-danger">
       <small class="text-white">Módulo no disponible</small>
@@ -35,12 +34,12 @@
   </div>
 </div>
 
-<hr>
+<hr />
 
 <h3>Usuarios registrados:</h3>
 <ul>
   <li *ngFor="let user of users">
-    {{user.username}} ({{user.firstName}} {{user.lastName}})
+    {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
     <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>-->
   </li>
 </ul>
