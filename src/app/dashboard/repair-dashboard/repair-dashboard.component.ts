@@ -95,7 +95,6 @@ export class RepairDashboardComponent implements OnInit {
         error => console.error(error)
       );
   }
-  r;
 
   get showFinished(): boolean {
     return this._showFinished;
@@ -116,7 +115,7 @@ export class RepairDashboardComponent implements OnInit {
   // FIXME: Update to internal link after the update is migrated to Angular app
   goToUpdate(repairId: number) {
     const redirectTo =
-      "http://brillante.brillantestore.com/fix-vista-de-actualizacion/?repairId=" +
+      "https://brillante.brillantestore.com/fix-vista-de-actualizacion/?repairId=" +
       repairId;
     window.open(redirectTo, "blank");
   }

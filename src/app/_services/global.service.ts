@@ -8,7 +8,7 @@ export class GlobalService {
   private _httpHeaders = new HttpHeaders({
     "Content-Type": "application/x-www-form-urlencoded"
   });
-  private _legacySiteUrl = `http://brillante.brillantestore.com/`;
+  private _legacySiteUrl = `https://brillante.brillantestore.com/`;
   private _webApiUrl = `${this._legacySiteUrl}api/fix`;
 
   constructor() {}
