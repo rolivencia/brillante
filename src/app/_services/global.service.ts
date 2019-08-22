@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import {HttpHeaders} from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class GlobalService {
-
-  private _httpHeaders = new HttpHeaders({'Content-Type':  'application/x-www-form-urlencoded'});
-  private _legacySiteUrl = `http://brillante.rolivencia.xyz/`;
+  private _httpHeaders = new HttpHeaders({
+    "Content-Type": "application/x-www-form-urlencoded"
+  });
+  private _legacySiteUrl = `http://brillante.brillantestore.com/`;
   private _webApiUrl = `${this._legacySiteUrl}api/fix`;
 
-  constructor() { }
+  constructor() {}
 
   get httpHeaders(): HttpHeaders {
     return this._httpHeaders;
