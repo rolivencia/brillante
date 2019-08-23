@@ -1,2 +1,22 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
 app-brillante {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#outlet-container {
+    flex-grow: 1;
+}
+
+#header-container,
+#outlet-container,
+#footer-container {
+    flex-shrink: 0;
 }

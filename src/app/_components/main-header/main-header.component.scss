@@ -1,0 +1,99 @@
+#navigation-menu {
+    .nav-item {
+        font-family: 'Barlow', sans-serif;
+        .nav-link {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}
+
+#main-header {
+    z-index: 1040;
+    background: white;
+}
+
+#main-header {
+    width: 100%;
+    z-index: 1040;
+    background: #fff;
+    a {
+        color: #6c6c6c;
+    }
+    .brand-navbar {
+        background: #fff;
+        height: 50px;
+        z-index: 2002;
+        .brand-container {
+            display: flex;
+            align-items: center;
+            a.navbar-brand {
+                padding: 0;
+                width: 115px;
+                width: 85px;
+                margin: 0;
+                img {
+                    width: 100%;
+                    display: block;
+                }
+            }
+        }
+    }
+    a.whatsapp {
+        color: #999;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        span {
+            display: none;
+        }
+        i {
+            font-weight: 600;
+            margin-right: 6px;
+            font-size: 24px;
+        }
+        b {
+            font-weight: 600;
+        }
+    }
+    .nav-sup {
+        padding-top: 3px;
+        .btn-light {
+            color: #6c6c6c;
+            margin-right: 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        i {
+            font-size: 25px;
+        }
+        li a {
+            padding: 7px 2px;
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    #main-header > .navbar {
+        padding: 25px 0 20px;
+    }
+}
+
+@media (min-width: 576px) {
+    #main-header .brand-navbar {
+        height: auto;
+        padding: 0.5rem 0 0 0;
+    }
+}
+
+@media (min-width: 575px) {
+    #main-header .brand-navbar .brand-container a.navbar-brand {
+        width: 135px;
+    }
+}
+
+@media (min-width: 768px) {
+    #main-header a.whatsapp span {
+        display: inline;
+    }
+}

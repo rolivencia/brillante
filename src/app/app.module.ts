@@ -13,7 +13,6 @@ import { DashboardComponent } from './dashboard';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { RepairService } from '@app/_services/repair.service';
-import { HeaderComponent } from './_components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainHeaderComponent } from '@app/_components/main-header/main-header.component';
 import { FooterComponent } from './_components/footer/footer.component';
@@ -23,13 +22,11 @@ import { FooterComponent } from './_components/footer/footer.component';
     declarations: [
         AlertComponent,
         AppComponent,
-        HeaderComponent,
         FooterComponent,
         MainHeaderComponent,
         DashboardComponent,
         LoginComponent,
         RegisterComponent,
-        HeaderComponent,
         FooterComponent
     ],
     providers: [

@@ -1,23 +1,31 @@
-<section id="MainHeader" class="MainHeader">
-    <div class="container">
-        <div class="nav-row">
-            <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
-                <div class="brand-container">
-                    <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
-                        <i class="fal fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand" href="">
-                        <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
-                    </a>
-                </div>
+<section id="main-header" class="container">
+    <div class="nav-row">
+        <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
+            <div class="brand-container">
+                <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
+                    <i class="fal fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="">
+                    <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
+                </a>
+            </div>
 
-                <a
-                    class="whatsapp"
-                    href="https://api.whatsapp.com/send?phone=543425360966&text=%C2%A1Hola!%20me%20contacto%20con%20ustedes%20para%20hacerles%20una%20consulta%20sobre%20sus%20servicios.%20Desde%20ya%20muchas%20gracias"
-                    ><i class="fab fa-whatsapp" target="_blank"></i><span><b>¡Clickea</b> y comunicate!</span></a
-                >
+            <a
+                *ngIf="!currentUser"
+                class="whatsapp"
+                href="https://api.whatsapp.com/send?phone=543425360966&text=%C2%A1Hola!%20me%20contacto%20con%20ustedes%20para%20hacerles%20una%20consulta%20sobre%20sus%20servicios.%20Desde%20ya%20muchas%20gracias"
+                ><i class="fab fa-whatsapp" target="_blank"></i><span><b>¡Clickea</b> y comunicate!</span></a
+            >
+            <ng-container *ngIf="currentUser">
+                <button type="button" class="btn btn-outline-secondary rounded-0">
+                    <span
+                        >Usuario actual: <strong>{{ welcomeName }}</strong></span
+                    >
+                </button>
+            </ng-container>
 
-                <ul class="nav justify-content-end align-items-center nav-sup">
+            <ul class="nav justify-content-end align-items-center nav-sup">
+                <ng-container *ngIf="!currentUser">
                     <li>
                         <a routerLink="/login" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
                             >INGRESAR</a
@@ -31,6 +39,14 @@
                             >REGISTRATE</a
                         >
                     </li>
+                </ng-container>
+                <ng-container *ngIf="currentUser">
+                    <li>
+                        <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                            >CERRAR SESIÓN</a
+                        >
+                    </li>
+
                     <li>
                         <a href="#nav-login-dialog" data-effect="mfp-move-from-top" class="btn btn-default d-sm-none popup-text"
                             ><i class="far fa-user"></i
@@ -38,63 +54,21 @@
                     </li>
 
                     <li>
-                        <button type="button" id="SearchMenu_OpenBtn" class="btn btn-default">
-                            <i class="far fa-search"></i>
-                        </button>
-                    </li>
-                    <li>
                         <a href="carrito" class="btn btn-default"><i class="far fa-shopping-cart"></i></a>
                     </li>
-                </ul>
-            </nav>
-            <div id="MainMenu">
-                <div id="MainMenu_overlay"></div>
-                <div id="MainMenu_CloseBtn">
-                    <i class="fal fa-chevron-left"></i>
-                </div>
-                <div id="MainMenu_MenuContainer">
-                    <nav class="navbar-light nav-main" id="MainMenu_Nav">
-                        <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
-                            <li class="nav-item">
-                                <a class="nav-link active" routerLink="/products">Productos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="productos/celulares">Celulares</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/repairs">Reparaciones</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/enterprise">Servicio a empresas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled" href="noticias">Novedades</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/contact"> Contacto</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <div id="SearchMenu" class="">
-                <div id="SearchMenu_overlay"></div>
-                <div id="SearchMenu_TopBar">
-                    <form name="f-buscador" id="f-buscador" method="get" class="buscador" action="/productos/buscar/" role="search">
-                        <div class="input-group">
-                            <input name="cadena" id="cadena" value="" class="form-control campo-buscador" placeholder="buscar" />
-                            <div class="input-group-append">
-                                <button class="btn btn-default boton-buscar" type="submit">
-                                    <i class="far fa-search"></i>
-                                </button>
-                                <button type="button" id="SearchMenu_CloseBtn">
-                                    <i class="fal fa-angle-left"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                </ng-container>
+            </ul>
+        </nav>
+        <nav class="navbar-light nav-main" id="navigation-menu">
+            <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
+                <ng-container *ngFor="let route of userLinks">
+                    <li class="nav-item" *ngIf="route.visible">
+                        <a class="nav-link" [ngClass]="{ disabled: !route.enabled, active: route.enabled }" [routerLink]="route.route">{{
+                            route.label
+                        }}</a>
+                    </li>
+                </ng-container>
+            </ul>
+        </nav>
     </div>
 </section>

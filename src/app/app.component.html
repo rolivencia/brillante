@@ -1,8 +1,17 @@
 ﻿<!-- nav -->
-<app-header></app-header>
-<app-main-header></app-main-header>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<!--<app-header></app-header>-->
+<div id="main-container" class="container">
+    <div id="header-container">
+        <app-main-header></app-main-header>
+    </div>
+    <div id="outlet-container" class="mt-xl-3">
+        <router-outlet></router-outlet>
+    </div>
+    <div id="footer-container">
+        <app-footer></app-footer>
+    </div>
+</div>
+
 <!-- main app container -->
 <!--<div class="jumbotron">-->
 <!--  <div id="app-container" class="container">-->
