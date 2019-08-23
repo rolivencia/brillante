@@ -1,0 +1,186 @@
+#div-unidades
+{
+    overflow-x: scroll;
+    width: 100%;
+}
+.ul-unidades
+{
+    min-width: 1500px;
+    padding: 0 0 0 10px;
+    list-style: none;
+    width: 100%;
+}
+.ul-unidades li
+{
+    background: #fff;
+    border-bottom: solid 1px #c4c4c4;
+    float: left;
+    padding: 0 0 0 20px;
+    position: relative;
+    width: 100%;
+}
+.ul-unidades li.encabezado
+{
+    
+    padding: 0 0 0 20px;
+    position: relative;
+}
+.unidades-ajax
+{
+    background: #fff url('/imagenes/panel/ajax.gif') center center no-repeat;
+    height: 100%;
+    display: none;
+    left: 0;
+    opacity: 0.85;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.ul-unidades .unidad-nombre
+{
+    border-right: solid 1px #c4c4c4;
+    float: left;
+    padding: 10px 10px 10px 10px;
+    width: 120px;
+}
+.unidad-base,
+.unidad-base-2
+{
+    display: none;
+}
+.margen-5
+{
+    margin-left: 10px;
+}
+.campo-texto
+{
+    float: left;
+}
+.mostrar
+{
+    display: block;
+}
+.ul-unidades .unidad-nombre .campo-texto
+{
+    width: 100px;
+}
+.ul-unidades .unidad-tipo,
+.ul-unidades .unidad-dormitorios,
+.ul-unidades .unidad-piso,
+.ul-unidades .unidad-superficie,
+.ul-unidades .unidad-terreno,
+.ul-unidades .unidad-patio,
+.ul-unidades .unidad-terraza,
+.ul-unidades .unidad-banios,
+.ul-unidades .unidad-anticipo,
+.ul-unidades .unidad-cuotas
+{
+    border-right: solid 1px #c4c4c4;
+    float: left;
+    padding: 10px 10px 10px 10px;
+   
+}
+.ul-unidades .unidad-tipo
+{
+    display: block;
+    width: 150px;
+}
+.ul-unidades .unidad-tipo,
+.ul-unidades .unidad-dormitorios
+{
+
+}
+.ul-unidades .unidad-tipo .form-group-select
+{
+    width: 140px;
+}
+.ul-unidades .unidad-tipo .form-control
+{
+    width: 130px;
+}
+.ul-unidades .unidad-superficie,
+.ul-unidades .unidad-terreno,
+.ul-unidades .unidad-patio,
+.ul-unidades .unidad-terraza
+{
+    width: 140px;
+}
+.ul-unidades .unidad-cuotas
+{
+    width: 100px;
+}
+.ul-unidades .unidad-piso .campo-texto,
+.ul-unidades .unidad-superficie .campo-texto,
+.ul-unidades .unidad-terreno .campo-texto,
+.ul-unidades .unidad-piso .campo-texto,
+.ul-unidades .unidad-patio .campo-texto,
+.ul-unidades .unidad-terraza .campo-texto,
+.ul-unidades .unidad-banios .campo-texto,
+.ul-unidades .unidad-anticipo .campo-texto,
+.ul-unidades .unidad-cuotas .campo-texto
+{
+    border: none;
+    border-bottom: solid 1px #c4c4c4;
+    text-align: center;
+    width: 50px;
+}
+.ul-unidades .unidad-precio
+{
+    border-right: solid 1px #c4c4c4;
+    float: left;
+    padding: 10px 10px 10px 10px;
+    width: 290px;
+}
+.ul-unidades .unidad-precio .campo-texto
+{
+    border: none;
+    border-bottom: solid 1px #c4c4c4;
+    text-align: center;
+    width: 90px;
+}
+.ul-unidades .unidad-precio .campo-select,
+.ul-unidades .unidad-dormitorios .campo-select
+{
+    border: none;
+    float: left;
+    width: 60px;
+}
+.ul-unidades .unidad-tipo .campo-select,
+.ul-unidades .unidad-dormitorios .campo-select
+{
+    border: none;
+    width: 120px;
+}
+.ul-unidades .unidad-estado .campo-texto
+{
+    width: 90px;
+}
+.boton-unidad-crear
+{
+    background: #c0c0c0;
+    color: #333;
+    float: left;
+    display: none;
+    margin: 25px 0 0 10px;
+    padding: 6px 14px 6px 14px;
+}
+.boton-unidad-borrar
+{
+    border: solid 1px #ff0000;
+    border-radius: 50%;
+    color: #ff0000;
+    display: block;
+    float: left;
+    font-size: 9px;
+    height: 16px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 35px;
+    padding: 2px 0 0 0;
+    width: 16px;
+}
+.boton-unidad-borrar:hover
+{
+    color: #ff0000 !important;
+}
