@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
         margin: 10,
         items: 1,
         nav: false,
-        autoplay: true
+        autoplay: true,
+        autoWidth: true
     };
 
     productsCarousel: OwlOptions = {
@@ -43,9 +44,7 @@ export class HomeComponent implements OnInit {
         }
     };
 
-    constructor() {
-        console.log("I'm here");
-    }
+    constructor() {}
 
     ngOnInit() {}
 }

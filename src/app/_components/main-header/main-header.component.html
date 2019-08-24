@@ -1,74 +1,69 @@
 <section id="main-header" class="container">
-    <div class="nav-row">
-        <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
-            <div class="brand-container">
-                <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
-                    <i class="fal fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="">
-                    <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
-                </a>
-            </div>
+    <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
+        <div class="brand-container">
+            <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
+                <i class="fal fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="">
+                <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
+            </a>
+        </div>
 
-            <a
-                *ngIf="!currentUser"
-                class="whatsapp"
-                href="https://api.whatsapp.com/send?phone=543425360966&text=%C2%A1Hola!%20me%20contacto%20con%20ustedes%20para%20hacerles%20una%20consulta%20sobre%20sus%20servicios.%20Desde%20ya%20muchas%20gracias"
-                ><i class="fab fa-whatsapp" target="_blank"></i><span><b>¡Clickea</b> y comunicate!</span></a
-            >
-            <ng-container *ngIf="currentUser">
-                <button type="button" class="btn btn-outline-secondary rounded-0">
-                    <span
-                        >Usuario actual: <strong>{{ welcomeName }}</strong></span
+        <a
+            *ngIf="!currentUser"
+            class="whatsapp"
+            href="https://api.whatsapp.com/send?phone=543425360966&text=%C2%A1Hola!%20me%20contacto%20con%20ustedes%20para%20hacerles%20una%20consulta%20sobre%20sus%20servicios.%20Desde%20ya%20muchas%20gracias"
+            ><i class="fab fa-whatsapp" target="_blank"></i><span><b>¡Clickea</b> y comunicate!</span></a
+        >
+        <ng-container *ngIf="currentUser">
+            <button type="button" class="btn btn-outline-secondary rounded-0">
+                <span
+                    >Usuario actual: <strong>{{ welcomeName }}</strong></span
+                >
+            </button>
+        </ng-container>
+
+        <ul class="nav justify-content-end align-items-center nav-sup">
+            <ng-container *ngIf="!currentUser">
+                <li>
+                    <a routerLink="/login" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                        >INGRESAR</a
                     >
-                </button>
+                </li>
+                <li>
+                    <a href="#nav-account-dialog" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                        >REGISTRATE</a
+                    >
+                </li>
             </ng-container>
+            <ng-container *ngIf="currentUser">
+                <li>
+                    <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                        >CERRAR SESIÓN</a
+                    >
+                </li>
 
-            <ul class="nav justify-content-end align-items-center nav-sup">
-                <ng-container *ngIf="!currentUser">
-                    <li>
-                        <a routerLink="/login" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
-                            >INGRESAR</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#nav-account-dialog"
-                            data-effect="mfp-move-from-top"
-                            class="btn btn-sm btn-light d-none d-sm-block popup-text"
-                            >REGISTRATE</a
-                        >
-                    </li>
-                </ng-container>
-                <ng-container *ngIf="currentUser">
-                    <li>
-                        <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
-                            >CERRAR SESIÓN</a
-                        >
-                    </li>
+                <li>
+                    <a href="#nav-login-dialog" data-effect="mfp-move-from-top" class="btn btn-default d-sm-none popup-text"
+                        ><i class="far fa-user"></i
+                    ></a>
+                </li>
 
-                    <li>
-                        <a href="#nav-login-dialog" data-effect="mfp-move-from-top" class="btn btn-default d-sm-none popup-text"
-                            ><i class="far fa-user"></i
-                        ></a>
-                    </li>
-
-                    <li>
-                        <a href="carrito" class="btn btn-default"><i class="far fa-shopping-cart"></i></a>
-                    </li>
-                </ng-container>
-            </ul>
-        </nav>
-        <nav class="navbar-light nav-main" id="navigation-menu">
-            <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
-                <ng-container *ngFor="let route of userLinks">
-                    <li class="nav-item" *ngIf="route.visible">
-                        <a class="nav-link" [ngClass]="{ disabled: !route.enabled, active: route.enabled }" [routerLink]="route.route">{{
-                            route.label
-                        }}</a>
-                    </li>
-                </ng-container>
-            </ul>
-        </nav>
-    </div>
+                <li>
+                    <a href="carrito" class="btn btn-default"><i class="far fa-shopping-cart"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </nav>
+    <nav class="navbar-light nav-main" id="navigation-menu">
+        <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
+            <ng-container *ngFor="let route of userLinks">
+                <li class="nav-item" *ngIf="route.visible">
+                    <a class="nav-link" [ngClass]="{ disabled: !route.enabled, active: route.enabled }" [routerLink]="route.route">{{
+                        route.label
+                    }}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </nav>
 </section>
