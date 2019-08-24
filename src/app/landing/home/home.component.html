@@ -90,76 +90,6 @@
         <div class="gap gap-small"></div>
     </div>
 
-    <!--nav class="navbar navbar-inverse navbar-main-white navbar-main menu-navegacion">
-  <div class="container">
-      <div class="navbar-header">
-          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse"><span class="sr-only">Main Menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="">
-
-          </a>
-      </div>
-      <div class="collapse navbar-collapse" id="main-nav-collapse">
-          <ul class="nav navbar-nav menu-principal">
-
-              <li class="dropdown"><a href="productos"><i class="fa fa-fire-extinguisher"></i> Productos<i class="drop-caret" data-toggle="dropdown"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-category">
-                                                                                      <li>
-                      <a href="productos/accesorios"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Accesorios</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/audio"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Audio</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/auriculares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Auriculares</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/cables"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cables</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/cargadores"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cargadores</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/celulares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Celulares</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/fundas"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Fundas</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/precios-regalados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>¡Precios regalados!</a>
-                      </li>
-                                                      <li>
-                      <a href="productos/templados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Templados</a>
-                      </li>
-                                                      <li>
-                      <a href="carteleria"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cartelería y Señalética</a>
-                      </li>
-                                                  </ul>
-              </li>
-              <li>
-                  <a href="tienda" ><i class="fa fa-shopping-cart"></i> Tienda</a>
-              </li>
-
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown contenedor-boton-usuario">
-                      <li><a href="usuario" class="btn btn-sm btn-light d-none d-sm-block" >INGRESAR</a>
-          <li><a href="registro" class="btn btn-sm btn-light d-none d-sm-block">REGISTRATE</a></li>
-          <li><a href="usuario" id="UserMenu_OpenBtn" class="btn btn-default d-sm-none"><i class= "far fa-user"></i></a></li>
-              </li>
-              <li class="dropdown">
-                  <a href="carrito" class="fa fa-shopping-cart"></a>
-                  <ul class="dropdown-menu dropdown-menu-shipping-cart">
-
-                  </ul>
-              </li>
-          </ul>
-
-      </div>
-  </div>
-</nav-->
-
     <section class="heroImage">
         <owl-carousel-o [options]="heroImage">
             <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/contacto.jpg" alt=""/></ng-template>
@@ -173,21 +103,21 @@
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-12 col-sm-6 col-md-4">
-                    <a href="reparaciones">
+                    <a routerLink="/repairs">
                         <figure>
                             <img src="/assets/imagenes/tema/banners/banner_reparaciones.jpg" alt="" class="mw-100" />
                         </figure>
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4">
-                    <a href="productos/accesorios">
+                    <a>
                         <figure>
                             <img src="/assets/imagenes/tema/banners/banner_accesorios.jpg" alt="" class="mw-100" />
                         </figure>
                     </a>
                 </div>
                 <div class="col-12 col-sm-12 col-md-4">
-                    <a href="novedades">
+                    <a>
                         <figure>
                             <img src="/assets/imagenes/tema/banners/banner_novedades.jpg" alt="" class="mw-100" />
                         </figure>
@@ -210,7 +140,7 @@
                         </p>
                     </div>
                     <div>
-                        <a href="reparaciones" class="btn btn-light btn-wider under-text-block-btn">VER MÁS</a>
+                        <a routerLink="/repairs" class="btn btn-light btn-wider under-text-block-btn">VER MÁS</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
@@ -383,135 +313,6 @@
                     ></ng-template>
                 </owl-carousel-o>
             </section>
-
-            <div class="owl-carousel owl-theme">
-                <div class="product_component" data-idProducto="153">
-                    <div class="carrito-agregar-ajax" id="ajax-153"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-186.png" alt="Madera iPhone 6s / 6 plus" />
-                    <div class="badge badge-secondary">Madera iPhone 6s / 6 plus</div>
-                    <div class="hovercard">
-                        <h6>Madera iPhone 6s / 6 plus</h6>
-
-                        <p>$850</p>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="153-madera-iphone-6s-6-plus" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-
-                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-153" data-idProducto="153">
-                                <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product_component" data-idProducto="113">
-                    <div class="carrito-agregar-ajax" id="ajax-113"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-139.png" alt="iPhone 7 Plus 32gb" />
-                    <div class="badge badge-secondary">iPhone 7 Plus 32gb</div>
-                    <div class="hovercard">
-                        <h6>iPhone 7 Plus 32gb</h6>
-
-                        <p>$41900</p>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="113-iphone-7-plus-32gb" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-
-                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-113" data-idProducto="113">
-                                <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product_component" data-idProducto="86">
-                    <div class="carrito-agregar-ajax" id="ajax-86"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-103.png" alt="Samsung S9 +" />
-                    <div class="badge badge-secondary">Samsung S9 +</div>
-                    <div class="hovercard">
-                        <h6>Samsung S9 +</h6>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="86-samsung-s9-" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product_component" data-idProducto="21">
-                    <div class="carrito-agregar-ajax" id="ajax-21"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-28.png" alt="Funde One Case 6" />
-                    <div class="badge badge-secondary">Funde One Case 6</div>
-                    <div class="hovercard">
-                        <h6>Funde One Case 6</h6>
-
-                        <p>$1650</p>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="21-funde-one-case-6" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-
-                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-21" data-idProducto="21">
-                                <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product_component" data-idProducto="134">
-                    <div class="carrito-agregar-ajax" id="ajax-134"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-164.png" alt="Achiever iPhone 6" />
-                    <div class="badge badge-secondary">Achiever iPhone 6</div>
-                    <div class="hovercard">
-                        <h6>Achiever iPhone 6</h6>
-
-                        <p>$1950</p>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="134-achiever-iphone-6" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-
-                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-134" data-idProducto="134">
-                                <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product_component" data-idProducto="169">
-                    <div class="carrito-agregar-ajax" id="ajax-169"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-202.png" alt="SiliconeCover Samsung S9+" />
-                    <div class="badge badge-secondary">SiliconeCover Samsung S9+</div>
-                    <div class="hovercard">
-                        <h6>SiliconeCover Samsung S9+</h6>
-
-                        <p>$1190</p>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="169-siliconecover-samsung-s9" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-
-                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-169" data-idProducto="169">
-                                <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product_component" data-idProducto="35">
-                    <div class="carrito-agregar-ajax" id="ajax-35"></div>
-                    <img src="/assets/imagenes-s/productos/productos-imagen-44.png" alt="Funda Reveal iPhone 6" />
-                    <div class="badge badge-secondary">Funda Reveal iPhone 6</div>
-                    <div class="hovercard">
-                        <h6>Funda Reveal iPhone 6</h6>
-
-                        <p>$1890</p>
-                        <!--small>o 12 cuotas de $65.00</small-->
-                        <div class="btns">
-                            <a href="35-funda-reveal-iphone-6" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
-
-                            <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-35" data-idProducto="35">
-                                <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -537,7 +338,7 @@
                         </p>
                     </div>
                     <div>
-                        <a href="contacto-y-ubicacion" class="btn btn-light btn-wider under-text-block-btn">CONSULTÁ</a>
+                        <a routerLink="/contact" class="btn btn-light btn-wider under-text-block-btn">CONSULTÁ</a>
                     </div>
                 </div>
             </div>
@@ -558,7 +359,7 @@
                         </p>
                     </div>
                     <div>
-                        <a href="servicios" class="btn btn-light btn-wider under-text-block-btn">VER MÁS</a>
+                        <a routerLink="/enterprise" class="btn btn-light btn-wider under-text-block-btn">VER MÁS</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 d-flex align-items-center justify-content-center img-col">
