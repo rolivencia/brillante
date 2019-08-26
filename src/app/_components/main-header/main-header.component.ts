@@ -12,7 +12,6 @@ export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
     private _adminLinks = [
-        { label: 'Inicio', route: '/', enabled: true, visible: true },
         { label: 'Dashboard', route: '/dashboard', enabled: true, visible: true },
         { label: 'Clientes', route: '/client', enabled: true, visible: true },
         {

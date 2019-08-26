@@ -1,45 +1,45 @@
 ﻿<div class="card-deck">
-  <div class="card text-white bg-primary mb-3" (click)="goTo('repair')">
-    <div class="card-body">
-      <h5 class="card-title">🔧 Gestión de Reparaciones</h5>
-      <p class="card-text">Ingresar al menú de gestión de reparaciones</p>
+    <div class="card text-white bg-primary mb-3" (click)="goTo('repair')">
+        <div class="card-body">
+            <h5 class="card-title">🔧 Gestión de Reparaciones</h5>
+            <p class="card-text">Ingresar al menú de gestión de reparaciones</p>
+        </div>
     </div>
-  </div>
 
-  <div class="card text-white bg-dark mb-3" (click)="goTo('client')">
-    <div class="card-body">
-      <h5 class="card-title">✋🏻 Gestión de Clientes</h5>
-      <p class="card-text">Ingresar al menú de gestión de clientes</p>
+    <div class="card text-white bg-dark mb-3" (click)="goTo('client')">
+        <div class="card-body">
+            <h5 class="card-title">✋🏻 Gestión de Clientes</h5>
+            <p class="card-text">Ingresar al menú de gestión de clientes</p>
+        </div>
     </div>
-  </div>
 
-  <div class="card text-white bg-success mb-3 disabled">
-    <div class="card-body">
-      <h5 class="card-title">💵 Gestión de Caja</h5>
-      <p class="card-text">Ingresar al menú de gestión de caja</p>
+    <div class="card text-white bg-success mb-3" (click)="goToLegacyCash()">
+        <div class="card-body">
+            <h5 class="card-title">💵 Gestión de Caja</h5>
+            <p class="card-text">Ingresar al menú de gestión de caja</p>
+        </div>
+        <div class="card-footer bg-primary">
+            <small class="text-white">Módulo legacy (sitio antiguo)</small>
+        </div>
     </div>
-    <div class="card-footer bg-danger">
-      <small class="text-white">Módulo no disponible</small>
-    </div>
-  </div>
 
-  <div class="card text-white bg-info mb-3 disabled">
-    <div class="card-body">
-      <h5 class="card-title">📱 Gestión de Stock</h5>
-      <p class="card-text">Ingresar al menú de gestión de stock</p>
+    <div class="card text-white bg-info mb-3" (click)="goToLegacyStock()">
+        <div class="card-body">
+            <h5 class="card-title">📱 Gestión de Stock</h5>
+            <p class="card-text">Ingresar al menú de gestión de stock</p>
+        </div>
+        <div class="card-footer bg-primary">
+            <small class="text-white">Módulo legacy (sitio antiguo)</small>
+        </div>
     </div>
-    <div class="card-footer bg-danger">
-      <small class="text-white">Módulo no disponible</small>
-    </div>
-  </div>
 </div>
 
 <hr />
 
 <h3>Usuarios registrados:</h3>
 <ul>
-  <li *ngFor="let user of users">
-    {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
-    <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>-->
-  </li>
+    <li *ngFor="let user of users">
+        {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
+        <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>-->
+    </li>
 </ul>
