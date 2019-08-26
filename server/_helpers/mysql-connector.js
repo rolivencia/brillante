@@ -7,6 +7,7 @@ function mysqlConnector() {
         host: 'pwcspfbyl73eccbn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
         user: 'ull0rya55h5ajn6y',
         password: 'fmrorcfy1lbwexto',
-        database: 'g30ybi82rgh176xm'
+        database: 'g30ybi82rgh176xm',
+        encoding: 'utf8mb4'
     });
 }

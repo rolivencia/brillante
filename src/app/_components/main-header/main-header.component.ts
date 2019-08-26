@@ -55,7 +55,7 @@ export class MainHeaderComponent implements OnInit {
     }
 
     get welcomeName() {
-        return `${this.currentUser.avatar} ${this.currentUser.firstName}`;
+        return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
     }
 
     get userLinks() {
