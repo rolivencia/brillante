@@ -7,7 +7,7 @@ import { CardsLayoutService } from '@app/_components/cards-layout/cards-layout.s
     styleUrls: ['./cards-layout.component.scss']
 })
 export class CardsLayoutComponent implements OnInit {
-    constructor(private cardsLayoutService: CardsLayoutService) {}
+    constructor(public cardsLayoutService: CardsLayoutService) {}
 
     ngOnInit() {}
 }

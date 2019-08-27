@@ -13,7 +13,7 @@ async function authenticate({ username, password }) {
     return new Promise((resolve, reject) => {
         connection().query(`SELECT * FROM user WHERE user_name = '${username}'`, (err, result) => {
             if (err) reject(error);
-            user = result.pop();
+            const user = result.pop();
             const encryptedPassword = bcrypt.compareSync(password, user.password, 10);
             if (user && encryptedPassword) {
                 const token = jwt.sign({ sub: user.id }, config.secret);
@@ -32,8 +32,21 @@ async function authenticate({ username, password }) {
 }
 
 async function getAll() {
-    return users.map(u => {
-        const { password, ...userWithoutPassword } = u;
-        return userWithoutPassword;
+    return new Promise((resolve, reject) => {
+        connection().query(`SELECT * FROM user`, (err, result) => {
+            if (err) reject(error);
+            if (result && result.length) {
+                resolve(
+                    result.map(userRow => ({
+                        id: userRow.id,
+                        firstName: userRow.first_name,
+                        lastName: userRow.last_name,
+                        username: userRow.user_name,
+                        token: '',
+                        avatar: userRow.avatar
+                    }))
+                );
+            }
+        });
     });
 }
