@@ -34,7 +34,7 @@ export class RepairDashboardComponent implements OnInit {
         { header: 'Cliente', binding: 'nombreApellidoCliente', width: '*' },
         { header: 'Marca', binding: 'marca', width: 110 },
         { header: 'Modelo', binding: 'modelo', width: '*' },
-        // { header: "IMEI", binding: "imei", width: "*" },
+        { header: 'IMEI', binding: 'imei', width: '*' },
         { header: 'Última Act.', binding: 'fechaUltimaActualizacion', width: '*' },
         { header: 'Estado', binding: 'estado', width: '*' }
     ];
