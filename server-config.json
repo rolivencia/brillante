@@ -1,3 +1,17 @@
 ﻿{
-    "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
+    "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+    "databases": {
+        "mysql": {
+            "databases": [
+                {
+                    "id": "brillante_godaddy",
+                    "host": "107.180.46.153",
+                    "user": "brillante_admin",
+                    "password": "goDDoArt#4608662",
+                    "database": "brillante_prod",
+                    "encoding": "utf8mb4"
+                }
+            ]
+        }
+    }
 }

@@ -36,12 +36,12 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'repair',
+        path: 'repair-dashboard',
         loadChildren: './dashboard/repair-dashboard/repair-dashboard.module#RepairDashboardModule',
         canActivate: [AuthGuard]
     },
     {
-        path: 'client',
+        path: 'client-dashboard',
         loadChildren: './dashboard/client-dashboard/client-dashboard.module#ClientDashboardModule',
         canActivate: [AuthGuard]
     },

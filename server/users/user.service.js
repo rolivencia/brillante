@@ -11,7 +11,7 @@ module.exports = {
 
 async function authenticate({ username, password }) {
     return new Promise((resolve, reject) => {
-        connection().query(`SELECT * FROM user WHERE user_name = '${username}'`, (err, result) => {
+        connection.mysqlConnector().query(`SELECT * FROM user WHERE user_name = '${username}'`, (err, result) => {
             if (err) reject(error);
             const user = result.pop();
             const encryptedPassword = bcrypt.compareSync(password, user.password, 10);
@@ -33,7 +33,7 @@ async function authenticate({ username, password }) {
 
 async function getAll() {
     return new Promise((resolve, reject) => {
-        connection().query(`SELECT * FROM user`, (err, result) => {
+        connection.mysqlConnector().query(`SELECT * FROM user`, (err, result) => {
             if (err) reject(error);
             if (result && result.length) {
                 resolve(

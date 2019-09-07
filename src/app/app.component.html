@@ -5,7 +5,9 @@
         <app-main-header></app-main-header>
     </div>
     <div id="outlet-container" class="py-xl-3 d-flex justify-content-center align-items-center">
-        <router-outlet></router-outlet>
+        <div id="inner-container" class="d-block w-100">
+            <router-outlet></router-outlet>
+        </div>
     </div>
     <div id="footer-container">
         <app-footer></app-footer>

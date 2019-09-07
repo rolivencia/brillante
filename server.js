@@ -7,7 +7,7 @@ const jwt = require('server/_helpers/jwt');
 const errorHandler = require('server/_helpers/error-handler');
 const path = require('path');
 
-const existingRoutes = ['/', '/login', '/repair', '/client'];
+const existingRoutes = ['/', '/login', '/repair-dashboard', '/client-dashboard'];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,14 +19,17 @@ app.use(errorHandler);
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/brillante'));
 
-const apiRoutes = [{ path: '/users', controller: './server/users/users.controller' }];
+const apiRoutes = [
+    { path: '/users', controller: './server/users/users.controller' },
+    { path: '/client', controller: './server/client/client.controller' }
+];
 
 app.get(existingRoutes, function(req, res) {
     res.sendFile(path.join(__dirname, '/dist/brillante/index.html'));
 });
 
 // use JWT auth to secure the api
-app.use(jwt());
+// app.use(jwt());
 
 // api routes
 for (const route of apiRoutes) {

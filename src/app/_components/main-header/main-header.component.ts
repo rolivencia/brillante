@@ -13,10 +13,10 @@ export class MainHeaderComponent implements OnInit {
 
     private _adminLinks = [
         { label: 'Dashboard', route: '/dashboard', enabled: true, visible: true },
-        { label: 'Clientes', route: '/client', enabled: true, visible: true },
+        { label: 'Clientes', route: '/client-dashboard', enabled: true, visible: true },
         {
             label: 'Reparaciones',
-            route: 'repair',
+            route: 'repair-dashboard',
             enabled: true,
             visible: true
         },
