@@ -16,7 +16,7 @@ async function getAll() {
 async function getById(id) {
     return Client().findOne({
         where: {
-            clientId: id
+            id: id
         }
     });
 }

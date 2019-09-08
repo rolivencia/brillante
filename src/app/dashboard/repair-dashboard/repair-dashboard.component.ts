@@ -86,6 +86,13 @@ export class RepairDashboardComponent implements OnInit {
             },
             error => console.error(error)
         );
+
+        this.repairService.getAll(showFinished, this._dateFrom, this._dateTo).subscribe(
+            data => {
+                console.log(data);
+            },
+            error => console.error(error)
+        );
     }
 
     get showFinished(): boolean {

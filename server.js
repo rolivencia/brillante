@@ -21,7 +21,8 @@ app.use(express.static('./dist/brillante'));
 
 const apiRoutes = [
     { path: '/users', controller: './server/users/users.controller' },
-    { path: '/client', controller: './server/client/client.controller' }
+    { path: '/client', controller: './server/client/client.controller' },
+    { path: '/repair', controller: './server/repair/repair.controller' }
 ];
 
 app.get(existingRoutes, function(req, res) {
@@ -29,7 +30,7 @@ app.get(existingRoutes, function(req, res) {
 });
 
 // use JWT auth to secure the api
-// app.use(jwt());
+app.use(jwt());
 
 // api routes
 for (const route of apiRoutes) {
