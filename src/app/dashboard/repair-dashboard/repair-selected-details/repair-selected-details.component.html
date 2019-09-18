@@ -1,0 +1,88 @@
+<div class="card">
+    <div class="card-header d-flex justify-content-between" *ngIf="repairDashboardService.selectedRepair">
+        <button class="btn btn-sm btn-primary" (click)="goToUpdate(repairDashboardService.selectedRepair.repairId)">
+            🛠️ Actualizar
+        </button>
+        <button type="button" class="ml-3 btn btn-sm btn-danger" (click)="open(deleteModal)">
+            ❌ Eliminar
+        </button>
+    </div>
+    <div class="card-body">
+        <ng-container *ngIf="repairDashboardService.selectedRepair">
+            <p class="mb-0">
+                <strong>ID Reparación: </strong>
+                {{ repairDashboardService.selectedRepair.repairId }}
+            </p>
+            <hr />
+            <p>
+                <strong>Cliente: </strong>
+                {{ repairDashboardService.selectedRepair.nombreApellidoCliente }}
+            </p>
+            <p><strong>eMail: </strong> {{ repairDashboardService.selectedRepair.emailCliente }}</p>
+            <p><strong>Teléfono: </strong> {{ repairDashboardService.selectedRepair.telefonoCliente }}</p>
+            <hr />
+            <p><strong>Modelo: </strong> {{ repairDashboardService.selectedRepair.modelo }}</p>
+            <p><strong>Estado: </strong>{{ repairDashboardService.selectedRepair.estado }}</p>
+            <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.imei }}</p>
+            <p>
+                <strong>Encendido: </strong>
+                <input type="checkbox" class="form-check-input" disabled [ngModel]="repairDashboardService.selectedRepair.encendido" />
+            </p>
+            <hr />
+            <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.problema }}</p>
+            <hr />
+            <p><strong>Fecha de Ingreso: </strong>{{ repairDashboardService.selectedRepair.fechaIngreso }}</p>
+            <p><strong>Última Actualización: </strong>{{ repairDashboardService.selectedRepair.fechaUltimaActualizacion }}</p>
+            <p *ngIf="repairDashboardService.selectedRepair.fechaReparacionTerminada">
+                <strong>Fecha de Término: </strong>{{ repairDashboardService.selectedRepair.fechaReparacionTerminada }}
+            </p>
+            <hr />
+            <p><strong>Costo de Reparación: </strong>{{ repairDashboardService.selectedRepair.costoReparacion }}</p>
+            <p><strong>Precio de Reparación: </strong>{{ repairDashboardService.selectedRepair.precioReparacion }}</p>
+        </ng-container>
+        <ng-container *ngIf="!repairDashboardService.selectedRepair">
+            <p>Seleccione una reparación de la grilla</p>
+            <hr />
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <p><b>¿Está seguro de que desea borrar la reparación?</b></p>
+        <p class="mb-0"><strong>ID Reparación: </strong> {{ repairDashboardService.selectedRepair.repairId }}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" (click)="modal.close('Cancel')">
+            ⬅️️ Cancelar
+        </button>
+        <button class="ml-3 btn btn-sm btn-danger" (click)="delete(repairDashboardService.selectedRepair.repairId)">
+            ❌ Eliminar
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #updateModal let-modal>
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <p><b>¿Está seguro de que desea borrar la reparación?</b></p>
+        <p class="mb-0"><strong>ID Reparación: </strong> {{ repairDashboardService.selectedRepair.repairId }}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" (click)="modal.close('Cancel')">
+            ⬅️ Cancelar
+        </button>
+        <button class="ml-3 btn btn-sm btn-primary" (click)="update()">
+            🛠 Actualizar
+        </button>
+    </div>
+</ng-template>

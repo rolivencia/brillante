@@ -1,0 +1,14 @@
+@import '../../../../../node_modules/bootstrap/scss/bootstrap';
+
+#grid-container {
+    height: 600px;
+}
+
+.wj-flexgrid {
+    @extend #grid-container;
+    font-size: 0.75rem;
+}
+
+#footerControls {
+    height: 34px;
+}

@@ -1,0 +1,7 @@
+@import '../../../../../node_modules/bootstrap/scss/bootstrap';
+
+.form-check-input {
+    position: absolute;
+    margin-top: 0.45rem;
+    @extend .ml-1;
+}
