@@ -1,11 +1,16 @@
 <div class="card">
-    <div class="card-header d-flex justify-content-between" *ngIf="repairDashboardService.selectedRepair">
-        <button class="btn btn-sm btn-primary" (click)="goToUpdate(repairDashboardService.selectedRepair.repairId)">
-            🛠️ Actualizar
+    <div class="card-header d-flex justify-content-between">
+        <button class="btn btn-sm btn-outline-success" (click)="addNew()">
+            ➕ Agregar
         </button>
-        <button type="button" class="ml-3 btn btn-sm btn-danger" (click)="open(deleteModal)">
-            ❌ Eliminar
-        </button>
+        <ng-container *ngIf="repairDashboardService.selectedRepair">
+            <button class="btn btn-sm btn-outline-primary" (click)="goToUpdate(repairDashboardService.selectedRepair.repairId)">
+                🛠️ Actualizar
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(deleteModal)">
+                ❌ Eliminar
+            </button>
+        </ng-container>
     </div>
     <div class="card-body">
         <ng-container *ngIf="repairDashboardService.selectedRepair">
@@ -41,7 +46,7 @@
             <p><strong>Precio de Reparación: </strong>{{ repairDashboardService.selectedRepair.precioReparacion }}</p>
         </ng-container>
         <ng-container *ngIf="!repairDashboardService.selectedRepair">
-            <p>Seleccione una reparación de la grilla</p>
+            <p>Para ver los detalles, seleccione una reparación de la grilla</p>
             <hr />
         </ng-container>
     </div>
@@ -63,26 +68,6 @@
         </button>
         <button class="ml-3 btn btn-sm btn-danger" (click)="delete(repairDashboardService.selectedRepair.repairId)">
             ❌ Eliminar
-        </button>
-    </div>
-</ng-template>
-
-<ng-template #updateModal let-modal>
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body text-center">
-        <p><b>¿Está seguro de que desea borrar la reparación?</b></p>
-        <p class="mb-0"><strong>ID Reparación: </strong> {{ repairDashboardService.selectedRepair.repairId }}</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-sm btn-secondary" (click)="modal.close('Cancel')">
-            ⬅️ Cancelar
-        </button>
-        <button class="ml-3 btn btn-sm btn-primary" (click)="update()">
-            🛠 Actualizar
         </button>
     </div>
 </ng-template>

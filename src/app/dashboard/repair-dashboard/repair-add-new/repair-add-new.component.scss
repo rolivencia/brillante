@@ -1,0 +1,26 @@
+@import '../../../../../node_modules/bootstrap/scss/bootstrap';
+
+.form-inline {
+    label {
+        width: 60px;
+        @extend .mr-3;
+    }
+    input:not([type='checkbox']) + label {
+        @extend .ml-3;
+    }
+    .form-control {
+        max-width: 150px;
+    }
+    .select {
+        width: 150px;
+    }
+}
+
+#equipment-data,
+#client-data {
+    height: 400px;
+}
+
+button + button {
+    @extend .ml-3;
+}

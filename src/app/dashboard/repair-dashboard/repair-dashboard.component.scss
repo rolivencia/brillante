@@ -1,28 +1,31 @@
-@import "../../../../node_modules/bootstrap/scss/bootstrap";
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
 
 .form-check-input {
-  position: absolute;
-  margin-top: 0.45rem;
-  @extend .ml-1;
+    position: absolute;
+    margin-top: 0.45rem;
+    @extend .ml-1;
 }
 
 #grid-container {
-  height: 600px;
+    height: 600px;
 }
 
 .alert h3 {
-  margin-top: 15rem !important;
+    margin-top: 15rem !important;
 }
 
 .wj-flexgrid {
-  @extend #grid-container;
-  font-size: 0.75rem;
+    @extend #grid-container;
+    font-size: 0.75rem;
 }
 
 .card-body {
-  height: 768px;
+    height: 768px;
+    .card-body {
+        height: unset;
+    }
 }
 
 #footerControls {
-  height: 34px;
+    height: 34px;
 }
