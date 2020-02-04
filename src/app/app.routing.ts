@@ -45,6 +45,11 @@ const appRoutes: Routes = [
         loadChildren: './dashboard/client-dashboard/client-dashboard.module#ClientDashboardModule',
         canActivate: [AuthGuard]
     },
+    {
+        path: 'products-dashboard',
+        loadChildren: './dashboard/products-dashboard/products-dashboard.module#ProductsDashboardModule',
+        canActivate: [AuthGuard]
+    },
 
     { path: 'login', component: LoginComponent },
     // { path: 'register', component: RegisterComponent },

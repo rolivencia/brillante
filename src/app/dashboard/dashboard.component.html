@@ -1,12 +1,12 @@
 ﻿<div class="card-deck">
-    <div class="card text-white bg-primary mb-3" (click)="goTo('repair')">
+    <div class="card text-white bg-primary mb-3" (click)="goTo('repair-dashboard')">
         <div class="card-body">
             <h5 class="card-title">🔧 Gestión de Reparaciones</h5>
             <p class="card-text">Ingresar al menú de gestión de reparaciones</p>
         </div>
     </div>
 
-    <div class="card text-white bg-dark mb-3" (click)="goTo('client')">
+    <div class="card text-white bg-dark mb-3" (click)="goTo('client-dashboard')">
         <div class="card-body">
             <h5 class="card-title">✋🏻 Gestión de Clientes</h5>
             <p class="card-text">Ingresar al menú de gestión de clientes</p>
@@ -30,6 +30,13 @@
         </div>
         <div class="card-footer bg-primary">
             <small class="text-white">Módulo legacy (sitio antiguo)</small>
+        </div>
+    </div>
+
+    <div class="card text-white bg-info mb-3" (click)="goTo('products-dashboard')">
+        <div class="card-body">
+            <h5 class="card-title">📱 Gestión de Stock</h5>
+            <p class="card-text">Ingresar al menú de gestión de stock</p>
         </div>
     </div>
 </div>
