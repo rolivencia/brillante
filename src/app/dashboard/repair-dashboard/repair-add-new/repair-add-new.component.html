@@ -2,9 +2,14 @@
     <div class="card-header d-flex justify-content-between">
         Nueva Reparación
         <div>
-            <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairDashboardService.saveRepair(newClient, newRepair)">
+            <button
+                type="submit"
+                class="btn btn-sm btn-outline-success"
+                (click)="repairDashboardService.saveRepair(newCustomer, newRepair)"
+            >
                 💾 Guardar reparación
             </button>
+            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="clean()">🗑️ Limpiar datos</button>
             <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="repairDashboardService.toggleAdd()">⬅️ Volver</button>
         </div>
     </div>
@@ -12,10 +17,10 @@
         <form>
             <div class="row">
                 <div class="col-6">
-                    <div id="client-data" class="card">
+                    <div id="customer-data" class="card">
                         <div class="card-header text-white bg-secondary">Datos del Cliente</div>
                         <div class="card-body">
-                            <div class="form-group form-inline">
+                            <div class="form-group">
                                 <label for="dni">DNI</label>
                                 <input
                                     name="dni"
@@ -25,10 +30,11 @@
                                     aria-describedby="dni"
                                     placeholder="..."
                                     required
-                                    [(ngModel)]="newClient.dni"
+                                    [(ngModel)]="newCustomer.dni"
+                                    (blur)="getExistingCustomer(newCustomer.dni)"
                                 />
                             </div>
-                            <div class="form-group form-inline d-flex justify-content-between">
+                            <div class="form-group">
                                 <label for="firstName">Nombre</label>
                                 <input
                                     name="firstName"
@@ -37,9 +43,11 @@
                                     id="firstName"
                                     placeholder="..."
                                     required
-                                    [(ngModel)]="newClient.firstName"
+                                    [(ngModel)]="newCustomer.firstName"
                                     pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'\s]+"
                                 />
+                            </div>
+                            <div class="form-group">
                                 <label for="lastName">Apellido</label>
                                 <input
                                     name="lastName"
@@ -48,11 +56,11 @@
                                     id="lastName"
                                     placeholder="..."
                                     required
-                                    [(ngModel)]="newClient.lastName"
+                                    [(ngModel)]="newCustomer.lastName"
                                     pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'\s]+"
                                 />
                             </div>
-                            <div class="form-group form-inline d-flex justify-content-between">
+                            <div class="form-group">
                                 <label for="email">Email</label>
                                 <input
                                     name="email"
@@ -60,8 +68,10 @@
                                     class="form-control form-control-sm"
                                     id="email"
                                     placeholder="..."
-                                    [(ngModel)]="newClient.email"
+                                    [(ngModel)]="newCustomer.email"
                                 />
+                            </div>
+                            <div class="form-group">
                                 <label for="telephone">Teléfono</label>
                                 <input
                                     name="telephone"
@@ -70,10 +80,10 @@
                                     id="telephone"
                                     placeholder="Sólo numeros"
                                     pattern="[0-9]+"
-                                    [(ngModel)]="newClient.telephone"
+                                    [(ngModel)]="newCustomer.telephone"
                                 />
                             </div>
-                            <div class="form-group form-inline">
+                            <div class="form-group">
                                 <label for="address">Dirección</label>
                                 <input
                                     name="address"
@@ -82,7 +92,7 @@
                                     id="address"
                                     placeholder="..."
                                     pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ'\s]+"
-                                    [(ngModel)]="newClient.address"
+                                    [(ngModel)]="newCustomer.address"
                                 />
                             </div>
                         </div>
@@ -92,28 +102,31 @@
                     <div id="equipment-data" class="card">
                         <div class="card-header text-white bg-secondary">Datos del Equipo</div>
                         <div class="card-body">
-                            <div class="form-group d-flex justify-content-between">
-                                <div class="form-inline">
-                                    <label for="equipmentType">Tipo de Equipo</label>
-                                    <select id="equipmentType" class="form-control form-control-sm">
-                                        <option>Smartphone</option>
-                                        <option>Tablet</option>
-                                        <option>Laptop</option>
-                                        <option>Escritorio</option>
-                                    </select>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input
-                                        name="arrivedTurnedOn"
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        id="arrivedTurnedOn"
-                                        [(ngModel)]="newRepair.encendido"
-                                    />
-                                    <label class="form-check-label" for="arrivedTurnedOn">Llegó Encendido</label>
+                            <div class="form-group">
+                                <label for="equipmentType">Tipo de Equipo</label>
+                                <div class="d-flex">
+                                    <div class="form-inline flex-grow-1 pr-5">
+                                        <select id="equipmentType" class="form-control form-control-sm flex-grow-1">
+                                            <option>Smartphone</option>
+                                            <option>Tablet</option>
+                                            <option>Laptop</option>
+                                            <option>Escritorio</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <input
+                                            name="arrivedTurnedOn"
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            id="arrivedTurnedOn"
+                                            [(ngModel)]="newRepair.encendido"
+                                        />
+                                        <label class="form-check-label" for="arrivedTurnedOn">Llegó Encendido</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group form-inline d-flex justify-content-between">
+
+                            <div class="form-group">
                                 <label for="manufacturer">Marca</label>
                                 <input
                                     name="manufacturer"
@@ -125,6 +138,8 @@
                                     required
                                     [(ngModel)]="newRepair.marca"
                                 />
+                            </div>
+                            <div class="form-group">
                                 <label for="model">Modelo</label>
                                 <input
                                     name="model"
@@ -137,7 +152,7 @@
                                     [(ngModel)]="newRepair.modelo"
                                 />
                             </div>
-                            <div class="form-group form-inline d-flex justify-content-between">
+                            <div class="form-group">
                                 <label for="paymentInAdvance">Seña</label>
                                 <input
                                     name="paymentInAdvance"
@@ -148,6 +163,8 @@
                                     value="0.00"
                                     [(ngModel)]="newRepair.seniaReparacion"
                                 />
+                            </div>
+                            <div class="form-group">
                                 <label for="imei">IMEI</label>
                                 <input
                                     name="imei"

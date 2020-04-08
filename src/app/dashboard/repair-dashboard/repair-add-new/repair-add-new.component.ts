@@ -11,12 +11,25 @@ export class RepairAddNewComponent implements OnInit {
     constructor(public repairDashboardService: RepairDashboardService) {}
 
     public newRepair: RepairLegacy = new RepairLegacy();
-    public newClient: ClientLegacy = new ClientLegacy();
+    public newCustomer: CustomerLegacy = new CustomerLegacy();
 
     ngOnInit() {}
+
+    //FIXME: DNI must be only of the string type
+    //TODO: Agregar debounce para evitar llamar rápido una y otra vez
+    getExistingCustomer(dni: string | number) {
+        const sDni = dni.toString();
+        if (sDni.length > 7) {
+        }
+    }
+
+    clean() {
+        this.newRepair = new RepairLegacy();
+        this.newCustomer = new CustomerLegacy();
+    }
 }
 
-export class ClientLegacy {
+export class CustomerLegacy {
     public id?: number;
     public dni: number;
     public firstName: string;

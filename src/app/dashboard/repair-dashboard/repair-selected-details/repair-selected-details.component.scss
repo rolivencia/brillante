@@ -5,3 +5,7 @@
     margin-top: 0.45rem;
     @extend .ml-1;
 }
+
+.card-body {
+    overflow-y: auto;
+}
