@@ -10,7 +10,7 @@
             "prefix": "app",
             "schematics": {
                 "@schematics/angular:component": {
-                    "styleext": "scss"
+                    "style": "scss"
                 }
             },
             "architect": {
@@ -49,6 +49,10 @@
                                     "type": "initial",
                                     "maximumWarning": "2mb",
                                     "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
                                 }
                             ]
                         }
@@ -119,5 +123,8 @@
             }
         }
     },
-    "defaultProject": "brillante"
+    "defaultProject": "brillante",
+    "cli": {
+        "analytics": "3b0ea8e4-88bd-4417-bce9-811d09dc8235"
+    }
 }

@@ -7,27 +7,27 @@ const appRoutes: Routes = [
     // otherwise redirect to home
     {
         path: '',
-        loadChildren: './landing/home/home.module#HomeModule'
+        loadChildren: () => import('./landing/home/home.module').then(m => m.HomeModule)
     },
 
     {
         path: 'products',
-        loadChildren: './landing/products/products.module#ProductsModule'
+        loadChildren: () => import('./landing/products/products.module').then(m => m.ProductsModule)
     },
 
     {
         path: 'enterprise',
-        loadChildren: './landing/enterprise/enterprise.module#EnterpriseModule'
+        loadChildren: () => import('./landing/enterprise/enterprise.module').then(m => m.EnterpriseModule)
     },
 
     {
         path: 'contact',
-        loadChildren: './landing/contact/contact.module#ContactModule'
+        loadChildren: () => import('./landing/contact/contact.module').then(m => m.ContactModule)
     },
 
     {
         path: 'repairs',
-        loadChildren: './landing/repairs/repairs.module#RepairsModule'
+        loadChildren: () => import('./landing/repairs/repairs.module').then(m => m.RepairsModule)
     },
 
     {
@@ -37,17 +37,17 @@ const appRoutes: Routes = [
     },
     {
         path: 'repair-dashboard',
-        loadChildren: './dashboard/repair-dashboard/repair-dashboard.module#RepairDashboardModule',
+        loadChildren: () => import('./dashboard/repair-dashboard/repair-dashboard.module').then(m => m.RepairDashboardModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'client-dashboard',
-        loadChildren: './dashboard/client-dashboard/client-dashboard.module#ClientDashboardModule',
+        loadChildren: () => import('./dashboard/client-dashboard/client-dashboard.module').then(m => m.ClientDashboardModule),
         canActivate: [AuthGuard]
     },
     {
         path: 'products-dashboard',
-        loadChildren: './dashboard/products-dashboard/products-dashboard.module#ProductsDashboardModule',
+        loadChildren: () => import('./dashboard/products-dashboard/products-dashboard.module').then(m => m.ProductsDashboardModule),
         canActivate: [AuthGuard]
     },
 
