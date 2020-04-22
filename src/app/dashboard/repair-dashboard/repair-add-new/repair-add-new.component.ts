@@ -85,16 +85,10 @@ export class RepairAddNewComponent implements OnInit {
             customer: this.formBuilder.group({
                 id: [this.customer.id],
                 dni: [this.customer.dni, [Validators.required, Validators.minLength(7)]],
-                firstName: [
-                    this.customer.firstName,
-                    [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-ZñÑáéíóúÁÉÍÓÚ's]+")]
-                ],
-                lastName: [
-                    this.customer.lastName,
-                    [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-ZñÑáéíóúÁÉÍÓÚ's]+")]
-                ],
-                email: [this.customer.email, [Validators.required, Validators.email, Validators.minLength(6)]],
-                address: [this.customer.address, [Validators.required, Validators.pattern("[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ's]+")]],
+                firstName: [this.customer.firstName, [Validators.required, Validators.minLength(2)]],
+                lastName: [this.customer.lastName, [Validators.required, Validators.minLength(2)]],
+                email: [this.customer.email, [Validators.required, Validators.email]],
+                address: [this.customer.address, [Validators.required]],
                 telephone: [this.customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]]
             }),
             repair: this.formBuilder.group({
@@ -104,9 +98,9 @@ export class RepairAddNewComponent implements OnInit {
                     type: [this.repair.device.type, Validators.required],
                     manufacturer: [this.repair.device.manufacturer, Validators.required],
                     model: [this.repair.device.model, Validators.required],
-                    deviceId: [this.repair.device.deviceId, Validators.required]
+                    deviceId: [this.repair.device.deviceId]
                 }),
-                issue: [this.repair.issue, [Validators.required, Validators.minLength(20)]],
+                issue: [this.repair.issue, [Validators.required]],
                 paymentInAdvance: [this.repair.paymentInAdvance, Validators.required]
             })
         });
