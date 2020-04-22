@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
 import { Observable } from 'rxjs';
-import { RepairLegacy } from '@app/_models';
+import { DeviceType, RepairLegacy } from '@app/_models';
 import { GlobalService } from '@app/_services/global.service';
 import { environment } from '@environments/environment';
 
@@ -12,6 +12,26 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root'
 })
 export class RepairService {
+    //FIXME: Cargar desde base de datos
+    public deviceTypes: DeviceType[] = [
+        {
+            id: 0,
+            description: 'Smartphone'
+        },
+        {
+            id: 1,
+            description: 'Tablet'
+        },
+        {
+            id: 2,
+            description: 'Laptop'
+        },
+        {
+            id: 3,
+            description: 'Escritorio'
+        }
+    ];
+
     private endpoint = `/reparacion.php`;
 
     constructor(private http: HttpClient, private globalService: GlobalService) {}

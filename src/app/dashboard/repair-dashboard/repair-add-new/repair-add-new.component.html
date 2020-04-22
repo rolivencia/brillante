@@ -2,11 +2,7 @@
     <div class="card-header d-flex justify-content-between">
         Nueva Reparación
         <div>
-            <button
-                type="submit"
-                class="btn btn-sm btn-outline-success"
-                (click)="repairDashboardService.saveRepair(newCustomer, newRepair)"
-            >
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()">
                 💾 Guardar reparación
             </button>
             <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="clean()">🗑️ Limpiar datos</button>
@@ -14,14 +10,19 @@
         </div>
     </div>
     <div class="card-body">
-        <form>
+        <form [formGroup]="formGroup" (ngSubmit)="save()">
             <div class="row">
                 <div class="col-6">
                     <div id="customer-data" class="card">
-                        <div class="card-header text-white bg-secondary">Datos del Cliente</div>
-                        <div class="card-body">
+                        <div class="card-header text-white bg-secondary">🙍 Datos del Cliente</div>
+                        <div formGroupName="customer" class="card-body">
                             <div class="form-group">
-                                <label for="dni">DNI</label>
+                                <div class="d-flex justify-content-between">
+                                    <label for="dni">DNI</label>
+                                    <div>
+                                        <span *ngIf="customerExists" class="badge badge-info">Cliente ya registrado</span>
+                                    </div>
+                                </div>
                                 <input
                                     name="dni"
                                     type="number"
@@ -29,9 +30,8 @@
                                     id="dni"
                                     aria-describedby="dni"
                                     placeholder="..."
-                                    required
-                                    [(ngModel)]="newCustomer.dni"
-                                    (blur)="getExistingCustomer(newCustomer.dni)"
+                                    formControlName="dni"
+                                    (blur)="getExistingCustomer()"
                                 />
                             </div>
                             <div class="form-group">
@@ -42,9 +42,8 @@
                                     class="form-control form-control-sm"
                                     id="firstName"
                                     placeholder="..."
-                                    required
-                                    [(ngModel)]="newCustomer.firstName"
-                                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'\s]+"
+                                    formControlName="firstName"
+                                    [readonly]="customerExists"
                                 />
                             </div>
                             <div class="form-group">
@@ -55,9 +54,8 @@
                                     class="form-control form-control-sm"
                                     id="lastName"
                                     placeholder="..."
-                                    required
-                                    [(ngModel)]="newCustomer.lastName"
-                                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ'\s]+"
+                                    formControlName="lastName"
+                                    [readonly]="customerExists"
                                 />
                             </div>
                             <div class="form-group">
@@ -68,7 +66,8 @@
                                     class="form-control form-control-sm"
                                     id="email"
                                     placeholder="..."
-                                    [(ngModel)]="newCustomer.email"
+                                    formControlName="email"
+                                    [readonly]="customerExists"
                                 />
                             </div>
                             <div class="form-group">
@@ -79,8 +78,8 @@
                                     class="form-control form-control-sm"
                                     id="telephone"
                                     placeholder="Sólo numeros"
-                                    pattern="[0-9]+"
-                                    [(ngModel)]="newCustomer.primaryTelephone"
+                                    formControlName="telephone"
+                                    [readonly]="customerExists"
                                 />
                             </div>
                             <div class="form-group">
@@ -91,8 +90,8 @@
                                     class="form-control form-control-sm"
                                     id="address"
                                     placeholder="..."
-                                    pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ'\s]+"
-                                    [(ngModel)]="newCustomer.address"
+                                    formControlName="address"
+                                    [readonly]="customerExists"
                                 />
                             </div>
                         </div>
@@ -100,57 +99,71 @@
                 </div>
                 <div class="col-6">
                     <div id="equipment-data" class="card">
-                        <div class="card-header text-white bg-secondary">Datos del Equipo</div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="equipmentType">Tipo de Equipo</label>
-                                <div class="d-flex">
-                                    <div class="form-inline flex-grow-1 pr-5">
-                                        <select id="equipmentType" class="form-control form-control-sm flex-grow-1">
-                                            <option>Smartphone</option>
-                                            <option>Tablet</option>
-                                            <option>Laptop</option>
-                                            <option>Escritorio</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <input
-                                            name="arrivedTurnedOn"
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            id="arrivedTurnedOn"
-                                            [(ngModel)]="newRepair.encendido"
-                                        />
-                                        <label class="form-check-label" for="arrivedTurnedOn">Llegó Encendido</label>
+                        <div class="card-header text-white bg-secondary">📱 Datos del Equipo</div>
+                        <div formGroupName="repair" class="card-body">
+                            <div formGroupName="device">
+                                <div class="form-group">
+                                    <label>Tipo de Equipo</label>
+                                    <div class="d-flex">
+                                        <div class="form-inline flex-grow-1 pr-5">
+                                            <wj-combo-box
+                                                class="form-control form-control-sm p-0"
+                                                id="type"
+                                                name="type"
+                                                aria-describedby="type"
+                                                formControlName="type"
+                                                [isEditable]="false"
+                                                [itemsSource]="repairService.deviceTypes"
+                                                [selectedItem]="repair.device.type"
+                                                [selectedIndex]="repair.device.type.id"
+                                                [displayMemberPath]="'description'"
+                                            ></wj-combo-box>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <input
+                                                name="arrivedTurnedOn"
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id="arrivedTurnedOn"
+                                                formControlName="turnedOn"
+                                            />
+                                            <label class="form-check-label" for="arrivedTurnedOn">Llegó Encendido</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="manufacturer">Marca</label>
-                                <input
-                                    name="manufacturer"
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    id="manufacturer"
-                                    placeholder="..."
-                                    pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ'\s]+"
-                                    required
-                                    [(ngModel)]="newRepair.marca"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="model">Modelo</label>
-                                <input
-                                    name="model"
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    id="model"
-                                    placeholder="..."
-                                    pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ'\s]+"
-                                    required
-                                    [(ngModel)]="newRepair.modelo"
-                                />
+                                <div class="form-group">
+                                    <label for="manufacturer">Marca</label>
+                                    <input
+                                        name="manufacturer"
+                                        type="text"
+                                        class="form-control form-control-sm"
+                                        id="manufacturer"
+                                        placeholder="..."
+                                        formControlName="manufacturer"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label for="model">Modelo</label>
+                                    <input
+                                        name="model"
+                                        type="text"
+                                        class="form-control form-control-sm"
+                                        id="model"
+                                        placeholder="..."
+                                        formControlName="model"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label for="imei">IMEI</label>
+                                    <input
+                                        name="imei"
+                                        type="text"
+                                        class="form-control form-control-sm"
+                                        id="imei"
+                                        placeholder="..."
+                                        formControlName="deviceId"
+                                    />
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="paymentInAdvance">Seña</label>
@@ -161,19 +174,7 @@
                                     id="paymentInAdvance"
                                     placeholder="..."
                                     value="0.00"
-                                    [(ngModel)]="newRepair.seniaReparacion"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="imei">IMEI</label>
-                                <input
-                                    name="imei"
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    id="imei"
-                                    placeholder="..."
-                                    pattern="[0-9]+"
-                                    [(ngModel)]="newRepair.imei"
+                                    formControlName="paymentInAdvance"
                                 />
                             </div>
                             <div class="form-group">
@@ -182,8 +183,7 @@
                                     rows="5"
                                     class="form-control form-control-sm"
                                     placeholder="Descripción del problema. Incluya aquí los códigos de desbloqueo y contraseña de iCloud."
-                                    required
-                                    [(ngModel)]="newRepair.problema"
+                                    formControlName="issue"
                                 ></textarea>
                             </div>
                         </div>

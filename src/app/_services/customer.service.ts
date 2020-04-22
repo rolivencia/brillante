@@ -10,7 +10,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
 @Injectable({
     providedIn: 'root'
 })
-export class ClientService {
+export class CustomerService {
     private endpoint = `/cliente.php`;
 
     constructor(private http: HttpClient, private globalService: GlobalService) {}

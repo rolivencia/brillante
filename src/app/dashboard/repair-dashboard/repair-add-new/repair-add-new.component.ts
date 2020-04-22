@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Customer } from '@app/_models/customer';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Repair, User } from '@app/_models';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
-import { Repair, RepairLegacy } from '@app/_models';
-import { ClientService } from '@app/_services/client.service';
+import { RepairService } from '@app/_services/repair.service';
+import { CustomerService } from '@app/_services/customer.service';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -9,26 +12,87 @@ import { ClientService } from '@app/_services/client.service';
     styleUrls: ['./repair-add-new.component.scss', '../repair-dashboard.component.scss']
 })
 export class RepairAddNewComponent implements OnInit {
-    constructor(private customerService: ClientService, public repairDashboardService: RepairDashboardService) {}
+    public formGroup: FormGroup;
+    public repair: Repair = new Repair();
+    public customer: Customer = new Customer();
 
-    public newRepair: RepairLegacy = new RepairLegacy();
-    public newCustomer: Customer = new Customer();
+    public customerExists: boolean = false;
+    public submitted: boolean = false;
 
-    ngOnInit() {}
+    constructor(
+        private cdr: ChangeDetectorRef,
+        public customerService: CustomerService,
+        private formBuilder: FormBuilder,
+        public repairDashboardService: RepairDashboardService,
+        public repairService: RepairService
+    ) {}
 
-    //FIXME: DNI must be only of the string type
+    ngOnInit() {
+        this.loadForm();
+    }
+
     //TODO: Agregar debounce para evitar llamar rápido una y otra vez
-    getExistingCustomer(dni: string | number) {
+    async getExistingCustomer() {
+        const dni = this.formGroup.controls['customer']['controls']['dni'].value.toString();
+
         if (dni.toString().length > 7) {
-            this.customerService.getByDniLegacy(dni).subscribe(result => {
-                this.newCustomer = this.legacyCustomerMapper(result);
+            const result = await this.customerService.getByDniLegacy(dni).toPromise();
+            this.customerExists = result.code !== 0;
+            this.customer = this.customerExists ? this.legacyCustomerMapper(result) : new Customer();
+
+            this.formGroup.patchValue({
+                customer: {
+                    id: this.customer.id,
+                    firstName: this.customer.firstName,
+                    lastName: this.customer.lastName,
+                    email: this.customer.email,
+                    address: this.customer.address,
+                    telephone: this.customer.telephone
+                }
             });
         }
     }
+    save() {
+        this.submitted = true;
+        console.log(this.formGroup);
+    }
 
     clean() {
-        this.newRepair = new RepairLegacy();
-        this.newCustomer = new Customer();
+        this.repair = new Repair();
+        this.customer = new Customer();
+    }
+
+    loadForm() {
+        this.formGroup = this.formBuilder.group({
+            customer: this.formBuilder.group({
+                id: [this.customer.id],
+                dni: [this.customer.dni, [Validators.required, Validators.minLength(7)]],
+                firstName: [
+                    this.customer.firstName,
+                    [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-ZñÑáéíóúÁÉÍÓÚ's]+")]
+                ],
+                lastName: [
+                    this.customer.lastName,
+                    [Validators.required, Validators.minLength(2), Validators.pattern("[a-zA-ZñÑáéíóúÁÉÍÓÚ's]+")]
+                ],
+                email: [this.customer.email, [Validators.required, Validators.email, Validators.minLength(6)]],
+                address: [this.customer.address, [Validators.required, Validators.pattern("[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ's]+")]],
+                telephone: [this.customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]]
+            }),
+            repair: this.formBuilder.group({
+                id: [this.repair.id],
+                device: this.formBuilder.group({
+                    turnedOn: [this.repair.device.turnedOn, Validators.required],
+                    type: [this.repair.device.type, Validators.required],
+                    manufacturer: [this.repair.device.manufacturer, Validators.required],
+                    model: [this.repair.device.model, Validators.required],
+                    deviceId: [this.repair.device.deviceId, Validators.required]
+                }),
+                issue: [this.repair.issue, [Validators.required, Validators.minLength(50)]],
+                paymentInAdvance: [this.repair.paymentInAdvance, Validators.required]
+            })
+        });
+        this.cdr.detectChanges();
     }
 
     legacyCustomerMapper({
@@ -45,30 +109,25 @@ export class RepairAddNewComponent implements OnInit {
         message
     }): Customer {
         console.log({ status: { code: code, message: message } });
-        return {
+
+        const customer: Customer = {
             id: clientId,
             firstName: nombre,
             lastName: apellido,
             address: direccion,
             dni: dni,
             email: email,
-            primaryTelephone: telefono,
+            telephone: telefono,
             secondaryTelephone: secondaryTelephone,
-            idUser: usuario
+            user: null
         };
+
+        customer.user = new User();
+
+        if (usuario) {
+            customer.user.id = usuario;
+        }
+
+        return customer;
     }
-}
-
-export class Customer {
-    public id?: number;
-    public dni: number;
-    public firstName: string;
-    public lastName: string;
-    public email: string;
-    public address: string;
-    public primaryTelephone: string;
-    public secondaryTelephone: string;
-    public idUser?: number;
-
-    constructor() {}
 }

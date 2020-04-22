@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RepairDashboardRoutingModule } from './repair-dashboard-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { WjInputModule } from 'wijmo/wijmo.angular2.input';
 import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
@@ -32,7 +32,8 @@ import { RepairUpdateComponent } from './repair-update/repair-update.component';
         WjGridModule,
         WjGridFilterModule,
         WjInputModule,
-        RepairDashboardRoutingModule
+        RepairDashboardRoutingModule,
+        ReactiveFormsModule
     ],
     providers: [RepairDashboardService, RepairService]
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClientService } from '@app/_services/client.service';
+import { CustomerService } from '@app/_services/customer.service';
 import { RepairService } from '@app/_services/repair.service';
 import { CollectionView, SortDescription } from 'wijmo/wijmo';
 import { RepairLegacy } from '@app/_models';
@@ -39,7 +39,7 @@ export class ClientDashboardComponent implements OnInit {
         { header: 'Estado', binding: 'estado', width: '*' }
     ];
 
-    constructor(private clientService: ClientService, private repairService: RepairService, private globalService: GlobalService) {}
+    constructor(private clientService: CustomerService, private repairService: RepairService, private globalService: GlobalService) {}
 
     ngOnInit() {
         this.getGridData();
