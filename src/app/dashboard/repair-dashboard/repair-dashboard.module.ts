@@ -14,6 +14,7 @@ import { RepairService } from '@app/_services/repair.service';
 import { RouterModule } from '@angular/router';
 import { RepairAddNewComponent } from './repair-add-new/repair-add-new.component';
 import { RepairUpdateComponent } from './repair-update/repair-update.component';
+import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,6 @@ import { RepairUpdateComponent } from './repair-update/repair-update.component';
         RepairDashboardRoutingModule,
         ReactiveFormsModule
     ],
-    providers: [RepairDashboardService, RepairService]
+    providers: [LegacyMapperService, RepairDashboardService, RepairService]
 })
 export class RepairDashboardModule {}

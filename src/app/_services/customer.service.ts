@@ -34,4 +34,13 @@ export class CustomerService {
         const params = new HttpParams().set('action', 'getByDni').append('dni', dni.toString());
         return this.http.get<RepairLegacy>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
     }
+
+    /**
+     * @deprecated
+     * @param legacyCustomer - Legacy Cliente Object (wp-brillante)
+     */
+    public createLegacy(legacyCustomer) {
+        const params = new HttpParams().set('action', 'create');
+        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, legacyCustomer, { headers: headers, params: params });
+    }
 }

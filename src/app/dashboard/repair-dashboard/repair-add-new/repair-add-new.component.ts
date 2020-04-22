@@ -5,6 +5,8 @@ import { Repair, User } from '@app/_models';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
 import { RepairService } from '@app/_services/repair.service';
 import { CustomerService } from '@app/_services/customer.service';
+import { AuthenticationService, UserService } from '@app/_services';
+import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -19,10 +21,13 @@ export class RepairAddNewComponent implements OnInit {
     public customerExists: boolean = false;
     public submitted: boolean = false;
 
+    private currentUser: User;
+
     constructor(
         private cdr: ChangeDetectorRef,
         public customerService: CustomerService,
         private formBuilder: FormBuilder,
+        private legacyMapperService: LegacyMapperService,
         public repairDashboardService: RepairDashboardService,
         public repairService: RepairService
     ) {}
@@ -48,7 +53,7 @@ export class RepairAddNewComponent implements OnInit {
         if (dni) {
             const result = await this.customerService.getByDniLegacy(dni).toPromise();
             this.customerExists = result.code !== 0;
-            this.customer = this.customerExists ? this.legacyCustomerMapper(result) : new Customer();
+            this.customer = this.customerExists ? this.legacyMapperService.fromLegacyCustomer(result) : new Customer();
         } else {
             this.customerExists = false;
             this.customer = new Customer();
@@ -65,7 +70,8 @@ export class RepairAddNewComponent implements OnInit {
             }
         });
     }
-    save() {
+
+    async save() {
         this.submitted = true;
 
         console.log(this.formGroup);
@@ -74,6 +80,18 @@ export class RepairAddNewComponent implements OnInit {
             alert('Falta llenar campos para poder guardar este cupón');
             return;
         }
+
+        let legacyCustomer = {};
+
+        if (this.customerExists) {
+            legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
+        } else {
+            const savedCustomer = await this.customerService.createLegacy(this.customer).toPromise();
+            this.customer.id = savedCustomer.id;
+        }
+
+        const legacyRepair = this.legacyMapperService.toLegacyRepairCreate(this.customer, this.repair);
+        const result = await this.repairService.createLegacy(legacyRepair);
     }
 
     clean() {
@@ -107,41 +125,5 @@ export class RepairAddNewComponent implements OnInit {
             })
         });
         this.cdr.detectChanges();
-    }
-
-    legacyCustomerMapper({
-        clientId,
-        nombre,
-        apellido,
-        direccion,
-        dni,
-        email,
-        telefono,
-        secondaryTelephone,
-        usuario,
-        code,
-        message
-    }): Customer {
-        console.log({ status: { code: code, message: message } });
-
-        const customer: Customer = {
-            id: clientId,
-            firstName: nombre,
-            lastName: apellido,
-            address: direccion,
-            dni: dni,
-            email: email,
-            telephone: telefono,
-            secondaryTelephone: secondaryTelephone,
-            user: null
-        };
-
-        customer.user = new User();
-
-        if (usuario) {
-            customer.user.id = usuario;
-        }
-
-        return customer;
     }
 }

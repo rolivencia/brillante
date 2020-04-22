@@ -73,4 +73,13 @@ export class RepairService {
         const params = new HttpParams().set('action', 'delete').append('repairId', id.toString());
         return this.http.get<RepairLegacy>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
     }
+
+    /**
+     * @deprecated
+     * @param legacyRepair - Legacy Repair Object (wp-brillante)
+     */
+    public createLegacy(legacyRepair) {
+        const params = new HttpParams().set('action', 'create');
+        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, legacyRepair, { headers: headers, params: params });
+    }
 }
