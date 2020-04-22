@@ -67,11 +67,13 @@ export class RepairAddNewComponent implements OnInit {
     }
     save() {
         this.submitted = true;
+
+        console.log(this.formGroup);
+
         if (this.formGroup.invalid) {
             alert('Falta llenar campos para poder guardar este cupón');
             return;
         }
-        console.log(this.formGroup);
     }
 
     clean() {
