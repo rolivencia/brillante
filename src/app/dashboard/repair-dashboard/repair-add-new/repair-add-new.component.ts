@@ -44,7 +44,6 @@ export class RepairAddNewComponent implements OnInit {
         return this.formGroup.controls.repair['controls'];
     }
 
-    //TODO: Agregar debounce para evitar llamar rápido una y otra vez
     async getExistingCustomer() {
         this.customerExists = false;
 
@@ -59,16 +58,7 @@ export class RepairAddNewComponent implements OnInit {
             this.customer = new Customer();
         }
 
-        this.formGroup.patchValue({
-            customer: {
-                id: this.customer.id,
-                firstName: this.customer.firstName,
-                lastName: this.customer.lastName,
-                email: this.customer.email,
-                address: this.customer.address,
-                telephone: this.customer.telephone
-            }
-        });
+        this.patchCustomer();
     }
 
     async save() {
@@ -81,23 +71,93 @@ export class RepairAddNewComponent implements OnInit {
             return;
         }
 
-        let legacyCustomer = {};
+        this.assignCustomerForm();
+        this.assignRepairForm();
 
-        if (this.customerExists) {
-            legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
-        } else {
-            const savedCustomer = await this.customerService.createLegacy(this.customer).toPromise();
-            this.customer.id = savedCustomer.id;
+        this.patchCustomer();
+        this.patchRepair();
+
+        const legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
+        if (!this.customerExists) {
+            const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
+            this.customer.id = savedCustomer.id ?? null;
         }
 
         const legacyRepair = this.legacyMapperService.toLegacyRepairCreate(this.customer, this.repair);
-        const result = await this.repairService.createLegacy(legacyRepair);
+        const result = await this.repairService.createLegacy(legacyRepair).toPromise();
+        console.log(result);
     }
 
     clean() {
         this.submitted = false;
         this.repair = new Repair();
         this.customer = new Customer();
+    }
+
+    assignRepairForm() {
+        const repairForm = this.formGroup.controls['repair']['controls'];
+        const deviceForm = this.formGroup.controls['repair']['controls']['device']['controls'];
+
+        //FIXME: Add "note" and other missing attributes. Delete ...
+        this.repair = {
+            ...this.repair,
+            id: repairForm.id.value,
+            customer: this.customer,
+            device: {
+                turnedOn: deviceForm.turnedOn.value,
+                type: deviceForm.type.value,
+                manufacturer: deviceForm.manufacturer.value,
+                model: deviceForm.model.value,
+                deviceId: deviceForm.deviceId.value
+            },
+            issue: repairForm.issue.value,
+            paymentInAdvance: repairForm.paymentInAdvance.value
+        };
+    }
+
+    //FIXME: Add "user" and "secondaryTelephone" missing attributes. Delete ...
+    assignCustomerForm() {
+        const customerForm = this.formGroup.controls['customer']['controls'];
+        this.customer = {
+            ...this.customer,
+            id: customerForm.id.value,
+            dni: customerForm.dni.value,
+            firstName: customerForm.firstName.value,
+            lastName: customerForm.lastName.value,
+            email: customerForm.email.value,
+            telephone: customerForm.telephone.value,
+            address: customerForm.address.value
+        };
+    }
+
+    patchRepair() {
+        this.formGroup.patchValue({
+            repair: {
+                id: this.repair.id,
+                device: {
+                    turnedOn: this.repair.device.turnedOn,
+                    type: this.repair.device.type,
+                    manufacturer: this.repair.device.manufacturer,
+                    model: this.repair.device.model,
+                    deviceId: this.repair.device.deviceId
+                },
+                issue: this.repair.issue,
+                paymentInAdvance: this.repair.paymentInAdvance
+            }
+        });
+    }
+
+    patchCustomer() {
+        this.formGroup.patchValue({
+            customer: {
+                id: this.customer.id,
+                firstName: this.customer.firstName,
+                lastName: this.customer.lastName,
+                email: this.customer.email,
+                address: this.customer.address,
+                telephone: this.customer.telephone
+            }
+        });
     }
 
     loadForm() {

@@ -1,16 +1,21 @@
 <div class="card">
-    <div class="card-header d-flex justify-content-between">
-        <button class="btn btn-sm btn-outline-success" (click)="addNew()">
-            ➕ Agregar
-        </button>
-        <ng-container *ngIf="repairDashboardService.selectedRepair">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-sm btn-outline-success" (click)="addNew()">
+                ➕ Agregar
+            </button>
+            <button class="btn btn-sm btn-outline-dark" (click)="addNewLegacy()">
+                ➕ Agregar (Sistema viejo)
+            </button>
+        </div>
+        <div class="d-flex justify-content-between mt-2" *ngIf="repairDashboardService.selectedRepair">
             <button class="btn btn-sm btn-outline-primary" (click)="goToUpdate(repairDashboardService.selectedRepair.repairId)">
-                🛠️ Actualizar
+                🛠️ Actualizar (Sistema viejo)
             </button>
             <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(deleteModal)">
                 ❌ Eliminar
             </button>
-        </ng-container>
+        </div>
     </div>
     <div class="card-body">
         <ng-container *ngIf="repairDashboardService.selectedRepair">

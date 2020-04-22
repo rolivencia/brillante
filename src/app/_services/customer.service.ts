@@ -40,7 +40,10 @@ export class CustomerService {
      * @param legacyCustomer - Legacy Cliente Object (wp-brillante)
      */
     public createLegacy(legacyCustomer) {
-        const params = new HttpParams().set('action', 'create');
-        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, legacyCustomer, { headers: headers, params: params });
+        return this.http.post<any>(
+            `${this.globalService.webApiUrl}${this.endpoint}`,
+            { ...legacyCustomer, action: 'create' },
+            { headers: headers }
+        );
     }
 }

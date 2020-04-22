@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: ''
+    apiUrl: '',
+    oldApi: 'https://brillante.brillantestore.com/'
     // apiUrl: "http://brillante-server.herokuapp.com"
 };

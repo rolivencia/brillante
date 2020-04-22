@@ -1,39 +1,40 @@
-import { Injectable } from "@angular/core";
-import { HttpHeaders } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: "root"
+    providedIn: 'root'
 })
 export class GlobalService {
-  private _httpHeaders = new HttpHeaders({
-    "Content-Type": "application/x-www-form-urlencoded"
-  });
-  private _legacySiteUrl = `https://brillante.brillantestore.com/`;
-  private _webApiUrl = `${this._legacySiteUrl}api/fix`;
+    private _httpHeaders = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    private _legacySiteUrl = environment.oldApi;
+    private _webApiUrl = `${this._legacySiteUrl}api/fix`;
 
-  constructor() {}
+    constructor() {}
 
-  get httpHeaders(): HttpHeaders {
-    return this._httpHeaders;
-  }
+    get httpHeaders(): HttpHeaders {
+        return this._httpHeaders;
+    }
 
-  set httpHeaders(value: HttpHeaders) {
-    this._httpHeaders = value;
-  }
+    set httpHeaders(value: HttpHeaders) {
+        this._httpHeaders = value;
+    }
 
-  get webApiUrl(): string {
-    return this._webApiUrl;
-  }
+    get webApiUrl(): string {
+        return this._webApiUrl;
+    }
 
-  set webApiUrl(value: string) {
-    this._webApiUrl = value;
-  }
+    set webApiUrl(value: string) {
+        this._webApiUrl = value;
+    }
 
-  get legacySiteUrl(): string {
-    return this._legacySiteUrl;
-  }
+    get legacySiteUrl(): string {
+        return this._legacySiteUrl;
+    }
 
-  set legacySiteUrl(value: string) {
-    this._legacySiteUrl = value;
-  }
+    set legacySiteUrl(value: string) {
+        this._legacySiteUrl = value;
+    }
 }

@@ -13,7 +13,7 @@ export class LegacyMapperService {
     }
 
     /**
-     * Transforma los objetos del nuevo cliente HTML5 a
+     * Transforma los objetos Repair del nuevo cliente HTML5 al formato que acepta el API legacy
      * @deprecated
      * @param customer - Instancia de cliente
      * @param repair - Instancia de reparación
@@ -21,19 +21,19 @@ export class LegacyMapperService {
     toLegacyRepairCreate(customer: Customer, repair: Repair) {
         return {
             clientId: customer.id,
-            tipoEquipo: repair.device.type.id,
+            tipoEquipo: repair.device.type.id.toString(),
             marca: repair.device.manufacturer,
             modelo: repair.device.model,
             imei: repair.device.deviceId,
             problema: repair.issue,
             seniaReparacion: repair.paymentInAdvance,
-            encendido: repair.device.turnedOn,
+            encendido: repair.device.turnedOn ? 1 : 0,
             usuario: this.currentUser.id
         };
     }
 
     /**
-     * Transforms an instance of Customer to an instance of Cliente in wp-brillante
+     * Transforma los objetos Customer del nuevo cliente HTML5 al formato que acepta el API legacy
      * @deprecated
      * @param customer - Instance of Customer class
      */

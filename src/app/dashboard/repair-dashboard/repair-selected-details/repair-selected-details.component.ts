@@ -50,7 +50,10 @@ export class RepairSelectedDetailsComponent implements OnInit {
 
     addNew() {
         this.repairDashboardService.toggleAdd();
-        // const redirectTo = 'http://brillante.brillantestore.com/fix-vista-de-registro/';
-        // window.open(redirectTo, '_blank');
+    }
+
+    addNewLegacy() {
+        const redirectTo = 'http://brillante.brillantestore.com/fix-vista-de-registro/';
+        window.open(redirectTo, '_blank');
     }
 }

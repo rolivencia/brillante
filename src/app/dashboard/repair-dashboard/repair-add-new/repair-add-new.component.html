@@ -29,7 +29,7 @@
                                         </div>
                                         <div
                                             class="text-danger"
-                                            *ngIf="!customerExists && submitted && customerControl['dni'].errors?.length < 7"
+                                            *ngIf="!customerExists && submitted && customerControl['dni'].errors?.minLength"
                                         >
                                             <small>Ingrese un DNI válido - 7 números o más</small>
                                         </div>
