@@ -10,6 +10,10 @@
     }
 }
 
+.form-group {
+    @extend .pb-0;
+}
+
 button + button {
     @extend .ml-3;
 }

@@ -31,33 +31,51 @@ export class RepairAddNewComponent implements OnInit {
         this.loadForm();
     }
 
+    get customerControl() {
+        return this.formGroup.controls.customer['controls'];
+    }
+
+    get repairControl() {
+        return this.formGroup.controls.repair['controls'];
+    }
+
     //TODO: Agregar debounce para evitar llamar rápido una y otra vez
     async getExistingCustomer() {
-        const dni = this.formGroup.controls['customer']['controls']['dni'].value.toString();
+        this.customerExists = false;
 
-        if (dni.toString().length > 7) {
+        const dni = this.formGroup.controls['customer']['controls']['dni'].value?.toString();
+
+        if (dni) {
             const result = await this.customerService.getByDniLegacy(dni).toPromise();
             this.customerExists = result.code !== 0;
             this.customer = this.customerExists ? this.legacyCustomerMapper(result) : new Customer();
-
-            this.formGroup.patchValue({
-                customer: {
-                    id: this.customer.id,
-                    firstName: this.customer.firstName,
-                    lastName: this.customer.lastName,
-                    email: this.customer.email,
-                    address: this.customer.address,
-                    telephone: this.customer.telephone
-                }
-            });
+        } else {
+            this.customerExists = false;
+            this.customer = new Customer();
         }
+
+        this.formGroup.patchValue({
+            customer: {
+                id: this.customer.id,
+                firstName: this.customer.firstName,
+                lastName: this.customer.lastName,
+                email: this.customer.email,
+                address: this.customer.address,
+                telephone: this.customer.telephone
+            }
+        });
     }
     save() {
         this.submitted = true;
+        if (this.formGroup.invalid) {
+            alert('Falta llenar campos para poder guardar este cupón');
+            return;
+        }
         console.log(this.formGroup);
     }
 
     clean() {
+        this.submitted = false;
         this.repair = new Repair();
         this.customer = new Customer();
     }
@@ -88,7 +106,7 @@ export class RepairAddNewComponent implements OnInit {
                     model: [this.repair.device.model, Validators.required],
                     deviceId: [this.repair.device.deviceId, Validators.required]
                 }),
-                issue: [this.repair.issue, [Validators.required, Validators.minLength(50)]],
+                issue: [this.repair.issue, [Validators.required, Validators.minLength(20)]],
                 paymentInAdvance: [this.repair.paymentInAdvance, Validators.required]
             })
         });
