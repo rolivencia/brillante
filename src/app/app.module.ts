@@ -16,9 +16,10 @@ import { RepairService } from '@app/_services/repair.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainHeaderComponent } from '@app/_components/main-header/main-header.component';
 import { FooterComponent } from './_components/footer/footer.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-    imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule, ReactiveFormsModule, routing],
+    imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule, ReactiveFormsModule, routing, ToastrModule.forRoot()],
     declarations: [
         AlertComponent,
         AppComponent,

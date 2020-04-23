@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Customer } from '@app/_models/customer';
+import { CustomerService } from '@app/_services/customer.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { Repair, User } from '@app/_models';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
 import { RepairService } from '@app/_services/repair.service';
-import { CustomerService } from '@app/_services/customer.service';
-import { AuthenticationService, UserService } from '@app/_services';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -21,15 +21,14 @@ export class RepairAddNewComponent implements OnInit {
     public customerExists: boolean = false;
     public submitted: boolean = false;
 
-    private currentUser: User;
-
     constructor(
         private cdr: ChangeDetectorRef,
         public customerService: CustomerService,
         private formBuilder: FormBuilder,
         private legacyMapperService: LegacyMapperService,
         public repairDashboardService: RepairDashboardService,
-        public repairService: RepairService
+        public repairService: RepairService,
+        private toastrService: ToastrService
     ) {}
 
     ngOnInit() {
@@ -81,11 +80,25 @@ export class RepairAddNewComponent implements OnInit {
         if (!this.customerExists) {
             const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
             this.customer.id = savedCustomer.id ?? null;
+            if (!savedCustomer?.code) {
+                this.toastrService.error('Error al registrar cliente.');
+                return;
+            }
         }
 
         const legacyRepair = this.legacyMapperService.toLegacyRepairCreate(this.customer, this.repair);
         const result = await this.repairService.createLegacy(legacyRepair).toPromise();
-        console.log(result);
+
+        if (!result || result.errorCode || result.historyErrorCode) {
+            if (result.errorCode) {
+                this.toastrService.error(result.errorCode);
+            }
+            if (result.historyErrorCode) {
+                this.toastrService.error(result.historyErrorCode);
+            }
+        } else if (result && result.id) {
+            this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito`);
+        }
     }
 
     clean() {

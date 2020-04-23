@@ -4,6 +4,7 @@ import { RepairDashboardComponent } from '@app/dashboard/repair-dashboard/repair
 import { RepairGridResultsComponent } from '@app/dashboard/repair-dashboard/repair-grid-results/repair-grid-results.component';
 import { RepairSelectedDetailsComponent } from '@app/dashboard/repair-dashboard/repair-selected-details/repair-selected-details.component';
 import { RepairAddNewComponent } from '@app/dashboard/repair-dashboard/repair-add-new/repair-add-new.component';
+import { RepairUpdateComponent } from '@app/dashboard/repair-dashboard/repair-update/repair-update.component';
 
 const routes: Routes = [
     {
@@ -24,7 +25,12 @@ const routes: Routes = [
             {
                 path: '',
                 component: RepairAddNewComponent,
-                outlet: 'top-outlet'
+                outlet: 'new-outlet'
+            },
+            {
+                path: '',
+                component: RepairUpdateComponent,
+                outlet: 'update-outlet'
             }
         ]
     }

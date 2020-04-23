@@ -15,6 +15,7 @@ export class RepairDashboardService {
     public showGridOnLeftOutlet: boolean = true;
     public showDetailsOnRightOutlet: boolean = true;
     public showAdd: boolean = false;
+    public showUpdate: boolean = false;
 
     constructor() {}
 
@@ -24,6 +25,14 @@ export class RepairDashboardService {
 
     toggleAdd() {
         this.showAdd = !this.showAdd;
+        this.showUpdate = false;
+        this.toggleGrid();
+        this.toggleDetails();
+    }
+
+    toggleUpdate() {
+        this.showUpdate = !this.showUpdate;
+        this.showAdd = false;
         this.toggleGrid();
         this.toggleDetails();
     }
