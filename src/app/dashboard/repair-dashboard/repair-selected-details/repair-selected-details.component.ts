@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RepairLegacy } from '@app/_models';
-import { RepairService } from '@app/_services/repair.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { RepairLegacy } from '@app/_models';
+import { RepairService } from '@app/_services/repair.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-repair-selected-details',
@@ -15,7 +15,6 @@ export class RepairSelectedDetailsComponent implements OnInit {
         private repairService: RepairService,
         private modalService: NgbModal,
         private router: Router,
-        private route: ActivatedRoute,
         public repairDashboardService: RepairDashboardService
     ) {}
 
@@ -33,8 +32,7 @@ export class RepairSelectedDetailsComponent implements OnInit {
             error => console.error(error.message),
             () => {
                 this.modalService.dismissAll();
-                //TODO: Refactor de esta funcionalidad. Recargar grid basada en un evento del service
-                this.router.navigate(['repair-dashboard/manage', { outlets: { top: null, left: 'grid', right: 'selected' } }]);
+                this.repairDashboardService.getGridData();
             }
         );
     }

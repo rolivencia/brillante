@@ -12,12 +12,12 @@
                     class="form-control"
                     placeholder="yyyy-mm-dd"
                     name="from"
-                    [maxDate]="ngbDateTo"
+                    [maxDate]="repairDashboardService.ngbDateTo"
                     [displayMonths]="displayMonths"
                     [navigation]="navigation"
                     [outsideDays]="outsideDays"
-                    [(ngModel)]="ngbDateFrom"
-                    (ngModelChange)="formatDate(ngbDateFrom, 'from')"
+                    [(ngModel)]="repairDashboardService.ngbDateFrom"
+                    (ngModelChange)="formatDate(repairDashboardService.ngbDateFrom, 'from')"
                     ngbDatepicker
                     #from="ngbDatepicker"
                 />
@@ -36,13 +36,13 @@
                     class="form-control"
                     placeholder="yyyy-mm-dd"
                     name="upto"
-                    [minDate]="ngbDateFrom"
-                    [maxDate]="ngbMaxDate"
+                    [minDate]="repairDashboardService.ngbDateFrom"
+                    [maxDate]="repairDashboardService.ngbMaxDate"
                     [displayMonths]="displayMonths"
                     [navigation]="navigation"
                     [outsideDays]="outsideDays"
-                    [(ngModel)]="ngbDateTo"
-                    (ngModelChange)="formatDate(ngbDateTo, 'to')"
+                    [(ngModel)]="repairDashboardService.ngbDateTo"
+                    (ngModelChange)="formatDate(repairDashboardService.ngbDateTo, 'to')"
                     ngbDatepicker
                     #upTo="ngbDatepicker"
                 />
@@ -57,20 +57,20 @@
     <div class="card-body">
         <ng-container>
             <div id="grid-container">
-                <div class="alert alert-info h-100 text-center" *ngIf="!gridCollection">
+                <div class="alert alert-info h-100 text-center" *ngIf="!repairDashboardService.gridCollection">
                     <h3>Cargando...</h3>
                 </div>
 
                 <wj-flex-grid
-                    *ngIf="gridCollection"
-                    [itemsSource]="gridCollection"
+                    *ngIf="repairDashboardService.gridCollection"
+                    [itemsSource]="repairDashboardService.gridCollection"
                     [selectionMode]="'Row'"
                     [headersVisibility]="'Column'"
                     [autoGenerateColumns]="false"
                     [allowResizing]="'Columns'"
                     [showSelectedHeaders]="'Row'"
                     [isReadOnly]="true"
-                    (selectionChanged)="getRepairDetails(gridCollection.currentItem)"
+                    (selectionChanged)="getRepairDetails(repairDashboardService.gridCollection.currentItem)"
                 >
                     <wj-flex-grid-filter></wj-flex-grid-filter>
                     <wj-flex-grid-column
@@ -88,18 +88,18 @@
 
             <div id="footerControls" class="row">
                 <div class="col-12 col-md-6">
-                    <wj-collection-view-pager [cv]="gridCollection"> </wj-collection-view-pager>
+                    <wj-collection-view-pager [cv]="repairDashboardService.gridCollection"> </wj-collection-view-pager>
                 </div>
                 <div class="col-12 col-md-6 text-right">
-                    <button class="btn btn-sm btn-outline-primary h-100" (click)="getGridData(showFinished)">
+                    <button class="btn btn-sm btn-outline-primary h-100" (click)="repairDashboardService.getGridData()">
                         🔄 Actualizar Lista
                     </button>
 
                     <div class="btn-group btn-group-toggle h-100">
                         <label class="ml-2 btn btn-sm btn-outline-success" ngbButtonLabel>
-                            <input type="checkbox" [(ngModel)]="showFinished" ngbButton />
-                            <ng-container *ngIf="showFinished">✅</ng-container>
-                            <ng-container *ngIf="!showFinished">❌</ng-container>
+                            <input type="checkbox" [(ngModel)]="repairDashboardService._showFinished" ngbButton />
+                            <ng-container *ngIf="repairDashboardService._showFinished">✅</ng-container>
+                            <ng-container *ngIf="!repairDashboardService._showFinished">❌</ng-container>
                             Ver Completados
                         </label>
                     </div>

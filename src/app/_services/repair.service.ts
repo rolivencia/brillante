@@ -1,10 +1,10 @@
+import { DeviceType, RepairLegacy } from '@app/_models';
+import { environment } from '@environments/environment';
+import { GlobalService } from '@app/_services/global.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
 import { Observable } from 'rxjs';
-import { DeviceType, RepairLegacy } from '@app/_models';
-import { GlobalService } from '@app/_services/global.service';
-import { environment } from '@environments/environment';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
