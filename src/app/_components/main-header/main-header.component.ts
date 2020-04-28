@@ -11,12 +11,13 @@ import { AuthenticationService } from '@app/_services';
 export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
+    //FIXME: Centralizar navegación
     private _adminLinks = [
         { label: 'Dashboard', route: '/dashboard', enabled: true, visible: true },
         { label: 'Clientes', route: '/client-dashboard', enabled: true, visible: true },
         {
             label: 'Reparaciones',
-            route: 'repair-dashboard',
+            route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }],
             enabled: true,
             visible: true
         },
@@ -43,10 +44,7 @@ export class MainHeaderComponent implements OnInit {
         this.authenticationService.currentUser.subscribe(x => (this.currentUser = x));
     }
 
-    ngOnInit() {
-        // localStorage.clear('users');
-        // localStorage.setItem('users', JSON.stringify(this.usersList));
-    }
+    ngOnInit() {}
 
     logout() {
         this.authenticationService.logout();
