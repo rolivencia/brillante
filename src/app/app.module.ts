@@ -27,8 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
         MainHeaderComponent,
         DashboardComponent,
         LoginComponent,
-        RegisterComponent,
-        FooterComponent
+        RegisterComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
