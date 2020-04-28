@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepairDashboardComponent } from '@app/dashboard/repair-dashboard/repair-dashboard.component';
-import { RepairGridResultsComponent } from '@app/dashboard/repair-dashboard/repair-grid-results/repair-grid-results.component';
-import { RepairSelectedDetailsComponent } from '@app/dashboard/repair-dashboard/repair-selected-details/repair-selected-details.component';
 import { RepairAddNewComponent } from '@app/dashboard/repair-dashboard/repair-add-new/repair-add-new.component';
 import { RepairUpdateComponent } from '@app/dashboard/repair-dashboard/repair-update/repair-update.component';
 
@@ -10,27 +8,32 @@ const routes: Routes = [
     {
         path: '',
         component: RepairDashboardComponent,
-        pathMatch: 'full',
         children: [
             {
-                path: '',
-                component: RepairGridResultsComponent,
-                outlet: 'left-outlet'
-            },
-            {
-                path: '',
-                component: RepairSelectedDetailsComponent,
-                outlet: 'right-outlet'
-            },
-            {
-                path: '',
-                component: RepairAddNewComponent,
-                outlet: 'new-outlet'
-            },
-            {
-                path: '',
-                component: RepairUpdateComponent,
-                outlet: 'update-outlet'
+                path: 'manage',
+                children: [
+                    {
+                        path: 'grid',
+                        loadChildren: () => import('./repair-grid-results/repair-grid-results.module').then(m => m.RepairGridResultsModule),
+                        outlet: 'left'
+                    },
+                    {
+                        path: 'selected',
+                        loadChildren: () =>
+                            import('./repair-selected-details/repair-selected-details.module').then(m => m.RepairSelectedDetailsModule),
+                        outlet: 'right'
+                    },
+                    {
+                        path: 'add',
+                        loadChildren: () => import('./repair-add-new/repair-add-new.module').then(m => m.RepairAddNewModule),
+                        outlet: 'top'
+                    },
+                    {
+                        path: 'update',
+                        loadChildren: () => import('./repair-update/repair-update.module').then(m => m.RepairUpdateModule),
+                        outlet: 'top'
+                    }
+                ]
             }
         ]
     }

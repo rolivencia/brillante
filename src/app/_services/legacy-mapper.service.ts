@@ -75,8 +75,6 @@ export class LegacyMapperService {
         code,
         message
     }): Customer {
-        console.log({ status: { code: code, message: message } });
-
         const customer: Customer = {
             id: clientId,
             firstName: nombre,

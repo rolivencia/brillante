@@ -11,6 +11,7 @@
         "lint": "ng lint",
         "format:check": "prettier --config prettier.config.js --list-different \\\"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\\\"",
         "e2e": "ng e2e",
+        "serve": "ng serve",
         "build-serve": "npm run-script build && npm run-script start",
         "build-prod": "npm run-script build --prod --aot && npm run-script start"
     },

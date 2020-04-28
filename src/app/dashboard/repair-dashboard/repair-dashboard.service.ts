@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RepairLegacy } from '@app/_models';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class RepairDashboardService {
@@ -11,13 +12,13 @@ export class RepairDashboardService {
         this._selectedRepair = value;
     }
 
-    private _selectedRepair: RepairLegacy;
+    private _selectedRepair: RepairLegacy; //FIXME: Adaptar posteriormente a nuevo formato de reparación
     public showGridOnLeftOutlet: boolean = true;
     public showDetailsOnRightOutlet: boolean = true;
     public showAdd: boolean = false;
     public showUpdate: boolean = false;
 
-    constructor() {}
+    constructor(private route: ActivatedRoute, private router: Router) {}
 
     public toggleGrid() {
         this.showGridOnLeftOutlet = !this.showGridOnLeftOutlet;

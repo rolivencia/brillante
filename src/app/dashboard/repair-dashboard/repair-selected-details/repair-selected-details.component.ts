@@ -34,26 +34,20 @@ export class RepairSelectedDetailsComponent implements OnInit {
             () => {
                 this.modalService.dismissAll();
                 //TODO: Refactor de esta funcionalidad. Recargar grid basada en un evento del service
-                this.repairDashboardService.toggleGrid();
-                this.repairDashboardService.toggleGrid();
+                this.router.navigate(['repair-dashboard/manage', { outlets: { top: null, left: 'grid', right: 'selected' } }]);
             }
         );
     }
 
+    add() {
+        this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'add', left: null, right: null } }]);
+    }
+
     update(repair: RepairLegacy) {
-        // TODO: Implement this method
+        this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'update', left: null, right: null } }]);
     }
 
     open(content) {
         this.modalService.open(content);
-    }
-
-    addNew() {
-        this.repairDashboardService.toggleAdd();
-    }
-
-    addNewLegacy() {
-        const redirectTo = 'http://brillante.brillantestore.com/fix-vista-de-registro/';
-        window.open(redirectTo, '_blank');
     }
 }

@@ -73,6 +73,7 @@ export class RepairGridResultsComponent implements OnInit {
         };
     }
 
+    //FIXME: Mover funcionalidad a service, a fin de poder refrescar la grid
     getGridData(showFinished: boolean) {
         this.repairService
             .getAllLegacy(showFinished, this._dateFrom, this._dateTo)
@@ -88,12 +89,6 @@ export class RepairGridResultsComponent implements OnInit {
                 },
                 error => console.error(error)
             );
-
-        // this.repairService.getAll(showFinished, this._dateFrom, this._dateTo).subscribe(
-        //   data => {
-        //   },
-        //   error => console.error(error)
-        // );
     }
 
     get showFinished(): boolean {

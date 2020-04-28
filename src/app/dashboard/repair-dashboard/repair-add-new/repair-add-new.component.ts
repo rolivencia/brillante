@@ -3,7 +3,8 @@ import { Customer } from '@app/_models/customer';
 import { CustomerService } from '@app/_services/customer.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
-import { Repair, User } from '@app/_models';
+import { Location } from '@angular/common';
+import { Repair } from '@app/_models';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
 import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
@@ -25,6 +26,7 @@ export class RepairAddNewComponent implements OnInit {
         private cdr: ChangeDetectorRef,
         public customerService: CustomerService,
         private formBuilder: FormBuilder,
+        public location: Location,
         private legacyMapperService: LegacyMapperService,
         public repairDashboardService: RepairDashboardService,
         public repairService: RepairService,
@@ -102,9 +104,12 @@ export class RepairAddNewComponent implements OnInit {
     }
 
     clean() {
+        this.customerExists = false;
         this.submitted = false;
         this.repair = new Repair();
         this.customer = new Customer();
+        this.patchCustomer();
+        this.patchRepair();
     }
 
     assignRepairForm() {
@@ -164,6 +169,7 @@ export class RepairAddNewComponent implements OnInit {
         this.formGroup.patchValue({
             customer: {
                 id: this.customer.id,
+                dni: this.customer.dni,
                 firstName: this.customer.firstName,
                 lastName: this.customer.lastName,
                 email: this.customer.email,

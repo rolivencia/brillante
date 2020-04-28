@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 
 import { User } from '@app/_models';
 import { UserService, AuthenticationService, AlertService } from '@app/_services';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-main-dashboard',
@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     constructor(
         private alertService: AlertService,
         private authenticationService: AuthenticationService,
+        private route: ActivatedRoute,
         private router: Router,
         private userService: UserService
     ) {
@@ -56,6 +57,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     goTo(route: string) {
         this.router.navigate([`/${route}`]);
+    }
+
+    goToRepair() {
+        this.router
+            .navigate(['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }])
+            .then(result => console.log(result));
     }
 
     goToLegacyCash() {
