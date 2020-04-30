@@ -2,15 +2,17 @@
     <div class="card-header d-flex justify-content-between">
         Nueva Reparación
         <div>
-            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()">
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.save()">
                 💾 Guardar reparación
             </button>
-            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="clean()">🗑️ Limpiar datos</button>
+            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="repairFormHandlerService.clean()">
+                🗑️ Limpiar datos
+            </button>
             <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="location.back()">⬅️ Volver</button>
         </div>
     </div>
     <div class="card-body">
-        <form [formGroup]="repairFormHandlerService.formGroup" (ngSubmit)="save()">
+        <form [formGroup]="repairFormHandlerService.formGroup" (ngSubmit)="repairFormHandlerService.save()">
             <div class="row">
                 <div class="col-6">
                     <div id="customer-data" class="card">
@@ -20,16 +22,26 @@
                                 <div class="d-flex justify-content-between">
                                     <label for="dni">DNI</label>
                                     <div>
-                                        <span *ngIf="customerExists" class="badge badge-info">Cliente ya registrado</span>
+                                        <span *ngIf="repairFormHandlerService.customerExists" class="badge badge-info p-2"
+                                            >Cliente ya registrado</span
+                                        >
                                         <div
                                             class="text-danger"
-                                            *ngIf="!customerExists && submitted && customerControl['dni'].errors?.required"
+                                            *ngIf="
+                                                !repairFormHandlerService.customerExists &&
+                                                this.repairFormHandlerService.submitted &&
+                                                repairFormHandlerService.customerControl['dni'].errors?.required
+                                            "
                                         >
                                             <small>Se requiere el DNI del cliente</small>
                                         </div>
                                         <div
                                             class="text-danger"
-                                            *ngIf="!customerExists && submitted && customerControl['dni'].errors?.minLength"
+                                            *ngIf="
+                                                !repairFormHandlerService.customerExists &&
+                                                this.repairFormHandlerService.submitted &&
+                                                repairFormHandlerService.customerControl['dni'].errors?.minLength
+                                            "
                                         >
                                             <small>Ingrese un DNI válido - 7 números o más</small>
                                         </div>
@@ -44,13 +56,19 @@
                                     step="1"
                                     aria-describedby="dni"
                                     formControlName="dni"
-                                    (blur)="getExistingCustomer()"
+                                    (blur)="repairFormHandlerService.getExistingCustomer()"
                                 />
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="firstName">Nombre</label>
-                                    <div class="text-danger" *ngIf="submitted && customerControl['firstName'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.customerControl['firstName'].errors?.required
+                                        "
+                                    >
                                         <small>Se requiere el nombre del cliente</small>
                                     </div>
                                 </div>
@@ -60,13 +78,19 @@
                                     class="form-control form-control-sm"
                                     id="firstName"
                                     formControlName="firstName"
-                                    [readonly]="customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists"
                                 />
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="lastName">Apellido</label>
-                                    <div class="text-danger" *ngIf="submitted && customerControl['firstName'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.customerControl['firstName'].errors?.required
+                                        "
+                                    >
                                         <small>Se requiere el apellido del cliente</small>
                                     </div>
                                 </div>
@@ -76,16 +100,28 @@
                                     class="form-control form-control-sm"
                                     id="lastName"
                                     formControlName="lastName"
-                                    [readonly]="customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists"
                                 />
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="email">Email</label>
-                                    <div class="text-danger" *ngIf="submitted && customerControl['email'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.customerControl['email'].errors?.required
+                                        "
+                                    >
                                         <small>Se requiere un email del cliente</small>
                                     </div>
-                                    <div class="text-danger" *ngIf="submitted && customerControl['email'].errors?.email">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.customerControl['email'].errors?.email
+                                        "
+                                    >
                                         <small>Ingrese un email válido</small>
                                     </div>
                                 </div>
@@ -95,13 +131,19 @@
                                     class="form-control form-control-sm"
                                     id="email"
                                     formControlName="email"
-                                    [readonly]="customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists"
                                 />
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="telephone">Teléfono</label>
-                                    <div class="text-danger" *ngIf="submitted && customerControl['telephone'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.customerControl['telephone'].errors?.required
+                                        "
+                                    >
                                         <small>Se requiere un teléfono del cliente</small>
                                     </div>
                                 </div>
@@ -114,13 +156,19 @@
                                     step="1"
                                     placeholder="Sólo numeros"
                                     formControlName="telephone"
-                                    [readonly]="customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists"
                                 />
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="address">Dirección</label>
-                                    <div class="text-danger" *ngIf="submitted && customerControl['address'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.customerControl['address'].errors?.required
+                                        "
+                                    >
                                         <small>Se requiere una dirección para el cliente</small>
                                     </div>
                                 </div>
@@ -130,7 +178,7 @@
                                     class="form-control form-control-sm"
                                     id="address"
                                     formControlName="address"
-                                    [readonly]="customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists"
                                 />
                             </div>
                         </div>
@@ -153,8 +201,8 @@
                                                 formControlName="type"
                                                 [isEditable]="false"
                                                 [itemsSource]="repairService.deviceTypes"
-                                                [selectedItem]="repair.device.type"
-                                                [selectedIndex]="repair.device.type.id"
+                                                [selectedItem]="repairFormHandlerService.repair.device.type"
+                                                [selectedIndex]="repairFormHandlerService.repair.device.type.id"
                                                 [displayMemberPath]="'description'"
                                             ></wj-combo-box>
                                         </div>
@@ -175,7 +223,10 @@
                                         <label for="manufacturer">Marca</label>
                                         <div
                                             class="text-danger"
-                                            *ngIf="submitted && repairControl['device']['controls']['manufacturer'].errors?.required"
+                                            *ngIf="
+                                                this.repairFormHandlerService.submitted &&
+                                                repairFormHandlerService.deviceControl['manufacturer'].errors?.required
+                                            "
                                         >
                                             <small>Se requiere la marca del dispositivo</small>
                                         </div>
@@ -193,7 +244,10 @@
                                         <label for="model">Modelo</label>
                                         <div
                                             class="text-danger"
-                                            *ngIf="submitted && repairControl['device']['controls']['model'].errors?.required"
+                                            *ngIf="
+                                                this.repairFormHandlerService.submitted &&
+                                                repairFormHandlerService.deviceControl['model'].errors?.required
+                                            "
                                         >
                                             <small>Se requiere el modelo del dispositivo</small>
                                         </div>
@@ -220,7 +274,13 @@
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="paymentInAdvance">Seña</label>
-                                    <div class="text-danger" *ngIf="submitted && repairControl['paymentInAdvance'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.repairControl['paymentInAdvance'].errors?.required
+                                        "
+                                    >
                                         <small>No puede ser vacío. Si no hay seña, ingrese 0</small>
                                     </div>
                                 </div>
@@ -243,7 +303,13 @@
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="issue">Descripción del problema</label>
-                                    <div class="text-danger" *ngIf="submitted && repairControl['issue'].errors?.required">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.repairControl['issue'].errors?.required
+                                        "
+                                    >
                                         <small>Se requiere la descripción del problema</small>
                                     </div>
                                 </div>

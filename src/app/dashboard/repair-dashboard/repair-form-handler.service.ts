@@ -1,14 +1,54 @@
-import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from '@app/_models/customer';
+import { CustomerService } from '@app/_services/customer.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { Repair } from '@app/_models';
+import { RepairService } from '@app/_services/repair.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RepairFormHandlerService {
+    get customerControl() {
+        return this.formGroup.controls.customer['controls'];
+    }
+
+    get repairControl() {
+        return this.formGroup.controls.repair['controls'];
+    }
+
+    get deviceControl() {
+        return this.repairControl['device']['controls'];
+    }
+
+    get customerExists(): boolean {
+        return this._customerExists;
+    }
+
+    set customerExists(value: boolean) {
+        this._customerExists = value;
+    }
+
+    get submitted(): boolean {
+        return this._submitted;
+    }
+
+    set submitted(value: boolean) {
+        this._submitted = value;
+    }
+
+    get customer(): Customer {
+        return this._customer;
+    }
+
     set customer(value: Customer) {
         this._customer = value;
+    }
+
+    get repair(): Repair {
+        return this._repair;
     }
 
     set repair(value: Repair) {
@@ -23,12 +63,21 @@ export class RepairFormHandlerService {
         this._formGroup = value;
     }
 
-    private _customer: Customer;
-    private _repair: Repair;
+    private _customerExists: boolean = false;
+    private _submitted: boolean = false;
+
+    private _customer: Customer = new Customer();
+    private _repair: Repair = new Repair();
 
     private _formGroup: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(
+        private customerService: CustomerService,
+        private legacyMapperService: LegacyMapperService,
+        private formBuilder: FormBuilder,
+        private repairService: RepairService,
+        private toastrService: ToastrService
+    ) {}
 
     public loadForm(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
         return this.formBuilder.group({
@@ -39,7 +88,8 @@ export class RepairFormHandlerService {
                 lastName: [customer.lastName, [Validators.required, Validators.minLength(2)]],
                 email: [customer.email, [Validators.required, Validators.email]],
                 address: [customer.address, [Validators.required]],
-                telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]]
+                telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]],
+                secondaryTelephone: [customer.telephone, [Validators.pattern('[0-9]+')]]
             }),
             repair: this.formBuilder.group({
                 id: [repair.id],
@@ -50,9 +100,152 @@ export class RepairFormHandlerService {
                     model: [repair.device.model, Validators.required],
                     deviceId: [repair.device.deviceId]
                 }),
+                status: [repair.status, Validators.required],
+                note: [repair.note],
                 issue: [repair.issue, [Validators.required]],
-                paymentInAdvance: [repair.paymentInAdvance, Validators.required]
+                paymentInAdvance: [repair.paymentInAdvance, Validators.required],
+                price: [repair.paymentInAdvance, Validators.required],
+                cost: [repair.paymentInAdvance, Validators.required]
             })
         });
+    }
+
+    /**
+     * Reverts form to initial status, with empty customer and repair data
+     */
+    public clean() {
+        this.customerExists = false;
+        this.submitted = false;
+        this.repair = new Repair();
+        this.customer = new Customer();
+        this.patchCustomer();
+        this.patchRepair();
+    }
+
+    public patchCustomer(customer: Customer = this.customer) {
+        this.formGroup.patchValue({
+            customer: {
+                id: customer.id,
+                dni: customer.dni,
+                firstName: customer.firstName,
+                lastName: customer.lastName,
+                email: customer.email,
+                address: customer.address,
+                telephone: customer.telephone
+            }
+        });
+    }
+
+    public patchRepair(repair: Repair = this.repair) {
+        this.formGroup.patchValue({
+            repair: {
+                id: repair.id,
+                device: {
+                    turnedOn: repair.device.turnedOn,
+                    type: repair.device.type,
+                    manufacturer: repair.device.manufacturer,
+                    model: repair.device.model,
+                    deviceId: repair.device.deviceId
+                },
+                issue: repair.issue,
+                paymentInAdvance: repair.paymentInAdvance
+            }
+        });
+    }
+
+    public async getExistingCustomer() {
+        this.customerExists = false;
+
+        const dni = this.customerControl['dni'].value?.toString();
+
+        if (dni) {
+            const result = await this.customerService.getByDniLegacy(dni).toPromise();
+            this.customerExists = result.code !== 0;
+            this.customer = this.customerExists ? this.legacyMapperService.fromLegacyCustomer(result) : new Customer();
+        } else {
+            this.customerExists = false;
+            this.customer = new Customer();
+        }
+
+        this.patchCustomer();
+    }
+
+    public assignRepairForm(repairForm = this.repairControl, deviceForm = this.deviceControl) {
+        this.repair = {
+            id: repairForm.id.value,
+            customer: this.customer,
+            device: {
+                turnedOn: deviceForm.turnedOn.value,
+                type: deviceForm.type.value,
+                manufacturer: deviceForm.manufacturer.value,
+                model: deviceForm.model.value,
+                deviceId: deviceForm.deviceId.value
+            },
+            status: repairForm.status.value,
+            note: repairForm.note.value,
+            issue: repairForm.issue.value,
+            paymentInAdvance: repairForm.paymentInAdvance.value,
+            price: repairForm.price.value,
+            cost: repairForm.cost.value,
+
+            // Read-only attributes - Modified by database
+            checkInDate: this.repair.checkInDate,
+            checkoutDate: this.repair.checkoutDate,
+            lastUpdateDate: this.repair.lastUpdateDate,
+            audit: this.repair.audit
+        };
+    }
+
+    //FIXME: Add "user" and "secondaryTelephone" missing attributes. Delete ...
+    assignCustomerForm(customerForm = this.customerControl) {
+        this.customer = {
+            ...this.customer,
+            id: customerForm.id.value,
+            dni: customerForm.dni.value,
+            firstName: customerForm.firstName.value,
+            lastName: customerForm.lastName.value,
+            email: customerForm.email.value,
+            telephone: customerForm.telephone.value,
+            address: customerForm.address.value
+        };
+    }
+
+    async save() {
+        this.submitted = true;
+
+        if (this.formGroup.invalid) {
+            this.toastrService.info('Falta llenar campos para dar de alta esta reparación.');
+            return;
+        }
+
+        this.assignCustomerForm();
+        this.assignRepairForm();
+
+        this.patchCustomer();
+        this.patchRepair();
+
+        const legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
+        if (!this.customerExists) {
+            const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
+            this.customer.id = savedCustomer.id ?? null;
+            if (!savedCustomer?.code) {
+                this.toastrService.error('Error al registrar cliente.');
+                return;
+            }
+        }
+
+        const legacyRepair = this.legacyMapperService.toLegacyRepairCreate(this.customer, this.repair);
+        const result = await this.repairService.createLegacy(legacyRepair).toPromise();
+
+        if (!result || result.errorCode || result.historyErrorCode) {
+            if (result.errorCode) {
+                this.toastrService.error(result.errorCode);
+            }
+            if (result.historyErrorCode) {
+                this.toastrService.error(result.historyErrorCode);
+            }
+        } else if (result && result.id) {
+            this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito`);
+        }
     }
 }

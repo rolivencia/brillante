@@ -28,6 +28,12 @@ export class Repair {
         this.paymentInAdvance = 0;
         this.price = 0;
         this.cost = 0;
+        this.note = '';
+
+        // Date attributes
+        this.checkInDate = null;
+        this.lastUpdateDate = null;
+        this.checkoutDate = null;
     }
 }
 
@@ -56,8 +62,14 @@ export class DeviceType {
 export class RepairStatus {
     public id: number;
     public description: string;
+
+    constructor(id?: number, description?: string) {
+        this.id = id;
+        this.description = description;
+    }
 }
 
+// FIXME: Borrar una vez finalizada la migración de datos.
 export class RepairLegacy {
     public apellidoCliente: string;
     public encendido: number;
