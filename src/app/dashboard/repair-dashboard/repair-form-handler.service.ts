@@ -248,4 +248,6 @@ export class RepairFormHandlerService {
             this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito`);
         }
     }
+
+    public async update(repair: Repair = this.repair) {}
 }

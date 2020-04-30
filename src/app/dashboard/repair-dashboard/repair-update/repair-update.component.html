@@ -1,1 +1,13 @@
-<p>repair-update works!</p>
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        Actualizar Reparación
+        <div>
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.update()">
+                💾 Guardar cambios
+            </button>
+            <button type="submit" class="btn btn-sm btn-outline-secondary ml-3" (click)="print()">🖨️ Generar Comprobante</button>
+            <button type="submit" class="btn btn-sm btn-outline-secondary ml-3" (click)="location.back()">⬅️ Volver</button>
+        </div>
+    </div>
+    <div class="card-body"></div>
+</div>

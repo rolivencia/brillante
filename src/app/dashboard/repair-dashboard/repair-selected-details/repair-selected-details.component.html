@@ -4,6 +4,13 @@
             <button class="btn btn-sm btn-outline-success" (click)="add()">
                 ➕ Agregar
             </button>
+            <button
+                class="btn btn-sm btn-outline-primary"
+                *ngIf="repairDashboardService.selectedRepair"
+                (click)="update(repairDashboardService.selectedRepair)"
+            >
+                🛠️ Actualizar
+            </button>
         </div>
         <div class="d-flex justify-content-between mt-2" *ngIf="repairDashboardService.selectedRepair">
             <button class="btn btn-sm btn-outline-primary" (click)="goToUpdate(repairDashboardService.selectedRepair.repairId)">

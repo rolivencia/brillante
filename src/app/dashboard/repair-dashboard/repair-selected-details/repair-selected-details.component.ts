@@ -41,6 +41,7 @@ export class RepairSelectedDetailsComponent implements OnInit {
         this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'add', left: null, right: null } }]);
     }
 
+    //FIXME: Actualizar a Repair una vez finalizada la migración
     update(repair: RepairLegacy) {
         this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'update', left: null, right: null } }]);
     }
