@@ -94,6 +94,8 @@ export class RepairLegacy {
     public emailCliente: string;
     public telefonoCliente: string | number;
     public costoReparacion: string;
+    public direccionCliente?: string;
+    public dniCliente?: string;
 
     constructor() {}
 }
