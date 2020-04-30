@@ -8,6 +8,7 @@ import { Repair } from '@app/_models';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
 import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
+import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -15,7 +16,6 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./repair-add-new.component.scss', '../repair-dashboard.component.scss']
 })
 export class RepairAddNewComponent implements OnInit {
-    public formGroup: FormGroup;
     public repair: Repair = new Repair();
     public customer: Customer = new Customer();
 
@@ -25,30 +25,31 @@ export class RepairAddNewComponent implements OnInit {
     constructor(
         private cdr: ChangeDetectorRef,
         public customerService: CustomerService,
-        private formBuilder: FormBuilder,
         public location: Location,
         private legacyMapperService: LegacyMapperService,
         public repairDashboardService: RepairDashboardService,
+        public repairFormHandlerService: RepairFormHandlerService,
         public repairService: RepairService,
         private toastrService: ToastrService
     ) {}
 
     ngOnInit() {
-        this.loadForm();
+        this.repairFormHandlerService.formGroup = this.repairFormHandlerService.loadForm(this.customer, this.repair);
+        this.cdr.detectChanges();
     }
 
     get customerControl() {
-        return this.formGroup.controls.customer['controls'];
+        return this.repairFormHandlerService.formGroup.controls.customer['controls'];
     }
 
     get repairControl() {
-        return this.formGroup.controls.repair['controls'];
+        return this.repairFormHandlerService.formGroup.controls.repair['controls'];
     }
 
     async getExistingCustomer() {
         this.customerExists = false;
 
-        const dni = this.formGroup.controls['customer']['controls']['dni'].value?.toString();
+        const dni = this.repairFormHandlerService.formGroup.controls['customer']['controls']['dni'].value?.toString();
 
         if (dni) {
             const result = await this.customerService.getByDniLegacy(dni).toPromise();
@@ -65,9 +66,9 @@ export class RepairAddNewComponent implements OnInit {
     async save() {
         this.submitted = true;
 
-        console.log(this.formGroup);
+        console.log(this.repairFormHandlerService.formGroup);
 
-        if (this.formGroup.invalid) {
+        if (this.repairFormHandlerService.formGroup.invalid) {
             alert('Falta llenar campos para poder guardar este cupón');
             return;
         }
@@ -113,8 +114,8 @@ export class RepairAddNewComponent implements OnInit {
     }
 
     assignRepairForm() {
-        const repairForm = this.formGroup.controls['repair']['controls'];
-        const deviceForm = this.formGroup.controls['repair']['controls']['device']['controls'];
+        const repairForm = this.repairFormHandlerService.formGroup.controls['repair']['controls'];
+        const deviceForm = this.repairFormHandlerService.formGroup.controls['repair']['controls']['device']['controls'];
 
         //FIXME: Add "note" and other missing attributes. Delete ...
         this.repair = {
@@ -135,7 +136,7 @@ export class RepairAddNewComponent implements OnInit {
 
     //FIXME: Add "user" and "secondaryTelephone" missing attributes. Delete ...
     assignCustomerForm() {
-        const customerForm = this.formGroup.controls['customer']['controls'];
+        const customerForm = this.repairFormHandlerService.formGroup.controls['customer']['controls'];
         this.customer = {
             ...this.customer,
             id: customerForm.id.value,
@@ -149,7 +150,7 @@ export class RepairAddNewComponent implements OnInit {
     }
 
     patchRepair() {
-        this.formGroup.patchValue({
+        this.repairFormHandlerService.formGroup.patchValue({
             repair: {
                 id: this.repair.id,
                 device: {
@@ -166,7 +167,7 @@ export class RepairAddNewComponent implements OnInit {
     }
 
     patchCustomer() {
-        this.formGroup.patchValue({
+        this.repairFormHandlerService.formGroup.patchValue({
             customer: {
                 id: this.customer.id,
                 dni: this.customer.dni,
@@ -177,32 +178,5 @@ export class RepairAddNewComponent implements OnInit {
                 telephone: this.customer.telephone
             }
         });
-    }
-
-    loadForm() {
-        this.formGroup = this.formBuilder.group({
-            customer: this.formBuilder.group({
-                id: [this.customer.id],
-                dni: [this.customer.dni, [Validators.required, Validators.minLength(7)]],
-                firstName: [this.customer.firstName, [Validators.required, Validators.minLength(2)]],
-                lastName: [this.customer.lastName, [Validators.required, Validators.minLength(2)]],
-                email: [this.customer.email, [Validators.required, Validators.email]],
-                address: [this.customer.address, [Validators.required]],
-                telephone: [this.customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]]
-            }),
-            repair: this.formBuilder.group({
-                id: [this.repair.id],
-                device: this.formBuilder.group({
-                    turnedOn: [this.repair.device.turnedOn, Validators.required],
-                    type: [this.repair.device.type, Validators.required],
-                    manufacturer: [this.repair.device.manufacturer, Validators.required],
-                    model: [this.repair.device.model, Validators.required],
-                    deviceId: [this.repair.device.deviceId]
-                }),
-                issue: [this.repair.issue, [Validators.required]],
-                paymentInAdvance: [this.repair.paymentInAdvance, Validators.required]
-            })
-        });
-        this.cdr.detectChanges();
     }
 }
