@@ -189,9 +189,9 @@ export class RepairFormHandlerService {
             cost: repairForm.cost.value,
 
             // Read-only attributes - Modified by database
-            checkInDate: this.repair.checkInDate,
-            checkoutDate: this.repair.checkoutDate,
-            lastUpdateDate: this.repair.lastUpdateDate,
+            checkIn: this.repair.checkIn,
+            checkOut: this.repair.checkOut,
+            lastUpdate: this.repair.lastUpdate,
             audit: this.repair.audit
         };
     }

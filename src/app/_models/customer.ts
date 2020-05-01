@@ -7,8 +7,8 @@ export class Customer {
     public lastName: string;
     public email: string;
     public address: string;
-    public telephone: number;
-    public secondaryTelephone: number;
+    public telephone: string;
+    public secondaryTelephone: string;
     public user: User;
 
     constructor() {

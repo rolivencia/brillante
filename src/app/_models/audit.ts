@@ -4,5 +4,5 @@ export class Audit {
     public deleted: boolean;
     public enabled: boolean;
     public createdAt: Moment;
-    public enabledAt: Moment;
+    public updatedAt: Moment;
 }

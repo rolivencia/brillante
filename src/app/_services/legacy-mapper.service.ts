@@ -1,15 +1,61 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '@app/_models/customer';
-import { Repair, User } from '@app/_models';
+import { Repair, RepairLegacy, User } from '@app/_models';
 import { AuthenticationService } from '@app/_services/authentication.service';
+import { RepairService } from '@app/_services/repair.service';
+import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LegacyMapperService {
     private currentUser: User;
-    constructor(private authenticationService: AuthenticationService) {
+    constructor(private authenticationService: AuthenticationService, private repairService: RepairService) {
+        moment.locale('es');
         this.authenticationService.currentUser.subscribe(x => (this.currentUser = x));
+    }
+
+    fromLegacyRepair(repairLegacy: RepairLegacy): Repair {
+        return {
+            id: repairLegacy.repairId,
+            customer: this.extractCustomerFromLegacyRepair(repairLegacy),
+            issue: repairLegacy.problema,
+            paymentInAdvance: parseFloat(repairLegacy.seniaReparacion),
+            cost: parseFloat(repairLegacy.costoReparacion),
+            price: parseFloat(repairLegacy.precioReparacion),
+            checkIn: moment(repairLegacy.fechaIngresoDate),
+            checkOut: repairLegacy.fechaReparacionTerminadaDate ? moment(repairLegacy.fechaReparacionTerminadaDate) : null,
+            lastUpdate: moment(repairLegacy.fechaUltimaActualizacionDate),
+            note: repairLegacy.nota,
+            status: this.repairService.repairStatuses.filter(repairStatus => repairStatus.id === repairLegacy.estadoId).pop(),
+            device: {
+                manufacturer: repairLegacy.marca,
+                model: repairLegacy.modelo,
+                deviceId: repairLegacy.imei,
+                turnedOn: !!repairLegacy.encendido,
+                type: this.repairService.deviceTypes.filter(deviceType => deviceType.id === repairLegacy.tipoEquipoId).pop()
+            },
+            audit: {
+                enabled: true,
+                deleted: false,
+                createdAt: moment(repairLegacy.fechaIngresoDate),
+                updatedAt: moment(repairLegacy.fechaUltimaActualizacionDate)
+            }
+        };
+    }
+
+    extractCustomerFromLegacyRepair(repairLegacy: RepairLegacy): Customer {
+        return {
+            id: repairLegacy.clientId,
+            dni: repairLegacy.dniCliente,
+            firstName: repairLegacy.nombreCliente,
+            lastName: repairLegacy.apellidoCliente,
+            email: repairLegacy.emailCliente,
+            address: repairLegacy.direccionCliente,
+            telephone: repairLegacy.telefonoCliente.toString(),
+            secondaryTelephone: repairLegacy.telefonoCliente.toString(),
+            user: null
+        };
     }
 
     /**

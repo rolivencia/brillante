@@ -1,4 +1,4 @@
-import { DeviceType, RepairLegacy } from '@app/_models';
+import { DeviceType, RepairLegacy, RepairStatus } from '@app/_models';
 import { environment } from '@environments/environment';
 import { GlobalService } from '@app/_services/global.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -12,6 +12,8 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root'
 })
 export class RepairService {
+    private endpoint = `/reparacion.php`;
+
     //FIXME: Cargar desde base de datos
     public deviceTypes: DeviceType[] = [
         {
@@ -32,7 +34,17 @@ export class RepairService {
         }
     ];
 
-    private endpoint = `/reparacion.php`;
+    //FIXME: Cargar desde base de datos
+    public repairStatuses: RepairStatus[] = [
+        { id: 0, description: 'Ingresada al Sistema' },
+        { id: 1, description: 'En proceso' },
+        { id: 2, description: 'Esperando por repuestos' },
+        { id: 3, description: 'Requiere intervención del cliente (Comunicarse con Brillante)' },
+        { id: 4, description: 'Listo para entrega' },
+        { id: 5, description: 'Finalizada y abonada' },
+        { id: 6, description: 'Reingresado' },
+        { id: 7, description: 'Devuelto sin reparar' }
+    ];
 
     constructor(private http: HttpClient, private globalService: GlobalService) {}
 

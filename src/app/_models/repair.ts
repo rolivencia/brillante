@@ -10,9 +10,9 @@ export class Repair {
     public issue: string;
     public status: RepairStatus;
     public audit: Audit;
-    public checkInDate: Moment;
-    public lastUpdateDate: Moment;
-    public checkoutDate: Moment;
+    public checkIn: Moment;
+    public lastUpdate: Moment;
+    public checkOut: Moment;
     public paymentInAdvance: number;
     public price: number;
     public cost: number;
@@ -31,9 +31,9 @@ export class Repair {
         this.note = '';
 
         // Date attributes
-        this.checkInDate = null;
-        this.lastUpdateDate = null;
-        this.checkoutDate = null;
+        this.checkIn = null;
+        this.lastUpdate = null;
+        this.checkOut = null;
     }
 }
 
@@ -74,10 +74,12 @@ export class RepairLegacy {
     public apellidoCliente: string;
     public encendido: number;
     public estado: string;
-    public fechaIngreso: string;
+    public fechaIngresoDate: string;
     public fechaReparacionTerminada: string;
     public fechaUltimaActualizacion: string;
     public horaUltimaActualizacion: string;
+    public fechaReparacionTerminadaDate?: string;
+    public fechaUltimaActualizacionDate?: string;
     public problema: string;
     public imei: string;
     public marca: string;
@@ -95,7 +97,8 @@ export class RepairLegacy {
     public telefonoCliente: string | number;
     public costoReparacion: string;
     public direccionCliente?: string;
-    public dniCliente?: string;
-
+    public dniCliente?: number;
+    public clientId?: number;
+    public estadoId?: number;
     constructor() {}
 }

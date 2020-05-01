@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import { RepairLegacy } from '@app/_models';
 import * as moment from 'moment';
+import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 
 @Component({
     selector: 'app-repair-update',
@@ -14,12 +15,21 @@ import * as moment from 'moment';
 export class RepairUpdateComponent implements OnInit {
     public repairLegacy: RepairLegacy;
 
-    constructor(public location: Location, public repairFormHandlerService: RepairFormHandlerService, private route: ActivatedRoute) {}
+    constructor(
+        public location: Location,
+        private legacyMapperService: LegacyMapperService,
+        public repairFormHandlerService: RepairFormHandlerService,
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         if (this.route.snapshot.data['legacyRepair']) {
             this.repairLegacy = this.route.snapshot.data['legacyRepair'];
-            console.log(this.repairLegacy);
+            this.repairFormHandlerService.customer = this.legacyMapperService.extractCustomerFromLegacyRepair(this.repairLegacy);
+            this.repairFormHandlerService.repair = this.legacyMapperService.fromLegacyRepair(this.repairLegacy);
+
+            console.log(this.repairFormHandlerService.customer);
+            console.log(this.repairFormHandlerService.repair);
         }
     }
 
@@ -94,7 +104,7 @@ export class RepairUpdateComponent implements OnInit {
 
             const fechaActual = moment(new Date());
 
-            const fechaIngreso = moment(new Date(this.repairLegacy.fechaIngreso));
+            const fechaIngreso = moment(new Date(this.repairLegacy.fechaIngresoDate));
 
             doc.setFontSize(14);
 
