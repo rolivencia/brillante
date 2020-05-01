@@ -100,5 +100,6 @@ export class RepairLegacy {
     public dniCliente?: number;
     public clientId?: number;
     public estadoId?: number;
+    public userId?: number;
     constructor() {}
 }

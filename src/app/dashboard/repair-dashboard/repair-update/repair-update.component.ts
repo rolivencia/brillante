@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import { RepairLegacy } from '@app/_models';
 import * as moment from 'moment';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
+import { RepairService } from '@app/_services/repair.service';
 
 @Component({
     selector: 'app-repair-update',
@@ -19,6 +20,7 @@ export class RepairUpdateComponent implements OnInit {
         public location: Location,
         private legacyMapperService: LegacyMapperService,
         public repairFormHandlerService: RepairFormHandlerService,
+        public repairService: RepairService,
         private route: ActivatedRoute
     ) {}
 

@@ -39,7 +39,8 @@ export class LegacyMapperService {
                 enabled: true,
                 deleted: false,
                 createdAt: moment(repairLegacy.fechaIngresoDate),
-                updatedAt: moment(repairLegacy.fechaUltimaActualizacionDate)
+                updatedAt: moment(repairLegacy.fechaUltimaActualizacionDate),
+                createdBy: this.authenticationService.currentUserValue
             }
         };
     }

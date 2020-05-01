@@ -1,0 +1,21 @@
+#customer-data {
+    p {
+        margin-bottom: 0.25rem;
+    }
+}
+
+#device-data,
+#repair-data {
+    p {
+        margin: 0;
+    }
+}
+
+#repair-data {
+    #issue-description {
+        height: 150px;
+        width: 540px;
+        text-align: justify;
+        overflow-x: auto;
+    }
+}
