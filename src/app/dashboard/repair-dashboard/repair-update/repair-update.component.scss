@@ -12,6 +12,9 @@
 }
 
 #repair-data {
+    .card-body {
+        height: 450px;
+    }
     #issue-description {
         height: 150px;
         width: 540px;

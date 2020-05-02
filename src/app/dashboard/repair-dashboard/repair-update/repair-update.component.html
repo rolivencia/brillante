@@ -56,13 +56,15 @@
                                     <strong>¿Llegó encendido?: </strong> {{ repairFormHandlerService.repair.device.turnedOn ? 'Sí' : 'No' }}
                                 </p>
                             </div>
-                            <div class="px-2">
+                            <div class="px-2" *ngIf="repairFormHandlerService.repair.device.deviceId">
                                 <p><strong>IMEI | S/N: </strong> {{ repairFormHandlerService.repair.device.deviceId }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <div id="repair-data" class="card">
                     <div class="card-header text-white bg-secondary py-2">🛠 Datos de la Reparación</div>
