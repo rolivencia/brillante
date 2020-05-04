@@ -5,8 +5,9 @@ const sequelizeConnector = connector.legacyDbConnector();
 const Client = require('server/client/client.model');
 
 class Repair extends Sequelize.Model {}
+class RepairStatusHistory extends Sequelize.Model {}
 
-module.exports = () => Repair;
+module.exports = { Repair, RepairStatusHistory };
 
 Repair.init(
     {
@@ -133,6 +134,61 @@ Repair.init(
     {
         sequelize: sequelizeConnector,
         modelName: 'sh_fix_repair'
+    }
+);
+
+RepairStatusHistory.init(
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            field: 'repair_status_history_id'
+        },
+        idRepair: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            field: 'repair_id'
+        },
+        idStatus: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            field: 'status_id'
+        },
+        createdAt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            field: 'created_date_tz'
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            field: 'modified_date_tz'
+        },
+        updatedBy: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            field: 'modified_user_id'
+        },
+        cost: {
+            type: Sequelize.DECIMAL,
+            allowNull: false,
+            field: 'repair_cost'
+        },
+        price: {
+            type: Sequelize.DECIMAL,
+            allowNull: false,
+            field: 'repair_price'
+        },
+        paymentInAdvance: {
+            type: Sequelize.DECIMAL,
+            allowNull: false,
+            field: 'repair_pay_in_advance'
+        }
+    },
+    {
+        sequelize: sequelizeConnector,
+        modelName: 'sh_fix_repair_status_history'
     }
 );
 

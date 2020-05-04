@@ -30,6 +30,7 @@ export class RepairUpdateComponent implements OnInit {
             this.repairFormHandlerService.customer = this.legacyMapperService.extractCustomerFromLegacyRepair(this.repairLegacy);
             this.repairFormHandlerService.repair = this.legacyMapperService.fromLegacyRepair(this.repairLegacy);
             this.repairFormHandlerService.formGroup = this.repairFormHandlerService.loadForm();
+            this.getHistory();
         }
     }
 
@@ -222,5 +223,10 @@ export class RepairUpdateComponent implements OnInit {
                 'Faltan datos necesarios para poder crear el comprobante. Compruebe haber guardado previamente el estado actual de la reparaciÃ³n. Revise que la reparaciÃ³n tenga estado "Listo para Entregar", "Pagado y Entregado" o "Saldo Pendiente", que las notas de la reparaciÃ³n no sean vacÃ­as y que ademÃ¡s el precio de la reparaciÃ³n sea distinto de cero.'
             );
         }
+    }
+
+    public async getHistory() {
+        const response = await this.repairService.getHistory(this.repairFormHandlerService.repair.id).toPromise();
+        console.log(response);
     }
 }

@@ -1,6 +1,7 @@
 const Client = require('server/client/client.model');
-const Repair = require('server/repair/repair.model');
+const repair = require('server/repair/repair.model');
 const RepairStatus = require('server/repair/repair-status.model');
+const RepairHistory = require('server/repair/repair-status.model');
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -9,14 +10,15 @@ module.exports = {
     create,
     getAll,
     getById,
-    update
+    update,
+    getHistoryByRepairId
 };
 
 async function create() {}
 
 async function getAll({ showFinished, startDate, endDate }) {
     if (showFinished) {
-        return Repair().findAll({
+        return repair.Repair().findAll({
             attributes: [
                 'id',
                 'manufacturer',
@@ -53,7 +55,7 @@ async function getAll({ showFinished, startDate, endDate }) {
             }
         });
     } else {
-        return Repair().findAll({
+        return repair.Repair().findAll({
             attributes: [
                 'id',
                 'manufacturer',
@@ -80,10 +82,21 @@ async function getAll({ showFinished, startDate, endDate }) {
 }
 
 async function getById(id) {
-    return Repair().findOne({
+    return repair.Repair().findOne({
         where: {
             id: id
         }
+    });
+}
+
+async function getHistoryByRepairId(idRepair) {
+    return repair.RepairStatusHistory.findAll({
+        attributes: ['id', 'updatedAt', 'updatedBy', 'idStatus', 'paymentInAdvance', 'cost', 'price'],
+        where: {
+            idRepair: idRepair,
+            updatedAt: { [Op.ne]: null }
+        },
+        order: [['updatedAt', 'DESC']]
     });
 }
 

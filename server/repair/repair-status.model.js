@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.legacyDbConnector();
 
-const Repair = require('server/repair/repair.model');
+const repair = require('server/repair/repair.model');
 
 class RepairStatusModel extends Sequelize.Model {}
 
@@ -28,9 +28,9 @@ RepairStatusModel.init(
     }
 );
 
-RepairStatusModel.belongsTo(Repair(), { as: 'repair', foreignKey: 'id_status' });
+RepairStatusModel.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'id_status' });
 
-Repair().hasMany(RepairStatusModel, {
+repair.Repair.hasMany(RepairStatusModel, {
     as: 'repairStatus',
     sourceKey: 'idStatus',
     foreignKey: 'id'

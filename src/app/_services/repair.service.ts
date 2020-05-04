@@ -72,6 +72,10 @@ export class RepairService {
         return this.http.get<any>(`${environment.apiUrl}/repair`, { headers: headers, params: params });
     }
 
+    public getHistory(idRepair: number): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/repair/history/${idRepair}`, { headers: headers });
+    }
+
     public getByClientIdLegacy(clientId: number): Observable<RepairLegacy> {
         const params = new HttpParams().set('action', 'getByClientId').append('clientId', clientId.toString());
         return this.http.get<RepairLegacy>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
