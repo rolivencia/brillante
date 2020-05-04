@@ -110,13 +110,13 @@ export class RepairUpdateComponent implements OnInit {
             doc.setFontSize(14);
 
             doc.text(
-                this.capitalize(fechaIngreso.format('dddd')) +
+                this.capitalize(fechaActual.format('dddd')) +
                     ' ' +
-                    fechaIngreso.format('DD') +
+                    fechaActual.format('DD') +
                     ' de ' +
                     this.capitalize(fechaIngreso.format('MMMM')) +
                     ' de ' +
-                    fechaIngreso.format('YYYY'),
+                    fechaActual.format('YYYY'),
                 130,
                 lastLine - 1
             );
