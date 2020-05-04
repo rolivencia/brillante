@@ -11,6 +11,13 @@
     }
 }
 
+#repair-history {
+    height: 100%;
+    .card .card-body {
+        height: unset;
+    }
+}
+
 #repair-data {
     .card-body {
         height: 450px;

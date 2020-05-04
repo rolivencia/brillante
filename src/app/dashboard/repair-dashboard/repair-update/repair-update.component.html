@@ -81,14 +81,18 @@
                     <div id="repair-data" class="card">
                         <div class="card-header text-white bg-secondary py-2">🛠 Datos de la Reparación</div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row h-100">
                                 <div class="col-4">
-                                    <div class="px-2">
+                                    <div id="repair-history" class="px-2">
                                         <p><strong>Historial de la Reparación: </strong></p>
+                                        <!--TODO: Implementar esta funcionalidad-->
+                                        <div class="alert alert-info text-center d-flex align-items-center">
+                                            <h3>Funcionalidad pendiente de implementación</h3>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-8">
-                                    <div class="d-flex justify-content-between">
+                                <div class="col-8 d-flex align-content-between flex-wrap">
+                                    <div class="w-100 d-flex justify-content-between">
                                         <div id="issue-description" class="px-2">
                                             <p><strong>Descripción del Problema: </strong></p>
                                             {{ repairFormHandlerService.repair.issue }}
@@ -109,7 +113,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="w-100 d-flex justify-content-between">
                                         <div class="px-2 mb-2">
                                             <p><strong>Estado de la Reparación: </strong></p>
                                             <div class="form-inline flex-grow-1">
@@ -171,7 +175,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex">
+                                    <div class="w-100 d-flex">
                                         <div class="px-2 mb-2 w-100">
                                             <p><strong>Notas sobre la Reparación: </strong></p>
                                             <textarea
