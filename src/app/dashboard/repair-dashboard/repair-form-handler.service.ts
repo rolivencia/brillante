@@ -11,6 +11,13 @@ import { ToastrService } from 'ngx-toastr';
     providedIn: 'root'
 })
 export class RepairFormHandlerService {
+    get saved(): boolean {
+        return this._saved;
+    }
+
+    set saved(value: boolean) {
+        this._saved = value;
+    }
     get customerControl() {
         return this.formGroup.controls.customer['controls'];
     }
@@ -65,6 +72,7 @@ export class RepairFormHandlerService {
 
     private _customerExists: boolean = false;
     private _submitted: boolean = false;
+    private _saved: boolean = false;
 
     private _customer: Customer = new Customer();
     private _repair: Repair = new Repair();
@@ -227,7 +235,7 @@ export class RepairFormHandlerService {
         const legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
         if (!this.customerExists) {
             const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
-            this.customer.id = savedCustomer.id ?? null;
+            this.customer.id = savedCustomer?.id;
             if (!savedCustomer?.code) {
                 this.toastrService.error('Error al registrar cliente.');
                 return;
@@ -249,5 +257,37 @@ export class RepairFormHandlerService {
         }
     }
 
-    public async update(repair: Repair = this.repair) {}
+    public async update() {
+        this.submitted = true;
+
+        if (this.formGroup.invalid) {
+            this.toastrService.info('Falta llenar campos para modificar esta reparación.');
+            return;
+        }
+
+        if (this.formGroup.pristine) {
+            this.toastrService.info('Debe realizar cambios para poder guardar esta reparación');
+            return;
+        }
+
+        this.assignCustomerForm();
+        this.assignRepairForm();
+
+        this.patchCustomer();
+        this.patchRepair();
+
+        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair);
+        const result = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
+
+        if (!result) {
+            if (result.errorCode) {
+                this.toastrService.error(result.errorCode);
+            }
+        } else if (result) {
+            this.toastrService.success(result.message);
+            this.saved = true;
+        }
+
+        // TODO: Proceder a actualizar el historial de la reparación al recibir la respuesta.
+    }
 }

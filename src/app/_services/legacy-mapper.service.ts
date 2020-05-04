@@ -80,6 +80,25 @@ export class LegacyMapperService {
     }
 
     /**
+     * Genera el objeto para actualizar una reparación con el API legacy
+     * @deprecated
+     * @param repair - Reparación
+     * @param generateTransaction - Boolean. Determina si se anota en caja el ingreso de la reparación.
+     */
+
+    toLegacyRepairTracking(repair: Repair, generateTransaction?: boolean) {
+        return {
+            repairId: repair.id,
+            statusId: repair.status.id,
+            nota: repair.note,
+            seniaReparacion: repair.paymentInAdvance,
+            costoReparacion: repair.cost,
+            precioReparacion: repair.price,
+            generateTransaction: generateTransaction ? generateTransaction : false
+        };
+    }
+
+    /**
      * Transforma los objetos Customer del nuevo cliente HTML5 al formato que acepta el API legacy
      * @deprecated
      * @param customer - Instance of Customer class

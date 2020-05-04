@@ -97,4 +97,12 @@ export class RepairService {
             { headers: headers }
         );
     }
+
+    public updateLegacy(partialRepair) {
+        return this.http.post<any>(
+            `${this.globalService.webApiUrl}${this.endpoint}`,
+            { ...partialRepair, action: 'updateTracking' },
+            { headers: headers }
+        );
+    }
 }

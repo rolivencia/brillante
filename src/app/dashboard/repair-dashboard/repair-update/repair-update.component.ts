@@ -29,9 +29,7 @@ export class RepairUpdateComponent implements OnInit {
             this.repairLegacy = this.route.snapshot.data['legacyRepair'];
             this.repairFormHandlerService.customer = this.legacyMapperService.extractCustomerFromLegacyRepair(this.repairLegacy);
             this.repairFormHandlerService.repair = this.legacyMapperService.fromLegacyRepair(this.repairLegacy);
-
-            console.log(this.repairFormHandlerService.customer);
-            console.log(this.repairFormHandlerService.repair);
+            this.repairFormHandlerService.formGroup = this.repairFormHandlerService.loadForm();
         }
     }
 

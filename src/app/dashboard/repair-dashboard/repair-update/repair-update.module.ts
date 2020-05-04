@@ -5,10 +5,11 @@ import { RepairUpdateRoutingModule } from './repair-update-routing.module';
 import { RepairService } from '@app/_services/repair.service';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { WjInputModule } from 'wijmo/wijmo.angular2.input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [RepairUpdateComponent],
-    imports: [CommonModule, RepairUpdateRoutingModule, WjInputModule],
+    imports: [CommonModule, RepairUpdateRoutingModule, WjInputModule, ReactiveFormsModule],
     providers: [LegacyMapperService, RepairService]
 })
 export class RepairUpdateModule {}
