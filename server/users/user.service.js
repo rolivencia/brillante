@@ -34,7 +34,7 @@ async function authenticate({ username, password }) {
 async function getAll() {
     return new Promise((resolve, reject) => {
         connection.mysqlConnector().query(`SELECT * FROM user`, (err, result) => {
-            if (err) reject(error);
+            if (err) reject(err);
             if (result && result.length) {
                 resolve(
                     result.map(userRow => ({

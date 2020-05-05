@@ -1,7 +1,7 @@
 const Client = require('server/client/client.model');
+
 const repair = require('server/repair/repair.model');
-const RepairStatus = require('server/repair/repair-status.model');
-const RepairHistory = require('server/repair/repair-status.model');
+const repairStatus = require('server/repair/repair.status');
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -71,6 +71,12 @@ async function getAll({ showFinished, startDate, endDate }) {
                 'repairPrice',
                 'equipmentTurnedOn'
             ],
+            include: [
+                {
+                    as: 'status',
+                    model: repairStatus.RepairStatus
+                }
+            ],
             where: {
                 idStatus: { [Op.notIn]: [5, 7] },
                 dischargeDate: { [Op.between]: [startDate, endDate] },
@@ -91,7 +97,14 @@ async function getById(id) {
 
 async function getHistoryByRepairId(idRepair) {
     return repair.RepairStatusHistory.findAll({
-        attributes: ['id', 'updatedAt', 'updatedBy', 'idStatus', 'paymentInAdvance', 'cost', 'price'],
+        attributes: ['id', 'createdAt', 'updatedAt', 'updatedBy', 'paymentInAdvance', 'cost', 'price', 'note'],
+        include: [
+            {
+                as: 'status',
+                model: repairStatus.RepairStatus,
+                attributes: ['id', 'status']
+            }
+        ],
         where: {
             idRepair: idRepair,
             updatedAt: { [Op.ne]: null }

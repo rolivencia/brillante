@@ -85,10 +85,28 @@
                                 <div class="col-4">
                                     <div id="repair-history" class="px-2">
                                         <p><strong>Historial de la Reparación: </strong></p>
-                                        <!--TODO: Implementar esta funcionalidad-->
-                                        <div class="alert alert-info text-center d-flex align-items-center">
-                                            <h3>Funcionalidad pendiente de implementación</h3>
-                                        </div>
+                                        <!--TODO: Mover lógica a servicio de reparaciones-->
+                                        <wj-flex-grid
+                                            class="mt-2"
+                                            *ngIf="statusHistory.length"
+                                            [itemsSource]="statusHistory"
+                                            [selectionMode]="'Row'"
+                                            [headersVisibility]="'Column'"
+                                            [autoGenerateColumns]="false"
+                                            [allowResizing]="'Columns'"
+                                            [allowSorting]="false"
+                                            [showSelectedHeaders]="'Row'"
+                                            [isReadOnly]="true"
+                                        >
+                                            <wj-flex-grid-column
+                                                *ngFor="let column of columns"
+                                                [width]="column.width"
+                                                [binding]="column.binding"
+                                                [header]="column.header"
+                                                [visible]="true"
+                                            >
+                                            </wj-flex-grid-column>
+                                        </wj-flex-grid>
                                     </div>
                                 </div>
                                 <div class="col-8 d-flex align-content-between flex-wrap">

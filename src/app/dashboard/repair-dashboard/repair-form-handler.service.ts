@@ -169,13 +169,11 @@ export class RepairFormHandlerService {
         if (dni) {
             const result = await this.customerService.getByDniLegacy(dni).toPromise();
             this.customerExists = result.code !== 0;
-            this.customer = this.customerExists ? this.legacyMapperService.fromLegacyCustomer(result) : new Customer();
+            this.customer = this.customerExists ? this.legacyMapperService.fromLegacyCustomer(result) : this.customer;
+            this.patchCustomer();
         } else {
             this.customerExists = false;
-            this.customer = new Customer();
         }
-
-        this.patchCustomer();
     }
 
     public assignRepairForm(repairForm = this.repairControl, deviceForm = this.deviceControl) {

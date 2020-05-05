@@ -4,11 +4,9 @@ const sequelizeConnector = connector.legacyDbConnector();
 
 const repair = require('server/repair/repair.model');
 
-class RepairStatusModel extends Sequelize.Model {}
+class RepairStatus extends Sequelize.Model {}
 
-module.exports = () => RepairStatusModel;
-
-RepairStatusModel.init(
+RepairStatus.init(
     {
         id: {
             type: Sequelize.INTEGER,
@@ -25,13 +23,15 @@ RepairStatusModel.init(
     {
         sequelize: sequelizeConnector,
         modelName: 'sh_fix_tab_status'
+    },
+    {
+        classMethods: {
+            associate: function() {
+                RepairStatus.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'status_id' });
+                RepairStatus.belongsTo(repair.RepairStatusHistory, { as: 'repairStatusHistory', foreignKey: 'status_id' });
+            }
+        }
     }
 );
 
-RepairStatusModel.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'id_status' });
-
-repair.Repair.hasMany(RepairStatusModel, {
-    as: 'repairStatus',
-    sourceKey: 'idStatus',
-    foreignKey: 'id'
-});
+module.exports = { RepairStatus };

@@ -3,8 +3,10 @@ import { environment } from '@environments/environment';
 import { GlobalService } from '@app/_services/global.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Moment } from 'moment';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { Moment } from 'moment';
+import { map } from 'rxjs/operators';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -73,7 +75,17 @@ export class RepairService {
     }
 
     public getHistory(idRepair: number): Observable<any> {
-        return this.http.get<any>(`${environment.apiUrl}/repair/history/${idRepair}`, { headers: headers });
+        return this.http
+            .get<any>(`${environment.apiUrl}/repair/history/${idRepair}`, { headers: headers })
+            .pipe(
+                map(historical =>
+                    historical.map(register => ({
+                        ...register,
+                        createdAt: register.createdAt ? moment(register.createdAt).format('YYYY/MM/DD HH:mm') : register.createdAt,
+                        updatedAt: register.updatedAt ? moment(register.updatedAt).format('YYYY/MM/DD HH:mm') : register.updatedAt
+                    }))
+                )
+            );
     }
 
     public getByClientIdLegacy(clientId: number): Observable<RepairLegacy> {
@@ -105,6 +117,7 @@ export class RepairService {
     public updateLegacy(partialRepair) {
         return this.http.post<any>(
             `${this.globalService.webApiUrl}${this.endpoint}`,
+
             { ...partialRepair, action: 'updateTracking' },
             { headers: headers }
         );

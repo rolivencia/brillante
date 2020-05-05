@@ -17,7 +17,7 @@ export class MainHeaderComponent implements OnInit {
         { label: 'Clientes', route: '/client-dashboard', enabled: true, visible: true },
         {
             label: 'Reparaciones',
-            route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }],
+            route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true
         },

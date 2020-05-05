@@ -3,11 +3,10 @@ const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.legacyDbConnector();
 
 const Client = require('server/client/client.model');
+const repairStatus = require('server/repair/repair.status');
 
 class Repair extends Sequelize.Model {}
 class RepairStatusHistory extends Sequelize.Model {}
-
-module.exports = { Repair, RepairStatusHistory };
 
 Repair.init(
     {
@@ -61,7 +60,7 @@ Repair.init(
             allowNull: false,
             references: {
                 model: 'sh_fix_tab_status',
-                key: 'idStatus'
+                key: 'id'
             },
             field: 'id_status'
         },
@@ -153,6 +152,10 @@ RepairStatusHistory.init(
         idStatus: {
             type: Sequelize.INTEGER,
             allowNull: false,
+            references: {
+                model: 'sh_fix_tab_status',
+                key: 'id'
+            },
             field: 'status_id'
         },
         createdAt: {
@@ -192,9 +195,15 @@ RepairStatusHistory.init(
     }
 );
 
+RepairStatusHistory.belongsTo(repairStatus.RepairStatus, { as: 'status', foreignKey: 'status_id' });
+//repairStatus.RepairStatus.belongsTo(Repair, { as: 'repair', foreignKey: 'status_id' });
+repairStatus.RepairStatus.hasMany(RepairStatusHistory, { as: 'repairStatusHistory', foreignKey: 'status_id' });
+
 Repair.belongsTo(Client(), { as: 'client', foreignKey: 'idClient' });
 
 Client().hasMany(Repair, {
     as: 'repair',
     foreignKey: 'idRepair'
 });
+
+module.exports = { Repair, RepairStatusHistory };

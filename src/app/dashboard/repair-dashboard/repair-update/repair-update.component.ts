@@ -15,6 +15,12 @@ import { RepairService } from '@app/_services/repair.service';
 })
 export class RepairUpdateComponent implements OnInit {
     public repairLegacy: RepairLegacy;
+    public statusHistory = [];
+
+    columns: any[] = [
+        { header: 'Estados Anteriores', binding: 'status.status', width: '*' },
+        { header: 'Fecha de modificación', binding: 'updatedAt', width: '*' }
+    ];
 
     constructor(
         public location: Location,
@@ -44,7 +50,7 @@ export class RepairUpdateComponent implements OnInit {
     };
 
     // FIXME: Implement this method - Add missing fonts. Check for date formatting and handling.
-
+    // FIXME: Refactor and relocate image usages
     public print() {
         if (this.canGenerateInvoice()) {
             // Default export is a4 paper, portrait, using milimeters for units
@@ -227,6 +233,6 @@ export class RepairUpdateComponent implements OnInit {
 
     public async getHistory() {
         const response = await this.repairService.getHistory(this.repairFormHandlerService.repair.id).toPromise();
-        console.log(response);
+        this.statusHistory = [].concat(response);
     }
 }
