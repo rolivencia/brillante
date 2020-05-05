@@ -83,9 +83,16 @@
                         <div class="card-body">
                             <div class="row h-100">
                                 <div class="col-4">
+                                    <div class="px-2 mb-2">
+                                        <p><strong>Fecha y Hora de Ingreso: </strong></p>
+                                        <p>{{ repairFormHandlerService.repair.checkIn.format('YYYY/MM/DD HH:mm') }}</p>
+                                    </div>
                                     <div id="repair-history" class="px-2">
                                         <p><strong>Historial de la Reparación: </strong></p>
                                         <!--TODO: Mover lógica a servicio de reparaciones-->
+                                        <div *ngIf="!statusHistory.length">
+                                            <p>La reparación aún no presenta ningún cambio de estado.</p>
+                                        </div>
                                         <wj-flex-grid
                                             class="mt-2"
                                             *ngIf="statusHistory.length"

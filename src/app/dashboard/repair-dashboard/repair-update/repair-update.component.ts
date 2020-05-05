@@ -1,11 +1,11 @@
+import * as moment from 'moment';
+import jsPDF from 'jspdf';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
-import { ActivatedRoute } from '@angular/router';
-import jsPDF from 'jspdf';
 import { RepairLegacy } from '@app/_models';
-import * as moment from 'moment';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { RepairService } from '@app/_services/repair.service';
 
 @Component({

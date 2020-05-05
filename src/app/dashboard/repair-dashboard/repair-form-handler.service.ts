@@ -169,8 +169,10 @@ export class RepairFormHandlerService {
         if (dni) {
             const result = await this.customerService.getByDniLegacy(dni).toPromise();
             this.customerExists = result.code !== 0;
-            this.customer = this.customerExists ? this.legacyMapperService.fromLegacyCustomer(result) : this.customer;
-            this.patchCustomer();
+            if (this.customerExists) {
+                this.customer = this.legacyMapperService.fromLegacyCustomer(result);
+                this.patchCustomer();
+            }
         } else {
             this.customerExists = false;
         }
