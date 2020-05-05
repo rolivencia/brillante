@@ -4,3 +4,43 @@
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @import '~ngx-toastr/toastr-bs4-alert';
+
+//@font-face{
+//  font-family: 'GothamBold';
+//  src: url('css/fonts/GOTHAM-BOLD.ttf');
+//}
+//
+//@font-face{
+//  font-family: 'GothamLight';
+//  src: url('css/fonts/GOTHAM-LIGHT.TTF');
+//}
+//
+//@font-face{
+//  font-family: 'OpenSansRegular';
+//  src: url('css/fonts/OpenSans-Regular.ttf');
+//}
+//
+//@font-face{
+//  font-family: 'OpenSansSemiBold';
+//  src: url('css/fonts/OpenSans-Semibold.ttf');
+//}
+//
+//@font-face{
+//  font-family: 'OpenSansBold';
+//  src: url('css/fonts/OpenSans-Bold.ttf');
+//}
+
+@font-face {
+    font-family: 'BariolRegular';
+    src: url('assets/fonts/Bariol_Regular.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadProLight';
+    src: url('assets/fonts/MyriadPro-Light.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadProRegular';
+    src: url('assets/fonts/MyriadPro-Regular.ttf');
+}
