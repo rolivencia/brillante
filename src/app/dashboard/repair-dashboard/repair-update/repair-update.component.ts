@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 import { RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-repair-update',
@@ -27,7 +28,8 @@ export class RepairUpdateComponent implements OnInit {
         private legacyMapperService: LegacyMapperService,
         public repairFormHandlerService: RepairFormHandlerService,
         public repairService: RepairService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastrService: ToastrService
     ) {}
 
     ngOnInit() {
@@ -40,8 +42,9 @@ export class RepairUpdateComponent implements OnInit {
         }
     }
 
-    private canGenerateInvoice(): boolean {
-        return true;
+    private canGenerateReport(): boolean {
+        const repair = this.repairFormHandlerService.repair;
+        return [4, 5, 8].includes(repair.status.id) && repair.note && !!repair.price;
     }
 
     private capitalize = s => {
@@ -52,7 +55,7 @@ export class RepairUpdateComponent implements OnInit {
     // FIXME: Implement this method - Add missing fonts. Check for date formatting and handling.
     // FIXME: Refactor and relocate image usages
     public print() {
-        if (this.canGenerateInvoice()) {
+        if (this.canGenerateReport()) {
             // Default export is a4 paper, portrait, using milimeters for units
 
             const brillanteLogo =
@@ -179,9 +182,10 @@ export class RepairUpdateComponent implements OnInit {
 
             doc.text('Modelo:  ' + this.repairLegacy.marca + ' ' + this.repairLegacy.modelo, 15, lastLine);
 
-            lastLine += 10;
-
-            doc.text('IMEI:  ' + this.repairLegacy.imei, 15, lastLine);
+            if (this.repairLegacy.imei) {
+                lastLine += 10;
+                doc.text('IMEI:  ' + this.repairLegacy.imei, 15, lastLine);
+            }
 
             lastLine += 10;
 
@@ -225,8 +229,8 @@ export class RepairUpdateComponent implements OnInit {
 
             doc.save('Comprobante_Reparacion_' + this.repairLegacy.repairId + '.pdf');
         } else {
-            alert(
-                'Faltan datos necesarios para poder crear el comprobante. Compruebe haber guardado previamente el estado actual de la reparaciÃ³n. Revise que la reparaciÃ³n tenga estado "Listo para Entregar", "Pagado y Entregado" o "Saldo Pendiente", que las notas de la reparaciÃ³n no sean vacÃ­as y que ademÃ¡s el precio de la reparaciÃ³n sea distinto de cero.'
+            this.toastrService.info(
+                'Faltan datos necesarios para poder crear el comprobante. Chequee el haber guardado previamente el estado actual de la reparación. Revise que la reparación tenga estado "Listo para Entregar", "Pagado y Entregado" o "Saldo Pendiente", que las notas de la reparación no sean vacías y que además el precio de la reparación sea distinto de cero.'
             );
         }
     }
