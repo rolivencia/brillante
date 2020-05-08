@@ -25,7 +25,7 @@ const apiRoutes = [
     { path: '/repair', controller: './server/repair/repair.controller' }
 ];
 
-app.get(existingRoutes, function(req, res) {
+app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, '/dist/brillante/index.html'));
 });
 
