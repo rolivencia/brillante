@@ -33,3 +33,7 @@
         overflow-x: auto;
     }
 }
+//FIXME: Generalize for use through all my applications
+wj-combo-box.wj-state-readonly {
+    background-color: #e9ecef !important;
+}
