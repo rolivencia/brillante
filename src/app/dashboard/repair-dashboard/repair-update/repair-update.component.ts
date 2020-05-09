@@ -46,6 +46,11 @@ export class RepairUpdateComponent implements OnInit {
         return [4, 5, 8].includes(repair.status.id) && repair.note && !!repair.price;
     }
 
+    public canRegisterPayment(): boolean {
+        const newStatus = this.repairFormHandlerService.repairControl['status']['value'];
+        return newStatus.id !== 5;
+    }
+
     public async getHistory() {
         const response = await this.repairService.getHistory(this.repairFormHandlerService.repair.id).toPromise();
         this.statusHistory = [].concat(response);

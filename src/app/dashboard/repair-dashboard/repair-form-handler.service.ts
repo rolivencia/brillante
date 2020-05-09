@@ -11,6 +11,13 @@ import { ToastrService } from 'ngx-toastr';
     providedIn: 'root'
 })
 export class RepairFormHandlerService {
+    get registerPayment(): boolean {
+        return this._registerPayment;
+    }
+
+    set registerPayment(value: boolean) {
+        this._registerPayment = value;
+    }
     get saved(): boolean {
         return this._saved;
     }
@@ -73,6 +80,7 @@ export class RepairFormHandlerService {
     private _customerExists: boolean = false;
     private _submitted: boolean = false;
     private _saved: boolean = false;
+    private _registerPayment: boolean = false;
 
     private _customer: Customer = new Customer();
     private _repair: Repair = new Repair();
@@ -276,7 +284,7 @@ export class RepairFormHandlerService {
         this.patchCustomer();
         this.patchRepair();
 
-        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair);
+        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, this.registerPayment);
         const result = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
 
         if (!result) {
