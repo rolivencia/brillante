@@ -25,10 +25,6 @@ const apiRoutes = [
     { path: '/repair', controller: './server/repair/repair.controller' }
 ];
 
-app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '/dist/brillante/index.html'));
-});
-
 // use JWT auth to secure the api
 app.use(jwt());
 
@@ -45,6 +41,10 @@ app.get('/backend', (req, res) => {
         },
         { env: process.env }
     ]);
+});
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '/dist/brillante/index.html'));
 });
 
 // Start the app by listening on the default Heroku port
