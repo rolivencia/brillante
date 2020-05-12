@@ -34,6 +34,7 @@ export class RepairUpdateComponent implements OnInit {
     ngOnInit() {
         if (this.route.snapshot.data['legacyRepair']) {
             this.repairLegacy = this.route.snapshot.data['legacyRepair'];
+            this.repairFormHandlerService.saved = false;
             this.repairFormHandlerService.customer = this.legacyMapperService.extractCustomerFromLegacyRepair(this.repairLegacy);
             this.repairFormHandlerService.repair = this.legacyMapperService.fromLegacyRepair(this.repairLegacy);
             this.repairFormHandlerService.formGroup = this.repairFormHandlerService.loadForm();

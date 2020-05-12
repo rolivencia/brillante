@@ -120,8 +120,8 @@ export class RepairFormHandlerService {
                 note: [repair.note],
                 issue: [repair.issue, [Validators.required]],
                 paymentInAdvance: [repair.paymentInAdvance, Validators.required],
-                price: [repair.paymentInAdvance, Validators.required],
-                cost: [repair.paymentInAdvance, Validators.required]
+                price: [repair.price, Validators.required],
+                cost: [repair.cost, Validators.required]
             })
         });
     }
@@ -163,8 +163,13 @@ export class RepairFormHandlerService {
                     model: repair.device.model,
                     deviceId: repair.device.deviceId
                 },
+                customer: repair.customer,
                 issue: repair.issue,
-                paymentInAdvance: repair.paymentInAdvance
+                paymentInAdvance: repair.paymentInAdvance,
+                cost: repair.cost,
+                price: repair.price,
+                status: repair.status,
+                note: repair.note
             }
         });
     }
