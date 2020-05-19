@@ -270,7 +270,7 @@ export class RepairFormHandlerService {
         }
     }
 
-    public async update() {
+    public async update(editDescription: boolean = false) {
         this.submitted = true;
 
         if (this.formGroup.invalid) {
@@ -289,15 +289,21 @@ export class RepairFormHandlerService {
         this.patchCustomer();
         this.patchRepair();
 
-        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, this.registerPayment);
-        const result = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
+        if (editDescription) {
+            const repairDescription = this.legacyMapperService.toLegacyRepairDescription(this.repair);
+            const updateResult = await this.repairService.updateDescriptionLegacy(repairDescription).toPromise();
+            console.log(updateResult);
+        }
 
-        if (!result) {
-            if (result.errorCode) {
-                this.toastrService.error(result.errorCode);
+        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, this.registerPayment);
+        const trackingUpdateResult = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
+
+        if (!trackingUpdateResult) {
+            if (trackingUpdateResult.errorCode) {
+                this.toastrService.error(trackingUpdateResult.errorCode);
             }
-        } else if (result) {
-            this.toastrService.success(result.message);
+        } else if (trackingUpdateResult) {
+            this.toastrService.success(trackingUpdateResult.message);
             this.saved = true;
         }
 

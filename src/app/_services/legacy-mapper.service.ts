@@ -86,7 +86,7 @@ export class LegacyMapperService {
      * @param generateTransaction - Boolean. Determina si se anota en caja el ingreso de la reparación.
      */
 
-    toLegacyRepairTracking(repair: Repair, generateTransaction?: boolean) {
+    public toLegacyRepairTracking(repair: Repair, generateTransaction?: boolean) {
         return {
             repairId: repair.id,
             statusId: repair.status.id,
@@ -95,6 +95,17 @@ export class LegacyMapperService {
             costoReparacion: repair.cost,
             precioReparacion: repair.price,
             generateTransaction: generateTransaction ? generateTransaction : false
+        };
+    }
+
+    public toLegacyRepairDescription(repair: Repair) {
+        return {
+            repairId: repair.id,
+            marca: repair.device.manufacturer,
+            modelo: repair.device.model,
+            imei: repair.device.deviceId,
+            problema: repair.issue,
+            tipoEquipo: repair.device.type.id
         };
     }
 

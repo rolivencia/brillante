@@ -122,4 +122,13 @@ export class RepairService {
             { headers: headers }
         );
     }
+
+    public updateDescriptionLegacy(partialRepair) {
+        return this.http.post<any>(
+            `${this.globalService.webApiUrl}${this.endpoint}`,
+
+            { ...partialRepair, action: 'updateRepairDescription' },
+            { headers: headers }
+        );
+    }
 }

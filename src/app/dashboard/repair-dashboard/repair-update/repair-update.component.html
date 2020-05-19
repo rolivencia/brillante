@@ -11,7 +11,7 @@
                 *ngIf="!repairFormHandlerService.saved"
                 type="submit"
                 class="btn btn-sm btn-outline-success"
-                (click)="repairFormHandlerService.update()"
+                (click)="repairFormHandlerService.update(editDevice)"
             >
                 💾 Guardar cambios
             </button>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="card-body">
-        <form [formGroup]="repairFormHandlerService.formGroup" (ngSubmit)="repairFormHandlerService.update()">
+        <form [formGroup]="repairFormHandlerService.formGroup" (ngSubmit)="repairFormHandlerService.update(editDevice)">
             <div class="row" formGroupName="customer">
                 <div class="col-12 mb-3">
                     <div id="customer-data" class="card">
@@ -50,11 +50,14 @@
                 </div>
             </div>
             <div class="row" formGroupName="repair">
-                <div class="col-12 mb-3">
-                    <div id="device-data" formGroupName="device" class="card">
-                        <div class="card-header text-white bg-secondary py-2">📱 Datos del Equipo</div>
+                <div class="col-12">
+                    <div id="device-data" class="card mb-3" formGroupName="device">
+                        <div class="card-header text-white bg-secondary d-flex justify-content-between py-2">
+                            <div>📱 Datos del Equipo</div>
+                            <button class="btn btn-sm btn-outline-light" type="button" (click)="toggleEditDevice()">✏️ Editar</button>
+                        </div>
                         <div class="card-body p-2">
-                            <div class="div d-flex justify-content-between">
+                            <div *ngIf="!editDevice" id="device-read-only" class="d-flex justify-content-between">
                                 <div class="px-2">
                                     <p><strong>Dispositivo: </strong> {{ repairFormHandlerService.repair.device.type.description }}</p>
                                 </div>
@@ -62,7 +65,7 @@
                                     <p><strong>Marca: </strong> {{ repairFormHandlerService.repair.device.manufacturer }}</p>
                                 </div>
                                 <div class="px-2">
-                                    <p><strong>Equipo: </strong> {{ repairFormHandlerService.repair.device.model }}</p>
+                                    <p><strong>Modelo: </strong> {{ repairFormHandlerService.repair.device.model }}</p>
                                 </div>
                                 <div class="px-2">
                                     <p>
@@ -74,10 +77,91 @@
                                     <p><strong>IMEI | S/N: </strong> {{ repairFormHandlerService.repair.device.deviceId }}</p>
                                 </div>
                             </div>
+                            <div *ngIf="editDevice" id="device-edit-data" class="d-flex justify-content-between">
+                                <div class="px-2">
+                                    <p><strong>Dispositivo: </strong></p>
+                                    <wj-combo-box
+                                        class="form-control form-control-sm p-0"
+                                        id="type"
+                                        name="type"
+                                        aria-describedby="type"
+                                        formControlName="type"
+                                        [isEditable]="false"
+                                        [isReadOnly]="repairFormHandlerService.saved"
+                                        [itemsSource]="repairService.deviceTypes"
+                                        [selectedItem]="repairFormHandlerService.repair.device.type"
+                                        [selectedIndex]="repairFormHandlerService.repair.device.type.id"
+                                        [displayMemberPath]="'description'"
+                                    ></wj-combo-box>
+                                </div>
+                                <div class="px-2">
+                                    <p><strong>Marca: </strong></p>
+                                    <input
+                                        name="manufacturer"
+                                        type="text"
+                                        class="form-control form-control-sm"
+                                        id="manufacturer"
+                                        formControlName="manufacturer"
+                                        [readOnly]="repairFormHandlerService.saved"
+                                    />
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.deviceControl['manufacturer'].errors?.required
+                                        "
+                                    >
+                                        <small>Se requiere la marca del dispositivo</small>
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <p><strong>Modelo: </strong></p>
+                                    <input
+                                        name="model"
+                                        type="text"
+                                        class="form-control form-control-sm"
+                                        id="model"
+                                        formControlName="model"
+                                        [readOnly]="repairFormHandlerService.saved"
+                                    />
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.repairFormHandlerService.submitted &&
+                                            repairFormHandlerService.deviceControl['model'].errors?.required
+                                        "
+                                    >
+                                        <small>Se requiere el modelo del dispositivo</small>
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <p><strong>¿Llegó encendido?: </strong></p>
+                                    <div class="form-check-inline">
+                                        <input
+                                            name="arrivedTurnedOn"
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            id="arrivedTurnedOn"
+                                            formControlName="turnedOn"
+                                            disabled
+                                        />
+                                        <label class="form-check-label" for="arrivedTurnedOn"> </label>
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <p><strong>IMEI | S/N: </strong></p>
+                                    <input
+                                        name="imei"
+                                        type="text"
+                                        class="form-control form-control-sm"
+                                        id="imei"
+                                        formControlName="deviceId"
+                                        [readOnly]="repairFormHandlerService.saved"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
                     <div id="repair-data" class="card">
                         <div class="card-header text-white bg-secondary py-2">🛠 Datos de la Reparación</div>
                         <div class="card-body">

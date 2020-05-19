@@ -17,6 +17,8 @@ export class RepairUpdateComponent implements OnInit {
     public repairLegacy: RepairLegacy;
     public statusHistory = [];
 
+    public editDevice: boolean = false;
+
     columns: any[] = [
         { header: 'Estados Anteriores', binding: 'status.status', width: '*' },
         { header: 'Fecha de modificación', binding: 'updatedAt', width: '*' }
@@ -63,5 +65,9 @@ export class RepairUpdateComponent implements OnInit {
             this.repairFormHandlerService.customer,
             this.repairFormHandlerService.repair
         );
+    }
+
+    public toggleEditDevice() {
+        this.editDevice = !this.editDevice;
     }
 }
