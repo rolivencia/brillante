@@ -65,6 +65,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .then(result => console.log(result));
     }
 
+    goToCash() {
+        this.router.navigate(['cash-dashboard']).then(result => console.log(result));
+    }
+
     goToLegacyCash() {
         window.open('http://brillante.brillantestore.com/cash-vista-de-gestion/', '_blank');
     }

@@ -21,8 +21,8 @@ export class MainHeaderComponent implements OnInit {
             enabled: true,
             visible: true
         },
-        { label: 'Caja', route: '/caja', enabled: false, visible: true },
-        { label: 'Stock', route: '/stock', enabled: false, visible: true }
+        { label: 'Caja', route: '/cash-dashboard', enabled: true, visible: true },
+        { label: 'Stock', route: '/products-dashboard', enabled: true, visible: true }
     ];
 
     private _userLinks = [

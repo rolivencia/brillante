@@ -46,6 +46,11 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'cash-dashboard',
+        loadChildren: () => import('./dashboard/cash-dashboard/cash-dashboard.module').then(m => m.CashDashboardModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'products-dashboard',
         loadChildren: () => import('./dashboard/products-dashboard/products-dashboard.module').then(m => m.ProductsDashboardModule),
         canActivate: [AuthGuard]
