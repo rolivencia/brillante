@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { CollectionView, SortDescription } from 'wijmo/wijmo';
-import { DateObject } from '@app/dashboard/repair-dashboard/repair-grid-results/repair-grid-results.component';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
 import { RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
+import { DateObject } from '@app/_models/date-object';
 
 @Injectable()
 export class RepairDashboardService {
@@ -36,9 +36,9 @@ export class RepairDashboardService {
     constructor(private route: ActivatedRoute, private router: Router, private repairService: RepairService) {}
 
     //FIXME: Move saving logic here
-    public saveRepair(newClient, newRepair) {
-        alert(JSON.stringify(newRepair));
-    }
+    // public saveRepair(newClient, newRepair) {
+    //     alert(JSON.stringify(newRepair));
+    // }
 
     async getGridData() {
         this.gridData = await this.repairService.getAllLegacy(this._showFinished, this._dateFrom, this._dateTo).toPromise();

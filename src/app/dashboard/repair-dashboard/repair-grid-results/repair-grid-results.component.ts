@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Moment } from 'moment';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
 import { RepairService } from '@app/_services/repair.service';
+import { DateObject } from '@app/_models/date-object';
+import { DateHandlerService } from '@app/_services/date-handler.service';
 
 @Component({
     selector: 'app-repair-grid-results',
@@ -10,7 +12,11 @@ import { RepairService } from '@app/_services/repair.service';
     styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss']
 })
 export class RepairGridResultsComponent implements OnInit {
-    constructor(private repairService: RepairService, public repairDashboardService: RepairDashboardService) {}
+    constructor(
+        private dateHandlerService: DateHandlerService,
+        private repairService: RepairService,
+        public repairDashboardService: RepairDashboardService
+    ) {}
 
     columns: any[] = [
         { header: 'ID', binding: 'repairId', width: 50 },
@@ -31,13 +37,14 @@ export class RepairGridResultsComponent implements OnInit {
         this.repairDashboardService._dateTo = moment();
         this.repairDashboardService._dateFrom = moment().subtract(1, 'month');
 
-        this.repairDashboardService.ngbDateTo = this.formatMomentToObject(this.repairDashboardService._dateTo);
-        this.repairDashboardService.ngbDateFrom = this.formatMomentToObject(this.repairDashboardService._dateFrom);
-        this.repairDashboardService.ngbMaxDate = this.formatMomentToObject(this.repairDashboardService._dateTo);
+        this.repairDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(this.repairDashboardService._dateTo);
+        this.repairDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(this.repairDashboardService._dateFrom);
+        this.repairDashboardService.ngbMaxDate = this.dateHandlerService.formatMomentToObject(this.repairDashboardService._dateTo);
 
         this.repairDashboardService.getGridData();
     }
 
+    //FIXME: Move this methods to a service
     formatDate(date: DateObject, fromOrTo: string) {
         const dateString = `${date.year}-${date.month}-${date.day}`;
 
@@ -49,21 +56,7 @@ export class RepairGridResultsComponent implements OnInit {
         }
     }
 
-    formatMomentToObject(momentDate: Moment): DateObject {
-        return {
-            year: momentDate.get('year'),
-            month: momentDate.get('month') + 1,
-            day: momentDate.get('date')
-        };
-    }
-
     getRepairDetails(item) {
         this.repairDashboardService.selectedRepair = item;
     }
-}
-
-export class DateObject {
-    year: number;
-    month: number;
-    day: number;
 }

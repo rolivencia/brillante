@@ -9,10 +9,11 @@ import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-d
 import { RepairService } from '@app/_services/repair.service';
 import { RouterModule } from '@angular/router';
 import { WjInputModule } from 'wijmo/wijmo.angular2.input';
+import { DateHandlerService } from '@app/_services/date-handler.service';
 
 @NgModule({
     declarations: [RepairDashboardComponent],
     imports: [CommonModule, RepairDashboardRoutingModule],
-    providers: [LegacyMapperService, RepairDashboardService, RepairService]
+    providers: [DateHandlerService, LegacyMapperService, RepairDashboardService, RepairService]
 })
 export class RepairDashboardModule {}
