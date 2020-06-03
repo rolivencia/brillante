@@ -1,60 +1,70 @@
-<div class="card">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-3">
-                Gestión de Caja
-            </div>
-            <div class="col-9 d-flex">
-                <button class="btn btn-sm btn-outline-primary mr-3">💵 Abrir Caja</button>
-                <button class="btn btn-sm btn-outline-success mr-3">💵 Guardar Registro</button>
-                <button class="btn btn-sm btn-outline-success mr-3">💵 Editar Registro</button>
-                <button class="btn btn-sm btn-outline-secondary mr-3">📊 Generar Reporte</button>
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Fecha</span>
-                    </div>
-                    <input
-                        class="form-control"
-                        placeholder="yyyy-mm-dd"
-                        name="from"
-                        [maxDate]="cashDashboardService.ngbMaxDate"
-                        [displayMonths]="displayMonths"
-                        [navigation]="navigation"
-                        [outsideDays]="outsideDays"
-                        [(ngModel)]="cashDashboardService.ngbDate"
-                        (ngModelChange)="formatDate(cashDashboardService.ngbDate, 'from')"
-                        ngbDatepicker
-                        #from="ngbDatepicker"
-                    />
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">
-                            📅
-                        </button>
+<div class="row">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <button class="btn btn-sm btn-outline-primary mr-3">💵 Abrir Caja</button>
+                        <button class="btn btn-sm btn-outline-success mr-3">💵 Guardar Registro</button>
+                        <button class="btn btn-sm btn-outline-secondary mr-3">📊 Generar Reporte</button>
+
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Fecha</span>
+                            </div>
+                            <input
+                                class="form-control"
+                                placeholder="yyyy-mm-dd"
+                                name="from"
+                                [maxDate]="cashDashboardService.ngbMaxDate"
+                                [displayMonths]="displayMonths"
+                                [navigation]="navigation"
+                                [outsideDays]="outsideDays"
+                                [(ngModel)]="cashDashboardService.ngbDate"
+                                (ngModelChange)="formatDate(cashDashboardService.ngbDate, 'from')"
+                                ngbDatepicker
+                                #from="ngbDatepicker"
+                            />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">
+                                    📅
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="card-body">
+                <wj-flex-grid
+                    *ngIf="cashDashboardService.gridCollection"
+                    [itemsSource]="cashDashboardService.gridCollection"
+                    [selectionMode]="'Row'"
+                    [headersVisibility]="'Column'"
+                    [autoGenerateColumns]="false"
+                    [allowResizing]="'Columns'"
+                    [showSelectedHeaders]="'Row'"
+                    [isReadOnly]="true"
+                    (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
+                >
+                    <wj-flex-grid-column
+                        *ngFor="let column of columns"
+                        [width]="column.width"
+                        [binding]="column.binding"
+                        [header]="column.header"
+                        [visible]="true"
+                    >
+                    </wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
         </div>
     </div>
-    <div class="card-body">
-        <wj-flex-grid
-            *ngIf="cashDashboardService.gridCollection"
-            [itemsSource]="cashDashboardService.gridCollection"
-            [selectionMode]="'Row'"
-            [headersVisibility]="'Column'"
-            [autoGenerateColumns]="false"
-            [allowResizing]="'Columns'"
-            [showSelectedHeaders]="'Row'"
-            [isReadOnly]="true"
-            (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
-        >
-            <wj-flex-grid-column
-                *ngFor="let column of columns"
-                [width]="column.width"
-                [binding]="column.binding"
-                [header]="column.header"
-                [visible]="true"
-            >
-            </wj-flex-grid-column>
-        </wj-flex-grid>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header d-flex justify-content-around">
+                <button class="btn btn-sm btn-outline-success mr-3">💵 Editar</button>
+                <button class="btn btn-sm btn-outline-danger mr-3">💵 Borrar</button>
+            </div>
+            <div class="card-body"></div>
+        </div>
     </div>
 </div>

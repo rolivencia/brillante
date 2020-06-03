@@ -4,6 +4,8 @@ import { Repair, RepairLegacy, User } from '@app/_models';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { RepairService } from '@app/_services/repair.service';
 import * as moment from 'moment';
+import { CashTransaction, Operation, TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
+import { Audit } from '@app/_models/audit';
 
 @Injectable({
     providedIn: 'root'
@@ -171,5 +173,60 @@ export class LegacyMapperService {
         }
 
         return customer;
+    }
+
+    fromLegacyCashTransaction({
+        concept,
+        conceptId,
+        creatorUser,
+        creatorUserId,
+        date,
+        inputAmount,
+        note,
+        outputAmount,
+        parentConcept,
+        parentConceptId,
+        repairId,
+        saleId,
+        stockId,
+        transactionId,
+        transactionType,
+        transactionTypeId
+    }): CashTransaction {
+        const transactionConcept = new TransactionConcept(parentConceptId, parentConcept);
+        const transactionSubConcept = new TransactionConcept(conceptId, concept, transactionConcept);
+        const audit = new Audit();
+
+        audit.createdBy = new User();
+        audit.createdBy.id = creatorUserId;
+        audit.createdBy.username = creatorUser;
+
+        return {
+            id: transactionId,
+            concept: transactionSubConcept,
+            amount: inputAmount ? inputAmount : outputAmount,
+            date: moment(date),
+            note: note,
+            audit: audit,
+            operation: this.fromLegacyTransactionOperation(repairId, saleId, stockId),
+            type: new TransactionType(transactionTypeId, transactionType)
+        };
+    }
+
+    fromLegacyTransactionOperation(repairId, saleId, stockId): Operation {
+        const operation: Operation = new Operation();
+
+        if (repairId) {
+            operation.id = repairId;
+            operation.type = 'Repair';
+        } else if (saleId) {
+            operation.id = saleId;
+            operation.type = 'Sale';
+        } else if (stockId) {
+            operation.id = stockId;
+            operation.type = 'Purchase';
+        }
+
+        return operation;
     }
 }
