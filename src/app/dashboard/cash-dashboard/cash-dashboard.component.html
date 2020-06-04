@@ -21,7 +21,7 @@
                                 [navigation]="navigation"
                                 [outsideDays]="outsideDays"
                                 [(ngModel)]="cashDashboardService.ngbDate"
-                                (ngModelChange)="formatDate(cashDashboardService.ngbDate, 'from')"
+                                (ngModelChange)="refreshGrid(cashDashboardService.ngbDate)"
                                 ngbDatepicker
                                 #from="ngbDatepicker"
                             />

@@ -30,8 +30,13 @@ export class CashDashboardComponent implements OnInit {
         this.cashDashboardService.ngbDate = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
     }
 
+    refreshGrid(date: DateObject) {
+        this.formatDate(date);
+        this.cashDashboardService.load(this.cashDashboardService.date);
+    }
+
     //FIXME: Move this methods to a service
-    formatDate(date: DateObject, fromOrTo: string) {
+    formatDate(date: DateObject) {
         const dateString = `${date.year}-${date.month}-${date.day}`;
         this.cashDashboardService.date = moment(dateString);
     }
