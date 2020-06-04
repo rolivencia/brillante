@@ -36,6 +36,7 @@
             </div>
             <div class="card-body">
                 <wj-flex-grid
+                    #cashGrid
                     *ngIf="cashDashboardService.gridCollection"
                     [itemsSource]="cashDashboardService.gridCollection"
                     [selectionMode]="'Row'"
@@ -53,6 +54,15 @@
                         [header]="column.header"
                         [visible]="true"
                     >
+                        <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            {{ cell.item.type.id === 0 ? '$ ' + cell.item.amount : '' }}
+                        </ng-template>
+                        <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            {{ cell.item.type.id === 1 ? '$ ' + cell.item.amount : '' }}
+                        </ng-template>
+                        <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            {{ cell.item.date.format('HH:mm') }}
+                        </ng-template>
                     </wj-flex-grid-column>
                 </wj-flex-grid>
             </div>
@@ -64,6 +74,7 @@
                 <button class="btn btn-sm btn-outline-success mr-3">💵 Editar</button>
                 <button class="btn btn-sm btn-outline-danger mr-3">💵 Borrar</button>
             </div>
+
             <div class="card-body"></div>
         </div>
     </div>

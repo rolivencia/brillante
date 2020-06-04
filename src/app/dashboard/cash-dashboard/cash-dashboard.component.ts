@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
 import { DateHandlerService } from '@app/_services/date-handler.service';
+import { FlexGrid } from 'wijmo/wijmo.grid';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -10,18 +11,19 @@ import { DateHandlerService } from '@app/_services/date-handler.service';
     styleUrls: ['./cash-dashboard.component.scss']
 })
 export class CashDashboardComponent implements OnInit {
+    @ViewChild('cashGrid', { static: false }) cashGrid: FlexGrid;
     displayMonths = 1;
     navigation = 'select';
     showWeekNumbers = false;
     outsideDays = 'visible';
 
     columns: any[] = [
-        { header: 'ID', binding: 'id', width: 80 },
-        { header: 'Concepto', binding: 'concept', width: '*' },
-        { header: 'Subconcepto', binding: 'subconcept', width: '*' },
-        { header: 'Ingreso', binding: 'inflow', width: 100 },
-        { header: 'Egreso', binding: 'outflow', width: 100 },
-        { header: 'Hora', binding: 'time', width: 80 }
+        { header: 'ID', binding: 'id', width: 60 },
+        { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
+        { header: 'Subconcepto', binding: 'concept.description', width: '*' },
+        { header: 'Ingreso', binding: 'amount', width: 80 },
+        { header: 'Egreso', binding: 'amount', width: 80 },
+        { header: 'Hora', binding: 'date', width: 60 }
     ];
 
     constructor(public cashDashboardService: CashDashboardService, private dateHandlerService: DateHandlerService) {}
@@ -43,6 +45,11 @@ export class CashDashboardComponent implements OnInit {
 
     //TODO: Implement this method
     getRegisterDetails(currentItem) {
-        console.log(currentItem);
+        this.cashDashboardService.selectedTransaction = currentItem;
+    }
+
+    logCell(item) {
+        console.log('ITEM');
+        console.log(item);
     }
 }
