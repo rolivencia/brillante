@@ -43,9 +43,9 @@ export class CashDashboardComponent implements OnInit {
         this.cashDashboardService.date = moment(dateString);
     }
 
-    //TODO: Implement this method
     getRegisterDetails(currentItem) {
         this.cashDashboardService.selectedTransaction = currentItem;
+        console.log(currentItem);
     }
 
     logCell(item) {

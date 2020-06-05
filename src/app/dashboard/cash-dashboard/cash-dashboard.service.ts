@@ -17,7 +17,7 @@ export class CashDashboardService {
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView;
-    public selectedTransaction: CashTransaction;
+    public selectedTransaction: CashTransaction = null;
 
     constructor(public cashService: CashService, public legacyMapperService: LegacyMapperService) {
         this.gridCollection = new CollectionView([]);

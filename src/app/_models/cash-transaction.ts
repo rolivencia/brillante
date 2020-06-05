@@ -10,7 +10,7 @@ export class CashTransaction {
     public date: Moment;
     public note: string;
     public audit: Audit;
-    public operation: Operation;
+    public operation?: Operation;
 
     constructor() {
         this.concept = new TransactionConcept();

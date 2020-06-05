@@ -1,5 +1,5 @@
 <div class="row">
-    <div id="left-container" class="col-9 d-flex flex-column justify-content-between">
+    <div id="left-container" class="col-8 d-flex flex-column justify-content-between">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -54,10 +54,10 @@
                         [visible]="true"
                     >
                         <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            {{ cell.item.type.id === 0 ? '$ ' + cell.item.amount : '' }}
+                            {{ cell.item.type.id === 1 ? '$ ' + cell.item.amount : '' }}
                         </ng-template>
                         <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            {{ cell.item.type.id === 1 ? '$ ' + cell.item.amount : '' }}
+                            {{ cell.item.type.id === 0 ? '$ ' + cell.item.amount : '' }}
                         </ng-template>
                         <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                             {{ cell.item.date.format('HH:mm') }}
@@ -71,17 +71,86 @@
                 <div>Nueva Transacción</div>
                 <button class="btn btn-sm btn-outline-success mr-3">💵 Guardar Registro</button>
             </div>
-            <div id="cash-transaction-new" class="card-body"></div>
+            <div id="cash-transaction-new" class="card-body">
+                <div class="row h-100">
+                    <div class="col-4">
+                        <label><b>Tipo de Transacción:</b></label>
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" />
+                        </div>
+                        <label><b>Monto:</b></label>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            <input class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-column">
+                        <label><b>Nota:</b></label>
+                        <div class="form-group h-100 pb-0 mb-0">
+                            <textarea class="h-100 form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label><b>Concepto:</b></label>
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" />
+                        </div>
+                        <label><b>Subconcepto:</b></label>
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <div class="card">
             <div class="card-header d-flex justify-content-around">
                 <button class="btn btn-sm btn-outline-success mr-3">💵 Editar</button>
                 <button class="btn btn-sm btn-outline-danger mr-3">💵 Borrar</button>
             </div>
 
-            <div id="cash-transaction-selected" class="card-body"></div>
+            <div id="cash-transaction-selected" class="card-body">
+                <ng-container *ngIf="cashDashboardService.selectedTransaction">
+                    <div class="px-0">
+                        <p><strong>ID: </strong> {{ cashDashboardService.selectedTransaction.id }}</p>
+                    </div>
+                    <div class="px-0">
+                        <p><strong>Concepto: </strong> {{ cashDashboardService.selectedTransaction.concept.parent.description }}</p>
+                    </div>
+                    <div class="px-0">
+                        <p><strong>Subconcepto: </strong> {{ cashDashboardService.selectedTransaction.concept.description }}</p>
+                    </div>
+                    <div class="px-0">
+                        <p><strong>Monto: </strong>$ {{ cashDashboardService.selectedTransaction.amount }}</p>
+                    </div>
+                    <div class="px-0">
+                        <p><strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.type.description }}</p>
+                    </div>
+                    <ng-container *ngIf="cashDashboardService.selectedTransaction.operation.id">
+                        <hr />
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <p><b>Operación Asociada: </b>{{ cashDashboardService.selectedTransaction.operation.type }}</p>
+                                <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation.id }}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <hr />
+                    <p><strong>Nota: </strong></p>
+                    <p>{{ cashDashboardService.selectedTransaction.note }}</p>
+                    <hr />
+                    <div class="px-0">
+                        <p><strong>Hora: </strong>{{ cashDashboardService.selectedTransaction.date.format('HH:mm') }}</p>
+                    </div>
+                    <div class="px-0">
+                        <p><strong>Usuario: </strong>{{ cashDashboardService.selectedTransaction.audit.createdBy.username }}</p>
+                    </div>
+                </ng-container>
+            </div>
         </div>
     </div>
 </div>
