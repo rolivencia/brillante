@@ -1,11 +1,10 @@
 <div class="row">
-    <div class="col-9">
+    <div id="left-container" class="col-9 d-flex flex-column justify-content-between">
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-12 d-flex">
                         <button class="btn btn-sm btn-outline-primary mr-3">💵 Abrir Caja</button>
-                        <button class="btn btn-sm btn-outline-success mr-3">💵 Guardar Registro</button>
                         <button class="btn btn-sm btn-outline-secondary mr-3">📊 Generar Reporte</button>
 
                         <div class="input-group input-group-sm">
@@ -34,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div id="cash-transaction-grid" class="card-body">
                 <wj-flex-grid
                     #cashGrid
                     *ngIf="cashDashboardService.gridCollection"
@@ -67,6 +66,13 @@
                 </wj-flex-grid>
             </div>
         </div>
+        <div class="card mt-3">
+            <div class="card-header d-flex justify-content-between">
+                <div>Nueva Transacción</div>
+                <button class="btn btn-sm btn-outline-success mr-3">💵 Guardar Registro</button>
+            </div>
+            <div id="cash-transaction-new" class="card-body"></div>
+        </div>
     </div>
     <div class="col-3">
         <div class="card">
@@ -75,7 +81,7 @@
                 <button class="btn btn-sm btn-outline-danger mr-3">💵 Borrar</button>
             </div>
 
-            <div class="card-body"></div>
+            <div id="cash-transaction-selected" class="card-body"></div>
         </div>
     </div>
 </div>
