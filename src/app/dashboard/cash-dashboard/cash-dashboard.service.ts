@@ -22,6 +22,7 @@ export class CashDashboardService {
     constructor(public cashService: CashService, public legacyMapperService: LegacyMapperService) {
         this.gridCollection = new CollectionView([]);
         this.load(moment());
+        this.loadControls();
     }
 
     async load(date: Moment) {
@@ -38,4 +39,11 @@ export class CashDashboardService {
         this.gridCollection.sortDescriptions.clear();
         this.gridCollection.sortDescriptions.push(sortById);
     }
+
+    async loadControls() {
+        const parentConcepts = await this.cashService.getConceptsLegacy(true).toPromise();
+        const concepts = await this.cashService.getConceptsLegacy(false).toPromise();
+    }
+
+    loadChildrenConcepts() {}
 }

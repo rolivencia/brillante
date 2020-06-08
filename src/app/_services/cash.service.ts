@@ -19,7 +19,11 @@ export class CashService {
             .set('action', 'getAll')
             .append('dateFrom', dateFrom.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).format('YYYY-MM-DD+HH:mm:ss'))
             .append('dateUpTo', dateTo.set({ hour: 23, minute: 59, second: 59, millisecond: 999 }).format('YYYY-MM-DD+HH:mm:ss'));
+        return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    }
 
+    public getConceptsLegacy(getParents: boolean = false): Observable<any> {
+        const params = new HttpParams().set('action', 'getTransactionConcepts').append('getParents', getParents.toString());
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
     }
 }
