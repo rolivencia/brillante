@@ -4,6 +4,7 @@ import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
 import { DateHandlerService } from '@app/_services/date-handler.service';
 import { FlexGrid } from 'wijmo/wijmo.grid';
+import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -26,7 +27,11 @@ export class CashDashboardComponent implements OnInit {
         { header: 'Hora', binding: 'date', width: 60 }
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, private dateHandlerService: DateHandlerService) {}
+    constructor(
+        public cashDashboardService: CashDashboardService,
+        public cashFormHandlerService: CashFormHandlerService,
+        private dateHandlerService: DateHandlerService
+    ) {}
 
     ngOnInit(): void {
         this.cashDashboardService.ngbDate = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);

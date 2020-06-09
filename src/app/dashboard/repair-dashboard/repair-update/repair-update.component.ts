@@ -39,7 +39,7 @@ export class RepairUpdateComponent implements OnInit {
             this.repairFormHandlerService.saved = false;
             this.repairFormHandlerService.customer = this.legacyMapperService.extractCustomerFromLegacyRepair(this.repairLegacy);
             this.repairFormHandlerService.repair = this.legacyMapperService.fromLegacyRepair(this.repairLegacy);
-            this.repairFormHandlerService.formGroup = this.repairFormHandlerService.loadForm();
+            this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
             this.getHistory();
         }
     }

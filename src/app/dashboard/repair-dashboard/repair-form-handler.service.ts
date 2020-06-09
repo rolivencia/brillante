@@ -95,7 +95,7 @@ export class RepairFormHandlerService {
         private toastrService: ToastrService
     ) {}
 
-    public loadForm(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
+    public load(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
         return this.formBuilder.group({
             customer: this.formBuilder.group({
                 id: [customer.id],

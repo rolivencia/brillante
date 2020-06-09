@@ -19,7 +19,7 @@ export class RepairAddNewComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.repairFormHandlerService.formGroup = this.repairFormHandlerService.loadForm();
+        this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
         this.cdr.detectChanges();
     }
 }

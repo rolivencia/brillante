@@ -76,7 +76,19 @@
                     <div class="col-4">
                         <label><b>Tipo de Transacción:</b></label>
                         <div class="input-group input-group-sm">
-                            <input class="form-control" />
+                            <wj-combo-box
+                                class="form-control form-control-sm p-0"
+                                id="type"
+                                name="type"
+                                aria-describedby="type"
+                                formControlName="type"
+                                [isEditable]="false"
+                                [isReadOnly]="cashFormHandlerService.saved"
+                                [itemsSource]="cashDashboardService.transactionTypes"
+                                [selectedItem]="cashFormHandlerService.cashTransaction.type"
+                                [selectedIndex]="cashFormHandlerService.cashTransaction.type.id"
+                                [displayMemberPath]="'description'"
+                            ></wj-combo-box>
                         </div>
                         <label><b>Monto:</b></label>
                         <div class="input-group input-group-sm">
