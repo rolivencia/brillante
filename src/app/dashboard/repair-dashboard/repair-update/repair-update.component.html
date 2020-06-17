@@ -290,7 +290,7 @@
                                                 class="form-check-input"
                                                 type="checkbox"
                                                 id="register-repair-payment"
-                                                [disabled]="canRegisterPayment()"
+                                                [disabled]="!repairFormHandlerService.canRegisterPayment()"
                                                 [(ngModel)]="repairFormHandlerService.registerPayment"
                                                 [ngModelOptions]="{ standalone: true }"
                                             />

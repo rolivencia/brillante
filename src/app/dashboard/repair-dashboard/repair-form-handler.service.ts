@@ -295,7 +295,9 @@ export class RepairFormHandlerService {
             console.log(updateResult);
         }
 
-        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, this.registerPayment);
+        const registerPayment = this.canRegisterPayment() ? this.registerPayment : false;
+
+        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, registerPayment);
         const trackingUpdateResult = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
 
         if (!trackingUpdateResult) {
@@ -308,5 +310,11 @@ export class RepairFormHandlerService {
         }
 
         // TODO: Proceder a actualizar el historial de la reparación al recibir la respuesta.
+    }
+
+    public canRegisterPayment(): boolean {
+        // TODO: Mark depending also on the old status
+        const newStatus = this.repairControl['status']['value'];
+        return newStatus.id === 5;
     }
 }
