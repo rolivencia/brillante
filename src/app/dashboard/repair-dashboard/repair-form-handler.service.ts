@@ -300,16 +300,18 @@ export class RepairFormHandlerService {
         const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, registerPayment);
         const trackingUpdateResult = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
 
-        if (!trackingUpdateResult) {
-            if (trackingUpdateResult.errorCode) {
-                this.toastrService.error(trackingUpdateResult.errorCode);
+        return new Promise((resolve, reject) => {
+            if (!trackingUpdateResult) {
+                if (trackingUpdateResult.errorCode) {
+                    this.toastrService.error(trackingUpdateResult.errorCode);
+                    reject(false);
+                }
+            } else if (trackingUpdateResult) {
+                this.toastrService.success(trackingUpdateResult.message);
+                this.saved = true;
+                resolve(true);
             }
-        } else if (trackingUpdateResult) {
-            this.toastrService.success(trackingUpdateResult.message);
-            this.saved = true;
-        }
-
-        // TODO: Proceder a actualizar el historial de la reparación al recibir la respuesta.
+        });
     }
 
     public canRegisterPayment(): boolean {

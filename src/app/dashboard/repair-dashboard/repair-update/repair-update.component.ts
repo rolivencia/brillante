@@ -65,4 +65,9 @@ export class RepairUpdateComponent implements OnInit {
     public toggleEditDevice() {
         this.editDevice = !this.editDevice;
     }
+
+    public async update(editDevice) {
+        await this.repairFormHandlerService.update(editDevice);
+        await this.getHistory();
+    }
 }
