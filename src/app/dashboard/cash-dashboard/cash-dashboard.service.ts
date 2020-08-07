@@ -1,20 +1,16 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Moment } from 'moment';
-import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
-import { CollectionView, SortDescription } from 'wijmo/wijmo';
 import { CashService } from '@app/_services/cash.service';
+import { CashTransaction } from '@app/_models/cash-transaction';
+import { CollectionView, SortDescription } from 'wijmo/wijmo';
+import { DateObject } from '@app/_models/date-object';
+import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
-import { CashTransaction, TransactionType } from '@app/_models/cash-transaction';
+import { Moment } from 'moment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CashDashboardService {
-    get transactionTypes(): TransactionType[] {
-        return this._transactionTypes;
-    }
-
     public date: Moment = moment();
     public ngbDate: DateObject;
     public ngbMaxDate: DateObject;
@@ -23,15 +19,8 @@ export class CashDashboardService {
     public gridCollection: CollectionView;
     public selectedTransaction: CashTransaction = null;
 
-    private _transactionTypes: TransactionType[] = [
-        { id: 0, description: 'Ingreso' },
-        { id: 1, description: 'Egreso' }
-    ];
-
     constructor(public cashService: CashService, public legacyMapperService: LegacyMapperService) {
         this.gridCollection = new CollectionView([]);
-        this.load(moment());
-        this.loadControls();
     }
 
     async load(date: Moment) {
@@ -48,11 +37,4 @@ export class CashDashboardService {
         this.gridCollection.sortDescriptions.clear();
         this.gridCollection.sortDescriptions.push(sortById);
     }
-
-    async loadControls() {
-        const parentConcepts = await this.cashService.getConceptsLegacy(true).toPromise();
-        const concepts = await this.cashService.getConceptsLegacy(false).toPromise();
-    }
-
-    loadChildrenConcepts() {}
 }

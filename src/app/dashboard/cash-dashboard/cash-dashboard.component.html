@@ -36,7 +36,7 @@
             <div id="cash-transaction-grid" class="card-body">
                 <wj-flex-grid
                     #cashGrid
-                    *ngIf="cashDashboardService.gridCollection"
+                    *ngIf="cashDashboardService.gridCollection && controlsLoaded"
                     [itemsSource]="cashDashboardService.gridCollection"
                     [selectionMode]="'Row'"
                     [headersVisibility]="'Column'"
@@ -71,12 +71,50 @@
                 <div>Nueva Transacción</div>
                 <button class="btn btn-sm btn-outline-success mr-3">💵 Guardar Registro</button>
             </div>
+          <form [formGroup]="cashFormHandlerService.formGroup" (ngSubmit)="cashFormHandlerService.create()">
             <div id="cash-transaction-new" class="card-body">
-                <div class="row h-100">
+                  <div class="row h-100">
+                  <div class="col-4">
+                    <label><b>Concepto:</b></label>
+                    <div class="input-group input-group-sm">
+                      <wj-combo-box class="form-control form-control-sm p-0"
+                                    [(ngModel)]="cashFormHandlerService.transactionParentConcept"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [isEditable]="false"
+                                    [isReadOnly]="cashFormHandlerService.saved"
+                                    [itemsSource]="cashFormHandlerService.transactionConcepts"
+                                    [selectedItem]="cashFormHandlerService.transactionParentConcept"
+                                    [displayMemberPath]="'description'">
+                      </wj-combo-box>
+                    </div>
+                    <label><b>Subconcepto:</b></label>
+                    <div class="input-group input-group-sm">
+                      <wj-combo-box class="form-control form-control-sm p-0"
+                                    id="concept"
+                                    name="concept"
+                                    aria-describedby="concept"
+                                    formControlName="concept"
+                                    [isEditable]="false"
+                                    [isReadOnly]="cashFormHandlerService.saved"
+                                    [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
+                                    [selectedItem]="cashFormHandlerService.cashTransaction.concept"
+                                    [displayMemberPath]="'description'">
+                      </wj-combo-box>
+                    </div>
+                  </div>
                     <div class="col-4">
                         <label><b>Tipo de Transacción:</b></label>
                         <div class="input-group input-group-sm">
-                            <wj-combo-box
+                          <span *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
+                            class="badge p-2"
+                                [ngClass]="{
+                                  'badge-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
+                                  'badge-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1}"
+                          >
+                            {{cashFormHandlerService.transactionParentConcept.transactionType.id === 1 ? 'Ingreso': 'Egreso'}}
+                          </span>
+                          <!-- TODO: Think about filtering the concept list depending on the transaction type also -->
+                          <!--  <wj-combo-box
                                 class="form-control form-control-sm p-0"
                                 id="type"
                                 name="type"
@@ -84,38 +122,34 @@
                                 formControlName="type"
                                 [isEditable]="false"
                                 [isReadOnly]="cashFormHandlerService.saved"
-                                [itemsSource]="cashDashboardService.transactionTypes"
+                                [itemsSource]="cashFormHandlerService.transactionTypes"
                                 [selectedItem]="cashFormHandlerService.cashTransaction.type"
                                 [selectedIndex]="cashFormHandlerService.cashTransaction.type.id"
                                 [displayMemberPath]="'description'"
-                            ></wj-combo-box>
+                            ></wj-combo-box> -->
                         </div>
                         <label><b>Monto:</b></label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input class="form-control" />
+                            <input class="form-control"
+                                   aria-describedby="amount"
+                                   formControlName="amount" />
                         </div>
                     </div>
                     <div class="col-4 d-flex flex-column">
                         <label><b>Nota:</b></label>
                         <div class="form-group h-100 pb-0 mb-0">
-                            <textarea class="h-100 form-control" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <label><b>Concepto:</b></label>
-                        <div class="input-group input-group-sm">
-                            <input class="form-control" />
-                        </div>
-                        <label><b>Subconcepto:</b></label>
-                        <div class="input-group input-group-sm">
-                            <input class="form-control" />
+                            <textarea class="h-100 form-control"
+                                      rows="3"
+                                      aria-describedby="note"
+                                      formControlName="note"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
+          </form>
         </div>
     </div>
     <div class="col-4">

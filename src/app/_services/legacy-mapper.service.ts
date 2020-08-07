@@ -1,18 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Customer } from '@app/_models/customer';
-import { Repair, RepairLegacy, User } from '@app/_models';
-import { AuthenticationService } from '@app/_services/authentication.service';
-import { RepairService } from '@app/_services/repair.service';
 import * as moment from 'moment';
-import { CashTransaction, Operation, TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
 import { Audit } from '@app/_models/audit';
+import { AuthenticationService } from '@app/_services/authentication.service';
+import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
+import { CashTransaction, Operation, TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
+import { Customer } from '@app/_models/customer';
+import { Injectable } from '@angular/core';
+import { Repair, RepairLegacy, User } from '@app/_models';
+import { RepairService } from '@app/_services/repair.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LegacyMapperService {
     private currentUser: User;
-    constructor(private authenticationService: AuthenticationService, private repairService: RepairService) {
+    constructor(
+        private authenticationService: AuthenticationService,
+        private repairService: RepairService,
+        private cashFormHandler: CashFormHandlerService
+    ) {
         moment.locale('es');
         this.authenticationService.currentUser.subscribe(x => (this.currentUser = x));
     }
@@ -193,9 +198,10 @@ export class LegacyMapperService {
         transactionType,
         transactionTypeId
     }): CashTransaction {
-        const transactionConcept = new TransactionConcept(parentConceptId, parentConcept);
-        const transactionSubConcept = new TransactionConcept(conceptId, concept, transactionConcept);
         const audit = new Audit();
+
+        const transactionConcept = this.cashFormHandler.transactionConcepts.filter(c => c.id === parentConceptId)[0];
+        const transactionSubConcept = transactionConcept.children.filter(c => c.id === conceptId)[0];
 
         audit.createdBy = new User();
         audit.createdBy.id = creatorUserId;
@@ -218,13 +224,13 @@ export class LegacyMapperService {
 
         if (repairId) {
             operation.id = repairId;
-            operation.type = 'Repair';
+            operation.type = 'Reparación';
         } else if (saleId) {
             operation.id = saleId;
-            operation.type = 'Sale';
+            operation.type = 'Venta';
         } else if (stockId) {
             operation.id = stockId;
-            operation.type = 'Purchase';
+            operation.type = 'Compra';
         }
 
         return operation;

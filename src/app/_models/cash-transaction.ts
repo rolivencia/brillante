@@ -1,6 +1,6 @@
 import * as moment from 'moment';
-import { Moment } from 'moment';
 import { Audit } from '@app/_models/audit';
+import { Moment } from 'moment';
 
 export class CashTransaction {
     public id: number;
@@ -33,7 +33,7 @@ export class TransactionType {
 
 export class Operation {
     id: number;
-    type: 'Sale' | 'Repair' | 'Purchase';
+    type: 'Venta' | 'Reparación' | 'Compra';
 
     constructor(id?, type?) {
         this.id = id;
@@ -44,11 +44,21 @@ export class Operation {
 export class TransactionConcept {
     public id: number;
     public description: string;
+    public transactionType: TransactionType;
     public parent: null | TransactionConcept;
+    public children: TransactionConcept[];
 
-    constructor(id?: number, description?: string, parent?: TransactionConcept) {
+    constructor(
+        id?: number,
+        description?: string,
+        transactionType?: TransactionType,
+        parent: TransactionConcept = null,
+        children: [] = []
+    ) {
         this.id = id;
         this.description = description;
+        this.transactionType = transactionType;
         this.parent = parent;
+        this.children = children;
     }
 }

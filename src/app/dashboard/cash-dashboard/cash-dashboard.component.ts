@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
-import { DateHandlerService } from '@app/_services/date-handler.service';
-import { FlexGrid } from 'wijmo/wijmo.grid';
+import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { DateHandlerService } from '@app/_services/date-handler.service';
+import { DateObject } from '@app/_models/date-object';
+import { FlexGrid } from 'wijmo/wijmo.grid';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -18,6 +18,8 @@ export class CashDashboardComponent implements OnInit {
     showWeekNumbers = false;
     outsideDays = 'visible';
 
+    controlsLoaded: boolean = false;
+
     columns: any[] = [
         { header: 'ID', binding: 'id', width: 60 },
         { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
@@ -28,6 +30,7 @@ export class CashDashboardComponent implements OnInit {
     ];
 
     constructor(
+        private changeDetectorRef: ChangeDetectorRef,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private dateHandlerService: DateHandlerService
@@ -35,6 +38,13 @@ export class CashDashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.cashDashboardService.ngbDate = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
+        this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
+        this.cashFormHandlerService.controlsLoaded.subscribe(result => {
+            this.controlsLoaded = result;
+            if (result) {
+                this.cashDashboardService.load(moment());
+            }
+        });
     }
 
     refreshGrid(date: DateObject) {
@@ -50,7 +60,7 @@ export class CashDashboardComponent implements OnInit {
 
     getRegisterDetails(currentItem) {
         this.cashDashboardService.selectedTransaction = currentItem;
-        console.log(currentItem);
+        this.changeDetectorRef.detectChanges();
     }
 
     logCell(item) {
