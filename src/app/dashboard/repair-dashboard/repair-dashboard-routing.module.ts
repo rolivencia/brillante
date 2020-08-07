@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepairDashboardComponent } from '@app/dashboard/repair-dashboard/repair-dashboard.component';
-import { RepairAddNewComponent } from '@app/dashboard/repair-dashboard/repair-add-new/repair-add-new.component';
-import { RepairUpdateComponent } from '@app/dashboard/repair-dashboard/repair-update/repair-update.component';
 
 const routes: Routes = [
     {
