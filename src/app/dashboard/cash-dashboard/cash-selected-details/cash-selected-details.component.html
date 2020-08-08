@@ -26,13 +26,15 @@
                 <p><strong>Monto: </strong>$ {{ cashDashboardService.selectedTransaction.amount }}</p>
             </div>
             <div class="px-0">
-                <p><strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.type.description }}</p>
+                <p>
+                    <strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.concept.transactionType.description }}
+                </p>
             </div>
             <ng-container *ngIf="cashDashboardService.selectedTransaction.operation.id">
                 <hr />
                 <div class="card bg-primary text-white">
                     <div class="card-body">
-                        <p><b>Operación Asociada: </b>{{ cashDashboardService.selectedTransaction.operation.type }}</p>
+                        <p><b>Operación Asociada: </b>{{ cashDashboardService.selectedTransaction.operation.description }}</p>
                         <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation.id }}</p>
                     </div>
                 </div>

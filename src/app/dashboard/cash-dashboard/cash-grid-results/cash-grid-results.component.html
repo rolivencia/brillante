@@ -19,6 +19,7 @@
                         [outsideDays]="outsideDays"
                         [(ngModel)]="cashDashboardService.ngbDate"
                         (ngModelChange)="refreshGrid(cashDashboardService.ngbDate)"
+                        (click)="from.toggle()"
                         ngbDatepicker
                         #from="ngbDatepicker"
                     />
@@ -52,10 +53,10 @@
                 [visible]="true"
             >
                 <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                    {{ cell.item.type.id === 1 ? '$ ' + cell.item.amount : '' }}
+                    {{ cell.item.concept.transactionType.id === 1 ? '$ ' + cell.item.amount : '' }}
                 </ng-template>
                 <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                    {{ cell.item.type.id === 0 ? '$ ' + cell.item.amount : '' }}
+                    {{ cell.item.concept.transactionType.id === 0 ? '$ ' + cell.item.amount : '' }}
                 </ng-template>
                 <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                     {{ cell.item.date.format('HH:mm') }}

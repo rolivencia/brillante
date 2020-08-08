@@ -16,7 +16,7 @@ export class CashDashboardService {
 
     public date: Moment = moment();
     public ngbDate: DateObject;
-    public ngbMaxDate: DateObject;
+    public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView;

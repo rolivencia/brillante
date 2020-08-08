@@ -2,14 +2,14 @@ import * as moment from 'moment';
 import { Audit } from '@app/_models/audit';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
-import { CashTransaction, Operation, TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
+import { CashTransaction, Operation, TransactionType } from '@app/_models/cash-transaction';
 import { Customer } from '@app/_models/customer';
 import { Injectable } from '@angular/core';
 import { Repair, RepairLegacy, User } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class LegacyMapperService {
     private currentUser: User;
@@ -19,7 +19,7 @@ export class LegacyMapperService {
         private cashFormHandler: CashFormHandlerService
     ) {
         moment.locale('es');
-        this.authenticationService.currentUser.subscribe(x => (this.currentUser = x));
+        this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
 
     fromLegacyRepair(repairLegacy: RepairLegacy): Repair {
@@ -34,21 +34,21 @@ export class LegacyMapperService {
             checkOut: repairLegacy.fechaReparacionTerminadaDate ? moment(repairLegacy.fechaReparacionTerminadaDate) : null,
             lastUpdate: moment(repairLegacy.fechaUltimaActualizacionDate),
             note: repairLegacy.nota,
-            status: this.repairService.repairStatuses.filter(repairStatus => repairStatus.id === repairLegacy.estadoId).pop(),
+            status: this.repairService.repairStatuses.filter((repairStatus) => repairStatus.id === repairLegacy.estadoId).pop(),
             device: {
                 manufacturer: repairLegacy.marca,
                 model: repairLegacy.modelo,
                 deviceId: repairLegacy.imei,
                 turnedOn: !!repairLegacy.encendido,
-                type: this.repairService.deviceTypes.filter(deviceType => deviceType.id === repairLegacy.tipoEquipoId).pop()
+                type: this.repairService.deviceTypes.filter((deviceType) => deviceType.id === repairLegacy.tipoEquipoId).pop(),
             },
             audit: {
                 enabled: true,
                 deleted: false,
                 createdAt: moment(repairLegacy.fechaIngresoDate),
                 updatedAt: moment(repairLegacy.fechaUltimaActualizacionDate),
-                createdBy: this.authenticationService.currentUserValue
-            }
+                createdBy: this.authenticationService.currentUserValue,
+            },
         };
     }
 
@@ -62,7 +62,7 @@ export class LegacyMapperService {
             address: repairLegacy.direccionCliente,
             telephone: repairLegacy.telefonoCliente.toString(),
             secondaryTelephone: repairLegacy.telefonoCliente.toString(),
-            user: null
+            user: null,
         };
     }
 
@@ -82,7 +82,7 @@ export class LegacyMapperService {
             problema: repair.issue,
             seniaReparacion: repair.paymentInAdvance,
             encendido: repair.device.turnedOn ? 1 : 0,
-            usuario: this.currentUser.id
+            usuario: this.currentUser.id,
         };
     }
 
@@ -101,7 +101,7 @@ export class LegacyMapperService {
             seniaReparacion: repair.paymentInAdvance,
             costoReparacion: repair.cost,
             precioReparacion: repair.price,
-            generateTransaction: generateTransaction ? generateTransaction : false
+            generateTransaction: generateTransaction ? generateTransaction : false,
         };
     }
 
@@ -112,7 +112,7 @@ export class LegacyMapperService {
             modelo: repair.device.model,
             imei: repair.device.deviceId,
             problema: repair.issue,
-            tipoEquipo: repair.device.type.id
+            tipoEquipo: repair.device.type.id,
         };
     }
 
@@ -128,7 +128,18 @@ export class LegacyMapperService {
             dni: customer.dni,
             direccion: customer.address,
             telefono: customer.telephone,
-            email: customer.email
+            email: customer.email,
+        };
+    }
+
+    toLegacyCashTransaction(transaction: CashTransaction) {
+        return {
+            transactionTypeId: transaction.concept.transactionType.id,
+            conceptId: transaction.concept.id,
+            amount: transaction.amount,
+            note: transaction.note,
+            createdUserId: transaction.audit.createdBy.id,
+            entityId: transaction.operation.id,
         };
     }
 
@@ -157,7 +168,7 @@ export class LegacyMapperService {
         secondaryTelephone,
         usuario,
         code,
-        message
+        message,
     }): Customer {
         const customer: Customer = {
             id: clientId,
@@ -168,7 +179,7 @@ export class LegacyMapperService {
             email: email,
             telephone: telefono,
             secondaryTelephone: secondaryTelephone,
-            user: null
+            user: null,
         };
 
         customer.user = new User();
@@ -196,12 +207,12 @@ export class LegacyMapperService {
         stockId,
         transactionId,
         transactionType,
-        transactionTypeId
+        transactionTypeId,
     }): CashTransaction {
         const audit = new Audit();
 
-        const transactionConcept = this.cashFormHandler.transactionConcepts.filter(c => c.id === parentConceptId)[0];
-        const transactionSubConcept = transactionConcept.children.filter(c => c.id === conceptId)[0];
+        const transactionConcept = this.cashFormHandler.transactionConcepts.filter((c) => c.id === parentConceptId)[0];
+        const transactionSubConcept = transactionConcept.children.filter((c) => c.id === conceptId)[0];
 
         audit.createdBy = new User();
         audit.createdBy.id = creatorUserId;
@@ -215,7 +226,6 @@ export class LegacyMapperService {
             note: note,
             audit: audit,
             operation: this.fromLegacyTransactionOperation(repairId, saleId, stockId),
-            type: new TransactionType(transactionTypeId, transactionType)
         };
     }
 
@@ -224,13 +234,13 @@ export class LegacyMapperService {
 
         if (repairId) {
             operation.id = repairId;
-            operation.type = 'Reparación';
+            operation.description = 'Reparación';
         } else if (saleId) {
             operation.id = saleId;
-            operation.type = 'Venta';
+            operation.description = 'Venta';
         } else if (stockId) {
             operation.id = stockId;
-            operation.type = 'Compra';
+            operation.description = 'Compra';
         }
 
         return operation;

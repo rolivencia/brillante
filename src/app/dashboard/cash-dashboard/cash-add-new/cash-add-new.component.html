@@ -5,7 +5,7 @@
             <button class="btn btn-sm btn-outline-secondary mr-3" (click)="details()">⬅️ Volver</button>
         </div>
         <div id="cash-transaction-new" class="card-body">
-            <span class="w-100 badge badge-success p-2">Crear Transacción</span>
+            <div class="w-100 alert alert-success text-center p-2">Crear Transacción</div>
             <div class="row">
                 <div class="col-12">
                     <label><b>Concepto:</b></label>
@@ -73,8 +73,16 @@ formControlName="type"
                         <input class="form-control" aria-describedby="amount" formControlName="amount" />
                     </div>
                     <label><b>Nota:</b></label>
-                    <div class="form-group pb-0 mb-0">
+                    <div class="input-group input-group-sm pb-0 mb-2">
                         <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note"> </textarea>
+                    </div>
+                    <label><b>Fecha y Hora:</b></label>
+                    <div class="input-group input-group-sm">
+                        <label>{{ currentDateTime }}</label>
+                    </div>
+                    <label><b>Usuario a Cargo:</b></label>
+                    <div class="input-group input-group-sm">
+                        <label>{{ currentUser.username }}</label>
                     </div>
                 </div>
             </div>

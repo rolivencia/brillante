@@ -6,7 +6,6 @@ export class CashTransaction {
     public id: number;
     public concept: TransactionConcept;
     public amount: number;
-    public type: TransactionType;
     public date: Moment;
     public note: string;
     public audit: Audit;
@@ -14,7 +13,6 @@ export class CashTransaction {
 
     constructor() {
         this.concept = new TransactionConcept();
-        this.type = new TransactionType();
         this.date = moment();
         this.audit = new Audit();
         this.operation = new Operation();
@@ -33,11 +31,11 @@ export class TransactionType {
 
 export class Operation {
     id: number;
-    type: 'Venta' | 'Reparación' | 'Compra';
+    description: 'Venta' | 'Reparación' | 'Compra';
 
     constructor(id?, type?) {
         this.id = id;
-        this.type = type;
+        this.description = type;
     }
 }
 
