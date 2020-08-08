@@ -9,7 +9,7 @@ import { DateHandlerService } from '@app/_services/date-handler.service';
 @Component({
     selector: 'app-repair-grid-results',
     templateUrl: './repair-grid-results.component.html',
-    styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss']
+    styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairGridResultsComponent implements OnInit {
     constructor(
@@ -25,12 +25,11 @@ export class RepairGridResultsComponent implements OnInit {
         { header: 'Modelo', binding: 'modelo', width: '*' },
         { header: 'IMEI', binding: 'imei', width: '*' },
         { header: 'Última Act.', binding: 'fechaUltimaActualizacion', width: '*' },
-        { header: 'Estado', binding: 'estado', width: '*' }
+        { header: 'Estado', binding: 'estado', width: '*' },
     ];
 
     displayMonths = 1;
     navigation = 'select';
-    showWeekNumbers = false;
     outsideDays = 'visible';
 
     ngOnInit() {

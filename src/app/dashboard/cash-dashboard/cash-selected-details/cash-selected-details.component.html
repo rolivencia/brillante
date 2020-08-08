@@ -1,1 +1,52 @@
-<p>cash-selected-details works!</p>
+<div class="card">
+    <div class="card-header d-flex justify-content-around">
+        <button class="btn btn-sm btn-outline-primary mr-3" (click)="add()">💵 Crear</button>
+        <button class="btn btn-sm btn-outline-dark mr-3" (click)="update()" [disabled]="!cashDashboardService.selectedTransaction">
+            ✏️ Editar
+        </button>
+        <button class="btn btn-sm btn-outline-danger mr-3" (click)="delete()" [disabled]="!cashDashboardService.selectedTransaction">
+            ❌ Borrar
+        </button>
+    </div>
+    <div id="cash-transaction-selected" class="card-body">
+        <ng-container *ngIf="!cashDashboardService.selectedTransaction">
+            <div class="alert alert-info">Seleccioná una transacción de la grilla para visualizar sus detalles</div></ng-container
+        >
+        <ng-container *ngIf="cashDashboardService.selectedTransaction">
+            <div class="px-0">
+                <p><strong>ID: </strong> {{ cashDashboardService.selectedTransaction.id }}</p>
+            </div>
+            <div class="px-0">
+                <p><strong>Concepto: </strong> {{ cashDashboardService.selectedTransaction.concept.parent.description }}</p>
+            </div>
+            <div class="px-0">
+                <p><strong>Subconcepto: </strong> {{ cashDashboardService.selectedTransaction.concept.description }}</p>
+            </div>
+            <div class="px-0">
+                <p><strong>Monto: </strong>$ {{ cashDashboardService.selectedTransaction.amount }}</p>
+            </div>
+            <div class="px-0">
+                <p><strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.type.description }}</p>
+            </div>
+            <ng-container *ngIf="cashDashboardService.selectedTransaction.operation.id">
+                <hr />
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <p><b>Operación Asociada: </b>{{ cashDashboardService.selectedTransaction.operation.type }}</p>
+                        <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation.id }}</p>
+                    </div>
+                </div>
+            </ng-container>
+            <hr />
+            <p><strong>Nota: </strong></p>
+            <p>{{ cashDashboardService.selectedTransaction.note }}</p>
+            <hr />
+            <div class="px-0">
+                <p><strong>Hora: </strong>{{ cashDashboardService.selectedTransaction.date.format('HH:mm') }}</p>
+            </div>
+            <div class="px-0">
+                <p><strong>Usuario: </strong>{{ cashDashboardService.selectedTransaction.audit.createdBy.username }}</p>
+            </div>
+        </ng-container>
+    </div>
+</div>

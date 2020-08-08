@@ -1,1 +1,66 @@
-<p>cash-grid-results works!</p>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-12 d-flex">
+                <button class="btn btn-sm btn-outline-primary mr-3">💵 Abrir Caja</button>
+                <button class="btn btn-sm btn-outline-secondary mr-3">📊 Generar Reporte</button>
+
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Fecha</span>
+                    </div>
+                    <input
+                        class="form-control"
+                        placeholder="yyyy-mm-dd"
+                        name="from"
+                        [maxDate]="cashDashboardService.ngbMaxDate"
+                        [displayMonths]="displayMonths"
+                        [navigation]="navigation"
+                        [outsideDays]="outsideDays"
+                        [(ngModel)]="cashDashboardService.ngbDate"
+                        (ngModelChange)="refreshGrid(cashDashboardService.ngbDate)"
+                        ngbDatepicker
+                        #from="ngbDatepicker"
+                    />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">
+                            📅
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cash-transaction-grid" class="card-body">
+        <wj-flex-grid
+            #cashGrid
+            *ngIf="cashDashboardService.gridCollection"
+            [itemsSource]="cashDashboardService.gridCollection"
+            [selectionMode]="'Row'"
+            [headersVisibility]="'Column'"
+            [autoGenerateColumns]="false"
+            [allowResizing]="'Columns'"
+            [showSelectedHeaders]="'Row'"
+            [isReadOnly]="true"
+            (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
+        >
+            <wj-flex-grid-column
+                *ngFor="let column of columns"
+                [width]="column.width"
+                [binding]="column.binding"
+                [header]="column.header"
+                [visible]="true"
+            >
+                <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                    {{ cell.item.type.id === 1 ? '$ ' + cell.item.amount : '' }}
+                </ng-template>
+                <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                    {{ cell.item.type.id === 0 ? '$ ' + cell.item.amount : '' }}
+                </ng-template>
+                <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                    {{ cell.item.date.format('HH:mm') }}
+                </ng-template>
+            </wj-flex-grid-column>
+        </wj-flex-grid>
+    </div>
+</div>

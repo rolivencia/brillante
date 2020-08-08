@@ -1,1 +1,83 @@
-<p>cash-add-new works!</p>
+<form [formGroup]="cashFormHandlerService.formGroup" (ngSubmit)="cashFormHandlerService.create()">
+    <div class="card">
+        <div class="card-header d-flex justify-content-around">
+            <button class="btn btn-sm btn-outline-success mr-3" type="submit">💵 Guardar</button>
+            <button class="btn btn-sm btn-outline-secondary mr-3" (click)="details()">⬅️ Volver</button>
+        </div>
+        <div id="cash-transaction-new" class="card-body">
+            <span class="w-100 badge badge-success p-2">Crear Transacción</span>
+            <div class="row">
+                <div class="col-12">
+                    <label><b>Concepto:</b></label>
+                    <div class="input-group input-group-sm mb-2">
+                        <wj-combo-box
+                            class="form-control form-control-sm p-0"
+                            [(ngModel)]="cashFormHandlerService.transactionParentConcept"
+                            [ngModelOptions]="{ standalone: true }"
+                            [isEditable]="false"
+                            [isReadOnly]="cashFormHandlerService.saved"
+                            [itemsSource]="cashFormHandlerService.transactionConcepts"
+                            [selectedItem]="cashFormHandlerService.transactionParentConcept"
+                            [displayMemberPath]="'description'"
+                        >
+                        </wj-combo-box>
+                    </div>
+                    <label><b>Subconcepto:</b></label>
+                    <div class="input-group input-group-sm mb-2">
+                        <wj-combo-box
+                            class="form-control form-control-sm p-0"
+                            id="concept"
+                            name="concept"
+                            aria-describedby="concept"
+                            formControlName="concept"
+                            [isEditable]="false"
+                            [isReadOnly]="cashFormHandlerService.saved"
+                            [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
+                            [selectedItem]="cashFormHandlerService.cashTransaction.concept"
+                            [displayMemberPath]="'description'"
+                        >
+                        </wj-combo-box>
+                    </div>
+                    <label><b>Tipo de Transacción:</b></label>
+                    <div class="input-group input-group-sm mb-2">
+                        <span
+                            *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
+                            class="badge p-2 w-100"
+                            [ngClass]="{
+                                'badge-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
+                                'badge-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                            }"
+                        >
+                            {{ cashFormHandlerService.transactionParentConcept.transactionType.id === 1 ? '💰 Ingreso' : '💸 Egreso' }}
+                        </span>
+                        <!-- TODO: Think about filtering the concept list depending on the transaction type also -->
+                        <!--  <wj-combo-box
+class="form-control form-control-sm p-0"
+id="type"
+name="type"
+aria-describedby="type"
+formControlName="type"
+[isEditable]="false"
+[isReadOnly]="cashFormHandlerService.saved"
+[itemsSource]="cashFormHandlerService.transactionTypes"
+[selectedItem]="cashFormHandlerService.cashTransaction.type"
+[selectedIndex]="cashFormHandlerService.cashTransaction.type.id"
+[displayMemberPath]="'description'"
+></wj-combo-box> -->
+                    </div>
+                    <label><b>Monto:</b></label>
+                    <div class="input-group input-group-sm mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input class="form-control" aria-describedby="amount" formControlName="amount" />
+                    </div>
+                    <label><b>Nota:</b></label>
+                    <div class="form-group pb-0 mb-0">
+                        <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note"> </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

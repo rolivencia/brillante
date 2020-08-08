@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-main-dashboard',
     templateUrl: 'dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss']
+    styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     currentUser: User;
@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         private router: Router,
         private userService: UserService
     ) {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+        this.currentUserSubscription = this.authenticationService.currentUser.subscribe((user) => {
             this.currentUser = user;
         });
     }
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.userService
             .getAll()
             .pipe(first())
-            .subscribe(users => {
+            .subscribe((users) => {
                 this.users = users;
             });
     }
@@ -62,11 +62,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     goToRepair() {
         this.router
             .navigate(['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }])
-            .then(result => console.log(result));
+            .then((result) => console.log(result));
     }
 
     goToCash() {
-        this.router.navigate(['cash-dashboard']).then(result => console.log(result));
+        this.router
+            .navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }])
+            .then((result) => console.log(result));
     }
 
     goToLegacyCash() {

@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class RepairService {
     private endpoint = `/reparacion.php`;
@@ -20,20 +20,20 @@ export class RepairService {
     public deviceTypes: DeviceType[] = [
         {
             id: 0,
-            description: 'Smartphone'
+            description: 'Smartphone',
         },
         {
             id: 1,
-            description: 'Tablet'
+            description: 'Tablet',
         },
         {
             id: 2,
-            description: 'Laptop'
+            description: 'Laptop',
         },
         {
             id: 3,
-            description: 'Escritorio'
-        }
+            description: 'Escritorio',
+        },
     ];
 
     //FIXME: Cargar desde base de datos
@@ -45,7 +45,7 @@ export class RepairService {
         { id: 4, description: 'Listo para entrega' },
         { id: 5, description: 'Finalizada y abonada' },
         { id: 6, description: 'Reingresado' },
-        { id: 7, description: 'Devuelto sin reparar' }
+        { id: 7, description: 'Devuelto sin reparar' },
     ];
 
     constructor(private http: HttpClient, private globalService: GlobalService) {}
@@ -78,11 +78,11 @@ export class RepairService {
         return this.http
             .get<any>(`${environment.apiUrl}/repair/history/${idRepair}`, { headers: headers })
             .pipe(
-                map(historical =>
-                    historical.map(register => ({
+                map((historical) =>
+                    historical.map((register) => ({
                         ...register,
                         createdAt: register.createdAt ? moment(register.createdAt).format('YYYY/MM/DD HH:mm') : register.createdAt,
-                        updatedAt: register.updatedAt ? moment(register.updatedAt).format('YYYY/MM/DD HH:mm') : register.updatedAt
+                        updatedAt: register.updatedAt ? moment(register.updatedAt).format('YYYY/MM/DD HH:mm') : register.updatedAt,
                     }))
                 )
             );
@@ -126,7 +126,6 @@ export class RepairService {
     public updateDescriptionLegacy(partialRepair) {
         return this.http.post<any>(
             `${this.globalService.webApiUrl}${this.endpoint}`,
-
             { ...partialRepair, action: 'updateRepairDescription' },
             { headers: headers }
         );

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class CashService {
     private endpoint = `/cash.php`;
@@ -25,5 +25,23 @@ export class CashService {
     public getConceptsLegacy(getParents: boolean = false): Observable<any> {
         const params = new HttpParams().set('action', 'getTransactionConcepts').append('getParents', getParents.toString());
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    }
+
+    // TODO: Finish implementation
+    public createLegacy() {
+        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { action: 'create' }, { headers: headers });
+    }
+
+    // TODO: Finish implementation
+    public updateLegacy() {
+        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { action: 'update' }, { headers: headers });
+    }
+
+    public deleteLegacy(transactionId: number | string) {
+        return this.http.post<any>(
+            `${this.globalService.webApiUrl}${this.endpoint}`,
+            { action: 'delete', transactionId: transactionId.toString() },
+            { headers: headers }
+        );
     }
 }
