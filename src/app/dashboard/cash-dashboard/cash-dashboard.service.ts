@@ -1,16 +1,19 @@
 import * as moment from 'moment';
+import { Moment } from 'moment';
 import { CashService } from '@app/_services/cash.service';
 import { CashTransaction } from '@app/_models/cash-transaction';
 import { CollectionView, SortDescription } from 'wijmo/wijmo';
 import { DateObject } from '@app/_models/date-object';
 import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
-import { Moment } from 'moment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class CashDashboardService {
+    public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
     public date: Moment = moment();
     public ngbDate: DateObject;
     public ngbMaxDate: DateObject;
@@ -29,9 +32,13 @@ export class CashDashboardService {
         const rawTransactions = await this.cashService.getAllLegacy(dateFrom, dateTo).toPromise();
 
         if (rawTransactions['data']?.length) {
-            this.transactions = rawTransactions['data'].map(transaction => this.legacyMapperService.fromLegacyCashTransaction(transaction));
-            this.gridCollection = new CollectionView<any>(this.transactions);
+            this.transactions = rawTransactions['data'].map((transaction) =>
+                this.legacyMapperService.fromLegacyCashTransaction(transaction)
+            );
+        } else {
+            this.transactions = [];
         }
+        this.gridCollection = new CollectionView<any>(this.transactions);
 
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();
