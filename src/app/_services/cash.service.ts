@@ -23,6 +23,11 @@ export class CashService {
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
     }
 
+    public getByIdLegacy(id: number | string): Observable<any> {
+        const params = new HttpParams().set('action', 'getById').append('transactionId', id.toString());
+        return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    }
+
     public getConceptsLegacy(getParents: boolean = false): Observable<any> {
         const params = new HttpParams().set('action', 'getTransactionConcepts').append('getParents', getParents.toString());
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });

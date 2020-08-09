@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { Router } from '@angular/router';
 import { CashService } from '@app/_services/cash.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -25,8 +25,8 @@ export class CashSelectedDetailsComponent implements OnInit {
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'add' } }]);
     }
 
-    update() {
-        this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'update' } }]);
+    update(id: number | string) {
+        this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'update/' + id } }]);
     }
 
     delete() {

@@ -197,6 +197,7 @@ export class LegacyMapperService {
     }
 
     fromLegacyCashTransaction({
+        amount,
         concept,
         conceptId,
         creatorUser,
@@ -219,6 +220,8 @@ export class LegacyMapperService {
         const transactionConcept = this.cashFormHandler.transactionConcepts.filter((c) => c.id === parentConceptId)[0];
         const transactionSubConcept = transactionConcept.children.filter((c) => c.id === conceptId)[0];
 
+        const transactionAmount = parseFloat(amount ? amount : inputAmount ? inputAmount : outputAmount);
+
         audit.createdBy = new User();
         audit.createdBy.id = creatorUserId;
         audit.createdBy.username = creatorUser;
@@ -226,7 +229,7 @@ export class LegacyMapperService {
         return {
             id: transactionId,
             concept: transactionSubConcept,
-            amount: inputAmount ? inputAmount : outputAmount,
+            amount: transactionAmount,
             date: moment(date),
             note: note,
             audit: audit,
