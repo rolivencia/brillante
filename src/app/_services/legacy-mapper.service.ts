@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import { Audit } from '@app/_models/audit';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
-import { CashTransaction, Operation, TransactionType } from '@app/_models/cash-transaction';
+import { CashTransaction, Operation } from '@app/_models/cash-transaction';
 import { Customer } from '@app/_models/customer';
 import { Injectable } from '@angular/core';
 import { Repair, RepairLegacy, User } from '@app/_models';
@@ -132,13 +132,18 @@ export class LegacyMapperService {
         };
     }
 
+    /**
+     * Transforms an instance of CashTransaction to the structure of the legacy API to create a new transaction
+     * @deprecated
+     * @param customer - Instance of Customer class
+     */
     toLegacyCashTransaction(transaction: CashTransaction) {
         return {
             transactionTypeId: transaction.concept.transactionType.id,
             conceptId: transaction.concept.id,
             amount: transaction.amount,
             note: transaction.note,
-            createdUserId: transaction.audit.createdBy.id,
+            createdUserId: this.authenticationService.currentUserValue.id,
             entityId: transaction.operation.id,
         };
     }

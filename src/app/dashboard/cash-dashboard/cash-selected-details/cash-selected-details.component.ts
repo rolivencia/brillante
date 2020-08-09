@@ -11,7 +11,9 @@ import { CashService } from '@app/_services/cash.service';
 export class CashSelectedDetailsComponent implements OnInit {
     constructor(public cashDashboardService: CashDashboardService, private cashService: CashService, public router: Router) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.cashDashboardService.editMode.next(false);
+    }
 
     add() {
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'add' } }]);

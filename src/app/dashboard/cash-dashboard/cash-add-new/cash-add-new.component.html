@@ -1,8 +1,8 @@
-<form [formGroup]="cashFormHandlerService.formGroup" (ngSubmit)="cashFormHandlerService.create()">
+<form [formGroup]="cashFormHandlerService.formGroup" (ngSubmit)="create()">
     <div class="card">
         <div class="card-header d-flex justify-content-around">
             <button class="btn btn-sm btn-outline-success mr-3" type="submit">💵 Guardar</button>
-            <button class="btn btn-sm btn-outline-secondary mr-3" (click)="details()">⬅️ Volver</button>
+            <button class="btn btn-sm btn-outline-secondary mr-3" type="button" (click)="details()">⬅️ Volver</button>
         </div>
         <div id="cash-transaction-new" class="card-body">
             <div class="w-100 alert alert-success text-center p-2">Crear Transacción</div>
@@ -65,14 +65,28 @@ formControlName="type"
 [displayMemberPath]="'description'"
 ></wj-combo-box> -->
                     </div>
+
                     <label><b>Monto:</b></label>
+                    <div
+                        class="text-danger"
+                        *ngIf="this.cashFormHandlerService.submitted && cashFormHandlerService.cashControl['amount'].errors"
+                    >
+                        <small>Ingrese un monto válido</small>
+                    </div>
                     <div class="input-group input-group-sm mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input class="form-control" aria-describedby="amount" formControlName="amount" />
+                        <input class="form-control" type="number" aria-describedby="amount" formControlName="amount" />
                     </div>
+
                     <label><b>Nota:</b></label>
+                    <div
+                        class="text-danger"
+                        *ngIf="this.cashFormHandlerService.submitted && cashFormHandlerService.cashControl['note'].errors"
+                    >
+                        <small>Ingrese una nota descriptiva con 10 caracteres o más</small>
+                    </div>
                     <div class="input-group input-group-sm pb-0 mb-2">
                         <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note"> </textarea>
                     </div>

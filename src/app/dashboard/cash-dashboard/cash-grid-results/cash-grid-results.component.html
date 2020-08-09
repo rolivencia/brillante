@@ -33,11 +33,18 @@
         </div>
     </div>
     <div id="cash-transaction-grid" class="card-body">
+        <div *ngIf="editMode && cashDashboardService.gridCollection.itemCount > 0" class="alert alert-info">
+            Presioná en "Volver" arriba en el menú derecho para desactivar el <b>modo edición</b> y poder seleccionar transacciones de la
+            grilla.
+        </div>
+        <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
+            No hay transacciones registradas para esta fecha. Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones.
+        </div>
         <wj-flex-grid
             #cashGrid
-            *ngIf="cashDashboardService.gridCollection"
+            *ngIf="cashDashboardService.gridCollection.itemCount > 0"
+            [selectionMode]="editMode ? 'None' : 'Row'"
             [itemsSource]="cashDashboardService.gridCollection"
-            [selectionMode]="'Row'"
             [headersVisibility]="'Column'"
             [autoGenerateColumns]="false"
             [allowResizing]="'Columns'"

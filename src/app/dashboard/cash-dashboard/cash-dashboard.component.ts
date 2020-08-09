@@ -3,7 +3,6 @@ import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboa
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DateHandlerService } from '@app/_services/date-handler.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -18,8 +17,7 @@ export class CashDashboardComponent implements OnInit {
         private changeDetectorRef: ChangeDetectorRef,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
-        private dateHandlerService: DateHandlerService,
-        private router: Router
+        private dateHandlerService: DateHandlerService
     ) {}
 
     ngOnInit(): void {

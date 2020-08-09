@@ -6,6 +6,7 @@ import { interval } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { AuthenticationService } from '@app/_services';
 import { User } from '@app/_models';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-cash-add-new',
@@ -39,7 +40,14 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
         this.cashDashboardService.editMode.next(false);
     }
 
-    save() {}
+    public async create() {
+        const result = await this.cashFormHandlerService.create();
+        if (result) {
+            this.cashDashboardService.date = moment();
+            this.cashDashboardService.load(this.cashDashboardService.date);
+            this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
+        }
+    }
 
     details() {
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);

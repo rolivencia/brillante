@@ -28,8 +28,12 @@ export class CashService {
     }
 
     // TODO: Finish implementation
-    public createLegacy() {
-        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { action: 'create' }, { headers: headers });
+    public createLegacy(transaction) {
+        return this.http.post<any>(
+            `${this.globalService.webApiUrl}${this.endpoint}`,
+            { ...transaction, action: 'create' },
+            { headers: headers }
+        );
     }
 
     // TODO: Finish implementation

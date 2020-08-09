@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
@@ -16,6 +16,7 @@ export class CashGridResultsComponent implements OnInit {
     displayMonths = 1;
     navigation = 'select';
     outsideDays = 'visible';
+    editMode: boolean = false;
 
     columns: any[] = [
         { header: 'ID', binding: 'id', width: 60 },
@@ -26,9 +27,18 @@ export class CashGridResultsComponent implements OnInit {
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, public cashFormHandlerService: CashFormHandlerService) {}
+    constructor(
+        public cashDashboardService: CashDashboardService,
+        public cashFormHandlerService: CashFormHandlerService,
+        public changeDetectorRef: ChangeDetectorRef
+    ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.cashDashboardService.editMode.subscribe((result) => {
+            this.editMode = result;
+            this.changeDetectorRef.detectChanges();
+        });
+    }
 
     //FIXME: Move this methods to a service
     formatDate(date: DateObject) {

@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root',
@@ -66,7 +67,12 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _formGroup: FormGroup;
     private _cashTransaction: CashTransaction = new CashTransaction();
 
-    constructor(private cashService: CashService, private formBuilder: FormBuilder, private legacyMapperService: LegacyMapperService) {
+    constructor(
+        private cashService: CashService,
+        private formBuilder: FormBuilder,
+        private legacyMapperService: LegacyMapperService,
+        private toastrService: ToastrService
+    ) {
         this.loadConcepts().then((concepts) => {
             this._transactionConcepts = concepts;
             this.controlsLoaded.next(true);
@@ -79,7 +85,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             concept: [transaction.concept, [Validators.required]],
             amount: [transaction.amount, [Validators.required]],
             date: [transaction.date, [Validators.required]],
-            note: [transaction.note, [Validators.required]],
+            note: [transaction.note, [Validators.required, Validators.minLength(10)]],
             operation: [transaction.operation],
         });
     }
@@ -114,31 +120,39 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     }
 
     async create(formGroup = this.formGroup): Promise<boolean> {
+        this.submitted = true;
+        if (this.formGroup.invalid) {
+            this.toastrService.info('Falta llenar campos para dar de alta esta transacción.');
+            return;
+        }
+        this.cashTransaction = this.assign();
+        this.patch();
+
+        console.log(this.cashTransaction);
+        // TODO: Add code that communicates with Cash endpoint to create instance
+
+        const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
+        const result = await this.cashService.createLegacy(legacyCashTransaction).toPromise();
+
         return new Promise((resolve, reject) => {
-            if (this.formGroup.invalid) {
-                reject(false);
+            if (!result || result.errorCode || result.historyErrorCode) {
+                if (result.errorCode) {
+                    this.toastrService.error(result.errorCode);
+                    reject(false);
+                }
+            } else if (result && result.transactionId) {
+                this.toastrService.success(`Transacción ID: ${result.transactionId} agregada con éxito`);
+                resolve(true);
             }
-
-            this.cashTransaction = this.assign();
-            this.patch();
-
-            console.log(this.cashTransaction);
-            // TODO: Add code that communicates with Cash endpoint to create instance
-
-            const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
-            // const result = await this.cashService.createLegacy(legacyCashTransaction);
-            // if(result){
-            //
-            // }
-
-            resolve(true);
         });
     }
 
     async update(formGroup = this.formGroup): Promise<boolean> {
+        this.submitted = true;
         return new Promise((resolve, reject) => {
             if (this.formGroup.invalid) {
-                reject(false);
+                this.toastrService.info('Falta llenar campos para poder modificar esta transacción.');
+                return;
             }
 
             this.cashTransaction = this.assign();
