@@ -3,6 +3,7 @@ import { Moment } from 'moment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { GlobalService } from '@app/_services/global.service';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '@app/_services/authentication.service';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -12,7 +13,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
 export class CashService {
     private endpoint = `/cash.php`;
 
-    constructor(private http: HttpClient, private globalService: GlobalService) {}
+    constructor(private authenticationService: AuthenticationService, private http: HttpClient, private globalService: GlobalService) {}
 
     public getAllLegacy(dateFrom: Moment, dateTo: Moment): Observable<any> {
         const params = new HttpParams()
@@ -34,6 +35,17 @@ export class CashService {
             { ...transaction, action: 'create' },
             { headers: headers }
         );
+    }
+
+    public openCashRegisterLegacy() {
+        return this.createLegacy({
+            conceptId: 49,
+            amount: 0,
+            transactionTypeId: 1,
+            note: 'Apertura de Caja',
+            createdUserId: this.authenticationService.currentUserValue.id,
+            entityId: null,
+        });
     }
 
     // TODO: Finish implementation

@@ -26,6 +26,23 @@ export class CashDashboardService {
         this.gridCollection = new CollectionView([]);
     }
 
+    isToday() {
+        const currentDateTime = moment();
+        return (
+            currentDateTime.year() === this.date.year() &&
+            currentDateTime.month() === this.date.month() &&
+            currentDateTime.date() === this.date.date()
+        );
+    }
+
+    async openCashRegister() {
+        // TODO: Replace for new NodeJS API
+        const result = await this.cashService.openCashRegisterLegacy().toPromise();
+        if (result) {
+            this.load(moment());
+        }
+    }
+
     async load(date: Moment) {
         const dateFrom = moment(date);
         const dateTo = moment(date);

@@ -2,8 +2,8 @@
     <div class="card-header">
         <div class="row">
             <div class="col-12 d-flex">
-                <button class="btn btn-sm btn-outline-primary mr-3">💵 Abrir Caja</button>
                 <button class="btn btn-sm btn-outline-secondary mr-3">📊 Generar Reporte</button>
+                <button class="btn btn-sm btn-outline-secondary mr-3" (click)="setTodayDate()">📅 Ver caja de Hoy</button>
 
                 <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
@@ -38,7 +38,11 @@
             grilla.
         </div>
         <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
-            No hay transacciones registradas para esta fecha. Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones.
+            No hay transacciones registradas para esta fecha.
+            <ng-container *ngIf="cashDashboardService.isToday()"
+                >Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones para el día de hoy y
+                visualizarlas.</ng-container
+            >
         </div>
         <wj-flex-grid
             #cashGrid
