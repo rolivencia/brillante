@@ -54,8 +54,12 @@ export class CashService {
     }
 
     // TODO: Finish implementation
-    public updateLegacy() {
-        return this.http.post<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { action: 'update' }, { headers: headers });
+    public updateLegacy(transaction): Observable<any> {
+        return this.http.post<any>(
+            `${this.globalService.webApiUrl}${this.endpoint}`,
+            { ...transaction, action: 'update' },
+            { headers: headers }
+        );
     }
 
     public deleteLegacy(transactionId: number | string) {
