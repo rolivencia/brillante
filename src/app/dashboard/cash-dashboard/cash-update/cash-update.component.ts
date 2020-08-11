@@ -51,10 +51,10 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
         this.cashDashboardService.editMode.next(false);
     }
 
-    update() {
+    async update() {
         this.cashFormHandlerService.cashTransaction.date = moment(this.dateTime);
         this.cashFormHandlerService.formGroup.patchValue({ date: moment(this.dateTime) });
-        const result = this.cashFormHandlerService.update();
+        const result = await this.cashFormHandlerService.update();
         if (result) {
             this.cashDashboardService.load(this.cashDashboardService.date);
             this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);

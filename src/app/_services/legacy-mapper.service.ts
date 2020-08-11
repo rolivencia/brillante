@@ -139,6 +139,7 @@ export class LegacyMapperService {
      */
     toLegacyCashTransaction(transaction: CashTransaction) {
         return {
+            transactionId: transaction.id,
             transactionTypeId: transaction.concept.transactionType.id,
             conceptId: transaction.concept.id,
             amount: transaction.amount,

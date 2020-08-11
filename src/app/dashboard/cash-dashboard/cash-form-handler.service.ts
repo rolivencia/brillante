@@ -166,7 +166,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
                     reject(false);
                 }
             } else if (result && result.transactionId) {
-                this.toastrService.success(`Transacción ID: ${result.transactionId} agregada con éxito`);
+                this.toastrService.info(`Transacción ID: ${result.transactionId} editada con éxito`);
                 resolve(true);
             }
         });

@@ -3,6 +3,7 @@ import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboa
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
 import { FlexGrid } from 'wijmo/wijmo.grid';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -26,7 +27,11 @@ export class CashGridResultsComponent implements OnInit {
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, public changeDetectorRef: ChangeDetectorRef) {}
+    constructor(
+        public cashDashboardService: CashDashboardService,
+        public changeDetectorRef: ChangeDetectorRef,
+        private toastrService: ToastrService
+    ) {}
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.subscribe((result) => {
@@ -36,24 +41,28 @@ export class CashGridResultsComponent implements OnInit {
     }
 
     //FIXME: Move this method to a service
-    formatDate(date: DateObject) {
+    public formatDate(date: DateObject) {
         const dateString = `${date.year}-${date.month}-${date.day}`;
         this.cashDashboardService.date = moment(dateString);
     }
 
     //FIXME: Move this method to a service
-    setTodayDate() {
+    public setTodayDate() {
         this.cashDashboardService.ngbDate = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
         this.refreshGrid(this.cashDashboardService.ngbDate);
     }
 
-    refreshGrid(date: DateObject) {
+    public refreshGrid(date: DateObject) {
         this.formatDate(date);
         this.cashDashboardService.load(this.cashDashboardService.date);
         this.cashDashboardService.selectedTransaction = null;
     }
 
-    getRegisterDetails(currentItem) {
+    public getRegisterDetails(currentItem) {
         this.cashDashboardService.selectedTransaction = currentItem;
+    }
+
+    public generateReport() {
+        this.toastrService.warning(`¡Disponible en breve!`, 'Funcionalidad aún en desarrollo.');
     }
 }

@@ -11,7 +11,7 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 
-const existingRoutes = ['/', '/login', '/repair-dashboard', '/client-dashboard'];
+const existingRoutes = ['/', '/login', '/repair-dashboard', '/client-dashboard', '/cash-dashboard'];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
