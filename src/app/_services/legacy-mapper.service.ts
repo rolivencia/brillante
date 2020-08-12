@@ -135,16 +135,18 @@ export class LegacyMapperService {
     /**
      * Transforms an instance of CashTransaction to the structure of the legacy API to create a new transaction
      * @deprecated
-     * @param customer - Instance of Customer class
+     * @param transaction - Instance of CashTransaction class
      */
     toLegacyCashTransaction(transaction: CashTransaction) {
         return {
+            transactionId: transaction.id,
             transactionTypeId: transaction.concept.transactionType.id,
             conceptId: transaction.concept.id,
             amount: transaction.amount,
             note: transaction.note,
             createdUserId: this.authenticationService.currentUserValue.id,
             entityId: transaction.operation.id,
+            dateTime: transaction.date.format('YYYY-MM-DD HH:mm:ss'),
         };
     }
 

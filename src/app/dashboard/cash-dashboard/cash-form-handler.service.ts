@@ -128,9 +128,6 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         this.cashTransaction = this.assign();
         this.patch();
 
-        console.log(this.cashTransaction);
-        // TODO: Add code that communicates with Cash endpoint to create instance
-
         const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
         const result = await this.cashService.createLegacy(legacyCashTransaction).toPromise();
 
@@ -149,24 +146,29 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
 
     async update(formGroup = this.formGroup): Promise<boolean> {
         this.submitted = true;
+
+        if (this.formGroup.invalid) {
+            this.toastrService.info('Falta llenar campos para poder modificar esta transacción.');
+            return;
+        }
+        this.cashTransaction = this.assign();
+        this.patch();
+
+        // TODO: Add code that communicates with Cash endpoint to update instance
+
+        const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
+        const result = await this.cashService.updateLegacy(legacyCashTransaction).toPromise();
+
         return new Promise((resolve, reject) => {
-            if (this.formGroup.invalid) {
-                this.toastrService.info('Falta llenar campos para poder modificar esta transacción.');
-                return;
+            if (!result || result.errorCode || result.historyErrorCode) {
+                if (result.errorCode) {
+                    this.toastrService.error(result.errorCode);
+                    reject(false);
+                }
+            } else if (result && result.transactionId) {
+                this.toastrService.info(`Transacción ID: ${result.transactionId} editada con éxito`);
+                resolve(true);
             }
-
-            this.cashTransaction = this.assign();
-            this.patch();
-
-            // TODO: Add code that communicates with Cash endpoint to update instance
-
-            // const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
-            // const result = await this.cashService.updateLegacy(legacyCashTransaction);
-            // if(result){
-            //
-            // }
-
-            resolve(true);
         });
     }
 

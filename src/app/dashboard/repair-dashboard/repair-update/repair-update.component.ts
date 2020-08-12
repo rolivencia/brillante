@@ -5,13 +5,12 @@ import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 import { RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
-import { ToastrService } from 'ngx-toastr';
 import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/repair-voucher-generator.service';
 
 @Component({
     selector: 'app-repair-update',
     templateUrl: './repair-update.component.html',
-    styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss']
+    styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairUpdateComponent implements OnInit {
     public repairLegacy: RepairLegacy;
@@ -21,7 +20,7 @@ export class RepairUpdateComponent implements OnInit {
 
     columns: any[] = [
         { header: 'Estados Anteriores', binding: 'status.status', width: '*' },
-        { header: 'Fecha de modificación', binding: 'updatedAt', width: '*' }
+        { header: 'Fecha de modificación', binding: 'updatedAt', width: '*' },
     ];
 
     constructor(
