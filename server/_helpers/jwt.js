@@ -9,6 +9,12 @@ function jwt() {
         path: [
             // public routes that don't require authentication
             '/users/authenticate',
+            '/dashboard',
+            new RegExp('/cash-dashboard/*', 'i'),
+            new RegExp('/repair-dashboard/*', 'i'),
+            new RegExp('/client-dashboard/*', 'i'),
+            new RegExp('/cash-dashboard/*', 'i'),
+            new RegExp('/products-dashboard/*', 'i'),
         ],
     });
 }
