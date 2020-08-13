@@ -14,17 +14,16 @@ import { BehaviorSubject } from 'rxjs';
 export class CashDashboardService {
     public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+    public loading: boolean = false;
     public date: Moment = moment();
     public ngbDate: DateObject;
     public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
     public transactions: CashTransaction[] = [];
 
-    public gridCollection: CollectionView;
+    public gridCollection: CollectionView = new CollectionView([]);
     public selectedTransaction: CashTransaction = null;
 
-    constructor(public cashService: CashService, public legacyMapperService: LegacyMapperService) {
-        this.gridCollection = new CollectionView([]);
-    }
+    constructor(public cashService: CashService, public legacyMapperService: LegacyMapperService) {}
 
     isToday() {
         const currentDateTime = moment();
@@ -44,6 +43,8 @@ export class CashDashboardService {
     }
 
     async load(date: Moment) {
+        this.loading = true;
+
         const dateFrom = moment(date);
         const dateTo = moment(date);
         const rawTransactions = await this.cashService.getAllLegacy(dateFrom, dateTo).toPromise();
@@ -60,5 +61,6 @@ export class CashDashboardService {
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();
         this.gridCollection.sortDescriptions.push(sortById);
+        this.loading = false;
     }
 }

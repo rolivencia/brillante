@@ -13,6 +13,7 @@
                         class="form-control"
                         placeholder="yyyy-mm-dd"
                         name="from"
+                        [disabled]="cashDashboardService.loading"
                         [maxDate]="cashDashboardService.ngbMaxDate"
                         [displayMonths]="displayMonths"
                         [navigation]="navigation"
@@ -33,46 +34,53 @@
         </div>
     </div>
     <div id="cash-transaction-grid" class="card-body">
-        <div *ngIf="editMode && cashDashboardService.gridCollection.itemCount > 0" class="alert alert-info">
-            Presioná en "Volver" arriba en el menú derecho para desactivar el <b>modo edición</b> y poder seleccionar transacciones de la
-            grilla.
-        </div>
-        <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
-            No hay transacciones registradas para esta fecha.
-            <ng-container *ngIf="cashDashboardService.isToday()"
-                >Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones para el día de hoy y
-                visualizarlas.</ng-container
+        <ng-container *ngIf="cashDashboardService.loading">
+            <div class="alert alert-info">
+                <h3>Cargando...</h3>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!cashDashboardService.loading">
+            <div *ngIf="editMode && cashDashboardService.gridCollection.itemCount > 0" class="alert alert-info">
+                Presioná en "Volver" arriba en el menú derecho para desactivar el <b>modo edición</b> y poder seleccionar transacciones de
+                la grilla.
+            </div>
+            <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
+                No hay transacciones registradas para esta fecha.
+                <ng-container *ngIf="cashDashboardService.isToday()"
+                    >Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones para el día de hoy y
+                    visualizarlas.</ng-container
+                >
+            </div>
+            <wj-flex-grid
+                #cashGrid
+                *ngIf="cashDashboardService.gridCollection.itemCount > 0"
+                [selectionMode]="editMode ? 'None' : 'Row'"
+                [itemsSource]="cashDashboardService.gridCollection"
+                [headersVisibility]="'Column'"
+                [autoGenerateColumns]="false"
+                [allowResizing]="'Columns'"
+                [showSelectedHeaders]="'Row'"
+                [isReadOnly]="true"
+                (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
             >
-        </div>
-        <wj-flex-grid
-            #cashGrid
-            *ngIf="cashDashboardService.gridCollection.itemCount > 0"
-            [selectionMode]="editMode ? 'None' : 'Row'"
-            [itemsSource]="cashDashboardService.gridCollection"
-            [headersVisibility]="'Column'"
-            [autoGenerateColumns]="false"
-            [allowResizing]="'Columns'"
-            [showSelectedHeaders]="'Row'"
-            [isReadOnly]="true"
-            (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
-        >
-            <wj-flex-grid-column
-                *ngFor="let column of columns"
-                [width]="column.width"
-                [binding]="column.binding"
-                [header]="column.header"
-                [visible]="true"
-            >
-                <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                    {{ cell.item.concept.transactionType.id === 1 ? '$ ' + cell.item.amount : '' }}
-                </ng-template>
-                <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                    {{ cell.item.concept.transactionType.id === 0 ? '$ ' + cell.item.amount : '' }}
-                </ng-template>
-                <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                    {{ cell.item.date.format('HH:mm') }}
-                </ng-template>
-            </wj-flex-grid-column>
-        </wj-flex-grid>
+                <wj-flex-grid-column
+                    *ngFor="let column of columns"
+                    [width]="column.width"
+                    [binding]="column.binding"
+                    [header]="column.header"
+                    [visible]="true"
+                >
+                    <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                        {{ cell.item.concept.transactionType.id === 1 ? '$ ' + cell.item.amount : '' }}
+                    </ng-template>
+                    <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                        {{ cell.item.concept.transactionType.id === 0 ? '$ ' + cell.item.amount : '' }}
+                    </ng-template>
+                    <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                        {{ cell.item.date.format('HH:mm') }}
+                    </ng-template>
+                </wj-flex-grid-column>
+            </wj-flex-grid>
+        </ng-container>
     </div>
 </div>
