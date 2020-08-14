@@ -210,7 +210,15 @@
                                     <div class="w-100 d-flex justify-content-between">
                                         <div id="issue-description" class="px-2">
                                             <p><strong>Descripción del Problema: </strong></p>
-                                            {{ repairFormHandlerService.repair.issue }}
+                                            <textarea
+                                                id="issue"
+                                                name="issue"
+                                                aria-describedby="issue"
+                                                formControlName="issue"
+                                                class="form-control"
+                                                rows="4"
+                                                [readOnly]="repairFormHandlerService.saved"
+                                            ></textarea>
                                         </div>
                                         <div>
                                             <div class="px-2 mb-2">

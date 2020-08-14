@@ -8,7 +8,7 @@ import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class RepairFormHandlerService {
     get registerPayment(): boolean {
@@ -105,7 +105,7 @@ export class RepairFormHandlerService {
                 email: [customer.email, [Validators.required, Validators.email]],
                 address: [customer.address, [Validators.required]],
                 telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]],
-                secondaryTelephone: [customer.telephone, [Validators.pattern('[0-9]+')]]
+                secondaryTelephone: [customer.telephone, [Validators.pattern('[0-9]+')]],
             }),
             repair: this.formBuilder.group({
                 id: [repair.id],
@@ -114,15 +114,15 @@ export class RepairFormHandlerService {
                     type: [repair.device.type, Validators.required],
                     manufacturer: [repair.device.manufacturer, Validators.required],
                     model: [repair.device.model, Validators.required],
-                    deviceId: [repair.device.deviceId]
+                    deviceId: [repair.device.deviceId],
                 }),
                 status: [repair.status, Validators.required],
                 note: [repair.note],
                 issue: [repair.issue, [Validators.required]],
                 paymentInAdvance: [repair.paymentInAdvance, Validators.required],
                 price: [repair.price, Validators.required],
-                cost: [repair.cost, Validators.required]
-            })
+                cost: [repair.cost, Validators.required],
+            }),
         });
     }
 
@@ -147,8 +147,8 @@ export class RepairFormHandlerService {
                 lastName: customer.lastName,
                 email: customer.email,
                 address: customer.address,
-                telephone: customer.telephone
-            }
+                telephone: customer.telephone,
+            },
         });
     }
 
@@ -161,7 +161,7 @@ export class RepairFormHandlerService {
                     type: repair.device.type,
                     manufacturer: repair.device.manufacturer,
                     model: repair.device.model,
-                    deviceId: repair.device.deviceId
+                    deviceId: repair.device.deviceId,
                 },
                 customer: repair.customer,
                 issue: repair.issue,
@@ -169,8 +169,8 @@ export class RepairFormHandlerService {
                 cost: repair.cost,
                 price: repair.price,
                 status: repair.status,
-                note: repair.note
-            }
+                note: repair.note,
+            },
         });
     }
 
@@ -200,7 +200,7 @@ export class RepairFormHandlerService {
                 type: deviceForm.type.value,
                 manufacturer: deviceForm.manufacturer.value,
                 model: deviceForm.model.value,
-                deviceId: deviceForm.deviceId.value
+                deviceId: deviceForm.deviceId.value,
             },
             status: repairForm.status.value,
             note: repairForm.note.value,
@@ -213,7 +213,7 @@ export class RepairFormHandlerService {
             checkIn: this.repair.checkIn,
             checkOut: this.repair.checkOut,
             lastUpdate: this.repair.lastUpdate,
-            audit: this.repair.audit
+            audit: this.repair.audit,
         };
     }
 
@@ -227,7 +227,7 @@ export class RepairFormHandlerService {
             lastName: customerForm.lastName.value,
             email: customerForm.email.value,
             telephone: customerForm.telephone.value,
-            address: customerForm.address.value
+            address: customerForm.address.value,
         };
     }
 
@@ -289,7 +289,7 @@ export class RepairFormHandlerService {
         this.patchCustomer();
         this.patchRepair();
 
-        if (editDescription) {
+        if (editDescription || this.formGroup.controls['repair']['controls']['issue'].dirty) {
             const repairDescription = this.legacyMapperService.toLegacyRepairDescription(this.repair);
             const updateResult = await this.repairService.updateDescriptionLegacy(repairDescription).toPromise();
             console.log(updateResult);
