@@ -1,6 +1,7 @@
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashService } from '@app/_services/cash.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Operation } from '@app/_models/cash-transaction';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -9,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './cash-selected-details.component.html',
     styleUrls: ['./cash-selected-details.component.scss'],
 })
-export class CashSelectedDetailsComponent implements OnInit {
+export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
     constructor(
         public cashDashboardService: CashDashboardService,
         private cashService: CashService,
@@ -19,6 +20,11 @@ export class CashSelectedDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(false);
+        this.cashDashboardService.selectedTransaction = null;
+    }
+
+    ngOnDestroy() {
+        this.cashDashboardService.selectedTransaction = null;
     }
 
     add() {
@@ -36,5 +42,17 @@ export class CashSelectedDetailsComponent implements OnInit {
             this.cashDashboardService.selectedTransaction = null;
             this.cashDashboardService.load(this.cashDashboardService.date);
         });
+    }
+
+    navigate() {
+        // TODO: Posibilitar navegación a ventas cuando se implemente el módulo correspondiente
+        const operation: Operation = this.cashDashboardService.selectedTransaction.operation;
+        switch (operation.description) {
+            case 'Reparación':
+                this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'update/' + operation.id, left: null, right: null } }]);
+                break;
+            default:
+                break;
+        }
     }
 }
