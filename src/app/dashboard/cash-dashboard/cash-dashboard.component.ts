@@ -14,7 +14,6 @@ export class CashDashboardComponent implements OnInit {
     controlsLoaded: boolean = false;
 
     constructor(
-        private changeDetectorRef: ChangeDetectorRef,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private dateHandlerService: DateHandlerService
@@ -31,7 +30,6 @@ export class CashDashboardComponent implements OnInit {
         });
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;
-            this.changeDetectorRef.detectChanges();
         });
     }
 }

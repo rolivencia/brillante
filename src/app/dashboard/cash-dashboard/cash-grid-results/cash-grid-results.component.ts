@@ -27,16 +27,11 @@ export class CashGridResultsComponent implements OnInit {
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
-    constructor(
-        public cashDashboardService: CashDashboardService,
-        public changeDetectorRef: ChangeDetectorRef,
-        private toastrService: ToastrService
-    ) {}
+    constructor(public cashDashboardService: CashDashboardService, private toastrService: ToastrService) {}
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.subscribe((result) => {
             this.editMode = result;
-            this.changeDetectorRef.detectChanges();
         });
     }
 
