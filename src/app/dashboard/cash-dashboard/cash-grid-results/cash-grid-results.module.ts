@@ -3,7 +3,7 @@ import { CashGridResultsRoutingModule } from './cash-grid-results-routing.module
 import { CommonModule } from '@angular/common';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
-import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
+import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({

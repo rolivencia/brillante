@@ -3,7 +3,7 @@ import { CashUpdateRoutingModule } from './cash-update-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { WjInputModule } from 'wijmo/wijmo.angular2.input';
+import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 import { CashUpdateResolverService } from '@app/dashboard/cash-dashboard/cash-update/cash-update-resolver.service';
 
 @NgModule({

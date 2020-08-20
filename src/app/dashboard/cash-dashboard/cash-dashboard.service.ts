@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { CashService } from '@app/_services/cash.service';
 import { CashTransaction } from '@app/_models/cash-transaction';
-import { CollectionView, SortDescription } from 'wijmo/wijmo';
+import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { DateObject } from '@app/_models/date-object';
 import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';

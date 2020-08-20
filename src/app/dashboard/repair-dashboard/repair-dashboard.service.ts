@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { CollectionView, SortDescription } from 'wijmo/wijmo';
+import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
 import { RepairLegacy } from '@app/_models';

@@ -8,12 +8,12 @@ import { RepairDashboardRoutingModule } from './repair-dashboard-routing.module'
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
 import { RepairService } from '@app/_services/repair.service';
 import { RouterModule } from '@angular/router';
-import { WjInputModule } from 'wijmo/wijmo.angular2.input';
+import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 import { DateHandlerService } from '@app/_services/date-handler.service';
 
 @NgModule({
     declarations: [RepairDashboardComponent],
     imports: [CommonModule, RepairDashboardRoutingModule],
-    providers: [DateHandlerService, LegacyMapperService, RepairDashboardService, RepairService]
+    providers: [DateHandlerService, LegacyMapperService, RepairDashboardService, RepairService],
 })
 export class RepairDashboardModule {}

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '@app/_services/customer.service';
 import { RepairService } from '@app/_services/repair.service';
-import { CollectionView, SortDescription } from 'wijmo/wijmo';
+import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { RepairLegacy } from '@app/_models';
 import { GlobalService } from '@app/_services/global.service';
 
 @Component({
     selector: 'app-client-dashboard',
     templateUrl: './client-dashboard.component.html',
-    styleUrls: ['./client-dashboard.component.scss']
+    styleUrls: ['./client-dashboard.component.scss'],
 })
 export class ClientDashboardComponent implements OnInit {
     // _selectedClientData: ClientLegacy;
@@ -28,7 +28,7 @@ export class ClientDashboardComponent implements OnInit {
         { header: 'Nombre', binding: 'firstName', width: '*' },
         { header: 'Apellido', binding: 'lastName', width: '*' },
         { header: 'eMail', binding: 'email', width: '*' },
-        { header: 'Dirección', binding: 'address', width: '*' }
+        { header: 'Dirección', binding: 'address', width: '*' },
     ];
 
     repairColumns: any[] = [
@@ -36,7 +36,7 @@ export class ClientDashboardComponent implements OnInit {
         { header: 'Marca', binding: 'marca', width: '*' },
         { header: 'Modelo', binding: 'modelo', width: '*' },
         { header: 'Última Act.', binding: 'fechaUltimaActualizacion', width: '*' },
-        { header: 'Estado', binding: 'estado', width: '*' }
+        { header: 'Estado', binding: 'estado', width: '*' },
     ];
 
     constructor(private clientService: CustomerService, private repairService: RepairService, private globalService: GlobalService) {}
@@ -79,25 +79,25 @@ export class ClientDashboardComponent implements OnInit {
 
     getGridData() {
         this.clientService.getAll().subscribe(
-            data => {
+            (data) => {
                 this.clientGridData = data;
                 this.clientGridCollection = new CollectionView(this.clientGridData);
                 this.clientGridCollection.pageSize = this.pageSize;
                 this.clientGridCollection.currentItem = null;
             },
-            error => console.error(error)
+            (error) => console.error(error)
         );
     }
 
     private getUserRepairs(clientData: any) {
         this.repairService.getByClientIdLegacy(clientData.id).subscribe(
-            data => {
+            (data) => {
                 this.repairGridData = data;
                 this.repairGridCollection = new CollectionView(this.repairGridData.data);
                 this.repairGridCollection.currentItem = this.repairGridCollection.items[0];
                 this.getRepairDetails(this.repairGridCollection.currentItem);
             },
-            error => console.error(error)
+            (error) => console.error(error)
         );
     }
 }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CashAddNewRoutingModule } from './cash-add-new-routing.module';
 import { CashAddNewComponent } from './cash-add-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WjInputModule } from 'wijmo/wijmo.angular2.input';
+import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 
 @NgModule({
     declarations: [CashAddNewComponent],

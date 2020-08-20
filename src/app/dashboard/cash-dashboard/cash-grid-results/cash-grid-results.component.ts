@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
-import { FlexGrid } from 'wijmo/wijmo.grid';
+import { FlexGrid } from '@grapecity/wijmo.grid';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

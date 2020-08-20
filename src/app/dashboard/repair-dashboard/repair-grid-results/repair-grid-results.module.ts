@@ -4,9 +4,9 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { RepairGridResultsComponent } from '@app/dashboard/repair-dashboard/repair-grid-results/repair-grid-results.component';
 import { RepairGridResultsRoutingModule } from './repair-grid-results-routing.module';
-import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
-import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
-import { WjInputModule } from 'wijmo/wijmo.angular2.input';
+import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
+import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
+import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 
 @NgModule({
     declarations: [RepairGridResultsComponent],
@@ -17,7 +17,7 @@ import { WjInputModule } from 'wijmo/wijmo.angular2.input';
         RepairGridResultsRoutingModule,
         WjGridModule,
         WjGridFilterModule,
-        WjInputModule
-    ]
+        WjInputModule,
+    ],
 })
 export class RepairGridResultsModule {}
