@@ -150,54 +150,6 @@ export class LegacyMapperService {
         };
     }
 
-    /**
-     * Transforms an instance of Cliente in wp-brillante to an instance of the Customer class
-     * @param clientId - id
-     * @param nombre - nombre
-     * @param apellido - apellido
-     * @param direccion - direccion
-     * @param dni - dni
-     * @param email - email
-     * @param telefono - telefono
-     * @param secondaryTelephone - secondaryTelephone
-     * @param usuario - usuario
-     * @param code - code
-     * @param message - message
-     */
-    fromLegacyCustomer({
-        clientId,
-        nombre,
-        apellido,
-        direccion,
-        dni,
-        email,
-        telefono,
-        secondaryTelephone,
-        usuario,
-        code,
-        message,
-    }): Customer {
-        const customer: Customer = {
-            id: clientId,
-            firstName: nombre,
-            lastName: apellido,
-            address: direccion,
-            dni: dni,
-            email: email,
-            telephone: telefono,
-            secondaryTelephone: secondaryTelephone,
-            user: null,
-        };
-
-        customer.user = new User();
-
-        if (usuario) {
-            customer.user.id = usuario;
-        }
-
-        return customer;
-    }
-
     fromLegacyCashTransaction({
         amount,
         concept,

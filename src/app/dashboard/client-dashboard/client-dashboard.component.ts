@@ -80,7 +80,7 @@ export class ClientDashboardComponent implements OnInit {
     getGridData() {
         this.clientService.getAll().subscribe(
             (data) => {
-                this.clientGridData = data;
+                this.clientGridData = data.rows;
                 this.clientGridCollection = new CollectionView(this.clientGridData);
                 this.clientGridCollection.pageSize = this.pageSize;
                 this.clientGridCollection.currentItem = null;
