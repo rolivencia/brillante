@@ -56,11 +56,23 @@ export class CashDashboardService {
         } else {
             this.transactions = [];
         }
-        this.gridCollection = new CollectionView<any>(this.transactions);
+        const transactions = this.transactions.map((Transaction) => this.mapTransactionType(Transaction));
+        this.gridCollection = new CollectionView<any>(transactions);
 
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();
         this.gridCollection.sortDescriptions.push(sortById);
         this.loading = false;
+    }
+
+    mapTransactionType(transaction: CashTransaction) {
+        const isIncome = transaction.concept.transactionType.id === 1;
+        const isExpense = transaction.concept.transactionType.id === 0;
+        return {
+            ...transaction,
+            amount: isIncome ? transaction.amount : -1 * transaction.amount,
+            income: isIncome ? transaction.amount : 0,
+            expense: isExpense ? transaction.amount : 0,
+        };
     }
 }

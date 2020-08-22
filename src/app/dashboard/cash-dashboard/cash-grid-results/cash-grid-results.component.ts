@@ -1,14 +1,15 @@
 import * as moment from 'moment';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
-import { FlexGrid } from '@grapecity/wijmo.grid';
+import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-grid-results',
     templateUrl: './cash-grid-results.component.html',
     styleUrls: ['./cash-grid-results.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class CashGridResultsComponent implements OnInit {
     @ViewChild('cashGrid', { static: false }) cashGrid: FlexGrid;
@@ -22,8 +23,9 @@ export class CashGridResultsComponent implements OnInit {
         { header: 'ID', binding: 'id', width: 60 },
         { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
         { header: 'Subconcepto', binding: 'concept.description', width: '*' },
-        { header: 'Ingreso', binding: 'amount', width: 80 },
-        { header: 'Egreso', binding: 'amount', width: 80 },
+        { header: 'Ingreso', binding: 'income', width: 80 },
+        { header: 'Egreso', binding: 'expense', width: 80 },
+        { header: 'Saldo', binding: 'amount', width: 80 },
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
@@ -33,6 +35,11 @@ export class CashGridResultsComponent implements OnInit {
         this.cashDashboardService.editMode.subscribe((result) => {
             this.editMode = result;
         });
+    }
+
+    initializeGrid(flex: FlexGrid) {
+        flex.columnFooters.rows.push(new GroupRow());
+        flex.bottomLeftCells.setCellData(0, 0, '$');
     }
 
     //FIXME: Move this method to a service
