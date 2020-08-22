@@ -73,28 +73,53 @@
                     [aggregate]="column.header === 'Ingreso' || column.header === 'Egreso' || column.header === 'Saldo' ? 'Sum' : 'None'"
                 >
                     <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                        {{ cell.item.concept.transactionType.id === 1 ? '$ ' + cell.item.amount : '' }}
+                        <ng-container *ngIf="cell.item.concept.transactionType.id === 1">
+                            <div class="d-flex justify-content-between">
+                                <div>$</div>
+                                <div>{{ cell.item.income }}</div>
+                            </div>
+                        </ng-container>
                     </ng-template>
+
                     <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'ColumnFooter'" let-cell="cell">
-                        <div class="alert alert-success mb-0 p-1 border-0">{{ '$ ' + cell.value }}</div>
+                        <div class="alert alert-success mb-0 p-1 border-0 d-flex justify-content-between">
+                            <div>$</div>
+                            <div>{{ cell.value }}</div>
+                        </div>
                     </ng-template>
 
                     <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                        {{ cell.item.concept.transactionType.id === 0 ? '$ ' + cell.item.amount : '' }}
+                        <ng-container *ngIf="cell.item.concept.transactionType.id === 0">
+                            <div class="d-flex justify-content-between">
+                                <div>$</div>
+                                <div>{{ cell.item.expense }}</div>
+                            </div>
+                        </ng-container>
                     </ng-template>
+
                     <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'ColumnFooter'" let-cell="cell">
-                        <div class="alert alert-danger mb-0 p-1 border-0">{{ '$ ' + cell.value }}</div>
+                        <div class="alert alert-danger mb-0 p-1 border-0 d-flex justify-content-between">
+                            <div>$</div>
+                            <div>{{ cell.value }}</div>
+                        </div>
                     </ng-template>
 
                     <ng-template *ngIf="column.header === 'Saldo'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                        {{ '$ ' + cell.item.amount }}
+                        <div class="d-flex justify-content-between">
+                            <div>$</div>
+                            <div>{{ cell.item.amount }}</div>
+                        </div>
                     </ng-template>
+
                     <ng-template *ngIf="column.header === 'Saldo'" wjFlexGridCellTemplate [cellType]="'ColumnFooter'" let-cell="cell">
-                        <div class="alert alert-info mb-0 p-1 border-0">{{ '$ ' + cell.value }}</div>
+                        <div class="alert alert-info mb-0 p-1 border-0 d-flex justify-content-between">
+                            <div>$</div>
+                            <div>{{ cell.value }}</div>
+                        </div>
                     </ng-template>
 
                     <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                        {{ cell.item.date.format('HH:mm') }}
+                        <div class="text-right">{{ cell.item.date.format('HH:mm') }}</div>
                     </ng-template>
                 </wj-flex-grid-column>
             </wj-flex-grid>
