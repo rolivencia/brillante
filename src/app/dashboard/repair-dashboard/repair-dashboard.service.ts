@@ -5,6 +5,7 @@ import { Moment } from 'moment';
 import { RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { DateObject } from '@app/_models/date-object';
+import * as moment from 'moment';
 
 @Injectable()
 export class RepairDashboardService {
@@ -21,11 +22,13 @@ export class RepairDashboardService {
     public gridCollection;
     public pageSize = 22;
 
+    public date: Moment = moment();
+
     public ngbDateFrom: DateObject;
     public ngbDateTo: DateObject;
 
-    public ngbMinDate: DateObject;
-    public ngbMaxDate: DateObject;
+    public ngbMinDate: DateObject = { year: 2020, month: 1, day: 1 };
+    public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
 
     public _showFinished = false;
     _dateFrom: Moment;

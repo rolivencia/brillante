@@ -12,6 +12,7 @@
                     class="form-control"
                     placeholder="yyyy-mm-dd"
                     name="from"
+                    [minDate]="repairDashboardService.ngbMinDate"
                     [maxDate]="repairDashboardService.ngbDateTo"
                     [displayMonths]="displayMonths"
                     [navigation]="navigation"

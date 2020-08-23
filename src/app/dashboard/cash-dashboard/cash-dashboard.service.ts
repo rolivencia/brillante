@@ -17,6 +17,7 @@ export class CashDashboardService {
     public loading: boolean = false;
     public date: Moment = moment();
     public ngbDate: DateObject;
+    public ngbMinDate: DateObject = { year: 2020, month: 8, day: 1 };
     public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
     public transactions: CashTransaction[] = [];
 
