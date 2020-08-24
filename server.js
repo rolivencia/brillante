@@ -30,7 +30,7 @@ app.use(express.static('./dist/brillante'));
 
 const apiRoutes = [
     { path: '/users', controller: './server/users/users.controller' },
-    { path: '/client', controller: './server/client/client.controller' },
+    { path: '/client', controller: './server/customer/customer.controller' },
     { path: '/repair', controller: './server/repair/repair.controller' },
 ];
 

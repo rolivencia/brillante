@@ -1,4 +1,4 @@
-const Client = require('./client.model');
+const Client = require('./customer.model');
 
 module.exports = {
     countAll,

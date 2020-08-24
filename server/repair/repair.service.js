@@ -1,4 +1,4 @@
-const Client = require('server/client/client.model');
+const Customer = require('server/customer/customer.model');
 
 const repair = require('server/repair/repair.model');
 const repairStatus = require('server/repair/repair.status');
@@ -11,7 +11,7 @@ module.exports = {
     getAll,
     getById,
     update,
-    getHistoryByRepairId
+    getHistoryByRepairId,
 };
 
 async function create() {}
@@ -32,27 +32,27 @@ async function getAll({ showFinished, startDate, endDate }) {
                 'payInAdvance',
                 'repairCost',
                 'repairPrice',
-                'equipmentTurnedOn'
+                'equipmentTurnedOn',
             ],
             include: [
                 {
                     as: 'client',
-                    model: Client(),
+                    model: Customer(),
                     required: true,
-                    attributes: ['id', 'firstName', 'lastName', 'email']
+                    attributes: ['id', 'firstName', 'lastName', 'email'],
                 },
                 {
                     as: 'repairStatus',
                     model: RepairStatus(),
                     required: true,
-                    attributes: ['id', 'description']
-                }
+                    attributes: ['id', 'description'],
+                },
             ],
             where: {
                 dischargeDate: { [Op.between]: [startDate, endDate] },
                 enabled: 1,
-                deleted: 0
-            }
+                deleted: 0,
+            },
         });
     } else {
         return repair.Repair().findAll({
@@ -69,20 +69,20 @@ async function getAll({ showFinished, startDate, endDate }) {
                 'payInAdvance',
                 'repairCost',
                 'repairPrice',
-                'equipmentTurnedOn'
+                'equipmentTurnedOn',
             ],
             include: [
                 {
                     as: 'status',
-                    model: repairStatus.RepairStatus
-                }
+                    model: repairStatus.RepairStatus,
+                },
             ],
             where: {
                 idStatus: { [Op.notIn]: [5, 7] },
                 dischargeDate: { [Op.between]: [startDate, endDate] },
                 enabled: 1,
-                deleted: 0
-            }
+                deleted: 0,
+            },
         });
     }
 }
@@ -90,8 +90,8 @@ async function getAll({ showFinished, startDate, endDate }) {
 async function getById(id) {
     return repair.Repair().findOne({
         where: {
-            id: id
-        }
+            id: id,
+        },
     });
 }
 
@@ -102,14 +102,14 @@ async function getHistoryByRepairId(idRepair) {
             {
                 as: 'status',
                 model: repairStatus.RepairStatus,
-                attributes: ['id', 'status']
-            }
+                attributes: ['id', 'status'],
+            },
         ],
         where: {
             idRepair: idRepair,
-            updatedAt: { [Op.ne]: null }
+            updatedAt: { [Op.ne]: null },
         },
-        order: [['updatedAt', 'DESC']]
+        order: [['updatedAt', 'DESC']],
     });
 }
 
