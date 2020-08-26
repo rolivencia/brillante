@@ -1,4 +1,4 @@
-<form [formGroup]="cashFormHandlerService.formGroup" (ngSubmit)="update()">
+<form [formGroup]="cashFormHandler.formGroup" (ngSubmit)="update()">
     <div class="card">
         <div class="card-header d-flex justify-content-around">
             <button class="btn btn-sm btn-outline-success mr-3" type="submit">💵 Guardar</button>
@@ -10,18 +10,18 @@
                 <div class="col-12">
                     <label><b>ID:</b></label>
                     <div class="input-group input-group-sm">
-                        <label>{{ cashFormHandlerService.cashTransaction.id }}</label>
+                        <label>{{ cashFormHandler.cashTransaction.id }}</label>
                     </div>
                     <label><b>Concepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
                         <wj-combo-box
                             class="form-control form-control-sm p-0"
-                            [(ngModel)]="cashFormHandlerService.transactionParentConcept"
+                            [(ngModel)]="cashFormHandler.transactionParentConcept"
                             [ngModelOptions]="{ standalone: true }"
                             [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="cashFormHandlerService.transactionConcepts"
-                            [selectedItem]="cashFormHandlerService.transactionParentConcept"
+                            [isReadOnly]="cashFormHandler.saved"
+                            [itemsSource]="cashFormHandler.transactionConcepts"
+                            [selectedItem]="cashFormHandler.transactionParentConcept"
                             [displayMemberPath]="'description'"
                         >
                         </wj-combo-box>
@@ -35,9 +35,9 @@
                             aria-describedby="concept"
                             formControlName="concept"
                             [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
-                            [selectedItem]="cashFormHandlerService.cashTransaction.concept"
+                            [isReadOnly]="cashFormHandler.saved"
+                            [itemsSource]="cashFormHandler.transactionParentConcept.children"
+                            [selectedItem]="cashFormHandler.cashTransaction.concept"
                             [displayMemberPath]="'description'"
                         >
                         </wj-combo-box>
@@ -45,14 +45,14 @@
                     <label><b>Tipo de Transacción:</b></label>
                     <div class="input-group input-group-sm mb-2">
                         <span
-                            *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
+                            *ngIf="cashFormHandler.transactionParentConcept.transactionType"
                             class="badge p-2 w-100"
                             [ngClass]="{
-                                'badge-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
-                                'badge-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                'badge-danger': cashFormHandler.transactionParentConcept.transactionType.id === 0,
+                                'badge-success': cashFormHandler.transactionParentConcept.transactionType.id === 1
                             }"
                         >
-                            {{ cashFormHandlerService.transactionParentConcept.transactionType.id === 1 ? '💰 Ingreso' : '💸 Egreso' }}
+                            {{ cashFormHandler.transactionParentConcept.transactionType.id === 1 ? '💰 Ingreso' : '💸 Egreso' }}
                         </span>
                         <!-- TODO: Think about filtering the concept list depending on the transaction type also -->
                     </div>

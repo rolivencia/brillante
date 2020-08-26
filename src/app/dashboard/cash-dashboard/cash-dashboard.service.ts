@@ -7,6 +7,7 @@ import { DateObject } from '@app/_models/date-object';
 import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { BehaviorSubject } from 'rxjs';
+import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 
 @Injectable({
     providedIn: 'root',
@@ -24,7 +25,11 @@ export class CashDashboardService {
     public gridCollection: CollectionView = new CollectionView([]);
     public selectedTransaction: CashTransaction = null;
 
-    constructor(public cashService: CashService, public legacyMapperService: LegacyMapperService) {}
+    constructor(
+        public cashService: CashService,
+        public legacyMapperService: LegacyMapperService,
+        private cashFormHandler: CashFormHandlerService
+    ) {}
 
     isToday() {
         const currentDateTime = moment();
@@ -52,7 +57,7 @@ export class CashDashboardService {
 
         if (rawTransactions['data']?.length) {
             this.transactions = rawTransactions['data'].map((transaction) =>
-                this.legacyMapperService.fromLegacyCashTransaction(transaction)
+                this.legacyMapperService.fromLegacyCashTransaction(transaction, this.cashFormHandler.transactionConcepts)
             );
         } else {
             this.transactions = [];

@@ -13,11 +13,7 @@ import { RepairService } from '@app/_services/repair.service';
 })
 export class LegacyMapperService {
     private currentUser: User;
-    constructor(
-        private authenticationService: AuthenticationService,
-        private repairService: RepairService,
-        private cashFormHandler: CashFormHandlerService
-    ) {
+    constructor(private authenticationService: AuthenticationService, private repairService: RepairService) {
         moment.locale('es');
         this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
@@ -150,28 +146,31 @@ export class LegacyMapperService {
         };
     }
 
-    fromLegacyCashTransaction({
-        amount,
-        concept,
-        conceptId,
-        creatorUser,
-        creatorUserId,
-        date,
-        inputAmount,
-        note,
-        outputAmount,
-        parentConcept,
-        parentConceptId,
-        repairId,
-        saleId,
-        stockId,
-        transactionId,
-        transactionType,
-        transactionTypeId,
-    }): CashTransaction {
+    fromLegacyCashTransaction(
+        {
+            amount,
+            concept,
+            conceptId,
+            creatorUser,
+            creatorUserId,
+            date,
+            inputAmount,
+            note,
+            outputAmount,
+            parentConcept,
+            parentConceptId,
+            repairId,
+            saleId,
+            stockId,
+            transactionId,
+            transactionType,
+            transactionTypeId,
+        },
+        transactionConcepts
+    ): CashTransaction {
         const audit = new Audit();
 
-        const transactionConcept = this.cashFormHandler.transactionConcepts.filter((c) => c.id === parentConceptId)[0];
+        const transactionConcept = transactionConcepts.filter((c) => c.id === parentConceptId)[0];
         const transactionSubConcept = transactionConcept.children.filter((c) => c.id === conceptId)[0];
 
         const transactionAmount = parseFloat(amount ? amount : inputAmount ? inputAmount : outputAmount);

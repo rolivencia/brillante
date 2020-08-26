@@ -16,7 +16,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
 
     constructor(
         public cashDashboardService: CashDashboardService,
-        public cashFormHandlerService: CashFormHandlerService,
+        public cashFormHandler: CashFormHandlerService,
         private legacyMapperService: LegacyMapperService,
         private route: ActivatedRoute,
         private router: Router
@@ -24,23 +24,26 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(true);
-        this.cashFormHandlerService.controlsLoaded.subscribe((result) => {
+        this.cashFormHandler.controlsLoaded.subscribe((result) => {
             if (result) {
                 const legacyCashTransaction = this.route.snapshot.data['legacyCashTransaction'];
                 if (legacyCashTransaction) {
-                    this.cashFormHandlerService.saved = false;
-                    this.cashFormHandlerService.cashTransaction = this.legacyMapperService.fromLegacyCashTransaction(legacyCashTransaction);
+                    this.cashFormHandler.saved = false;
+                    this.cashFormHandler.cashTransaction = this.legacyMapperService.fromLegacyCashTransaction(
+                        legacyCashTransaction,
+                        this.cashFormHandler.transactionConcepts
+                    );
 
                     // Assign parent transaction concept for usage in the update form
-                    this.cashFormHandlerService.transactionParentConcept = this.cashFormHandlerService.transactionConcepts.filter(
-                        (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
+                    this.cashFormHandler.transactionParentConcept = this.cashFormHandler.transactionConcepts.filter(
+                        (concept) => this.cashFormHandler.cashTransaction.concept.parent.id === concept.id
                     )[0];
 
                     // Assign date
-                    this.dateTime = this.cashFormHandlerService.cashTransaction.date.toDate();
+                    this.dateTime = this.cashFormHandler.cashTransaction.date.toDate();
 
-                    this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
-                    this.cashFormHandlerService.patch();
+                    this.cashFormHandler.formGroup = this.cashFormHandler.load();
+                    this.cashFormHandler.patch();
                     this.controlsLoaded = true;
                 }
             }
@@ -52,9 +55,9 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     }
 
     async update() {
-        this.cashFormHandlerService.cashTransaction.date = moment(this.dateTime);
-        this.cashFormHandlerService.formGroup.patchValue({ date: moment(this.dateTime) });
-        const result = await this.cashFormHandlerService.update();
+        this.cashFormHandler.cashTransaction.date = moment(this.dateTime);
+        this.cashFormHandler.formGroup.patchValue({ date: moment(this.dateTime) });
+        const result = await this.cashFormHandler.update();
         if (result) {
             this.cashDashboardService.load(this.cashDashboardService.date);
             this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
