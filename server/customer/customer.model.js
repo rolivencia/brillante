@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
-const sequelizeConnector = connector.legacyDbConnector();
+const sequelizeConnector = connector.sequelizeConnector();
 
 class Client extends Sequelize.Model {}
 

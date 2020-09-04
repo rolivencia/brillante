@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
-const sequelizeConnector = connector.legacyDbConnector();
+const sequelizeConnector = connector.sequelizeConnector();
 
 const Customer = require('server/customer/customer.model');
 const repairStatus = require('server/repair/repair.status');
