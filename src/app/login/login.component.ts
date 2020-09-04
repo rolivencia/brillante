@@ -1,11 +1,9 @@
-﻿import { Component, enableProdMode, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+﻿import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
 import { AlertService, AuthenticationService } from '@app/_services';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '@environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({ templateUrl: 'login.component.html', selector: 'app-login', styleUrls: ['./login.component.scss'] })
 export class LoginComponent implements OnInit {
@@ -15,12 +13,12 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
 
     constructor(
+        private alertService: AlertService,
+        private authenticationService: AuthenticationService,
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService,
-        private alertService: AlertService,
-        private http: HttpClient
+        private toastrService: ToastrService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
@@ -31,7 +29,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
         });
 
         // get return url from route parameters or default to '/'
@@ -56,11 +54,12 @@ export class LoginComponent implements OnInit {
             .login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
-                data => {
+                (data) => {
                     this.router.navigate([this.returnUrl]);
                 },
-                error => {
-                    this.alertService.error(error);
+                (error) => {
+                    console.log(error);
+                    this.toastrService.error('Ha ocurrido un error. Compruebe su usuario y contraseña');
                     this.loading = false;
                 }
             );
