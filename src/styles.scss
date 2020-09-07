@@ -4,6 +4,10 @@
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @import '~ngx-toastr/toastr-bs4-alert';
 
+:root {
+    --progress-loader-color: #00ffff;
+}
+
 //@font-face{
 //  font-family: 'GothamBold';
 //  src: url('css/fonts/GOTHAM-BOLD.ttf');
