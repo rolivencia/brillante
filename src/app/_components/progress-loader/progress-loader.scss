@@ -1,0 +1,14 @@
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: wait;
+}
+
+.loader {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+}

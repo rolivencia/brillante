@@ -17,9 +17,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainHeaderComponent } from '@app/_components/main-header/main-header.component';
 import { FooterComponent } from './_components/footer/footer.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ProgressLoaderModule } from '@app/_components/progress-loader/progress-loader.module';
+import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 
 @NgModule({
-    imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule, ReactiveFormsModule, routing, ToastrModule.forRoot()],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        routing,
+        ToastrModule.forRoot(),
+        ProgressLoaderModule,
+    ],
     declarations: [
         AlertComponent,
         AppComponent,
@@ -27,13 +38,14 @@ import { ToastrModule } from 'ngx-toastr';
         MainHeaderComponent,
         DashboardComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        RepairService
+        ProgressLoaderService,
+        RepairService,
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule {}
