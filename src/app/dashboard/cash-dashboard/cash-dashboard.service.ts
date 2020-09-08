@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { BehaviorSubject } from 'rxjs';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
+import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 
 @Injectable({
     providedIn: 'root',
@@ -28,7 +29,8 @@ export class CashDashboardService {
     constructor(
         public cashService: CashService,
         public legacyMapperService: LegacyMapperService,
-        private cashFormHandler: CashFormHandlerService
+        private cashFormHandler: CashFormHandlerService,
+        private progressLoaderService: ProgressLoaderService
     ) {}
 
     isToday() {
@@ -50,6 +52,7 @@ export class CashDashboardService {
 
     async load(date: Moment) {
         this.loading = true;
+        this.progressLoaderService.showWithOverlay();
 
         const dateFrom = moment(date);
         const dateTo = moment(date);
@@ -68,6 +71,7 @@ export class CashDashboardService {
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();
         this.gridCollection.sortDescriptions.push(sortById);
+        this.progressLoaderService.hide();
         this.loading = false;
     }
 

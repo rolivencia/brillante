@@ -6,6 +6,7 @@ import { RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
+import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 
 @Injectable()
 export class RepairDashboardService {
@@ -36,7 +37,12 @@ export class RepairDashboardService {
 
     private _selectedRepair: RepairLegacy; //FIXME: Adaptar posteriormente a nuevo formato de reparación
 
-    constructor(private route: ActivatedRoute, private router: Router, private repairService: RepairService) {}
+    constructor(
+        private progressLoaderService: ProgressLoaderService,
+        private route: ActivatedRoute,
+        private router: Router,
+        private repairService: RepairService
+    ) {}
 
     //FIXME: Move saving logic here
     // public saveRepair(newClient, newRepair) {
@@ -44,11 +50,13 @@ export class RepairDashboardService {
     // }
 
     async getGridData() {
+        this.progressLoaderService.showWithOverlay();
         this.gridData = await this.repairService.getAllLegacy(this._showFinished, this._dateFrom, this._dateTo).toPromise();
         this.gridCollection = new CollectionView(this.gridData.data);
         this.gridCollection.pageSize = this.pageSize;
         this.gridCollection.currentItem = null;
         const sortDescription = new SortDescription('fechaUltimaActualizacion', false);
         this.gridCollection.sortDescriptions.push(sortDescription);
+        this.progressLoaderService.hide();
     }
 }

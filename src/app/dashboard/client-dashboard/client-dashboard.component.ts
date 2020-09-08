@@ -4,6 +4,7 @@ import { RepairService } from '@app/_services/repair.service';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { RepairLegacy } from '@app/_models';
 import { GlobalService } from '@app/_services/global.service';
+import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 
 @Component({
     selector: 'app-client-dashboard',
@@ -39,7 +40,12 @@ export class ClientDashboardComponent implements OnInit {
         { header: 'Estado', binding: 'estado', width: '*' },
     ];
 
-    constructor(private clientService: CustomerService, private repairService: RepairService, private globalService: GlobalService) {}
+    constructor(
+        private clientService: CustomerService,
+        private repairService: RepairService,
+        private globalService: GlobalService,
+        private progressLoaderService: ProgressLoaderService
+    ) {}
 
     ngOnInit() {
         this.getGridData();
@@ -78,14 +84,19 @@ export class ClientDashboardComponent implements OnInit {
     }
 
     getGridData() {
+        this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
                 this.clientGridData = data.rows;
                 this.clientGridCollection = new CollectionView(this.clientGridData);
                 this.clientGridCollection.pageSize = this.pageSize;
                 this.clientGridCollection.currentItem = null;
+                this.progressLoaderService.hide();
             },
-            (error) => console.error(error)
+            (error) => {
+                console.error(error);
+                this.progressLoaderService.show();
+            }
         );
     }
 
