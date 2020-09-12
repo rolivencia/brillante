@@ -195,10 +195,13 @@ RepairStatusHistory.init(
     }
 );
 
-RepairStatusHistory.belongsTo(repairStatus.RepairStatus, { as: 'status', foreignKey: 'status_id' });
-repairStatus.RepairStatus.hasMany(RepairStatusHistory, { as: 'repairStatusHistory', foreignKey: 'status_id' });
+Repair.belongsTo(repairStatus.RepairStatus, { as: 'status', foreignKey: 'id_status' });
+//repairStatus.RepairStatus.hasMany(Repair, {as: 'repair', foreignKey: 'status_id'});
 
-Repair.belongsTo(Customer(), { as: 'client', foreignKey: 'idClient' });
+RepairStatusHistory.belongsTo(repairStatus.RepairStatus, { as: 'status', foreignKey: 'status_id' });
+//repairStatus.RepairStatus.hasMany(RepairStatusHistory, { as: 'repairStatusHistory', foreignKey: 'status_id' });
+
+Repair.belongsTo(Customer(), { as: 'customer', foreignKey: 'idClient' });
 
 Customer().hasMany(Repair, {
     as: 'repair',

@@ -81,6 +81,9 @@
                         [header]="column.header"
                         [visible]="true"
                     >
+                        <ng-template *ngIf="column.header === 'Última Act.'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            {{ cell.item.lastUpdate.format('YYYY-MM-DD HH:mm') }}
+                        </ng-template>
                     </wj-flex-grid-column>
                 </wj-flex-grid>
             </div>

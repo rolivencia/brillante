@@ -26,34 +26,43 @@
         <ng-container *ngIf="repairDashboardService.selectedRepair">
             <p class="mb-0">
                 <strong>ID Reparación: </strong>
-                {{ repairDashboardService.selectedRepair.repairId }}
+                {{ repairDashboardService.selectedRepair.id }}
             </p>
             <hr />
             <p>
                 <strong>Cliente: </strong>
-                {{ repairDashboardService.selectedRepair.nombreApellidoCliente }}
+                {{ repairDashboardService.selectedRepair.customer['fullName'] }}
             </p>
-            <p><strong>eMail: </strong> {{ repairDashboardService.selectedRepair.email }}</p>
-            <p><strong>Teléfono: </strong> {{ repairDashboardService.selectedRepair.telefono }}</p>
+            <p><strong>eMail: </strong> {{ repairDashboardService.selectedRepair.customer.email }}</p>
+            <p><strong>Teléfono: </strong> {{ repairDashboardService.selectedRepair.customer.telephone }}</p>
             <hr />
-            <p><strong>Modelo: </strong> {{ repairDashboardService.selectedRepair.modelo }}</p>
-            <p><strong>Estado: </strong>{{ repairDashboardService.selectedRepair.estado }}</p>
-            <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.imei }}</p>
+            <p><strong>Modelo: </strong> {{ repairDashboardService.selectedRepair.device.model }}</p>
+            <p><strong>Estado: </strong>{{ repairDashboardService.selectedRepair.status.status }}</p>
+            <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.device.deviceId }}</p>
             <p>
                 <strong>Encendido: </strong>
-                <input type="checkbox" class="form-check-input" disabled [ngModel]="repairDashboardService.selectedRepair.encendido" />
+                <input
+                    type="checkbox"
+                    class="form-check-input"
+                    disabled
+                    [ngModel]="repairDashboardService.selectedRepair.device.turnedOn"
+                />
             </p>
             <hr />
-            <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.problema }}</p>
+            <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.issue }}</p>
             <hr />
-            <p><strong>Fecha de Ingreso: </strong>{{ repairDashboardService.selectedRepair.fechaIngreso }}</p>
-            <p><strong>Última Actualización: </strong>{{ repairDashboardService.selectedRepair.fechaUltimaActualizacion }}</p>
-            <p *ngIf="repairDashboardService.selectedRepair.fechaReparacionTerminada">
-                <strong>Fecha de Término: </strong>{{ repairDashboardService.selectedRepair.fechaReparacionTerminada }}
+            <p><strong>Fecha de Ingreso: </strong>{{ repairDashboardService.selectedRepair.checkIn.format('YYYY-MM-DD HH:mm') }}</p>
+            <p><strong>Última Actualización: </strong>{{ repairDashboardService.selectedRepair.lastUpdate.format('YYYY-MM-DD HH:mm') }}</p>
+            <p *ngIf="repairDashboardService.selectedRepair.checkOut">
+                <strong>Fecha de Término: </strong>{{ repairDashboardService.selectedRepair.checkOut.format('YYYY-MM-DD HH:mm') }}
             </p>
             <hr />
-            <p><strong>Costo de Reparación: </strong>{{ repairDashboardService.selectedRepair.costoReparacion }}</p>
-            <p><strong>Precio de Reparación: </strong>{{ repairDashboardService.selectedRepair.precioReparacion }}</p>
+            <p *ngIf="repairDashboardService.selectedRepair.cost">
+                <strong>Costo de Reparación: </strong>$ {{ repairDashboardService.selectedRepair.cost }}
+            </p>
+            <p *ngIf="repairDashboardService.selectedRepair.price">
+                <strong>Precio de Reparación: </strong>$ {{ repairDashboardService.selectedRepair.price }}
+            </p>
         </ng-container>
         <ng-container *ngIf="!repairDashboardService.selectedRepair">
             <p>Para ver los detalles, seleccione una reparación de la grilla</p>

@@ -16,9 +16,11 @@ module.exports = {
 
 async function create() {}
 
-async function getAll({ showFinished, startDate, endDate }) {
+async function getAll({ showFinishedString, startDate, endDate }) {
+    const showFinished = showFinishedString !== 'false';
+
     if (showFinished) {
-        return repair.Repair().findAll({
+        return repair.Repair.findAll({
             attributes: [
                 'id',
                 'manufacturer',
@@ -36,16 +38,23 @@ async function getAll({ showFinished, startDate, endDate }) {
             ],
             include: [
                 {
-                    as: 'client',
+                    as: 'customer',
                     model: Customer(),
                     required: true,
-                    attributes: ['id', 'firstName', 'lastName', 'email'],
+                    attributes: [
+                        'id',
+                        'firstName',
+                        'lastName',
+                        'email',
+                        'telephone',
+                        [Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName'],
+                    ],
                 },
                 {
-                    as: 'repairStatus',
-                    model: RepairStatus(),
+                    as: 'status',
+                    model: repairStatus.RepairStatus,
                     required: true,
-                    attributes: ['id', 'description'],
+                    attributes: ['id', 'status'],
                 },
             ],
             where: {
@@ -55,7 +64,7 @@ async function getAll({ showFinished, startDate, endDate }) {
             },
         });
     } else {
-        return repair.Repair().findAll({
+        return repair.Repair.findAll({
             attributes: [
                 'id',
                 'manufacturer',
@@ -73,8 +82,23 @@ async function getAll({ showFinished, startDate, endDate }) {
             ],
             include: [
                 {
+                    as: 'customer',
+                    model: Customer(),
+                    required: true,
+                    attributes: [
+                        'id',
+                        'firstName',
+                        'lastName',
+                        'email',
+                        'telephone',
+                        [(Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName')],
+                    ],
+                },
+                {
                     as: 'status',
                     model: repairStatus.RepairStatus,
+                    required: true,
+                    attributes: ['id', 'status'],
                 },
             ],
             where: {
@@ -88,7 +112,7 @@ async function getAll({ showFinished, startDate, endDate }) {
 }
 
 async function getById(id) {
-    return repair.Repair().findOne({
+    return repair.Repair.findOne({
         where: {
             id: id,
         },

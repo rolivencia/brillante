@@ -19,13 +19,13 @@ export class RepairGridResultsComponent implements OnInit {
     ) {}
 
     columns: any[] = [
-        { header: 'ID', binding: 'repairId', width: 50 },
-        { header: 'Cliente', binding: 'nombreApellidoCliente', width: '*' },
-        { header: 'Marca', binding: 'marca', width: 110 },
-        { header: 'Modelo', binding: 'modelo', width: '*' },
-        { header: 'IMEI', binding: 'imei', width: '*' },
-        { header: 'Última Act.', binding: 'fechaUltimaActualizacion', width: '*' },
-        { header: 'Estado', binding: 'estado', width: '*' },
+        { header: 'ID', binding: 'id', width: 50 },
+        { header: 'Cliente', binding: 'customer.fullName', width: '*' },
+        { header: 'Marca', binding: 'device.manufacturer', width: 100 },
+        { header: 'Modelo', binding: 'device.model', width: '*' },
+        { header: 'IMEI', binding: 'device.deviceId', width: '*' },
+        { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
+        { header: 'Estado', binding: 'status.status', width: '*' },
     ];
 
     displayMonths = 1;

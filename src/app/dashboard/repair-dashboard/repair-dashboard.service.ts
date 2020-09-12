@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
-import { RepairLegacy } from '@app/_models';
+import { Repair, RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
@@ -10,11 +10,11 @@ import { ProgressLoaderService } from '@app/_components/progress-loader/progress
 
 @Injectable()
 export class RepairDashboardService {
-    get selectedRepair(): any {
+    get selectedRepair(): Repair {
         return this._selectedRepair;
     }
 
-    set selectedRepair(value: any) {
+    set selectedRepair(value: Repair) {
         this._selectedRepair = value;
     }
 
@@ -35,7 +35,7 @@ export class RepairDashboardService {
     _dateFrom: Moment;
     _dateTo: Moment;
 
-    private _selectedRepair: RepairLegacy; //FIXME: Adaptar posteriormente a nuevo formato de reparación
+    private _selectedRepair: Repair;
 
     constructor(
         private progressLoaderService: ProgressLoaderService,
@@ -51,8 +51,8 @@ export class RepairDashboardService {
 
     async getGridData() {
         this.progressLoaderService.showWithOverlay();
-        this.gridData = await this.repairService.getAllLegacy(this._showFinished, this._dateFrom, this._dateTo).toPromise();
-        this.gridCollection = new CollectionView(this.gridData.data);
+        this.gridData = await this.repairService.getAll(this._showFinished, this._dateFrom, this._dateTo).toPromise();
+        this.gridCollection = new CollectionView(this.gridData);
         this.gridCollection.pageSize = this.pageSize;
         this.gridCollection.currentItem = null;
         const sortDescription = new SortDescription('fechaUltimaActualizacion', false);
