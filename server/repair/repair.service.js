@@ -16,8 +16,8 @@ module.exports = {
 
 async function create() {}
 
-async function getAll({ showFinishedString, startDate, endDate }) {
-    const showFinished = showFinishedString !== 'false';
+async function getAll({ showFinished, startDate, endDate }) {
+    showFinished = showFinished !== 'false';
 
     if (showFinished) {
         return repair.Repair.findAll({
@@ -91,7 +91,7 @@ async function getAll({ showFinishedString, startDate, endDate }) {
                         'lastName',
                         'email',
                         'telephone',
-                        [(Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName')],
+                        [Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName'],
                     ],
                 },
                 {
