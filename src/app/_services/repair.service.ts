@@ -62,46 +62,7 @@ export class RepairService {
             .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
         return this.http
             .get<any>(`${environment.apiUrl}/repair`, { headers: headers, params: params })
-            .pipe(
-                map((repairs): Repair[] =>
-                    repairs.map(
-                        (repair): Repair => {
-                            const {
-                                dischargeDate,
-                                updatedDate,
-                                finishedDate,
-                                equipmentTurnedOn,
-                                manufacturer,
-                                model,
-                                imei,
-                                repairPrice,
-                                repairCost,
-                                ...destructuredRepair
-                            } = repair;
-                            return {
-                                ...destructuredRepair,
-                                cost: repairCost,
-                                price: repairPrice,
-                                device: {
-                                    turnedOn: equipmentTurnedOn ? true : false,
-                                    manufacturer: manufacturer,
-                                    model: model,
-                                    deviceId: imei,
-                                },
-                                audit: {
-                                    createdAt: moment(dischargeDate),
-                                    updatedAt: moment(updatedDate),
-                                    enabled: repair.habilitado,
-                                    deleted: repair.deleted,
-                                },
-                                checkIn: moment(dischargeDate),
-                                lastUpdate: moment(updatedDate),
-                                checkOut: finishedDate ? moment(finishedDate) : finishedDate,
-                            };
-                        }
-                    )
-                )
-            );
+            .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
     }
 
     public getHistory(idRepair: number): Observable<any> {
@@ -160,4 +121,19 @@ export class RepairService {
             { headers: headers }
         );
     }
+}
+
+export function toRepair(repairDTO): Repair {
+    const { dischargeDate, updatedDate, finishedDate, ...destructuredRepair } = repairDTO;
+    return {
+        ...destructuredRepair,
+        audit: {
+            ...destructuredRepair.audit,
+            createdAt: moment(destructuredRepair.audit.createdAt),
+            updatedAt: moment(destructuredRepair.audit.createdAt),
+        },
+        checkIn: moment(dischargeDate),
+        lastUpdate: moment(updatedDate),
+        checkOut: finishedDate ? moment(finishedDate) : finishedDate,
+    };
 }
