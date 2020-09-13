@@ -3,14 +3,22 @@ const router = express.Router();
 const repairService = require('./repair.service');
 
 router.get('/', getAll);
+router.get('/:id', getById);
 router.get('/history/:idRepair', getHistoryByRepairId);
 
 module.exports = router;
 
+function getById(req, res, next) {
+    repairService
+        .getById(req.params.id)
+        .then((repair) => res.json(repair))
+        .catch((err) => next(err));
+}
+
 function getAll(req, res, next) {
     repairService
         .getAll(req.query)
-        .then((customers) => res.json(customers))
+        .then((repairs) => res.json(repairs))
         .catch((err) => next(err));
 }
 

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
-import { RepairLegacy } from '@app/_models';
+import { Repair, RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/repair-voucher-generator.service';
 
@@ -13,7 +13,7 @@ import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/r
     styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairUpdateComponent implements OnInit {
-    public repairLegacy: RepairLegacy;
+    public repair: Repair;
     public statusHistory = [];
 
     public editDevice: boolean = false;
@@ -33,11 +33,11 @@ export class RepairUpdateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        if (this.route.snapshot.data['legacyRepair']) {
-            this.repairLegacy = this.route.snapshot.data['legacyRepair'];
+        if (this.route.snapshot.data['repair']) {
+            this.repair = this.route.snapshot.data['repair'];
             this.repairFormHandlerService.saved = false;
-            this.repairFormHandlerService.customer = this.legacyMapperService.extractCustomerFromLegacyRepair(this.repairLegacy);
-            this.repairFormHandlerService.repair = this.legacyMapperService.fromLegacyRepair(this.repairLegacy);
+            this.repairFormHandlerService.customer = { ...this.repair.customer };
+            this.repairFormHandlerService.repair = { ...this.repair };
             this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
             this.getHistory();
         }

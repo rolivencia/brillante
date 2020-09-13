@@ -8,14 +8,13 @@ const routes: Routes = [
         path: ':id',
         component: RepairUpdateComponent,
         resolve: {
-            //FIXME: Cambiar cuando reciba objetos repair desde nueva API de NodeJS
-            legacyRepair: RepairUpdateResolverService
-        }
-    }
+            repair: RepairUpdateResolverService,
+        },
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class RepairUpdateRoutingModule {}

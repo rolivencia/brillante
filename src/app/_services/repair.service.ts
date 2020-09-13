@@ -50,18 +50,19 @@ export class RepairService {
 
     constructor(private http: HttpClient, private globalService: GlobalService) {}
 
-    public getByIdLegacy(id: number): Observable<RepairLegacy> {
-        const params = new HttpParams().set('action', 'getById').append('repairId', id.toString());
-        return this.http.get<RepairLegacy>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    public getById(id: number): Observable<Repair> {
+        return this.http
+            .get<Repair>(`${environment.apiUrl}/repair/${id}`, { headers: headers })
+            .pipe(map((repairDTO): Repair => toRepair(repairDTO)));
     }
 
-    public getAll(showFinished: boolean, dateFrom: Moment, dateTo: Moment): Observable<any> {
+    public getAll(showFinished: boolean, dateFrom: Moment, dateTo: Moment): Observable<Repair[]> {
         const params = new HttpParams()
             .set('showFinished', showFinished.toString())
             .append('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
             .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
         return this.http
-            .get<any>(`${environment.apiUrl}/repair`, { headers: headers, params: params })
+            .get<Repair[]>(`${environment.apiUrl}/repair`, { headers: headers, params: params })
             .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
     }
 
