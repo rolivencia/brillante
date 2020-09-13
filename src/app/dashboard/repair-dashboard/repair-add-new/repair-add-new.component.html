@@ -1,14 +1,26 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
         Nueva Reparación
+        <ng-container *ngIf="repairFormHandlerService.saved">
+            <span class="badge badge-info p-2"
+                >Reparación guardada. Elija "Volver" o "Cargar Nueva" para dar de alta otra reparación</span
+            >
+        </ng-container>
         <div>
-            <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.save()">
-                💾 Guardar reparación
-            </button>
-            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="repairFormHandlerService.clean()">
-                🗑️ Limpiar datos
-            </button>
-            <button type="submit" class="btn btn-sm btn-outline-secondary" (click)="location.back()">⬅️ Volver</button>
+            <ng-container *ngIf="!repairFormHandlerService.saved">
+                <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.save()">
+                    💾 Guardar reparación
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="repairFormHandlerService.clean()">
+                    🗑️ Limpiar datos
+                </button>
+            </ng-container>
+            <ng-container *ngIf="repairFormHandlerService.saved">
+                <button type="button" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.clean()">
+                    🔄 Cargar nueva
+                </button>
+            </ng-container>
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="location.back()">⬅️ Volver</button>
         </div>
     </div>
     <div class="card-body">
@@ -78,7 +90,7 @@
                                     class="form-control form-control-sm"
                                     id="firstName"
                                     formControlName="firstName"
-                                    [readonly]="repairFormHandlerService.customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
                                 />
                             </div>
                             <div class="form-group">
@@ -100,7 +112,7 @@
                                     class="form-control form-control-sm"
                                     id="lastName"
                                     formControlName="lastName"
-                                    [readonly]="repairFormHandlerService.customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
                                 />
                             </div>
                             <div class="form-group">
@@ -131,7 +143,7 @@
                                     class="form-control form-control-sm"
                                     id="email"
                                     formControlName="email"
-                                    [readonly]="repairFormHandlerService.customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
                                 />
                             </div>
                             <div class="form-group">
@@ -156,7 +168,7 @@
                                     step="1"
                                     placeholder="Sólo numeros"
                                     formControlName="telephone"
-                                    [readonly]="repairFormHandlerService.customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
                                 />
                             </div>
                             <div class="form-group">
@@ -178,7 +190,7 @@
                                     class="form-control form-control-sm"
                                     id="address"
                                     formControlName="address"
-                                    [readonly]="repairFormHandlerService.customerExists"
+                                    [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
                                 />
                             </div>
                         </div>
@@ -200,6 +212,7 @@
                                                 aria-describedby="type"
                                                 formControlName="type"
                                                 [isEditable]="false"
+                                                [isReadOnly]="repairFormHandlerService.saved"
                                                 [itemsSource]="repairService.deviceTypes"
                                                 [selectedItem]="repairFormHandlerService.repair.device.type"
                                                 [selectedIndex]="repairFormHandlerService.repair.device.type.id"
@@ -237,6 +250,7 @@
                                         class="form-control form-control-sm"
                                         id="manufacturer"
                                         formControlName="manufacturer"
+                                        [readOnly]="repairFormHandlerService.saved"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -258,6 +272,7 @@
                                         class="form-control form-control-sm"
                                         id="model"
                                         formControlName="model"
+                                        [readOnly]="repairFormHandlerService.saved"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -268,6 +283,7 @@
                                         class="form-control form-control-sm"
                                         id="imei"
                                         formControlName="deviceId"
+                                        [readOnly]="repairFormHandlerService.saved"
                                     />
                                 </div>
                             </div>
@@ -297,6 +313,7 @@
                                         id="paymentInAdvance"
                                         value="0"
                                         formControlName="paymentInAdvance"
+                                        [readOnly]="repairFormHandlerService.saved"
                                     />
                                 </div>
                             </div>
@@ -320,6 +337,7 @@
                                     class="form-control form-control-sm"
                                     placeholder="Descripción del problema. Incluya aquí los códigos de desbloqueo y contraseña de iCloud."
                                     formControlName="issue"
+                                    [readOnly]="repairFormHandlerService.saved"
                                 ></textarea>
                             </div>
                         </div>

@@ -132,6 +132,7 @@ export class RepairFormHandlerService {
     public clean() {
         this.customerExists = false;
         this.submitted = false;
+        this.saved = false;
         this.repair = new Repair();
         this.customer = new Customer();
         this.patchCustomer();
@@ -266,6 +267,7 @@ export class RepairFormHandlerService {
                 this.toastrService.error(result.historyErrorCode);
             }
         } else if (result && result.id) {
+            this.saved = true;
             this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito`);
         }
     }
