@@ -2,11 +2,11 @@ const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
-class Client extends Sequelize.Model {}
+class Customer extends Sequelize.Model {}
 
-module.exports = () => Client;
+module.exports = { Customer };
 
-Client.init(
+Customer.init(
     {
         id: {
             type: Sequelize.BIGINT,

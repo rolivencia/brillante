@@ -1,4 +1,4 @@
-const Customer = require('server/customer/customer.model');
+const customer = require('server/customer/customer.model');
 
 const repair = require('server/repair/repair.model');
 const repairStatus = require('server/repair/repair.status');
@@ -40,7 +40,7 @@ async function getAll({ showFinished, startDate, endDate }) {
         include: [
             {
                 as: 'customer',
-                model: Customer(),
+                model: customer.Customer,
                 required: true,
                 attributes: [
                     'id',
@@ -98,7 +98,7 @@ async function getById(id) {
         include: [
             {
                 as: 'customer',
-                model: Customer(),
+                model: customer.Customer,
                 required: true,
                 attributes: [
                     'id',

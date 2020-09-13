@@ -1,4 +1,4 @@
-const Client = require('./customer.model');
+const customer = require('./customer.model');
 
 module.exports = {
     countAll,
@@ -14,12 +14,12 @@ async function create() {}
 async function getAll(offset, limit, sortBy = {}) {
     // TODO: Implement pagination and sorting to retrieve data on-demand
     //return Client().findAndCountAll({ offset: offset, limit: limit });
-    return Client().findAndCountAll();
+    return customer.Customer.findAndCountAll();
 }
 
 async function getByDni(dni) {
-    let customer = null;
-    const rawCustomer = await Client().findOne({
+    let customerDAO = null;
+    const rawCustomer = await customer.Customer.findOne({
         where: {
             dni: dni,
         },
@@ -29,7 +29,7 @@ async function getByDni(dni) {
         // TODO: Agregar usuario creador
         // TODO: Agregar usuario ligado
         const dataValues = rawCustomer.dataValues;
-        customer = {
+        customerDAO = {
             address: dataValues.address,
             dni: dataValues.dni,
             email: dataValues.email,
@@ -49,15 +49,15 @@ async function getByDni(dni) {
     }
 
     return new Promise((resolve, reject) => {
-        customer ? resolve(customer) : resolve(null);
+        customerDAO ? resolve(customerDAO) : reject(error);
     });
 }
 async function countAll() {
-    return Client().count();
+    return customer.Customer.count();
 }
 
 async function getById(id) {
-    return Client().findOne({
+    return customer.Customer.findOne({
         where: {
             id: id,
         },
