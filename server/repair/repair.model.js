@@ -79,7 +79,7 @@ Repair.init(
             allowNull: true,
             field: 'fecha_reparacion_terminada',
         },
-        payInAdvance: {
+        paymentInAdvance: {
             type: Sequelize.DECIMAL,
             allowNull: true,
             field: 'senia_reparacion',
