@@ -79,13 +79,13 @@
     </div>
     <div class="modal-body text-center">
         <p><b>¿Está seguro de que desea borrar la reparación?</b></p>
-        <p class="mb-0"><strong>ID Reparación: </strong> {{ repairDashboardService.selectedRepair.repairId }}</p>
+        <p class="mb-0"><strong>ID Reparación: </strong> {{ repairDashboardService.selectedRepair.id }}</p>
     </div>
     <div class="modal-footer">
         <button class="btn btn-sm btn-outline-secondary" (click)="modal.close('Cancel')">
             ⬅️️ Cancelar
         </button>
-        <button class="ml-3 btn btn-sm btn-outline-danger" (click)="delete(repairDashboardService.selectedRepair.repairId)">
+        <button class="ml-3 btn btn-sm btn-outline-danger" (click)="delete(repairDashboardService.selectedRepair.id)">
             ❌ Eliminar
         </button>
     </div>

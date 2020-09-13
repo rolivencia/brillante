@@ -12,11 +12,7 @@ import { DateHandlerService } from '@app/_services/date-handler.service';
     styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairGridResultsComponent implements OnInit {
-    constructor(
-        private dateHandlerService: DateHandlerService,
-        private repairService: RepairService,
-        public repairDashboardService: RepairDashboardService
-    ) {}
+    constructor(private dateHandlerService: DateHandlerService, public repairDashboardService: RepairDashboardService) {}
 
     columns: any[] = [
         { header: 'ID', binding: 'id', width: 50 },

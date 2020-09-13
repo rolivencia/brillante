@@ -55,7 +55,7 @@ export class RepairDashboardService {
         this.gridCollection = new CollectionView(this.gridData);
         this.gridCollection.pageSize = this.pageSize;
         this.gridCollection.currentItem = null;
-        const sortDescription = new SortDescription('fechaUltimaActualizacion', false);
+        const sortDescription = new SortDescription('lastUpdate', false);
         this.gridCollection.sortDescriptions.push(sortDescription);
         this.progressLoaderService.hide();
     }

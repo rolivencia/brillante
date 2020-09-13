@@ -125,7 +125,7 @@ export class RepairService {
 }
 
 export function toRepair(repairDTO): Repair {
-    const { dischargeDate, updatedDate, finishedDate, ...destructuredRepair } = repairDTO;
+    const { checkIn, lastUpdate, checkOut, ...destructuredRepair } = repairDTO;
     return {
         ...destructuredRepair,
         audit: {
@@ -133,8 +133,8 @@ export function toRepair(repairDTO): Repair {
             createdAt: moment(destructuredRepair.audit.createdAt),
             updatedAt: moment(destructuredRepair.audit.createdAt),
         },
-        checkIn: moment(dischargeDate),
-        lastUpdate: moment(updatedDate),
-        checkOut: finishedDate ? moment(finishedDate) : finishedDate,
+        checkIn: moment(checkIn),
+        lastUpdate: moment(lastUpdate),
+        checkOut: checkOut ? moment(checkOut) : checkOut,
     };
 }
