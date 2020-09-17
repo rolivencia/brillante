@@ -45,18 +45,21 @@ export class TransactionConcept {
     public transactionType: TransactionType;
     public parent: null | TransactionConcept;
     public children: TransactionConcept[];
+    public userAssignable: boolean;
 
     constructor(
         id?: number,
         description?: string,
         transactionType?: TransactionType,
         parent: TransactionConcept = null,
-        children: [] = []
+        children: [] = [],
+        userAssignable: boolean = true
     ) {
         this.id = id;
         this.description = description;
         this.transactionType = transactionType;
         this.parent = parent;
         this.children = children;
+        this.userAssignable = userAssignable;
     }
 }

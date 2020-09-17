@@ -35,7 +35,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
                     );
 
                     // Assign parent transaction concept for usage in the update form
-                    this.cashFormHandler.transactionParentConcept = this.cashFormHandler.transactionConcepts.filter(
+                    this.cashFormHandler.transactionParentConcept = this.cashFormHandler.selectableTransactionConcepts.filter(
                         (concept) => this.cashFormHandler.cashTransaction.concept.parent.id === concept.id
                     )[0];
 

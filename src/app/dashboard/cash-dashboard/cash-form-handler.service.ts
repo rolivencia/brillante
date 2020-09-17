@@ -7,11 +7,16 @@ import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CashFormHandlerService implements FormHandler<FormGroup, CashTransaction> {
+    get selectableTransactionConcepts(): TransactionConcept[] {
+        return this._selectableTransactionConcepts;
+    }
+
     get transactionConcepts(): TransactionConcept[] {
         return this._transactionConcepts;
     }
@@ -62,6 +67,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
 
     private _transactionOperations: Operation[] = [];
     private _transactionConcepts: TransactionConcept[] = [];
+    private _selectableTransactionConcepts: TransactionConcept[] = [];
     public transactionParentConcept: TransactionConcept = new TransactionConcept();
 
     private _formGroup: FormGroup;
@@ -74,7 +80,18 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         private toastrService: ToastrService
     ) {
         this.loadConcepts().then((concepts) => {
-            this._transactionConcepts = concepts;
+            this._transactionConcepts = _.cloneDeep(concepts);
+
+            const selectableParentTransactionConcepts: TransactionConcept[] = concepts.filter(
+                (parentConcept) => parentConcept.userAssignable
+            );
+
+            selectableParentTransactionConcepts.forEach((parentConcept) => {
+                parentConcept.children = parentConcept.children.filter((childrenConcept) => childrenConcept.userAssignable);
+            });
+
+            this._selectableTransactionConcepts = [].concat(selectableParentTransactionConcepts);
+
             this.controlsLoaded.next(true);
         });
     }
@@ -190,6 +207,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             description: concept.description,
             transactionType: this._transactionTypes.filter((transactionType) => concept.transactionTypeId === transactionType.id)[0],
             parent: null,
+            userAssignable: concept.userAssignable,
             children: [],
         }));
 
@@ -198,6 +216,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             description: concept.description,
             transactionType: this._transactionTypes.filter((transactionType) => concept.transactionTypeId === transactionType.id)[0],
             parent: parentConcepts.filter((parent) => parent.id === concept.parentConceptId)[0],
+            userAssignable: concept.userAssignable,
             children: [],
         }));
 
