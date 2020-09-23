@@ -36,6 +36,7 @@ async function getAll({ showFinished, startDate, endDate }) {
             'enabled',
             'deleted',
             'idEquipment',
+            'warrantyTerm',
         ],
         include: [
             {
@@ -96,6 +97,7 @@ async function getById(id) {
             'enabled',
             'deleted',
             'idEquipment',
+            'warrantyTerm',
         ],
         include: [
             {

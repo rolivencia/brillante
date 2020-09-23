@@ -129,6 +129,11 @@ Repair.init(
             allowNull: false,
             field: 'eliminado',
         },
+        warrantyTerm: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            field: 'warranty_term',
+        },
     },
     {
         sequelize: sequelizeConnector,
