@@ -16,6 +16,7 @@ export class Repair {
     public paymentInAdvance: number;
     public price: number;
     public cost: number;
+    public warrantyTerm: number;
 
     //FIXME: En carga, traer la lista y ahí asignar vía filter.
     constructor() {
@@ -29,6 +30,7 @@ export class Repair {
         this.price = 0;
         this.cost = 0;
         this.note = '';
+        this.warrantyTerm = 3;
 
         // Date attributes
         this.checkIn = null;
@@ -101,5 +103,6 @@ export class RepairLegacy {
     public clientId?: number;
     public estadoId?: number;
     public userId?: number;
+    public warrantyTerm: number;
     constructor() {}
 }

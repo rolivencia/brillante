@@ -122,6 +122,7 @@ export class RepairFormHandlerService {
                 paymentInAdvance: [repair.paymentInAdvance, Validators.required],
                 price: [repair.price, Validators.required],
                 cost: [repair.cost, Validators.required],
+                warrantyTerm: [repair.warrantyTerm, [Validators.required, Validators.min(0), Validators.max(24)]],
             }),
         });
     }
@@ -171,6 +172,7 @@ export class RepairFormHandlerService {
                 price: repair.price,
                 status: repair.status,
                 note: repair.note,
+                warrantyTerm: repair.warrantyTerm,
             },
         });
     }
@@ -209,6 +211,7 @@ export class RepairFormHandlerService {
             paymentInAdvance: repairForm.paymentInAdvance.value,
             price: repairForm.price.value,
             cost: repairForm.cost.value,
+            warrantyTerm: repairForm.warrantyTerm.value,
 
             // Read-only attributes - Modified by database
             checkIn: this.repair.checkIn,

@@ -5,14 +5,13 @@ import { CashTransaction, Operation } from '@app/_models/cash-transaction';
 import { Customer } from '@app/_models/customer';
 import { Injectable } from '@angular/core';
 import { Repair, User } from '@app/_models';
-import { RepairService } from '@app/_services/repair.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LegacyMapperService {
     private currentUser: User;
-    constructor(private authenticationService: AuthenticationService, private repairService: RepairService) {
+    constructor(private authenticationService: AuthenticationService) {
         moment.locale('es');
         this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
@@ -53,6 +52,7 @@ export class LegacyMapperService {
             costoReparacion: repair.cost,
             precioReparacion: repair.price,
             generateTransaction: generateTransaction ? generateTransaction : false,
+            warrantyTerm: repair.warrantyTerm,
         };
     }
 

@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Customer } from '@app/_models/customer';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class RepairVoucherGeneratorService {
     constructor(private toastrService: ToastrService) {}
@@ -168,7 +168,12 @@ export class RepairVoucherGeneratorService {
 
             lastLine += 10;
 
-            doc.text('Garantía: ' + '30 días', 15, lastLine);
+            //doc.text('Garantía: ' + '30 días', 15, lastLine);
+            if (repair.warrantyTerm > 0) {
+                doc.text('Garantía: ' + repair.warrantyTerm + ' meses desde el día de la entrega del equipo reparado.', 15, lastLine);
+            } else {
+                doc.text('Garantía: LA PRESENTE REPARACIÓN NO CUENTA CON UN PERÍODO DE GARANTÍA.', 15, lastLine);
+            }
 
             doc.setFontSize(12);
 
@@ -186,7 +191,7 @@ export class RepairVoucherGeneratorService {
         }
     }
     //FIXME: Refactor and move this generic function elsewhere
-    private capitalize = s => {
+    private capitalize = (s) => {
         if (typeof s !== 'string') return '';
         return s.charAt(0).toUpperCase() + s.slice(1);
     };

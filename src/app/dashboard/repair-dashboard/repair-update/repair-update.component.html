@@ -225,7 +225,7 @@
                                                 <p><strong>¿Dejó Seña?</strong></p>
                                                 {{
                                                     repairFormHandlerService.repair.paymentInAdvance
-                                                        ? repairFormHandlerService.repair.paymentInAdvance
+                                                        ? '$ ' + repairFormHandlerService.repair.paymentInAdvance
                                                         : 'Sin Seña'
                                                 }}
                                             </div>
@@ -237,9 +237,9 @@
                                         </div>
                                     </div>
                                     <div class="w-100 d-flex justify-content-between">
-                                        <div class="px-2">
-                                            <p><strong>Estado de la Reparación: </strong></p>
-                                            <div class="form-inline flex-grow-1">
+                                        <div class="px-2 flex-grow-1">
+                                            <p><strong>Estado: </strong></p>
+                                            <div class="form-inline">
                                                 <wj-combo-box
                                                     class="form-control form-control-sm p-0"
                                                     id="status"
@@ -256,9 +256,9 @@
                                             </div>
                                         </div>
                                         <div class="px-2">
-                                            <p><strong>Costo de la Reparación: </strong></p>
+                                            <p><strong>Costo: </strong></p>
                                             <div class="input-group input-group-sm">
-                                                <div class="input-group-append">
+                                                <div class="input-group-prepend">
                                                     <span class="input-group-text">
                                                         $
                                                     </span>
@@ -274,9 +274,9 @@
                                             </div>
                                         </div>
                                         <div class="px-2">
-                                            <p><strong>Precio de la Reparación: </strong></p>
+                                            <p><strong>Precio: </strong></p>
                                             <div class="input-group input-group-sm">
-                                                <div class="input-group-append">
+                                                <div class="input-group-prepend">
                                                     <span class="input-group-text">
                                                         $
                                                     </span>
@@ -291,8 +291,29 @@
                                                 />
                                             </div>
                                         </div>
+                                        <div class="px-2">
+                                            <p><strong>Garantía: </strong></p>
+                                            <div class="input-group input-group-sm">
+                                                <input
+                                                    name="warrantyTerm"
+                                                    type="number"
+                                                    class="form-control form-control-sm"
+                                                    id="warrantyTerm"
+                                                    step="1"
+                                                    [min]="0"
+                                                    [max]="24"
+                                                    [readOnly]="repairFormHandlerService.saved"
+                                                    formControlName="warrantyTerm"
+                                                />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        meses
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="w-100 d-flex justify-content-between">
+                                    <div class="w-100 d-flex justify-content-between align-content-center">
                                         <div class="form-check pl-1">
                                             <input
                                                 class="form-check-input"
