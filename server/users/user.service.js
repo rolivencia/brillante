@@ -1,8 +1,9 @@
-﻿const bcrypt = require('bcrypt');
+﻿const user = require('server/users/user.model');
+const role = require('server/users/role.model');
+
+const bcrypt = require('bcrypt');
 const environment = require('server/_helpers/environment');
 const jwt = require('jsonwebtoken');
-const role = require('./role.model');
-const user = require('./user.model');
 
 module.exports = {
     authenticate,
@@ -10,7 +11,7 @@ module.exports = {
 };
 
 async function authenticate({ username, password }) {
-    const user = await user.User.findOne({
+    const currentUser = await user.User.findOne({
         include: [
             {
                 model: role.Role,
@@ -28,12 +29,12 @@ async function authenticate({ username, password }) {
     });
 
     return new Promise((resolve, reject) => {
-        if (!user || !user.dataValues) reject(error);
+        if (!currentUser || !currentUser.dataValues) reject(error);
 
-        bcrypt.compareSync(password, user.dataValues.password, 10)
+        bcrypt.compareSync(password, currentUser.dataValues.password, 10)
             ? resolve({
-                  ...user.dataValues,
-                  token: jwt.sign({ sub: user.id }, environment.secret),
+                  ...currentUser.dataValues,
+                  token: jwt.sign({ sub: currentUser.id }, environment.secret),
               })
             : reject(error);
     });

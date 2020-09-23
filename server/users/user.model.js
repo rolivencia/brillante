@@ -7,8 +7,6 @@ const userRole = require('./user-role.model');
 
 class User extends Sequelize.Model {}
 
-module.exports = { User };
-
 User.init(
     {
         id: {
@@ -80,3 +78,5 @@ role.Role.belongsToMany(User, {
     through: userRole.UserRole,
     foreignKey: 'id_role',
 });
+
+module.exports = { User };
