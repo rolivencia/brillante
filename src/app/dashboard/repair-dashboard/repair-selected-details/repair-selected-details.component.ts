@@ -4,6 +4,7 @@ import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-d
 import { Repair, RepairLegacy } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-repair-selected-details',
@@ -15,6 +16,7 @@ export class RepairSelectedDetailsComponent implements OnInit {
         private repairService: RepairService,
         private modalService: NgbModal,
         private router: Router,
+        private toastrService: ToastrService,
         public repairDashboardService: RepairDashboardService
     ) {}
 
@@ -28,7 +30,10 @@ export class RepairSelectedDetailsComponent implements OnInit {
 
     delete(id: number) {
         this.repairService.delete(id).subscribe(
-            (data) => console.log(data.message),
+            (data) => {
+                console.log(data.response);
+                this.toastrService.info(`Eliminada reparación ID ${id}`);
+            },
             (error) => console.error(error.message),
             () => {
                 this.modalService.dismissAll();

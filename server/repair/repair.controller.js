@@ -4,6 +4,7 @@ const repairService = require('./repair.service');
 
 router.get('/', getAll);
 router.get('/:id', getById);
+router.get('/remove/:id', remove);
 router.get('/history/:idRepair', getHistoryByRepairId);
 
 module.exports = router;
@@ -27,4 +28,19 @@ function getHistoryByRepairId(req, res, next) {
         .getHistoryByRepairId(req.params.idRepair)
         .then((repairStatusHistory) => res.json(repairStatusHistory))
         .catch((err) => next(err));
+}
+
+function remove(req, res, next) {
+    repairService
+        .remove(req.params.id)
+        .then((response) => {
+            if (response) {
+                res.json({ response: `Deleted repair with id ${req.params.id}` });
+            } else {
+                res.status(400).json({
+                    message: 'Bad request. Could not delete repair with id: ' + req.param('id'),
+                });
+            }
+        })
+        .catch((err) => next(res.status(400).json({ message: err })));
 }

@@ -10,11 +10,16 @@ module.exports = {
     create,
     getAll,
     getById,
+    remove,
     update,
     getHistoryByRepairId,
 };
 
 async function create() {}
+
+async function remove(id) {
+    return repair.Repair.update({ deleted: 1 }, { where: { id: id } });
+}
 
 async function getAll({ showFinished, startDate, endDate }) {
     showFinished = showFinished !== 'false';

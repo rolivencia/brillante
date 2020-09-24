@@ -89,9 +89,8 @@ export class RepairService {
         // TODO: Implement method
     }
 
-    public delete(id: number): Observable<RepairLegacy> {
-        const params = new HttpParams().set('action', 'delete').append('repairId', id.toString());
-        return this.http.get<RepairLegacy>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    public delete(id: number): Observable<{ response: string }> {
+        return this.http.get<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
     }
 
     /**
