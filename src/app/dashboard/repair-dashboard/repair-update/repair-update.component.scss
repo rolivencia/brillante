@@ -6,8 +6,8 @@
 
 #device-data,
 #repair-data {
-    #status{
-      min-width: 200px;
+    #status {
+        min-width: 200px;
     }
     p {
         margin: 0;
@@ -36,6 +36,10 @@
         overflow-x: auto;
     }
 }
+#warranty-input-group {
+    min-width: 125px;
+}
+
 //FIXME: Generalize for use through all my applications
 wj-combo-box.wj-state-readonly {
     background-color: #e9ecef !important;
