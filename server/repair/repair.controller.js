@@ -2,13 +2,37 @@ const express = require('express');
 const router = express.Router();
 const repairService = require('./repair.service');
 
+router.post('/create', create);
+router.put('/updateDevice', updateDevice);
+router.put('/updateTracking', updateTracking);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.get('/getByClientId/:id', getByClientId);
-router.get('/remove/:id', remove);
 router.get('/history/:idRepair', getHistoryByRepairId);
+router.delete('/remove/:id', remove);
 
 module.exports = router;
+
+function create(req, res, next) {
+    repairService
+        .create(req.body)
+        .then((repair) => res.json(repair))
+        .catch((err) => next(err));
+}
+
+function updateDevice(req, res, next) {
+    repairService
+        .updateDevice(req.body)
+        .then((repair) => res.json(repair))
+        .catch((err) => next(err));
+}
+
+function updateTracking(req, res, next) {
+    repairService
+        .updateTracking(req.body)
+        .then((repair) => res.json(repair))
+        .catch((err) => next(err));
+}
 
 function getById(req, res, next) {
     repairService

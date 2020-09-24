@@ -12,11 +12,25 @@ module.exports = {
     getByClientId,
     getById,
     remove,
-    update,
+    updateDevice,
+    updateTracking,
     getHistoryByRepairId,
 };
 
-async function create() {}
+async function create({ ...repair }) {
+    //TODO: Implement this function
+    console.log(repair);
+}
+
+async function updateDevice({ ...repair }) {
+    //TODO: Implement this function
+    console.log(repair);
+}
+
+async function updateTracking({ ...repair }) {
+    //TODO: Implement this function
+    console.log(repair);
+}
 
 async function remove(id) {
     return repair.Repair.update({ deleted: 1 }, { where: { id: id } });
@@ -204,7 +218,6 @@ async function getHistoryByRepairId(idRepair) {
         order: [['updatedAt', 'DESC']],
     });
 }
-async function update() {}
 
 function toRepairDTO(repairDAO) {
     const {

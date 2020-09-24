@@ -86,10 +86,6 @@ export class RepairService {
             .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
     }
 
-    public getForUpdateById() {
-        // TODO: Implement method
-    }
-
     public delete(id: number): Observable<{ response: string }> {
         return this.http.get<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
     }
