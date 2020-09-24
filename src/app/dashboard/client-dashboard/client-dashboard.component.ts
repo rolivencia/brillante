@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomerService } from '@app/_services/customer.service';
-import { RepairService } from '@app/_services/repair.service';
-import { CollectionView, SortDescription } from '@grapecity/wijmo';
-import { RepairLegacy } from '@app/_models';
-import { GlobalService } from '@app/_services/global.service';
-import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
+import {Component, OnInit} from '@angular/core';
+import {CustomerService} from '@app/_services/customer.service';
+import {RepairService} from '@app/_services/repair.service';
+import {CollectionView} from '@grapecity/wijmo';
+import {Repair} from '@app/_models';
+import {GlobalService} from '@app/_services/global.service';
+import {ProgressLoaderService} from '@app/_components/progress-loader/progress-loader.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-client-dashboard',
@@ -12,9 +13,8 @@ import { ProgressLoaderService } from '@app/_components/progress-loader/progress
     styleUrls: ['./client-dashboard.component.scss'],
 })
 export class ClientDashboardComponent implements OnInit {
-    // _selectedClientData: ClientLegacy;
 
-    selectedRepairData: RepairLegacy;
+    selectedRepairData: Repair;
     clientGridData: any;
     repairGridData: any;
     clientGridCollection: CollectionView;
@@ -33,18 +33,19 @@ export class ClientDashboardComponent implements OnInit {
     ];
 
     repairColumns: any[] = [
-        { header: 'ID', binding: 'repairId', width: 50 },
-        { header: 'Marca', binding: 'marca', width: '*' },
-        { header: 'Modelo', binding: 'modelo', width: '*' },
-        { header: 'Última Act.', binding: 'fechaUltimaActualizacion', width: '*' },
-        { header: 'Estado', binding: 'estado', width: '*' },
+        { header: 'ID', binding: 'id', width: 50 },
+        { header: 'Marca', binding: 'device.manufacturer', width: '*' },
+        { header: 'Modelo', binding: 'device.model', width: '*' },
+        { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
+        { header: 'Estado', binding: 'status.status', width: '*' },
     ];
 
     constructor(
         private clientService: CustomerService,
         private repairService: RepairService,
         private globalService: GlobalService,
-        private progressLoaderService: ProgressLoaderService
+        private progressLoaderService: ProgressLoaderService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -77,10 +78,8 @@ export class ClientDashboardComponent implements OnInit {
         this.selectedRepairData = item;
     }
 
-    // FIXME: Update to internal link after the update is migrated to Angular app
-    goToUpdate(repairId: number) {
-        const redirectTo = `${this.globalService.legacySiteUrl}/fix-vista-de-actualizacion/?repairId=${repairId}`;
-        window.open(redirectTo, 'blank');
+    goToUpdate(repair: Repair) {
+        this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'update/' + repair.id, left: null, right: null } }]);
     }
 
     getGridData() {
@@ -101,10 +100,11 @@ export class ClientDashboardComponent implements OnInit {
     }
 
     private getUserRepairs(clientData: any) {
-        this.repairService.getByClientIdLegacy(clientData.id).subscribe(
+        // this.repairService.getByClientIdLegacy(clientData.id).subscribe(
+        this.repairService.getByClientId(clientData.id).subscribe(
             (data) => {
                 this.repairGridData = data;
-                this.repairGridCollection = new CollectionView(this.repairGridData.data);
+                this.repairGridCollection = new CollectionView(this.repairGridData);
                 this.repairGridCollection.currentItem = this.repairGridCollection.items[0];
                 this.getRepairDetails(this.repairGridCollection.currentItem);
             },

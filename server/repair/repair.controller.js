@@ -4,6 +4,7 @@ const repairService = require('./repair.service');
 
 router.get('/', getAll);
 router.get('/:id', getById);
+router.get('/getByClientId/:id', getByClientId);
 router.get('/remove/:id', remove);
 router.get('/history/:idRepair', getHistoryByRepairId);
 
@@ -12,6 +13,13 @@ module.exports = router;
 function getById(req, res, next) {
     repairService
         .getById(req.params.id)
+        .then((repair) => res.json(repair))
+        .catch((err) => next(err));
+}
+
+function getByClientId(req, res, next) {
+    repairService
+        .getByClientId(req.params.id)
         .then((repair) => res.json(repair))
         .catch((err) => next(err));
 }

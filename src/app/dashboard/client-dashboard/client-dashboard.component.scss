@@ -4,7 +4,10 @@
 
 #repair-grid-container,
 #repair-loading-alert {
-  height: 278px;
+  height: 230px;
+  .wj-flexgrid{
+    height: inherit;
+  }
 }
 
 .footer-controls {

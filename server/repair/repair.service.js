@@ -9,6 +9,7 @@ const Op = Sequelize.Op;
 module.exports = {
     create,
     getAll,
+    getByClientId,
     getById,
     remove,
     update,
@@ -135,6 +136,51 @@ async function getById(id) {
     return new Promise((resolve, reject) => {
         if (repairDAO) {
             const repairDTOs = toRepairDTO(repairDAO.dataValues);
+            resolve(repairDTOs);
+        } else {
+            reject(error);
+        }
+    });
+}
+async function getByClientId(idClient) {
+    const repairDAOs = await repair.Repair.findAll({
+        attributes: [
+            'id',
+            'manufacturer',
+            'model',
+            'imei',
+            'issue',
+            'note',
+            'dischargeDate',
+            'updatedDate',
+            'finishedDate',
+            'paymentInAdvance',
+            'repairCost',
+            'repairPrice',
+            'equipmentTurnedOn',
+            'enabled',
+            'deleted',
+            'idEquipment',
+            'warrantyTerm',
+        ],
+        include: [
+            {
+                as: 'status',
+                model: repairStatus.RepairStatus,
+                required: true,
+                attributes: ['id', 'status'],
+            },
+        ],
+        where: {
+            idClient: idClient,
+            enabled: 1,
+            deleted: 0,
+        },
+    });
+
+    return new Promise((resolve, reject) => {
+        if (repairDAOs) {
+            const repairDTOs = repairDAOs.map((repairDAO) => toRepairDTO(repairDAO.dataValues));
             resolve(repairDTOs);
         } else {
             reject(error);

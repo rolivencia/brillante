@@ -80,9 +80,10 @@ export class RepairService {
             );
     }
 
-    public getByClientIdLegacy(clientId: number): Observable<RepairLegacy> {
-        const params = new HttpParams().set('action', 'getByClientId').append('clientId', clientId.toString());
-        return this.http.get<RepairLegacy>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    public getByClientId(clientId: number): Observable<Repair[]> {
+        return this.http
+            .get<Repair[]>(`${environment.apiUrl}/repair/getByClientId/${clientId}`, { headers: headers })
+            .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
     }
 
     public getForUpdateById() {

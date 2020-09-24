@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-8">
+    <div class="col-7">
         <div class="card h-100">
             <div class="card-body">
                 <div id="client-grid-container">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-5">
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between">
                 <button class="btn btn-sm btn-primary" (click)="update(selectedClientData)">
@@ -102,6 +102,9 @@
                                 [header]="column.header"
                                 [visible]="true"
                             >
+                              <ng-template *ngIf="column.binding === 'lastUpdate'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                                {{ cell.item.lastUpdate.format('YYYY-MM-DD') }}
+                              </ng-template>
                             </wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
@@ -110,7 +113,7 @@
 
                     <div class="footer-controls row" *ngIf="selectedRepairData">
                         <div class="col-12 text-right">
-                            <button class="btn btn-sm btn-primary h-100" (click)="goToUpdate(selectedRepairData.repairId)">
+                            <button class="btn btn-sm btn-primary h-100" (click)="goToUpdate(selectedRepairData)">
                                 🛠️ Ver en Reparaciones
                             </button>
                         </div>
