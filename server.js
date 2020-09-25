@@ -32,6 +32,8 @@ const apiRoutes = [
     { path: '/users', controller: './server/users/users.controller' },
     { path: '/client', controller: './server/customer/customer.controller' },
     { path: '/repair', controller: './server/repair/repair.controller' },
+    //{ path: '/cash', controller: './server/cash/cash.controller' },
+    { path: '/cash/transaction', controller: './server/cash/transaction-concepts/transaction-concepts.controller' },
 ];
 
 // use JWT auth to secure the api

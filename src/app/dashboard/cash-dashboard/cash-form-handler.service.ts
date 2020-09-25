@@ -202,6 +202,9 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         const parentRawConcepts = (await this.cashService.getConceptsLegacy(true).toPromise()).data;
         const childrenRawConcepts = (await this.cashService.getConceptsLegacy(false).toPromise()).data;
 
+        //TODO: Replace old legacy API call with this one
+        //const rawConcepts = await this.cashService.getConcepts().toPromise();
+
         const parentConcepts = parentRawConcepts.map((concept) => ({
             id: concept.conceptId,
             description: concept.description,

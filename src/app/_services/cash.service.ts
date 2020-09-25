@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { GlobalService } from '@app/_services/global.service';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '@app/_services/authentication.service';
+import { Repair } from '@app/_models';
+import { environment } from '@environments/environment';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -26,6 +28,10 @@ export class CashService {
     public getByIdLegacy(id: number | string): Observable<any> {
         const params = new HttpParams().set('action', 'getById').append('transactionId', id.toString());
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    }
+
+    public getConcepts(): Observable<any> {
+        return this.http.get<Repair>(`${environment.apiUrl}/cash/transaction/get`, { headers: headers });
     }
 
     public getConceptsLegacy(getParents: boolean = false): Observable<any> {
