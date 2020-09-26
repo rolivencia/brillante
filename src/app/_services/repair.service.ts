@@ -102,6 +102,10 @@ export class RepairService {
         );
     }
 
+    public create(repair: Repair) {
+        return this.http.post<any>(`${environment.apiUrl}/repair/create`, { ...toRepairDTO(repair) });
+    }
+
     public updateLegacy(partialRepair) {
         return this.http.post<any>(
             `${this.globalService.webApiUrl}${this.endpoint}`,
@@ -120,17 +124,33 @@ export class RepairService {
     }
 }
 
+/**
+ * @param repairDTO
+ */
 export function toRepair(repairDTO): Repair {
-    const { checkIn, lastUpdate, checkOut, ...destructuredRepair } = repairDTO;
     return {
-        ...destructuredRepair,
+        ...repairDTO,
         audit: {
-            ...destructuredRepair.audit,
-            createdAt: moment(destructuredRepair.audit.createdAt),
-            updatedAt: moment(destructuredRepair.audit.createdAt),
+            ...repairDTO.audit,
+            createdAt: moment(repairDTO.audit.createdAt),
+            updatedAt: moment(repairDTO.audit.createdAt),
         },
-        checkIn: moment(checkIn),
-        lastUpdate: moment(lastUpdate),
-        checkOut: checkOut ? moment(checkOut) : checkOut,
+        checkIn: moment(repairDTO.checkIn),
+        lastUpdate: moment(repairDTO.lastUpdate),
+        checkOut: repairDTO.checkOut ? moment(repairDTO.checkOut) : repairDTO.checkOut,
+    };
+}
+
+export function toRepairDTO(repair: Repair) {
+    return {
+        ...repair,
+        audit: {
+            ...repair.audit,
+            createdAt: repair.audit.createdAt ? repair.audit.createdAt.toISOString() : moment().toISOString(),
+            updatedAt: repair.audit.updatedAt ? repair.audit.updatedAt.toISOString() : moment().toISOString(),
+        },
+        checkIn: repair.checkIn ? repair.checkIn.toISOString() : moment().toISOString(),
+        lastUpdate: repair.checkOut ? repair.checkOut.toISOString() : moment().toISOString(),
+        checkOut: repair.checkOut ? repair.checkOut.toISOString : null,
     };
 }

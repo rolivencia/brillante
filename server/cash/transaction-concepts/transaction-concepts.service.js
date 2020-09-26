@@ -31,6 +31,13 @@ async function get() {
     });
 }
 
+//TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
+async function create() {}
+//TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
+async function update() {}
+//TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
+async function remove() {}
+
 function toTransactionDTO(transactionDAO, parentConcepts = []) {
     return {
         id: transactionDAO.id,

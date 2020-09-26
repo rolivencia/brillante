@@ -11,19 +11,22 @@ module.exports = {
     getAll,
     getByClientId,
     getById,
+    getHistoryByRepairId,
     remove,
     updateDevice,
     updateTracking,
-    getHistoryByRepairId,
 };
 
-async function create({ ...repair }) {
+async function create({ customer, device, note, issue, paymentInAdvance, ...discarded }) {
     //TODO: Implement this function
-    console.log(repair);
+    //TODO: Add creator user - Issue #11
+    //TODO: Add tracking record too
+    console.log(...repair);
 }
 
 async function updateDevice({ ...repair }) {
     //TODO: Implement this function
+    //TODO: Add tracking record too
     console.log(repair);
 }
 
