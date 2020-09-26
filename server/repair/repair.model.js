@@ -12,7 +12,7 @@ Repair.init(
     {
         id: {
             type: Sequelize.BIGINT,
-            allowNull: false,
+            autoIncrement: true,
             primaryKey: true,
             field: 'repair_id',
         },
@@ -67,6 +67,7 @@ Repair.init(
         dischargeDate: {
             type: Sequelize.DATE,
             allowNull: false,
+            defaultValue: Sequelize.NOW,
             field: 'fecha_ingreso',
         },
         updatedDate: {
@@ -111,12 +112,12 @@ Repair.init(
         },
         createdAt: {
             type: Sequelize.DATE,
-            allowNull: false,
+            defaultValue: Sequelize.NOW,
             field: 'fecha_creacion',
         },
         updatedAt: {
             type: Sequelize.DATE,
-            allowNull: false,
+            defaultValue: Sequelize.NOW,
             field: 'fecha_modificacion',
         },
         enabled: {
@@ -136,6 +137,7 @@ Repair.init(
         },
     },
     {
+        timestamps: false,
         sequelize: sequelizeConnector,
         modelName: 'sh_fix_repair',
     }
@@ -145,7 +147,7 @@ RepairStatusHistory.init(
     {
         id: {
             type: Sequelize.INTEGER,
-            allowNull: false,
+            autoIncrement: true,
             primaryKey: true,
             field: 'repair_status_history_id',
         },
@@ -165,12 +167,12 @@ RepairStatusHistory.init(
         },
         createdAt: {
             type: Sequelize.DATE,
-            allowNull: false,
+            defaultValue: Sequelize.NOW,
             field: 'created_date_tz',
         },
         updatedAt: {
             type: Sequelize.DATE,
-            allowNull: false,
+            allowNull: true,
             field: 'modified_date_tz',
         },
         updatedBy: {
@@ -180,21 +182,23 @@ RepairStatusHistory.init(
         },
         cost: {
             type: Sequelize.DECIMAL,
-            allowNull: false,
+            allowNull: true,
             field: 'repair_cost',
         },
         price: {
             type: Sequelize.DECIMAL,
-            allowNull: false,
+            allowNull: true,
             field: 'repair_price',
         },
         paymentInAdvance: {
             type: Sequelize.DECIMAL,
             allowNull: false,
+            defaultValue: 0,
             field: 'repair_pay_in_advance',
         },
     },
     {
+        timestamps: false,
         sequelize: sequelizeConnector,
         modelName: 'sh_fix_repair_status_history',
     }

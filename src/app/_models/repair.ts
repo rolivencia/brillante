@@ -17,6 +17,7 @@ export class Repair {
     public price: number;
     public cost: number;
     public warrantyTerm: number;
+    public history: RepairStatusHistory[] | any[]; // TODO: Implement RepairStatusHistory class
 
     //FIXME: En carga, traer la lista y ahí asignar vía filter.
     constructor() {
@@ -105,4 +106,8 @@ export class RepairLegacy {
     public userId?: number;
     public warrantyTerm: number;
     constructor() {}
+}
+
+export class RepairStatusHistory {
+    //TODO: Implement attributes of this class. Check database.
 }
