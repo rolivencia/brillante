@@ -9,7 +9,21 @@ module.exports = {
     update,
 };
 
-async function create() {}
+async function create({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, user }) {
+    //TODO: Implement user cross-assignation
+    return customer.Customer.findOrCreate({
+        where: { dni: dni },
+        defaults: {
+            dni: dni,
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            telephone: telephone,
+            email: email,
+            secondaryTelephone: secondaryTelephone,
+        },
+    });
+}
 
 async function getAll(offset, limit, sortBy = {}) {
     // TODO: Implement pagination and sorting to retrieve data on-demand
@@ -64,4 +78,19 @@ async function getById(id) {
     });
 }
 
-async function update() {}
+async function update({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, user }) {
+    //TODO: Implement user cross-assignation
+    //TODO: Leave full implementation for Phase 2. Not currently required.
+    return customer.Customer.update(
+        {
+            firstName: firstName,
+            lastName: lastName,
+            dni: dni,
+            address: address,
+            telephone: telephone,
+            email: email,
+            secondaryTelephone: secondaryTelephone,
+        },
+        { where: { id: id } }
+    );
+}

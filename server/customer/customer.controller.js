@@ -6,6 +6,7 @@ router.get('/countAll', countAll);
 router.get('/getAll/:offset/:limit', getAll);
 router.get('/getByDni/:dni', getByDni);
 router.get('/getById/:id', getById);
+router.post('/create', create);
 
 module.exports = router;
 
@@ -38,5 +39,12 @@ function getAll(req, res, next) {
     customerService
         .getAll(offset, limit)
         .then((clients) => res.json(clients))
+        .catch((err) => next(err));
+}
+
+function create(req, res, next) {
+    customerService
+        .create(req.body)
+        .then((response) => res.json(respose))
         .catch((err) => next(err));
 }
