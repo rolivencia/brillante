@@ -193,39 +193,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         return this.cashTransaction;
     }
 
-    transactionChildrenConcepts(parent: TransactionConcept): TransactionConcept[] {
-        return parent.children;
-    }
-
     async loadConcepts(): Promise<TransactionConcept[]> {
-        // TODO: Refactor to use new NodeJS API. Get children concepts based on parent as parameter. Do this assignments server-side
-        const parentRawConcepts = (await this.cashService.getConceptsLegacy(true).toPromise()).data;
-        const childrenRawConcepts = (await this.cashService.getConceptsLegacy(false).toPromise()).data;
-
-        //TODO: Replace old legacy API call with this one
-        //const rawConcepts = await this.cashService.getConcepts().toPromise();
-
-        const parentConcepts = parentRawConcepts.map((concept) => ({
-            id: concept.conceptId,
-            description: concept.description,
-            transactionType: this._transactionTypes.filter((transactionType) => concept.transactionTypeId === transactionType.id)[0],
-            parent: null,
-            userAssignable: concept.userAssignable,
-            children: [],
-        }));
-
-        const childrenConcepts = childrenRawConcepts.map((concept) => ({
-            id: concept.conceptId,
-            description: concept.description,
-            transactionType: this._transactionTypes.filter((transactionType) => concept.transactionTypeId === transactionType.id)[0],
-            parent: parentConcepts.filter((parent) => parent.id === concept.parentConceptId)[0],
-            userAssignable: concept.userAssignable,
-            children: [],
-        }));
-
-        return parentConcepts.map((concept) => ({
-            ...concept,
-            children: childrenConcepts.filter((children) => children.parent.id === concept.id),
-        }));
+        return await this.cashService.getConcepts().toPromise();
     }
 }

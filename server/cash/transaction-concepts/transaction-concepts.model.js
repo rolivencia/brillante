@@ -24,7 +24,7 @@ CashTransactionConcept.init(
             allowNull: true,
             field: 'transaction_parent_concept_id',
         },
-        typeId: {
+        transactionTypeId: {
             type: Sequelize.SMALLINT,
             allowNull: true,
             field: 'transaction_type_id',

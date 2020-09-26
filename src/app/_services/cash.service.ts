@@ -34,11 +34,6 @@ export class CashService {
         return this.http.get<Repair>(`${environment.apiUrl}/cash/transaction/get`, { headers: headers });
     }
 
-    public getConceptsLegacy(getParents: boolean = false): Observable<any> {
-        const params = new HttpParams().set('action', 'getTransactionConcepts').append('getParents', getParents.toString());
-        return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
-    }
-
     // TODO: Finish implementation
     public createLegacy(transaction) {
         return this.http.post<any>(
