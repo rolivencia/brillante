@@ -1,9 +1,6 @@
 const customer = require('server/customer/customer.model');
-
 const repair = require('server/repair/repair.model');
 const repairStatus = require('server/repair/repair.status');
-
-const repairService = require('../customer/customer.service');
 
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
@@ -27,54 +24,50 @@ async function create({ customer, device, issue, paymentInAdvance, ...discarded 
     //TODO: Add creator user - Issue #11
     //TODO: Add tracking record too
 
-    const t = await sequelizeConnector.transaction();
+    return new Promise(async (resolve, reject) => {
+        const t = await sequelizeConnector.transaction();
 
-    let repairDAO;
-    let repairHistoryDAO;
+        let repairDAO;
+        let repairHistoryDAO;
 
-    try {
-        repairDAO = await repair.Repair.create(
-            {
-                idClient: customer.id,
-                idEquipment: device.type.id,
-                manufacturer: device.manufacturer,
-                model: device.model,
-                imei: device.deviceId,
-                equipmentTurnedOn: device.turnedOn,
-                issue: issue,
-                paymentInAdvance: paymentInAdvance,
-                createdBy: 1,
-                enabled: 1,
-                deleted: 0,
-                warrantyTerm: 3,
-                idStatus: 0,
-            },
-            { transaction: t }
-        );
+        try {
+            repairDAO = await repair.Repair.create(
+                {
+                    idClient: customer.id,
+                    idEquipment: device.type.id,
+                    manufacturer: device.manufacturer,
+                    model: device.model,
+                    imei: device.deviceId,
+                    equipmentTurnedOn: device.turnedOn,
+                    issue: issue,
+                    paymentInAdvance: paymentInAdvance,
+                    createdBy: 1,
+                    enabled: 1,
+                    deleted: 0,
+                    warrantyTerm: 3,
+                    idStatus: 0,
+                },
+                { transaction: t }
+            );
 
-        repairHistoryDAO = await repair.RepairStatusHistory.create(
-            {
-                idRepair: repairDAO.dataValues.id,
-                idStatus: 0,
-                updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
-                cost: repairDAO.dataValues.cost,
-                price: repairDAO.dataValues.price,
-                paymentInAdvance: repairDAO.dataValues.paymentInAdvance,
-                updatedAt: null,
-            },
-            { transaction: t }
-        );
+            repairHistoryDAO = await repair.RepairStatusHistory.create(
+                {
+                    idRepair: repairDAO.dataValues.id,
+                    idStatus: 0,
+                    updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    cost: repairDAO.dataValues.cost,
+                    price: repairDAO.dataValues.price,
+                    paymentInAdvance: repairDAO.dataValues.paymentInAdvance,
+                    updatedAt: null,
+                },
+                { transaction: t }
+            );
 
-        await t.commit();
-    } catch (error) {
-        console.error(error);
-        await t.rollback();
-    }
-
-    return new Promise((resolve, reject) => {
-        if (repairDAO && repairHistoryDAO) {
+            await t.commit();
             resolve({ ...repairDAO.dataValues, history: { ...repairHistoryDAO.dataValues } });
-        } else {
+        } catch (error) {
+            console.error(error);
+            await t.rollback();
             reject(error);
         }
     });

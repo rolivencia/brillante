@@ -218,6 +218,7 @@ export class RepairFormHandlerService {
             checkOut: this.repair.checkOut,
             lastUpdate: this.repair.lastUpdate,
             audit: this.repair.audit,
+            history: this.repair.history,
         };
     }
 
@@ -260,19 +261,14 @@ export class RepairFormHandlerService {
         }
 
         const legacyRepair = this.legacyMapperService.toLegacyRepairCreate(this.customer, this.repair);
-        const result = await this.repairService.createLegacy(legacyRepair).toPromise();
-        //const result = await this.repairService.create(this.repair).toPromise();
+        //const result = await this.repairService.createLegacy(legacyRepair).toPromise();
+        const result = await this.repairService.create(this.repair).toPromise();
 
-        if (!result || result.errorCode || result.historyErrorCode) {
-            if (result.errorCode) {
-                this.toastrService.error(result.errorCode);
-            }
-            if (result.historyErrorCode) {
-                this.toastrService.error(result.historyErrorCode);
-            }
-        } else if (result && result.id) {
+        if (result && result.id) {
             this.saved = true;
             this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito`);
+        } else {
+            this.toastrService.error(result);
         }
     }
 

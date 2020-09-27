@@ -87,7 +87,7 @@ export class RepairService {
     }
 
     public delete(id: number): Observable<{ response: string }> {
-        return this.http.get<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
+        return this.http.delete<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
     }
 
     /**
