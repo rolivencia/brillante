@@ -66,13 +66,12 @@ Repair.init(
         },
         dischargeDate: {
             type: Sequelize.DATE,
-            allowNull: false,
             defaultValue: Sequelize.NOW,
             field: 'fecha_ingreso',
         },
         updatedDate: {
             type: Sequelize.DATE,
-            allowNull: true,
+            defaultValue: Sequelize.NOW,
             field: 'fecha_ultima_actualizacion',
         },
         finishedDate: {
