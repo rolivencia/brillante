@@ -260,8 +260,6 @@ export class RepairFormHandlerService {
             }
         }
 
-        const legacyRepair = this.legacyMapperService.toLegacyRepairCreate(this.customer, this.repair);
-        //const result = await this.repairService.createLegacy(legacyRepair).toPromise();
         const result = await this.repairService.create(this.repair).toPromise();
 
         if (result && result.id) {

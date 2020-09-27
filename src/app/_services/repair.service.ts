@@ -90,18 +90,6 @@ export class RepairService {
         return this.http.delete<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
     }
 
-    /**
-     * @deprecated
-     * @param legacyRepair - Legacy Repair Object (wp-brillante)
-     */
-    public createLegacy(legacyRepair) {
-        return this.http.post<any>(
-            `${this.globalService.webApiUrl}${this.endpoint}`,
-            { ...legacyRepair, action: 'create' },
-            { headers: headers }
-        );
-    }
-
     public create(repair: Repair) {
         return this.http.post<any>(`${environment.apiUrl}/repair/create`, { ...toRepairDTO(repair) });
     }

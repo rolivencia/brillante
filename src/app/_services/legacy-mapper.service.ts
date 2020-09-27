@@ -17,26 +17,6 @@ export class LegacyMapperService {
     }
 
     /**
-     * Transforma los objetos Repair del nuevo cliente HTML5 al formato que acepta el API legacy
-     * @deprecated
-     * @param customer - Instancia de cliente
-     * @param repair - Instancia de reparación
-     */
-    toLegacyRepairCreate(customer: Customer, repair: Repair) {
-        return {
-            clientId: customer.id,
-            tipoEquipo: repair.device.type.id.toString(),
-            marca: repair.device.manufacturer,
-            modelo: repair.device.model,
-            imei: repair.device.deviceId,
-            problema: repair.issue,
-            seniaReparacion: repair.paymentInAdvance,
-            encendido: repair.device.turnedOn ? 1 : 0,
-            usuario: this.currentUser.id,
-        };
-    }
-
-    /**
      * Genera el objeto para actualizar una reparación con el API legacy
      * @deprecated
      * @param repair - Reparación
