@@ -36,17 +36,6 @@ export class LegacyMapperService {
         };
     }
 
-    public toLegacyRepairDescription(repair: Repair) {
-        return {
-            repairId: repair.id,
-            marca: repair.device.manufacturer,
-            modelo: repair.device.model,
-            imei: repair.device.deviceId,
-            problema: repair.issue,
-            tipoEquipo: repair.device.type.id,
-        };
-    }
-
     /**
      * Transforma los objetos Customer del nuevo cliente HTML5 al formato que acepta el API legacy
      * @deprecated

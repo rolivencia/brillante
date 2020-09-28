@@ -15,7 +15,7 @@ module.exports = {
     getById,
     getHistoryByRepairId,
     remove,
-    updateDevice,
+    updateDevice: updateDeviceInfo,
     updateTracking,
 };
 
@@ -73,10 +73,17 @@ async function create({ customer, device, issue, paymentInAdvance, ...discarded 
     });
 }
 
-async function updateDevice({ ...repair }) {
-    //TODO: Implement this function
-    //TODO: Add tracking record too
-    console.log(repair);
+async function updateDeviceInfo({ id, device, issue, ...discarded }) {
+    return repair.Repair.update(
+        {
+            idEquipment: device.type.id,
+            manufacturer: device.manufacturer,
+            model: device.model,
+            imei: device.deviceId,
+            issue: issue,
+        },
+        { where: { id: id } }
+    );
 }
 
 async function updateTracking({ ...repair }) {

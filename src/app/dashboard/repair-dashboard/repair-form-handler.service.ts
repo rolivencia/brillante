@@ -290,9 +290,11 @@ export class RepairFormHandlerService {
         this.patchRepair();
 
         if (editDescription || this.formGroup.controls['repair']['controls']['issue'].dirty) {
-            const repairDescription = this.legacyMapperService.toLegacyRepairDescription(this.repair);
-            const updateResult = await this.repairService.updateDescriptionLegacy(repairDescription).toPromise();
-            console.log(updateResult);
+            const updateDeviceInfo = await this.repairService.updateDeviceInfo(this.repair).toPromise();
+            if (!updateDeviceInfo) {
+                this.toastrService.info('Error al actualizar información del dispositivo en reparación.');
+                return;
+            }
         }
 
         const registerPayment = this.canRegisterPayment() ? this.registerPayment : false;

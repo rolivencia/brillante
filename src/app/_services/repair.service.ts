@@ -103,12 +103,8 @@ export class RepairService {
         );
     }
 
-    public updateDescriptionLegacy(partialRepair) {
-        return this.http.post<any>(
-            `${this.globalService.webApiUrl}${this.endpoint}`,
-            { ...partialRepair, action: 'updateRepairDescription' },
-            { headers: headers }
-        );
+    public updateDeviceInfo(repair: Repair) {
+        return this.http.put<any>(`${environment.apiUrl}/repair/updateDeviceInfo`, { ...repair });
     }
 }
 

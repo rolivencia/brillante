@@ -3,7 +3,7 @@ const router = express.Router();
 const repairService = require('./repair.service');
 
 router.post('/create', create);
-router.put('/updateDevice', updateDevice);
+router.put('/updateDeviceInfo', updateDeviceInfo);
 router.put('/updateTracking', updateTracking);
 router.get('/', getAll);
 router.get('/:id', getById);
@@ -20,7 +20,7 @@ function create(req, res, next) {
         .catch((err) => next(err));
 }
 
-function updateDevice(req, res, next) {
+function updateDeviceInfo(req, res, next) {
     repairService
         .updateDevice(req.body)
         .then((repair) => res.json(repair))
@@ -30,7 +30,7 @@ function updateDevice(req, res, next) {
 function updateTracking(req, res, next) {
     repairService
         .updateTracking(req.body)
-        .then((repair) => res.json(repair))
+        .then((result) => res.json(result))
         .catch((err) => next(err));
 }
 
