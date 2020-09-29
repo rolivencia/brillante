@@ -56,20 +56,11 @@ export class CashDashboardService {
 
         const dateFrom = moment(date);
         const dateTo = moment(date);
-        const rawTransactions = await this.cashService.getAllLegacy(dateFrom, dateTo).toPromise();
+
         const testTransaction = await this.cashService.getAll(dateFrom, dateTo).toPromise();
+        this.transactions = testTransaction.map((Transaction) => mapTransactionType(Transaction));
 
-        console.log(testTransaction);
-
-        if (rawTransactions['data']?.length) {
-            this.transactions = rawTransactions['data'].map((transaction) =>
-                this.legacyMapperService.fromLegacyCashTransaction(transaction, this.cashFormHandler.transactionConcepts)
-            );
-        } else {
-            this.transactions = [];
-        }
-        const transactions = this.transactions.map((Transaction) => this.mapTransactionType(Transaction));
-        this.gridCollection = new CollectionView<any>(transactions);
+        this.gridCollection = new CollectionView<any>(this.transactions);
 
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();
@@ -77,15 +68,15 @@ export class CashDashboardService {
         this.progressLoaderService.hide();
         this.loading = false;
     }
+}
 
-    mapTransactionType(transaction: CashTransaction) {
-        const isIncome = transaction.concept.transactionType.id === 1;
-        const isExpense = transaction.concept.transactionType.id === 0;
-        return {
-            ...transaction,
-            amount: isIncome ? transaction.amount : -1 * transaction.amount,
-            income: isIncome ? transaction.amount : 0,
-            expense: isExpense ? transaction.amount : 0,
-        };
-    }
+export function mapTransactionType(transaction: CashTransaction) {
+    const isIncome = transaction.concept.transactionType.id === 1;
+    const isExpense = transaction.concept.transactionType.id === 0;
+    return {
+        ...transaction,
+        amount: isIncome ? transaction.amount : -1 * transaction.amount,
+        income: isIncome ? transaction.amount : 0,
+        expense: isExpense ? transaction.amount : 0,
+    };
 }

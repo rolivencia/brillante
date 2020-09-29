@@ -59,8 +59,8 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _saved: boolean = false;
 
     private _transactionTypes: TransactionType[] = [
-        { id: 0, description: 'Egreso' },
-        { id: 1, description: 'Ingreso' },
+        { id: 0, description: 'Ingreso' },
+        { id: 1, description: 'Egreso' },
     ];
 
     public controlsLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

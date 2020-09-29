@@ -13,6 +13,6 @@ export class CashUpdateResolverService implements Resolve<any> {
         const idAsString = route.paramMap.get('id');
         const id = idAsString ? parseInt(idAsString, 10) : 0;
 
-        return this.cashService.getByIdLegacy(id);
+        return this.cashService.getById(id);
     }
 }

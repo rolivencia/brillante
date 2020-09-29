@@ -49,7 +49,8 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
         }
     }
 
-    details() {
+    back() {
+        this.cashFormHandlerService.clean();
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
     }
 }

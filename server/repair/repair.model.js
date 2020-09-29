@@ -207,7 +207,6 @@ Repair.belongsTo(repairStatus.RepairStatus, { as: 'status', foreignKey: 'id_stat
 RepairStatusHistory.belongsTo(repairStatus.RepairStatus, { as: 'status', foreignKey: 'status_id' });
 
 Repair.belongsTo(customer.Customer, { as: 'customer', foreignKey: 'idClient' });
-
 customer.Customer.hasMany(Repair, {
     as: 'repair',
     foreignKey: 'idRepair',

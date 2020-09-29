@@ -41,7 +41,9 @@
                     <strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.concept.transactionType.description }}
                 </p>
             </div>
-            <ng-container *ngIf="cashDashboardService.selectedTransaction.operation.id">
+            <ng-container
+                *ngIf="cashDashboardService.selectedTransaction.operation && cashDashboardService.selectedTransaction.operation.id"
+            >
                 <hr />
                 <div id="associated-operation" class="card bg-primary text-white" (click)="navigate()">
                     <div class="card-body">
@@ -58,7 +60,7 @@
                 <p><strong>Hora: </strong>{{ cashDashboardService.selectedTransaction.date.format('HH:mm') }}</p>
             </div>
             <div class="px-0">
-                <p><strong>Usuario: </strong>{{ cashDashboardService.selectedTransaction.audit.createdBy.username }}</p>
+                <p><strong>Usuario: </strong>{{ cashDashboardService.selectedTransaction.audit.createdBy.userName }}</p>
             </div>
         </ng-container>
     </div>

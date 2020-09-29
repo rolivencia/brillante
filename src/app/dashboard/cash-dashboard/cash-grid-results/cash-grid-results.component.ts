@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
 import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { ToastrService } from 'ngx-toastr';
+import { CashTransaction } from '@app/_models/cash-transaction';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -60,7 +61,7 @@ export class CashGridResultsComponent implements OnInit {
         this.cashDashboardService.selectedTransaction = null;
     }
 
-    public getRegisterDetails(currentItem) {
+    public getRegisterDetails(currentItem: CashTransaction) {
         this.cashDashboardService.selectedTransaction = currentItem;
     }
 

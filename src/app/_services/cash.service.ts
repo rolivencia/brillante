@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
+import * as moment from 'moment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { GlobalService } from '@app/_services/global.service';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { Repair } from '@app/_models';
 import { environment } from '@environments/environment';
+import { map } from 'rxjs/operators';
+import { CashTransaction } from '@app/_models/cash-transaction';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -17,24 +20,23 @@ export class CashService {
 
     constructor(private authenticationService: AuthenticationService, private http: HttpClient, private globalService: GlobalService) {}
 
-    public getAllLegacy(dateFrom: Moment, dateTo: Moment): Observable<any> {
-        const params = new HttpParams()
-            .set('action', 'getAll')
-            .append('dateFrom', dateFrom.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).format('YYYY-MM-DD+HH:mm:ss'))
-            .append('dateUpTo', dateTo.set({ hour: 23, minute: 59, second: 59, millisecond: 999 }).format('YYYY-MM-DD+HH:mm:ss'));
-        return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
-    }
-
     public getAll(dateFrom: Moment, dateTo: Moment): Observable<any> {
         const params = new HttpParams()
             .set('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
             .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
-        return this.http.get<Repair>(`${environment.apiUrl}/cash`, { headers: headers, params: params });
+        return this.http
+            .get<CashTransaction[]>(`${environment.apiUrl}/cash`, { headers: headers, params: params })
+            .pipe(
+                map((cashTransactionsDTO): CashTransaction[] =>
+                    cashTransactionsDTO.map((cashTransactionDTO): CashTransaction => toCashTransaction(cashTransactionDTO))
+                )
+            );
     }
 
-    public getByIdLegacy(id: number | string): Observable<any> {
-        const params = new HttpParams().set('action', 'getById').append('transactionId', id.toString());
-        return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
+    public getById(id: number | string): Observable<any> {
+        return this.http
+            .get<CashTransaction>(`${environment.apiUrl}/cash/${id}`)
+            .pipe(map((cashTransactionDTO) => toCashTransaction(cashTransactionDTO)));
     }
 
     public getConcepts(): Observable<any> {
@@ -77,4 +79,17 @@ export class CashService {
             { headers: headers }
         );
     }
+}
+
+export function toCashTransaction(cashTransactionDTO): CashTransaction {
+    return {
+        ...cashTransactionDTO,
+        date: moment(cashTransactionDTO.date),
+        amount: parseFloat(cashTransactionDTO.amount),
+        audit: {
+            ...cashTransactionDTO.audit,
+            createdAt: moment(cashTransactionDTO.audit.createdAt),
+            updatedAt: moment(cashTransactionDTO.audit.updatedAt),
+        },
+    };
 }

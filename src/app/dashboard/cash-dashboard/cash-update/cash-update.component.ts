@@ -26,13 +26,10 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
         this.cashDashboardService.editMode.next(true);
         this.cashFormHandler.controlsLoaded.subscribe((result) => {
             if (result) {
-                const legacyCashTransaction = this.route.snapshot.data['legacyCashTransaction'];
-                if (legacyCashTransaction) {
+                const cashTransaction = this.route.snapshot.data['legacyCashTransaction'];
+                if (cashTransaction) {
                     this.cashFormHandler.saved = false;
-                    this.cashFormHandler.cashTransaction = this.legacyMapperService.fromLegacyCashTransaction(
-                        legacyCashTransaction,
-                        this.cashFormHandler.transactionConcepts
-                    );
+                    this.cashFormHandler.cashTransaction = cashTransaction;
 
                     // Assign parent transaction concept for usage in the update form
                     this.cashFormHandler.transactionParentConcept = this.cashFormHandler.selectableTransactionConcepts.filter(
@@ -55,7 +52,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     }
 
     async update() {
-        this.cashFormHandler.cashTransaction.date = moment(this.dateTime);
+        this.cashFormHandler.cashTransaction.audit.createdAt = moment(this.dateTime);
         this.cashFormHandler.formGroup.patchValue({ date: moment(this.dateTime) });
         const result = await this.cashFormHandler.update();
         if (result) {
@@ -64,7 +61,8 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
         }
     }
 
-    details() {
+    back() {
+        this.cashFormHandler.clean();
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
     }
 }
