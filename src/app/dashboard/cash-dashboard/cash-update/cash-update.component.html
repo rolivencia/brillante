@@ -14,7 +14,20 @@
                     </div>
                     <label><b>Concepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
+                        <ng-container
+                            *ngIf="
+                                !cashFormHandler.cashTransaction.concept.parent.userAssignable ||
+                                !cashFormHandler.cashTransaction.concept.userAssignable
+                            "
+                        >
+                            <label>{{ cashFormHandler.cashTransaction.concept.parent.description }}</label>
+                        </ng-container>
+
                         <wj-combo-box
+                            *ngIf="
+                                cashFormHandler.cashTransaction.concept.parent.userAssignable &&
+                                cashFormHandler.cashTransaction.concept.userAssignable
+                            "
                             class="form-control form-control-sm p-0"
                             [(ngModel)]="cashFormHandler.transactionParentConcept"
                             [ngModelOptions]="{ standalone: true }"
@@ -28,7 +41,12 @@
                     </div>
                     <label><b>Subconcepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
+                        <ng-container *ngIf="!cashFormHandler.cashTransaction.concept.userAssignable">
+                            <label>{{ cashFormHandler.cashTransaction.concept.description }}</label>
+                        </ng-container>
+
                         <wj-combo-box
+                            *ngIf="cashFormHandler.cashTransaction.concept.userAssignable"
                             class="form-control form-control-sm p-0"
                             id="concept"
                             name="concept"

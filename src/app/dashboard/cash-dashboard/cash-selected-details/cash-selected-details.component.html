@@ -8,6 +8,7 @@
         <ng-container *ngIf="cashDashboardService.gridCollection.itemCount > 0">
             <button class="btn btn-sm btn-outline-primary mr-3" (click)="add()">💵 Crear</button>
             <button
+                *ngIf="isEditable(cashDashboardService.selectedTransaction)"
                 class="btn btn-sm btn-outline-dark mr-3"
                 (click)="update(cashDashboardService.selectedTransaction.id)"
                 [disabled]="!cashDashboardService.selectedTransaction"

@@ -1,7 +1,7 @@
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashService } from '@app/_services/cash.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Operation } from '@app/_models/cash-transaction';
+import { CashTransaction, Operation } from '@app/_models/cash-transaction';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -58,5 +58,9 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
             default:
                 break;
         }
+    }
+
+    isEditable(cashTransaction: CashTransaction) {
+        return cashTransaction.concept.parent.userAssignable;
     }
 }
