@@ -37,7 +37,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
 
     delete() {
         const toDeleteId = this.cashDashboardService.selectedTransaction.id;
-        this.cashService.deleteLegacy(toDeleteId).subscribe((result) => {
+        this.cashService.remove(toDeleteId).subscribe((result) => {
             this.toastrService.info(`Transacción de ID ${toDeleteId} eliminada correctamente.`);
             this.cashDashboardService.selectedTransaction = null;
             this.cashDashboardService.load(this.cashDashboardService.date);

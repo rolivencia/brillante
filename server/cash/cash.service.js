@@ -53,7 +53,9 @@ async function getAll({ startDate, endDate }) {
 
 async function create(cashTransaction) {}
 async function update(cashTransaction) {}
-async function remove(id) {}
+async function remove(id) {
+    return cash.CashTransaction.update({ deleted: 1 }, { where: { id: id } });
+}
 
 function toTransactionDTO({ createdBy, deleted, enabled, user, ...transactionDAO }) {
     return {

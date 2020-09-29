@@ -39,6 +39,10 @@ export class CashService {
             .pipe(map((cashTransactionDTO) => toCashTransaction(cashTransactionDTO)));
     }
 
+    public remove(id: number | string): Observable<any> {
+        return this.http.delete<any>(`${environment.apiUrl}/cash/remove/${id}`);
+    }
+
     public getConcepts(): Observable<any> {
         return this.http.get<Repair>(`${environment.apiUrl}/cash/transaction/get`, { headers: headers });
     }
@@ -68,14 +72,6 @@ export class CashService {
         return this.http.post<any>(
             `${this.globalService.webApiUrl}${this.endpoint}`,
             { ...transaction, action: 'update' },
-            { headers: headers }
-        );
-    }
-
-    public deleteLegacy(transactionId: number | string) {
-        return this.http.post<any>(
-            `${this.globalService.webApiUrl}${this.endpoint}`,
-            { action: 'delete', transactionId: transactionId.toString() },
             { headers: headers }
         );
     }
