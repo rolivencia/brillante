@@ -57,9 +57,10 @@ async function remove(id) {
     return cash.CashTransaction.update({ deleted: 1 }, { where: { id: id } });
 }
 
-function toTransactionDTO({ createdBy, deleted, enabled, user, ...transactionDAO }) {
+function toTransactionDTO({ createdBy, deleted, enabled, user, operation, ...transactionDAO }) {
     return {
         ...transactionDAO,
+        operation: operation ? operation.dataValues : operation,
         concept: {
             ...transactionDAO.concept.dataValues,
             children: [],
@@ -104,9 +105,9 @@ function cashGetDefinition() {
         },
         {
             as: 'operation',
-            model: cash.RepairCashTransaction,
+            model: cash.RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
             required: false,
-            attributes: ['idRepair', [Sequelize.fn('CONCAT', '', 'Reparación'), 'description']],
+            attributes: ['id', 'idRepair', [Sequelize.fn('CONCAT', '', 'Reparación'), 'description']],
         },
     ];
 }

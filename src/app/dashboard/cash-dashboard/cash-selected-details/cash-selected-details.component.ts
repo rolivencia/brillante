@@ -46,10 +46,14 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
 
     navigate() {
         // TODO: Posibilitar navegación a ventas cuando se implemente el módulo correspondiente
+        // TODO: Cambiar asociación para que sea genérica y no sólo responda a idRepair
         const operation: Operation = this.cashDashboardService.selectedTransaction.operation;
         switch (operation.description) {
             case 'Reparación':
-                this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'update/' + operation.id, left: null, right: null } }]);
+                this.router.navigate([
+                    'repair-dashboard/manage',
+                    { outlets: { top: 'update/' + operation['idRepair'], left: null, right: null } },
+                ]);
                 break;
             default:
                 break;

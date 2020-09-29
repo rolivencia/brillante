@@ -41,14 +41,13 @@
                     <strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.concept.transactionType.description }}
                 </p>
             </div>
-            <ng-container
-                *ngIf="cashDashboardService.selectedTransaction.operation && cashDashboardService.selectedTransaction.operation.id"
-            >
+            <ng-container *ngIf="cashDashboardService.selectedTransaction.operation">
                 <hr />
                 <div id="associated-operation" class="card bg-primary text-white" (click)="navigate()">
                     <div class="card-body">
                         <p><b>Operación Asociada: </b>{{ cashDashboardService.selectedTransaction.operation.description }}</p>
-                        <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation.id }}</p>
+                        <!-- TODO: Cambiar asociación para que sea genérica y no sólo responda a idRepair -->
+                        <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation['idRepair'] }}</p>
                     </div>
                 </div>
             </ng-container>
