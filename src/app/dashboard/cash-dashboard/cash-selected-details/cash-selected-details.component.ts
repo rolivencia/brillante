@@ -61,6 +61,6 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
     }
 
     isEditable(cashTransaction: CashTransaction) {
-        return cashTransaction.concept.parent.userAssignable;
+        return cashTransaction && cashTransaction.concept.parent.userAssignable;
     }
 }

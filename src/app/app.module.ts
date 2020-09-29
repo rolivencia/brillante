@@ -19,27 +19,21 @@ import { FooterComponent } from './_components/footer/footer.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ProgressLoaderModule } from '@app/_components/progress-loader/progress-loader.module';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
+import { LoginModule } from '@app/login/login.module';
+import { RegisterModule } from '@app/register/register.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        FormsModule,
         HttpClientModule,
-        ReactiveFormsModule,
+        LoginModule,
+        RegisterModule,
         routing,
         ToastrModule.forRoot(),
         ProgressLoaderModule,
     ],
-    declarations: [
-        AlertComponent,
-        AppComponent,
-        FooterComponent,
-        MainHeaderComponent,
-        DashboardComponent,
-        LoginComponent,
-        RegisterComponent,
-    ],
+    declarations: [AlertComponent, AppComponent, FooterComponent, MainHeaderComponent, DashboardComponent],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
