@@ -16,7 +16,7 @@ module.exports = {
     getHistoryByRepairId,
     remove,
     updateDevice: updateDeviceInfo,
-    updateTracking,
+    updateTracking: updateTrackingInfo,
 };
 
 async function create({ customer, device, issue, paymentInAdvance, ...discarded }) {
@@ -86,9 +86,60 @@ async function updateDeviceInfo({ id, device, issue, ...discarded }) {
     );
 }
 
-async function updateTracking({ ...repair }) {
-    //TODO: Implement this function
-    console.log(repair);
+async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
+    const { id, status, note, paymentInAdvance, cost, price, warrantyTerm, ...discarded } = repairToUpdate;
+
+    const t = await sequelizeConnector.transaction();
+
+    let repairDAO;
+    let previousRepairHistoryDAO;
+    let newRepairHistoryDAO;
+    let cashTransaction; //TODO: Write Sequelize query
+    let operationTransaction; //TODO: Write Sequelize query
+
+    try {
+        repairDAO = await repair.Repair.update(
+            {
+                note: note,
+                status: status.id,
+                cost: cost,
+                price: price,
+                paymentInAdvance: paymentInAdvance,
+                warrantyTerm: warrantyTerm,
+                updatedDate: Sequelize.NOW,
+                updatedAt: Sequelize.NOW,
+            },
+            { where: { id: id }, transaction: t }
+        );
+        previousRepairHistoryDAO = await repair.RepairStatusHistory.update(
+            {
+                updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                updatedAt: Sequelize.NOW,
+            },
+            { where: { idRepair: id, updatedAt: { [Op.eq]: null } }, transaction: t }
+        );
+
+        newRepairHistoryDAO = await repair.RepairStatusHistory.create(
+            {
+                idRepair: id,
+                idStatus: status.id,
+                updatedAt: Sequelize.NOW,
+                updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                cost: cost,
+                price: price,
+                paymentInAdvance: paymentInAdvance,
+            },
+            { transaction: t }
+        );
+        await t.rollback();
+        //TODO: Implement this function
+        console.log('COMMIT');
+        //await t.commit();
+    } catch (e) {
+        await t.rollback();
+        console.error(e);
+        console.error('ROLLBACK');
+    }
 }
 
 async function remove(id) {

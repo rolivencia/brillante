@@ -301,6 +301,8 @@ export class RepairFormHandlerService {
 
         const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, registerPayment);
         const trackingUpdateResult = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
+        //TODO: Replace for new NodeJS API version
+        //const trackingUpdateResult = await this.repairService.updateTrackingInfo(this.repair, registerPayment).toPromise();
 
         return new Promise((resolve, reject) => {
             if (!trackingUpdateResult) {

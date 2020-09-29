@@ -106,6 +106,10 @@ export class RepairService {
     public updateDeviceInfo(repair: Repair) {
         return this.http.put<any>(`${environment.apiUrl}/repair/updateDeviceInfo`, { ...repair });
     }
+
+    public updateTrackingInfo(repair: Repair, generateTransaction: boolean) {
+        return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, { repairToUpdate: repair, generateTransaction });
+    }
 }
 
 /**

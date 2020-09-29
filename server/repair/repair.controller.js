@@ -4,7 +4,7 @@ const repairService = require('./repair.service');
 
 router.post('/create', create);
 router.put('/updateDeviceInfo', updateDeviceInfo);
-router.put('/updateTracking', updateTracking);
+router.put('/updateTrackingInfo', updateTrackingInfo);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.get('/getByClientId/:id', getByClientId);
@@ -27,7 +27,7 @@ function updateDeviceInfo(req, res, next) {
         .catch((err) => next(err));
 }
 
-function updateTracking(req, res, next) {
+function updateTrackingInfo(req, res, next) {
     repairService
         .updateTracking(req.body)
         .then((result) => res.json(result))
