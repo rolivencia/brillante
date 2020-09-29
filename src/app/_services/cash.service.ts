@@ -25,6 +25,13 @@ export class CashService {
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });
     }
 
+    public getAll(dateFrom: Moment, dateTo: Moment): Observable<any> {
+        const params = new HttpParams()
+            .set('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
+            .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
+        return this.http.get<Repair>(`${environment.apiUrl}/cash`, { headers: headers, params: params });
+    }
+
     public getByIdLegacy(id: number | string): Observable<any> {
         const params = new HttpParams().set('action', 'getById').append('transactionId', id.toString());
         return this.http.get<any>(`${this.globalService.webApiUrl}${this.endpoint}`, { headers: headers, params: params });

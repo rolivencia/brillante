@@ -57,6 +57,9 @@ export class CashDashboardService {
         const dateFrom = moment(date);
         const dateTo = moment(date);
         const rawTransactions = await this.cashService.getAllLegacy(dateFrom, dateTo).toPromise();
+        const testTransaction = await this.cashService.getAll(dateFrom, dateTo).toPromise();
+
+        console.log(testTransaction);
 
         if (rawTransactions['data']?.length) {
             this.transactions = rawTransactions['data'].map((transaction) =>
