@@ -57,10 +57,11 @@ export class CashDashboardService {
         const dateFrom = moment(date);
         const dateTo = moment(date);
 
-        const testTransaction = await this.cashService.getAll(dateFrom, dateTo).toPromise();
-        this.transactions = testTransaction.map((Transaction) => mapTransactionType(Transaction));
+        const transactions = await this.cashService.getAll(dateFrom, dateTo).toPromise();
+        this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
 
         this.gridCollection = new CollectionView<any>(this.transactions);
+        this.gridCollection.currentItem = null;
 
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();

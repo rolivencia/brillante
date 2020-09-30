@@ -1,8 +1,6 @@
 import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
-import { Moment } from 'moment';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
-import { RepairService } from '@app/_services/repair.service';
 import { DateObject } from '@app/_models/date-object';
 import { DateHandlerService } from '@app/_services/date-handler.service';
 
