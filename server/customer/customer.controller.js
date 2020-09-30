@@ -45,6 +45,6 @@ function getAll(req, res, next) {
 function create(req, res, next) {
     customerService
         .create(req.body)
-        .then((response) => res.json(respose))
+        .then((customer) => res.json(customer))
         .catch((err) => next(err));
 }

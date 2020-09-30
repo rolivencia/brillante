@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { CashTransaction } from '@app/_models/cash-transaction';
-import { Customer } from '@app/_models/customer';
 import { Injectable } from '@angular/core';
 import { Repair, User } from '@app/_models';
 
@@ -32,22 +31,6 @@ export class LegacyMapperService {
             precioReparacion: repair.price,
             generateTransaction: generateTransaction ? generateTransaction : false,
             warrantyTerm: repair.warrantyTerm,
-        };
-    }
-
-    /**
-     * Transforma los objetos Customer del nuevo cliente HTML5 al formato que acepta el API legacy
-     * @deprecated
-     * @param customer - Instance of Customer class
-     */
-    toLegacyCustomerCreate(customer: Customer) {
-        return {
-            nombre: customer.firstName,
-            apellido: customer.lastName,
-            dni: customer.dni,
-            direccion: customer.address,
-            telefono: customer.telephone,
-            email: customer.email,
         };
     }
 

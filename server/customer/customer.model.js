@@ -10,7 +10,7 @@ Customer.init(
     {
         id: {
             type: Sequelize.BIGINT,
-            allowNull: false,
+            autoIncrement: true,
             primaryKey: true,
             field: 'client_id',
         },
@@ -76,12 +76,12 @@ Customer.init(
         },
         enabled: {
             type: Sequelize.BOOLEAN,
-            allowNull: false,
+            defaultValue: 1,
             field: 'habilitado',
         },
         deleted: {
             type: Sequelize.BOOLEAN,
-            allowNull: false,
+            defaultValue: 0,
             field: 'eliminado',
         },
     },

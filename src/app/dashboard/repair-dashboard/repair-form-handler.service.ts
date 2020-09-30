@@ -250,11 +250,12 @@ export class RepairFormHandlerService {
         this.patchCustomer();
         this.patchRepair();
 
-        const legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
         if (!this.customerExists) {
-            const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
+            //const legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
+            //const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
+            const [savedCustomer, wasSaved] = await this.customerService.create(this.customer).toPromise();
             this.customer.id = savedCustomer?.id;
-            if (!savedCustomer?.code) {
+            if (!savedCustomer) {
                 this.toastrService.error('Error al registrar cliente.');
                 return;
             }

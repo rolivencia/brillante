@@ -9,7 +9,7 @@ module.exports = {
     update,
 };
 
-async function create({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, user }) {
+async function create({ dni, firstName, lastName, address, telephone, email, secondaryTelephone }) {
     //TODO: Implement user cross-assignation
     return customer.Customer.findOrCreate({
         where: { dni: dni },
@@ -27,7 +27,6 @@ async function create({ id, dni, firstName, lastName, address, telephone, email,
 
 async function getAll(offset, limit, sortBy = {}) {
     // TODO: Implement pagination and sorting to retrieve data on-demand
-    //return Client().findAndCountAll({ offset: offset, limit: limit });
     return customer.Customer.findAndCountAll();
 }
 
