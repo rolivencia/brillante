@@ -9,6 +9,7 @@ import { Repair } from '@app/_models';
 import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
 import { CashTransaction } from '@app/_models/cash-transaction';
+import { Customer } from '@app/_models/customer';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -56,15 +57,18 @@ export class CashService {
         );
     }
 
-    public openCashRegisterLegacy() {
-        return this.createLegacy({
-            conceptId: 49,
-            amount: 0,
-            transactionTypeId: 1,
-            note: 'Apertura de Caja',
-            createdUserId: this.authenticationService.currentUserValue.id,
-            entityId: null,
-        });
+    // TODO: Finish implementation
+    public create(transaction): Observable<CashTransaction> {
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/create`, { ...transaction });
+    }
+
+    public openCashRegister() {
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, {});
+    }
+
+    // TODO: Finish implementation (add CronJob + Manual)
+    public closeCashRegister() {
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/close`, {});
     }
 
     // TODO: Finish implementation

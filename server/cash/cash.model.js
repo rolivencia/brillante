@@ -28,9 +28,9 @@ CashTransaction.init(
             allowNull: false,
             field: 'transaction_type_id',
         },
-        createdAt: {
+        date: {
             type: Sequelize.DATE,
-            allowNull: false,
+            defaultValue: Sequelize.NOW,
             field: 'date',
         },
         transactionConceptId: {

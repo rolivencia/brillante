@@ -44,8 +44,8 @@ export class CashDashboardService {
 
     async openCashRegister() {
         // TODO: Replace for new NodeJS API
-        const result = await this.cashService.openCashRegisterLegacy().toPromise();
-        if (result) {
+        const result = await this.cashService.openCashRegister().toPromise();
+        if (result && result.id) {
             this.load(moment());
         }
     }

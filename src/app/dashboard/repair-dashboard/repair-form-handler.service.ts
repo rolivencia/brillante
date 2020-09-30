@@ -251,8 +251,7 @@ export class RepairFormHandlerService {
         this.patchRepair();
 
         if (!this.customerExists) {
-            //const legacyCustomer = this.legacyMapperService.toLegacyCustomerCreate(this.customer);
-            //const savedCustomer = await this.customerService.createLegacy(legacyCustomer).toPromise();
+            //TODO: Restructure after changing backend Sequelize method for "create" instead of "findOrCreate"
             const [savedCustomer, wasSaved] = await this.customerService.create(this.customer).toPromise();
             this.customer.id = savedCustomer?.id;
             if (!savedCustomer) {

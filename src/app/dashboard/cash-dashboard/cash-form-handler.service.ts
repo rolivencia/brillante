@@ -145,17 +145,13 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         this.cashTransaction = this.assign();
         this.patch();
 
-        const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
-        const result = await this.cashService.createLegacy(legacyCashTransaction).toPromise();
-
+        const result = await this.cashService.create(this.cashTransaction).toPromise();
         return new Promise((resolve, reject) => {
-            if (!result || result.errorCode || result.historyErrorCode) {
-                if (result.errorCode) {
-                    this.toastrService.error(result.errorCode);
-                    reject(false);
-                }
-            } else if (result && result.transactionId) {
-                this.toastrService.success(`Transacción ID: ${result.transactionId} agregada con éxito`);
+            if (!result) {
+                this.toastrService.error("Ocurrió un error. La reparación no pudo ser creada.");
+                reject(false);
+            } else {
+                this.toastrService.success(`Transacción ID: ${result.id} agregada con éxito`);
                 resolve(true);
             }
         });

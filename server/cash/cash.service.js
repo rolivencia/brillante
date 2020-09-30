@@ -1,4 +1,3 @@
-const connector = require('server/_helpers/mysql-connector');
 const cash = require('server/cash/cash.model');
 const user = require('server/users/user.model');
 
@@ -11,6 +10,8 @@ module.exports = {
     create,
     update,
     remove,
+    openCashRegister,
+    closeCashRegister,
 };
 
 async function getById(id) {
@@ -36,7 +37,7 @@ async function getAll({ startDate, endDate }) {
         attributes: ['id', 'amount', 'date', 'note', 'createdBy', 'deleted', 'enabled'],
         include: cashGetDefinition(),
         where: {
-            createdAt: { [Op.between]: [startDate, endDate] },
+            date: { [Op.between]: [startDate, endDate] },
             enabled: 1,
             deleted: 0,
         },
@@ -51,7 +52,38 @@ async function getAll({ startDate, endDate }) {
     });
 }
 
-async function create(cashTransaction) {}
+async function openCashRegister() {
+    return cash.CashTransaction.create({
+        amount: 0,
+        date: Sequelize.NOW,
+        note: 'Apertura de Caja',
+        transactionTypeId: 1,
+        transactionConceptId: 49,
+        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+    });
+}
+
+async function closeCashRegister() {
+    return cash.CashTransaction.create({
+        amount: 0,
+        date: Sequelize.NOW,
+        note: 'Apertura de Caja',
+        transactionTypeId: 1,
+        transactionConceptId: 163,
+        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+    });
+}
+
+async function create({ amount, date, note, concept, ...cashTransaction }) {
+    return cash.CashTransaction.create({
+        amount: amount,
+        date: date,
+        note: note,
+        transactionTypeId: concept.transactionType.id,
+        transactionConceptId: concept.id,
+        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+    });
+}
 async function update(cashTransaction) {}
 async function remove(id) {
     return cash.CashTransaction.update({ deleted: 1 }, { where: { id: id } });

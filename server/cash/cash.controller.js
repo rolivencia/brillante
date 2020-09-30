@@ -8,7 +8,24 @@ router.post('/create', create);
 router.put('/update', update);
 router.delete('/remove/:id', remove);
 
+router.post('/open', openCashRegister);
+router.post('/close', closeCashRegister);
+
 module.exports = router;
+
+function openCashRegister() {
+    cashService
+        .openCashRegister()
+        .then((transaction) => res.json(transaction))
+        .catch((err) => next(err));
+}
+
+function closeCashRegister() {
+    cashService
+        .closeCashRegister()
+        .then((transaction) => res.json(transaction))
+        .catch((err) => next(err));
+}
 
 function getAll(req, res, next) {
     cashService

@@ -20,10 +20,7 @@ module.exports = {
 };
 
 async function create({ customer, device, issue, paymentInAdvance, ...discarded }) {
-    //TODO: Implement this function
     //TODO: Add creator user - Issue #11
-    //TODO: Add tracking record too
-
     return new Promise(async (resolve, reject) => {
         const t = await sequelizeConnector.transaction();
 
