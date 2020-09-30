@@ -71,6 +71,10 @@ export class CashService {
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/close`, {});
     }
 
+    public update(transaction): Observable<[number]> {
+        return this.http.put<[number]>(`${environment.apiUrl}/cash/update`, { ...transaction });
+    }
+
     // TODO: Finish implementation
     public updateLegacy(transaction): Observable<any> {
         return this.http.post<any>(

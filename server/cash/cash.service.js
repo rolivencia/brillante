@@ -84,7 +84,20 @@ async function create({ amount, date, note, concept, ...cashTransaction }) {
         createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
     });
 }
-async function update(cashTransaction) {}
+async function update({ id, amount, date, note, concept, ...cashTransaction }) {
+    return cash.CashTransaction.update(
+        {
+            amount: amount,
+            date: date,
+            note: note,
+            transactionTypeId: concept.transactionType.id,
+            transactionConceptId: concept.id,
+            createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+        },
+        { where: { id: id } }
+    );
+}
+
 async function remove(id) {
     return cash.CashTransaction.update({ deleted: 1 }, { where: { id: id } });
 }

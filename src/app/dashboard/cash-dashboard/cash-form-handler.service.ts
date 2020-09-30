@@ -148,7 +148,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         const result = await this.cashService.create(this.cashTransaction).toPromise();
         return new Promise((resolve, reject) => {
             if (!result) {
-                this.toastrService.error("Ocurrió un error. La reparación no pudo ser creada.");
+                this.toastrService.error('Ocurrió un error. La reparación no pudo ser creada.');
                 reject(false);
             } else {
                 this.toastrService.success(`Transacción ID: ${result.id} agregada con éxito`);
@@ -167,19 +167,14 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         this.cashTransaction = this.assign();
         this.patch();
 
-        // TODO: Add code that communicates with Cash endpoint to update instance
-
-        const legacyCashTransaction = this.legacyMapperService.toLegacyCashTransaction(this.cashTransaction);
-        const result = await this.cashService.updateLegacy(legacyCashTransaction).toPromise();
+        const [result] = await this.cashService.update(this.cashTransaction).toPromise();
 
         return new Promise((resolve, reject) => {
-            if (!result || result.errorCode || result.historyErrorCode) {
-                if (result.errorCode) {
-                    this.toastrService.error(result.errorCode);
-                    reject(false);
-                }
-            } else if (result && result.transactionId) {
-                this.toastrService.info(`Transacción ID: ${result.transactionId} editada con éxito`);
+            if (!result) {
+                this.toastrService.error('Ocurrió un error. La reparación no pudo ser actualizada.');
+                reject(false);
+            } else {
+                this.toastrService.info(`Transacción ID: ${this.cashTransaction.id} editada con éxito`);
                 resolve(true);
             }
         });
