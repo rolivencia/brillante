@@ -55,7 +55,6 @@ async function getAll({ startDate, endDate }) {
 async function openCashRegister() {
     return cash.CashTransaction.create({
         amount: 0,
-        date: Sequelize.NOW,
         note: 'Apertura de Caja',
         transactionTypeId: 1,
         transactionConceptId: 49,
@@ -66,7 +65,6 @@ async function openCashRegister() {
 async function closeCashRegister() {
     return cash.CashTransaction.create({
         amount: 0,
-        date: Sequelize.NOW,
         note: 'Apertura de Caja',
         transactionTypeId: 1,
         transactionConceptId: 163,

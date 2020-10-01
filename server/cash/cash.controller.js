@@ -13,14 +13,14 @@ router.post('/close', closeCashRegister);
 
 module.exports = router;
 
-function openCashRegister() {
+function openCashRegister(req, res, next) {
     cashService
         .openCashRegister()
         .then((transaction) => res.json(transaction))
         .catch((err) => next(err));
 }
 
-function closeCashRegister() {
+function closeCashRegister(req, res, next) {
     cashService
         .closeCashRegister()
         .then((transaction) => res.json(transaction))
