@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Repair, RepairLegacy } from '@app/_models';
+import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 
 @Injectable({

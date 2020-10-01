@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
-import { Repair, RepairLegacy } from '@app/_models';
+import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';

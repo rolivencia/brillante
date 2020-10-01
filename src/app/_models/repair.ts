@@ -72,42 +72,6 @@ export class RepairStatus {
     }
 }
 
-// FIXME: Borrar una vez finalizada la migración de datos.
-export class RepairLegacy {
-    public apellidoCliente: string;
-    public encendido: number;
-    public estado: string;
-    public fechaIngresoDate: string;
-    public fechaReparacionTerminada: string;
-    public fechaUltimaActualizacion: string;
-    public horaUltimaActualizacion: string;
-    public fechaReparacionTerminadaDate?: string;
-    public fechaUltimaActualizacionDate?: string;
-    public problema: string;
-    public imei: string;
-    public marca: string;
-    public message: string;
-    public modelo: string;
-    public nombreCliente: string;
-    public nota: string;
-    public precioReparacion: string;
-    public repairId: number;
-    public seniaReparacion: string;
-    public status: string;
-    public tipoEquipoId: number;
-    public nombreApellidoCliente: string;
-    public emailCliente: string;
-    public telefonoCliente: string | number;
-    public costoReparacion: string;
-    public direccionCliente?: string;
-    public dniCliente?: number;
-    public clientId?: number;
-    public estadoId?: number;
-    public userId?: number;
-    public warrantyTerm: number;
-    constructor() {}
-}
-
 export class RepairStatusHistory {
     //TODO: Implement attributes of this class. Check database.
 }

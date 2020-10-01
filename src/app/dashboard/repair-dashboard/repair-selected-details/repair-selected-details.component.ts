@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RepairDashboardService } from '@app/dashboard/repair-dashboard/repair-dashboard.service';
-import { Repair, RepairLegacy } from '@app/_models';
+import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -21,12 +21,6 @@ export class RepairSelectedDetailsComponent implements OnInit {
     ) {}
 
     ngOnInit() {}
-
-    // FIXME: Update to internal link after the update is migrated to Angular app
-    goToUpdate(repairId: number) {
-        const redirectTo = 'https://brillante.brillantestore.com/fix-vista-de-actualizacion/?repairId=' + repairId;
-        window.open(redirectTo, '_blank');
-    }
 
     delete(id: number) {
         this.repairService.delete(id).subscribe(

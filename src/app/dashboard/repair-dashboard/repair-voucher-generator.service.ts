@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import jsPDF from 'jspdf';
 import { Injectable } from '@angular/core';
-import { Repair, RepairLegacy } from '@app/_models';
+import { Repair } from '@app/_models';
 import { ToastrService } from 'ngx-toastr';
 import { Customer } from '@app/_models/customer';
 

@@ -1,6 +1,5 @@
-import { DeviceType, Repair, RepairLegacy, RepairStatus } from '@app/_models';
+import { DeviceType, Repair, RepairStatus } from '@app/_models';
 import { environment } from '@environments/environment';
-import { GlobalService } from '@app/_services/global.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -48,7 +47,7 @@ export class RepairService {
         { id: 7, description: 'Devuelto sin reparar' },
     ];
 
-    constructor(private http: HttpClient, private globalService: GlobalService) {}
+    constructor(private http: HttpClient) {}
 
     public getById(id: number): Observable<Repair> {
         return this.http
@@ -92,15 +91,6 @@ export class RepairService {
 
     public create(repair: Repair) {
         return this.http.post<any>(`${environment.apiUrl}/repair/create`, { ...toRepairDTO(repair) });
-    }
-
-    public updateLegacy(partialRepair) {
-        return this.http.post<any>(
-            `${this.globalService.webApiUrl}${this.endpoint}`,
-
-            { ...partialRepair, action: 'updateTracking' },
-            { headers: headers }
-        );
     }
 
     public updateDeviceInfo(repair: Repair) {

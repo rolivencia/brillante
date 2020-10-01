@@ -24,7 +24,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
         this.cashDashboardService.editMode.next(true);
         this.cashFormHandler.controlsLoaded.subscribe((result) => {
             if (result) {
-                const cashTransaction = this.route.snapshot.data['legacyCashTransaction'];
+                const cashTransaction = this.route.snapshot.data['cashTransaction'];
                 if (cashTransaction) {
                     this.cashFormHandler.saved = false;
                     this.cashFormHandler.cashTransaction = cashTransaction;

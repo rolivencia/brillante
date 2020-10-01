@@ -71,14 +71,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .then((result) => console.log(result));
     }
 
-    goToLegacyCash() {
-        window.open('http://brillante.brillantestore.com/cash-vista-de-gestion/', '_blank');
-    }
-
-    goToLegacyStock() {
-        window.open('http://brillante.brillantestore.com/stock-vista-de-gestion/', '_blank');
-    }
-
     notImplemented(route: string) {
         this.alertService.error('Módulo no implementado.', true);
     }

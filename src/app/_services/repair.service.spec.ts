@@ -1,7 +1,6 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { RepairService } from './repair.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Repair, RepairLegacy } from '@app/_models';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RepairService', () => {
     beforeEach(() =>

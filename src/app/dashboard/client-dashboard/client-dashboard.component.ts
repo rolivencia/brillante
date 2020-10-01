@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {CustomerService} from '@app/_services/customer.service';
-import {RepairService} from '@app/_services/repair.service';
-import {CollectionView} from '@grapecity/wijmo';
-import {Repair} from '@app/_models';
-import {GlobalService} from '@app/_services/global.service';
-import {ProgressLoaderService} from '@app/_components/progress-loader/progress-loader.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CustomerService } from '@app/_services/customer.service';
+import { RepairService } from '@app/_services/repair.service';
+import { CollectionView } from '@grapecity/wijmo';
+import { Repair } from '@app/_models';
+import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-client-dashboard',
@@ -13,7 +12,6 @@ import {Router} from '@angular/router';
     styleUrls: ['./client-dashboard.component.scss'],
 })
 export class ClientDashboardComponent implements OnInit {
-
     selectedRepairData: Repair;
     clientGridData: any;
     repairGridData: any;
@@ -43,7 +41,6 @@ export class ClientDashboardComponent implements OnInit {
     constructor(
         private clientService: CustomerService,
         private repairService: RepairService,
-        private globalService: GlobalService,
         private progressLoaderService: ProgressLoaderService,
         private router: Router
     ) {}
@@ -100,7 +97,6 @@ export class ClientDashboardComponent implements OnInit {
     }
 
     private getUserRepairs(clientData: any) {
-        // this.repairService.getByClientIdLegacy(clientData.id).subscribe(
         this.repairService.getByClientId(clientData.id).subscribe(
             (data) => {
                 this.repairGridData = data;
