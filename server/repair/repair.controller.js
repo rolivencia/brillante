@@ -22,14 +22,14 @@ function create(req, res, next) {
 
 function updateDeviceInfo(req, res, next) {
     repairService
-        .updateDevice(req.body)
+        .updateDeviceInfo(req.body)
         .then((repair) => res.json(repair))
         .catch((err) => next(err));
 }
 
 function updateTrackingInfo(req, res, next) {
     repairService
-        .updateTracking(req.body)
+        .updateTrackingInfo(req.body)
         .then((result) => res.json(result))
         .catch((err) => next(err));
 }

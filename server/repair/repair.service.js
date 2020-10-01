@@ -1,6 +1,10 @@
 const customer = require('server/customer/customer.model');
 const repair = require('server/repair/repair.model');
+const cash = require('server/cash/cash.model');
+
 const repairStatus = require('server/repair/repair.status');
+
+const repairService = require('server/cash/cash.service');
 
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
@@ -15,8 +19,8 @@ module.exports = {
     getById,
     getHistoryByRepairId,
     remove,
-    updateDevice: updateDeviceInfo,
-    updateTracking: updateTrackingInfo,
+    updateDeviceInfo,
+    updateTrackingInfo,
 };
 
 async function create({ customer, device, issue, paymentInAdvance, ...discarded }) {
@@ -91,52 +95,75 @@ async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
     let repairDAO;
     let previousRepairHistoryDAO;
     let newRepairHistoryDAO;
-    let cashTransaction; //TODO: Write Sequelize query
-    let operationTransaction; //TODO: Write Sequelize query
+    let cashTransactionDAO; //TODO: Write Sequelize query
+    let operationTransactionDAO; //TODO: Write Sequelize query
 
-    try {
-        repairDAO = await repair.Repair.update(
-            {
-                note: note,
-                status: status.id,
-                cost: cost,
-                price: price,
-                paymentInAdvance: paymentInAdvance,
-                warrantyTerm: warrantyTerm,
-                updatedDate: Sequelize.NOW,
-                updatedAt: Sequelize.NOW,
-            },
-            { where: { id: id }, transaction: t }
-        );
-        previousRepairHistoryDAO = await repair.RepairStatusHistory.update(
-            {
-                updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
-                updatedAt: Sequelize.NOW,
-            },
-            { where: { idRepair: id, updatedAt: { [Op.eq]: null } }, transaction: t }
-        );
+    return new Promise(async (resolve, reject) => {
+        try {
+            repairDAO = await repair.Repair.update(
+                {
+                    note: note,
+                    idStatus: status.id,
+                    cost: cost,
+                    price: price,
+                    paymentInAdvance: paymentInAdvance,
+                    warrantyTerm: warrantyTerm,
+                    updatedDate: Sequelize.literal('CURRENT_TIMESTAMP'),
+                    updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
+                },
+                { where: { id: id }, transaction: t }
+            );
 
-        newRepairHistoryDAO = await repair.RepairStatusHistory.create(
-            {
-                idRepair: id,
-                idStatus: status.id,
-                updatedAt: Sequelize.NOW,
-                updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
-                cost: cost,
-                price: price,
-                paymentInAdvance: paymentInAdvance,
-            },
-            { transaction: t }
-        );
-        await t.rollback();
-        //TODO: Implement this function
-        console.log('COMMIT');
-        //await t.commit();
-    } catch (e) {
-        await t.rollback();
-        console.error(e);
-        console.error('ROLLBACK');
-    }
+            previousRepairHistoryDAO = await repair.RepairStatusHistory.update(
+                {
+                    updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
+                },
+                { where: { idRepair: id, updatedAt: { [Op.eq]: null } }, transaction: t }
+            );
+
+            newRepairHistoryDAO = await repair.RepairStatusHistory.create(
+                {
+                    idRepair: id,
+                    idStatus: status.id,
+                    updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    cost: cost,
+                    price: price,
+                    paymentInAdvance: paymentInAdvance,
+                    updatedAt: null,
+                },
+                { transaction: t }
+            );
+
+            if (generateTransaction && status.id === 5) {
+                //TODO: Define enums for server-side APIs (Status)
+                cashTransactionDAO = await cash.CashTransaction.create(
+                    {
+                        amount: price,
+                        note: 'Ingresos por Reparación ID ' + id,
+                        transactionTypeId: 1,
+                        transactionConceptId: 158, // TODO: Define enums for server-side APIs (Transaction Concepts)
+                        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+                    },
+                    { transaction: t }
+                );
+
+                operationTransactionDAO = await cash.RepairCashTransaction.create(
+                    {
+                        idRepair: id,
+                        idCashTransaction: cashTransactionDAO.dataValues.id,
+                    },
+                    { transaction: t }
+                );
+            }
+
+            await t.commit();
+            resolve([1]);
+        } catch (e) {
+            await t.rollback();
+            reject([0]);
+        }
+    });
 }
 
 async function remove(id) {

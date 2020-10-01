@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 
 @Component({
     selector: 'app-cash-update',
@@ -17,7 +16,6 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     constructor(
         public cashDashboardService: CashDashboardService,
         public cashFormHandler: CashFormHandlerService,
-        private legacyMapperService: LegacyMapperService,
         private route: ActivatedRoute,
         private router: Router
     ) {}

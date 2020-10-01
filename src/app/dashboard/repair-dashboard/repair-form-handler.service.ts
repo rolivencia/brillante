@@ -2,7 +2,6 @@ import { Customer } from '@app/_models/customer';
 import { CustomerService } from '@app/_services/customer.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
@@ -89,7 +88,6 @@ export class RepairFormHandlerService {
 
     constructor(
         private customerService: CustomerService,
-        private legacyMapperService: LegacyMapperService,
         private formBuilder: FormBuilder,
         private repairService: RepairService,
         private toastrService: ToastrService
@@ -264,9 +262,9 @@ export class RepairFormHandlerService {
 
         if (result && result.id) {
             this.saved = true;
-            this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito`);
+            this.toastrService.success(`Reparación ID: ${result.id} agregada con éxito.`);
         } else {
-            this.toastrService.error(result);
+            this.toastrService.error('Error al intentar agregar nueva reparación.');
         }
     }
 
@@ -279,7 +277,7 @@ export class RepairFormHandlerService {
         }
 
         if (this.formGroup.pristine) {
-            this.toastrService.info('Debe realizar cambios para poder guardar esta reparación');
+            this.toastrService.info('Debe realizar cambios para poder guardar esta reparación.');
             return;
         }
 
@@ -298,22 +296,16 @@ export class RepairFormHandlerService {
         }
 
         const registerPayment = this.canRegisterPayment() ? this.registerPayment : false;
-
-        const legacyRepairTracking = this.legacyMapperService.toLegacyRepairTracking(this.repair, registerPayment);
-        const trackingUpdateResult = await this.repairService.updateLegacy(legacyRepairTracking).toPromise();
-        //TODO: Replace for new NodeJS API version
-        //const trackingUpdateResult = await this.repairService.updateTrackingInfo(this.repair, registerPayment).toPromise();
+        const [trackingUpdateResult] = await this.repairService.updateTrackingInfo(this.repair, registerPayment).toPromise();
 
         return new Promise((resolve, reject) => {
-            if (!trackingUpdateResult) {
-                if (trackingUpdateResult.errorCode) {
-                    this.toastrService.error(trackingUpdateResult.errorCode);
-                    reject(false);
-                }
-            } else if (trackingUpdateResult) {
-                this.toastrService.success(trackingUpdateResult.message);
+            if (trackingUpdateResult) {
+                this.toastrService.success(`Reparación ID ${this.repair.id} actualizada con éxito.`);
                 this.saved = true;
                 resolve(true);
+            } else {
+                this.toastrService.error(`Error al intentar actualizar la reparación ID ${this.repair.id}.`);
+                reject(false);
             }
         });
     }

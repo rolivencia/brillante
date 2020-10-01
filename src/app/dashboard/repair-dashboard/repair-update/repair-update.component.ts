@@ -1,9 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
-import { Repair, RepairLegacy } from '@app/_models';
+import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/repair-voucher-generator.service';
 
@@ -25,7 +24,6 @@ export class RepairUpdateComponent implements OnInit {
 
     constructor(
         public location: Location,
-        private legacyMapperService: LegacyMapperService,
         public repairFormHandlerService: RepairFormHandlerService,
         public repairService: RepairService,
         private route: ActivatedRoute,
