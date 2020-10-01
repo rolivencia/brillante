@@ -18,7 +18,6 @@ export class CashReportComponent implements OnInit, OnDestroy {
     navigation = 'select';
     outsideDays = 'visible';
 
-    cashGrid: WjFlexGrid;
     @ViewChild('cashGrid', { static: false }) cashGrid: WjFlexGrid;
 
     columns: any[] = [
