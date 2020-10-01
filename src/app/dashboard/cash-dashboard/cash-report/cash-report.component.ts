@@ -50,10 +50,20 @@ export class CashReportComponent implements OnInit, OnDestroy {
     }
 
     exportToXls() {
+        const from = formatDate(this.cashDashboardService.ngbDateFrom).format('YYYY-MM-DD');
+        const to = formatDate(this.cashDashboardService.ngbDateTo).format('YYYY-MM-DD');
         wjcGridXlsx.FlexGridXlsxConverter.save(
             this.cashGrid,
-            { includeColumnHeaders: true, includeCellStyles: false },
-            'Reporte Brillante Store'
+            {
+                includeColumnHeaders: true,
+                includeCellStyles: false,
+                formatItem: (item) => {
+                    if (item.row !== 0 && item.col === 7) {
+                        console.log('ITEM:' + item);
+                    }
+                },
+            },
+            `Reporte Brillante Store (${from} - ${to})`
         );
     }
 

@@ -59,7 +59,13 @@
                 >
                     ✅ Generar
                 </button>
-                <button class="ml-3 mr-3 btn btn-sm btn-outline-dark" (click)="exportToXls()">💾 Exportar</button>
+                <button
+                    *ngIf="cashDashboardService.gridCollection.itemCount > 0"
+                    class="ml-3 mr-3 btn btn-sm btn-outline-dark"
+                    (click)="exportToXls()"
+                >
+                    💾 Exportar
+                </button>
                 <button class="ml-5 btn btn-sm btn-outline-secondary" type="button" (click)="back()">⬅️ Volver</button>
             </div>
         </div>
@@ -74,7 +80,7 @@
             <ng-container *ngIf="!cashDashboardService.loading">
                 <div id="grid-container">
                     <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
-                        Seleccioná las fechas a analizar y clickeá en "Generar" para  para visualizar el reporte.
+                        Seleccioná las fechas a analizar y clickeá en "Generar" para para visualizar el reporte.
                     </div>
                     <wj-flex-grid
                         #cashGrid
@@ -159,7 +165,12 @@
                                 </div>
                             </ng-template>
 
-                            <ng-template *ngIf="column.header === 'Fecha y Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <ng-template
+                                *ngIf="column.header === 'Fecha y Hora'"
+                                wjFlexGridCellTemplate
+                                [cellType]="'Cell'"
+                                let-cell="cell"
+                            >
                                 <div class="text-right">{{ cell.item.date.format('YYYY-MM-DD HH:mm') }}</div>
                             </ng-template>
                         </wj-flex-grid-column>
