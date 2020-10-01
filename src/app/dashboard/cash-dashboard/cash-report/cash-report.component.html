@@ -74,7 +74,7 @@
             <ng-container *ngIf="!cashDashboardService.loading">
                 <div id="grid-container">
                     <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
-                        No hay transacciones registradas para esta fecha.
+                        Seleccioná las fechas a analizar y clickeá en "Generar" para  para visualizar el reporte.
                     </div>
                     <wj-flex-grid
                         #cashGrid
@@ -159,8 +159,8 @@
                                 </div>
                             </ng-template>
 
-                            <ng-template *ngIf="column.header === 'Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                <div class="text-right">{{ cell.item.date.format('HH:mm') }}</div>
+                            <ng-template *ngIf="column.header === 'Fecha y Hora'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                                <div class="text-right">{{ cell.item.date.format('YYYY-MM-DD HH:mm') }}</div>
                             </ng-template>
                         </wj-flex-grid-column>
                     </wj-flex-grid>

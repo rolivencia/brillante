@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { Moment } from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { CashService } from '@app/_services/cash.service';
@@ -7,7 +8,6 @@ import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { DateObject } from '@app/_models/date-object';
 import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { Injectable } from '@angular/core';
-import { Moment } from 'moment';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 
 @Injectable({
@@ -52,7 +52,8 @@ export class CashDashboardService {
         }
     }
 
-    async load(from: Moment, to?: Moment) {
+    async load(from: Moment, to?: Moment, filterConcepts: any[] = []) {
+        // TODO: Return transactions to display them where desired
         this.loading = true;
         this.progressLoaderService.showWithOverlay();
 
@@ -61,6 +62,10 @@ export class CashDashboardService {
 
         const transactions = await this.cashService.getAll(dateFrom, dateTo).toPromise();
         this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
+
+        if (filterConcepts.length) {
+            this.transactions = this.transactions.filter((transaction) => !filterConcepts.includes(transaction.concept.id));
+        }
 
         this.gridCollection = new CollectionView<any>(this.transactions);
         this.gridCollection.currentItem = null;
