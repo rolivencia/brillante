@@ -1,9 +1,9 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { User } from '@app/_models';
-import { UserService, AuthenticationService, AlertService } from '@app/_services';
+import { AlertService, AuthenticationService, UserService } from '@app/_services';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -32,8 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.loadAllUsers();
     }
 
-    ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
+    ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
     }
 

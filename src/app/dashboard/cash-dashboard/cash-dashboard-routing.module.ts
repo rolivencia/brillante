@@ -31,6 +31,11 @@ const routes: Routes = [
                         loadChildren: () => import('./cash-update/cash-update.module').then((m) => m.CashUpdateModule),
                         outlet: 'right',
                     },
+                    {
+                        path: 'report',
+                        loadChildren: () => import('./cash-report/cash-report.module').then((m) => m.CashReportModule),
+                        outlet: 'top',
+                    },
                 ],
             },
         ],

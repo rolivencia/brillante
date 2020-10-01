@@ -23,7 +23,7 @@ export class MainHeaderComponent implements OnInit {
         },
         {
             label: 'Caja',
-            route: ['/cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }],
+            route: ['/cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
         },

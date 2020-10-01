@@ -1,10 +1,10 @@
 import * as moment from 'moment';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
-import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
-import { ToastrService } from 'ngx-toastr';
+import { FlexGrid } from '@grapecity/wijmo.grid';
 import { CashTransaction } from '@app/_models/cash-transaction';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -12,7 +12,7 @@ import { CashTransaction } from '@app/_models/cash-transaction';
     styleUrls: ['./cash-grid-results.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class CashGridResultsComponent implements OnInit {
+export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('cashGrid', { static: false }) cashGrid: FlexGrid;
 
     displayMonths = 1;
@@ -30,7 +30,7 @@ export class CashGridResultsComponent implements OnInit {
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, private toastrService: ToastrService) {}
+    constructor(public cashDashboardService: CashDashboardService, private router: Router) {}
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.subscribe((result) => {
@@ -38,9 +38,12 @@ export class CashGridResultsComponent implements OnInit {
         });
     }
 
-    initializeGrid(flex: FlexGrid) {
-        flex.columnFooters.rows.push(new GroupRow());
-        flex.bottomLeftCells.setCellData(0, 0, '$');
+    ngAfterViewInit() {
+        this.refreshGrid(this.cashDashboardService.ngbDateFrom);
+    }
+
+    ngOnDestroy(): void {
+        this.setTodayDate();
     }
 
     //FIXME: Move this method to a service
@@ -51,8 +54,8 @@ export class CashGridResultsComponent implements OnInit {
 
     //FIXME: Move this method to a service
     public setTodayDate() {
-        this.cashDashboardService.ngbDate = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
-        this.refreshGrid(this.cashDashboardService.ngbDate);
+        this.cashDashboardService.setTodayDate();
+        this.refreshGrid(this.cashDashboardService.ngbDateFrom);
     }
 
     public refreshGrid(date: DateObject) {
@@ -66,6 +69,6 @@ export class CashGridResultsComponent implements OnInit {
     }
 
     public generateReport() {
-        this.toastrService.warning(`¡Disponible en breve!`, 'Funcionalidad aún en desarrollo.');
+        this.router.navigate(['cash-dashboard/manage', { outlets: { top: 'report', left: null, right: null } }]);
     }
 }

@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 import { Repair } from '@app/_models';
@@ -41,8 +41,8 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(){
-      this.repairFormHandlerService.registerPayment = false;
+    ngOnDestroy(): void {
+        this.repairFormHandlerService.registerPayment = false;
     }
 
     private canGenerateReport(): boolean {

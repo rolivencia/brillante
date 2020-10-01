@@ -20,7 +20,8 @@ export class CashDashboardComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.cashDashboardService.ngbDate = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
+        this.cashDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
+        this.cashDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
         this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
         this.cashFormHandlerService.controlsLoaded.subscribe((result) => {
             this.controlsLoaded = result;

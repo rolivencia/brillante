@@ -23,7 +23,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
         this.cashDashboardService.selectedTransaction = null;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.cashDashboardService.selectedTransaction = null;
     }
 

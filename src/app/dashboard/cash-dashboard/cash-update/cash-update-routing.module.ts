@@ -8,7 +8,6 @@ const routes: Routes = [
         path: ':id',
         component: CashUpdateComponent,
         resolve: {
-            //FIXME: Cambiar cuando reciba objetos cashTransaction desde nueva API de NodeJS
             cashTransaction: CashUpdateResolverService,
         },
     },
