@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 import { Repair } from '@app/_models';
@@ -11,7 +11,7 @@ import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/r
     templateUrl: './repair-update.component.html',
     styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss'],
 })
-export class RepairUpdateComponent implements OnInit {
+export class RepairUpdateComponent implements OnInit, OnDestroy {
     public repair: Repair;
     public statusHistory = [];
 
@@ -39,6 +39,10 @@ export class RepairUpdateComponent implements OnInit {
             this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
             this.getHistory();
         }
+    }
+
+    ngOnDestroy(){
+      this.repairFormHandlerService.registerPayment = false;
     }
 
     private canGenerateReport(): boolean {
