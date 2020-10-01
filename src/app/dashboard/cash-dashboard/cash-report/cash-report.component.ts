@@ -36,6 +36,7 @@ export class CashReportComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.cashDashboardService.ngbDateFrom = { year: moment().year(), month: moment().month() % 13, day: moment().date() };
         this.cashDashboardService.ngbDateTo = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
+        this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
     }
 
     ngOnDestroy(): void {
@@ -58,8 +59,8 @@ export class CashReportComponent implements OnInit, OnDestroy {
                 includeColumnHeaders: true,
                 includeCellStyles: false,
                 formatItem: (item) => {
-                    if (item.row !== 0 && item.col === 7) {
-                        console.log('ITEM:' + item);
+                    if (item.panel.cellType === 1 && item.col === 7) {
+                        item.xlsxCell.value = moment(item.xlsxCell.value).format('YYYY-MM-DD HH:mm');
                     }
                 },
             },
