@@ -1,11 +1,10 @@
 import { Audit } from '@app/_models/audit';
 import { BehaviorSubject } from 'rxjs';
 import { CashService } from '@app/_services/cash.service';
-import { CashTransaction, Operation, TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
+import { CashTransaction, Operation, TransactionConcept } from '@app/_models/cash-transaction';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 
@@ -58,11 +57,6 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _submitted: boolean = false;
     private _saved: boolean = false;
 
-    private _transactionTypes: TransactionType[] = [
-        { id: 0, description: 'Ingreso' },
-        { id: 1, description: 'Egreso' },
-    ];
-
     public controlsLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     private _transactionOperations: Operation[] = [];
@@ -73,12 +67,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _formGroup: FormGroup;
     private _cashTransaction: CashTransaction = new CashTransaction();
 
-    constructor(
-        private cashService: CashService,
-        private formBuilder: FormBuilder,
-        private legacyMapperService: LegacyMapperService,
-        private toastrService: ToastrService
-    ) {
+    constructor(private cashService: CashService, private formBuilder: FormBuilder, private toastrService: ToastrService) {
         this.loadConcepts().then((concepts) => {
             this._transactionConcepts = _.cloneDeep(concepts);
 

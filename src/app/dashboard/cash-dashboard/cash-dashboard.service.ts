@@ -5,7 +5,6 @@ import { CashTransaction } from '@app/_models/cash-transaction';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { DateObject } from '@app/_models/date-object';
 import { Injectable } from '@angular/core';
-import { LegacyMapperService } from '@app/_services/legacy-mapper.service';
 import { BehaviorSubject } from 'rxjs';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
@@ -28,7 +27,6 @@ export class CashDashboardService {
 
     constructor(
         public cashService: CashService,
-        public legacyMapperService: LegacyMapperService,
         private cashFormHandler: CashFormHandlerService,
         private progressLoaderService: ProgressLoaderService
     ) {}
