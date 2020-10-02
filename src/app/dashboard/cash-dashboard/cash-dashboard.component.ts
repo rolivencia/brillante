@@ -25,9 +25,6 @@ export class CashDashboardComponent implements OnInit {
         this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
         this.cashFormHandlerService.controlsLoaded.subscribe((result) => {
             this.controlsLoaded = result;
-            if (result) {
-                this.cashDashboardService.load(moment());
-            }
         });
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;
