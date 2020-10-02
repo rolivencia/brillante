@@ -64,7 +64,7 @@ export class CashReportComponent implements OnInit, OnDestroy {
                         item.xlsxCell.style.fill = { color: '#e9ecef' }; //TODO: Generalize color - Select from service
                     }
                     if (item.panel.cellType === CellType.Cell && item.col === 7) {
-                        item.xlsxCell.value = moment(item.xlsxCell.value).format('YYYY-MM-DD HH:mm');
+                        item.xlsxCell.value = moment(item.xlsxCell.value).format('YYYY/MM/DD HH:mm');
                     }
                     if (item.panel.cellType === CellType.ColumnFooter && !isNaN(item.xlsxCell.value)) {
                         if (item.col === 6) {

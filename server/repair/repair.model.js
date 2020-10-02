@@ -195,6 +195,11 @@ RepairStatusHistory.init(
             defaultValue: 0,
             field: 'repair_pay_in_advance',
         },
+        note: {
+            type: Sequelize.STRING,
+            allowNull: true,
+            field: 'note',
+        },
     },
     {
         timestamps: false,

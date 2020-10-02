@@ -56,6 +56,7 @@ async function create({ customer, device, issue, paymentInAdvance, ...discarded 
                     idRepair: repairDAO.dataValues.id,
                     idStatus: 0,
                     updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    note: issue,
                     cost: repairDAO.dataValues.cost,
                     price: repairDAO.dataValues.price,
                     paymentInAdvance: repairDAO.dataValues.paymentInAdvance,
@@ -104,8 +105,8 @@ async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
                 {
                     note: note,
                     idStatus: status.id,
-                    cost: cost,
-                    price: price,
+                    repairCost: cost,
+                    repairPrice: price,
                     paymentInAdvance: paymentInAdvance,
                     warrantyTerm: warrantyTerm,
                     updatedDate: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -127,6 +128,7 @@ async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
                     idRepair: id,
                     idStatus: status.id,
                     updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    note: note,
                     cost: cost,
                     price: price,
                     paymentInAdvance: paymentInAdvance,
@@ -347,7 +349,7 @@ async function getHistoryByRepairId(idRepair) {
         ],
         where: {
             idRepair: idRepair,
-            updatedAt: { [Op.ne]: null },
+            //updatedAt: { [Op.ne]: null },
         },
         order: [['updatedAt', 'DESC']],
     });

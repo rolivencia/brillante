@@ -167,6 +167,25 @@
                         <div class="card-body">
                             <div class="row h-100">
                                 <div class="col-4 d-flex align-content-between flex-wrap">
+                                    <div id="issue-description" class="px-2">
+                                        <p><strong>Descripción del Problema: </strong></p>
+                                        <textarea
+                                            id="issue"
+                                            name="issue"
+                                            aria-describedby="issue"
+                                            formControlName="issue"
+                                            class="form-control"
+                                            [readOnly]="repairFormHandlerService.saved"
+                                        ></textarea>
+                                    </div>
+                                    <div class="px-2 mb-2">
+                                        <p><strong>¿Dejó Seña?</strong></p>
+                                        {{
+                                            repairFormHandlerService.repair.paymentInAdvance
+                                                ? '$ ' + repairFormHandlerService.repair.paymentInAdvance
+                                                : 'Sin Seña'
+                                        }}
+                                    </div>
                                     <div class="px-2 mb-2">
                                         <p><strong>Fecha y Hora de Ingreso: </strong></p>
                                         <p>{{ repairFormHandlerService.repair.checkIn.format('YYYY/MM/DD HH:mm') }}</p>
@@ -176,59 +195,40 @@
                                     <!--                                        <p><strong>Usuario a Cargo: </strong></p>-->
                                     <!--                                        <p>{{ repairFormHandlerService.repair.checkIn.format('YYYY/MM/DD HH:mm') }}</p>-->
                                     <!--                                    </div>-->
-                                    <div id="repair-history" class="px-2">
-                                        <p><strong>Historial de la Reparación: </strong></p>
-                                        <!--TODO: Mover lógica a servicio de reparaciones-->
-                                        <div *ngIf="!statusHistory.length">
-                                            <p>La reparación aún no presenta ningún cambio de estado.</p>
-                                        </div>
-                                        <wj-flex-grid
-                                            id="repair-history-grid"
-                                            class="mt-2"
-                                            *ngIf="statusHistory.length"
-                                            [itemsSource]="statusHistory"
-                                            [selectionMode]="'Row'"
-                                            [headersVisibility]="'Column'"
-                                            [autoGenerateColumns]="false"
-                                            [allowResizing]="'Columns'"
-                                            [allowSorting]="false"
-                                            [showSelectedHeaders]="'Row'"
-                                            [isReadOnly]="true"
-                                        >
-                                            <wj-flex-grid-column
-                                                *ngFor="let column of columns"
-                                                [width]="column.width"
-                                                [binding]="column.binding"
-                                                [header]="column.header"
-                                                [visible]="true"
-                                            >
-                                            </wj-flex-grid-column>
-                                        </wj-flex-grid>
-                                    </div>
                                 </div>
                                 <div class="col-8 d-flex align-content-between flex-wrap">
-                                    <div class="w-100 d-flex justify-content-between">
-                                        <div id="issue-description" class="px-2">
-                                            <p><strong>Descripción del Problema: </strong></p>
-                                            <textarea
-                                                id="issue"
-                                                name="issue"
-                                                aria-describedby="issue"
-                                                formControlName="issue"
-                                                class="form-control"
-                                                rows="4"
-                                                [readOnly]="repairFormHandlerService.saved"
-                                            ></textarea>
-                                        </div>
+                                    <div class="w-100">
                                         <div>
-                                            <div class="px-2 mb-2">
-                                                <p><strong>¿Dejó Seña?</strong></p>
-                                                {{
-                                                    repairFormHandlerService.repair.paymentInAdvance
-                                                        ? '$ ' + repairFormHandlerService.repair.paymentInAdvance
-                                                        : 'Sin Seña'
-                                                }}
+                                            <div id="repair-history" class="px-2">
+                                                <p><strong>Historial de la Reparación: </strong></p>
+                                                <!--TODO: Mover lógica a servicio de reparaciones-->
+                                                <div *ngIf="!statusHistory.itemCount">
+                                                    <p>La reparación aún no presenta ningún cambio de estado.</p>
+                                                </div>
+                                                <wj-flex-grid
+                                                    #repairHistoryGrid
+                                                    id="repair-history-grid"
+                                                    *ngIf="statusHistory.itemCount > 0"
+                                                    [itemsSource]="statusHistory"
+                                                    [selectionMode]="'Row'"
+                                                    [headersVisibility]="'Column'"
+                                                    [autoGenerateColumns]="false"
+                                                    [allowResizing]="'Columns'"
+                                                    [allowSorting]="false"
+                                                    [showSelectedHeaders]="'Row'"
+                                                    [isReadOnly]="true"
+                                                >
+                                                    <wj-flex-grid-column
+                                                        *ngFor="let column of columns"
+                                                        [width]="column.width"
+                                                        [binding]="column.binding"
+                                                        [header]="column.header"
+                                                        [visible]="true"
+                                                    >
+                                                    </wj-flex-grid-column>
+                                                </wj-flex-grid>
                                             </div>
+
                                             <div class="px-2" style="display: none;">
                                                 <!--FIXME: Borrar hardcode de esta sección. Mostrar quién hizo el añadido/modificación -->
                                                 <p><strong>Responsable de Carga</strong></p>
@@ -336,7 +336,7 @@
                                                 id="note"
                                                 name="note"
                                                 rows="5"
-                                                placeholder="Descripción del problema. Incluya aquí los códigos de desbloqueo y contraseña de iCloud."
+                                                placeholder="Notas de la reparación. Incluya aquí procedimientos e información valiosa para colegas de trabajo y el cliente."
                                                 [readOnly]="repairFormHandlerService.saved"
                                                 formControlName="note"
                                             >
