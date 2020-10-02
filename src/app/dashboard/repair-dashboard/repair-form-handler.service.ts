@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '@app/_services';
 
 @Injectable({
     providedIn: 'root',
@@ -87,6 +88,7 @@ export class RepairFormHandlerService {
     private _formGroup: FormGroup;
 
     constructor(
+        private authenticationService: AuthenticationService,
         private customerService: CustomerService,
         private formBuilder: FormBuilder,
         private repairService: RepairService,
@@ -258,7 +260,7 @@ export class RepairFormHandlerService {
             }
         }
 
-        const result = await this.repairService.create(this.repair).toPromise();
+        const result = await this.repairService.create(this.repair, this.authenticationService.currentUserValue).toPromise();
 
         if (result && result.id) {
             this.saved = true;
@@ -296,7 +298,9 @@ export class RepairFormHandlerService {
         }
 
         const registerPayment = this.canRegisterPayment() ? this.registerPayment : false;
-        const [trackingUpdateResult] = await this.repairService.updateTrackingInfo(this.repair, registerPayment).toPromise();
+        const [trackingUpdateResult] = await this.repairService
+            .updateTrackingInfo(this.repair, this.authenticationService.currentUserValue, registerPayment)
+            .toPromise();
 
         return new Promise((resolve, reject) => {
             if (trackingUpdateResult) {

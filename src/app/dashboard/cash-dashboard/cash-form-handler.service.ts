@@ -1,4 +1,6 @@
+import * as _ from 'lodash';
 import { Audit } from '@app/_models/audit';
+import { AuthenticationService } from '@app/_services';
 import { BehaviorSubject } from 'rxjs';
 import { CashService } from '@app/_services/cash.service';
 import { CashTransaction, Operation, TransactionConcept } from '@app/_models/cash-transaction';
@@ -6,7 +8,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import * as _ from 'lodash';
 
 @Injectable({
     providedIn: 'root',
@@ -67,7 +68,12 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _formGroup: FormGroup;
     private _cashTransaction: CashTransaction = new CashTransaction();
 
-    constructor(private cashService: CashService, private formBuilder: FormBuilder, private toastrService: ToastrService) {
+    constructor(
+        private authenticationService: AuthenticationService,
+        private cashService: CashService,
+        private formBuilder: FormBuilder,
+        private toastrService: ToastrService
+    ) {
         this.loadConcepts().then((concepts) => {
             this._transactionConcepts = _.cloneDeep(concepts);
 
@@ -134,7 +140,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         this.cashTransaction = this.assign();
         this.patch();
 
-        const result = await this.cashService.create(this.cashTransaction).toPromise();
+        const result = await this.cashService.create(this.cashTransaction, this.authenticationService.currentUserValue).toPromise();
         return new Promise((resolve, reject) => {
             if (!result) {
                 this.toastrService.error('Ocurrió un error. La reparación no pudo ser creada.');

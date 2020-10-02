@@ -3,6 +3,7 @@ const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
 const customer = require('server/customer/customer.model');
+const user = require('server/users/user.model');
 const repairStatus = require('server/repair/repair.status');
 
 class Repair extends Sequelize.Model {}
@@ -103,11 +104,19 @@ Repair.init(
             type: Sequelize.BIGINT,
             allowNull: true,
             field: 'usuario_creador',
+            references: {
+                model: 'user',
+                key: 'id',
+            },
         },
         updatedBy: {
             type: Sequelize.BIGINT,
             allowNull: true,
             field: 'usuario_modificador',
+            references: {
+                model: 'user',
+                key: 'id',
+            },
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -177,6 +186,10 @@ RepairStatusHistory.init(
         updatedBy: {
             type: Sequelize.INTEGER,
             allowNull: false,
+            references: {
+                model: 'user',
+                key: 'id',
+            },
             field: 'modified_user_id',
         },
         cost: {
@@ -216,5 +229,11 @@ customer.Customer.hasMany(Repair, {
     as: 'repair',
     foreignKey: 'idRepair',
 });
+
+Repair.belongsTo(user.User, { as: 'user', foreignKey: 'usuario_creador' });
+user.User.hasMany(Repair, { as: 'repair', foreignKey: 'id' });
+
+RepairStatusHistory.belongsTo(user.User, { as: 'user', foreignKey: 'modified_user_id' });
+user.User.hasMany(RepairStatusHistory, { as: 'repairStatusHistory', foreignKey: 'id' });
 
 module.exports = { Repair, RepairStatusHistory };

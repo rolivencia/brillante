@@ -1,6 +1,7 @@
 const customer = require('server/customer/customer.model');
 const repair = require('server/repair/repair.model');
 const cash = require('server/cash/cash.model');
+const user = require('server/users/user.model');
 
 const repairStatus = require('server/repair/repair.status');
 
@@ -23,8 +24,7 @@ module.exports = {
     updateTrackingInfo,
 };
 
-async function create({ customer, device, issue, paymentInAdvance, ...discarded }) {
-    //TODO: Add creator user - Issue #11
+async function create({ repairToCreate, user }) {
     return new Promise(async (resolve, reject) => {
         const t = await sequelizeConnector.transaction();
 
@@ -34,15 +34,15 @@ async function create({ customer, device, issue, paymentInAdvance, ...discarded 
         try {
             repairDAO = await repair.Repair.create(
                 {
-                    idClient: customer.id,
-                    idEquipment: device.type.id,
-                    manufacturer: device.manufacturer,
-                    model: device.model,
-                    imei: device.deviceId,
-                    equipmentTurnedOn: device.turnedOn,
-                    issue: issue,
-                    paymentInAdvance: paymentInAdvance,
-                    createdBy: 1,
+                    idClient: repairToCreate.customer.id,
+                    idEquipment: repairToCreate.device.type.id,
+                    manufacturer: repairToCreate.device.manufacturer,
+                    model: repairToCreate.device.model,
+                    imei: repairToCreate.device.deviceId,
+                    equipmentTurnedOn: repairToCreate.device.turnedOn,
+                    issue: repairToCreate.issue,
+                    paymentInAdvance: repairToCreate.paymentInAdvance,
+                    createdBy: user.id,
                     enabled: 1,
                     deleted: 0,
                     warrantyTerm: 3,
@@ -55,8 +55,8 @@ async function create({ customer, device, issue, paymentInAdvance, ...discarded 
                 {
                     idRepair: repairDAO.dataValues.id,
                     idStatus: 0,
-                    updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
-                    note: issue,
+                    updatedBy: user.id,
+                    note: repairToCreate.issue,
                     cost: repairDAO.dataValues.cost,
                     price: repairDAO.dataValues.price,
                     paymentInAdvance: repairDAO.dataValues.paymentInAdvance,
@@ -88,7 +88,7 @@ async function updateDeviceInfo({ id, device, issue, ...discarded }) {
     );
 }
 
-async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
+async function updateTrackingInfo({ repairToUpdate, user, generateTransaction }) {
     const { id, status, note, paymentInAdvance, cost, price, warrantyTerm, ...discarded } = repairToUpdate;
 
     const t = await sequelizeConnector.transaction();
@@ -117,7 +117,7 @@ async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
 
             previousRepairHistoryDAO = await repair.RepairStatusHistory.update(
                 {
-                    updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    updatedBy: user.id,
                     updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
                 },
                 { where: { idRepair: id, updatedAt: { [Op.eq]: null } }, transaction: t }
@@ -127,7 +127,7 @@ async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
                 {
                     idRepair: id,
                     idStatus: status.id,
-                    updatedBy: 1, //TODO: Issue #11 -> Link user to repair creation/update
+                    updatedBy: user.id,
                     note: note,
                     cost: cost,
                     price: price,
@@ -145,7 +145,7 @@ async function updateTrackingInfo({ repairToUpdate, generateTransaction }) {
                         note: 'Ingresos por Reparación ID ' + id,
                         transactionTypeId: 1,
                         transactionConceptId: 158, // TODO: Define enums for server-side APIs (Transaction Concepts)
-                        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+                        createdBy: user.id,
                     },
                     { transaction: t }
                 );
@@ -216,6 +216,12 @@ async function getAll({ showFinished, startDate, endDate }) {
                 required: true,
                 attributes: ['id', 'status'],
             },
+            {
+                as: 'user',
+                model: user.User,
+                required: true,
+                attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
+            },
         ],
         where: {
             idStatus: { [Op.notIn]: showFinished ? [] : [5, 7] },
@@ -276,6 +282,12 @@ async function getById(id) {
                 model: repairStatus.RepairStatus,
                 required: true,
                 attributes: ['id', 'status'],
+            },
+            {
+                as: 'user',
+                model: user.User,
+                required: true,
+                attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
             },
         ],
         where: {
@@ -345,6 +357,12 @@ async function getHistoryByRepairId(idRepair) {
                 as: 'status',
                 model: repairStatus.RepairStatus,
                 attributes: ['id', 'status'],
+            },
+            {
+                as: 'user',
+                model: user.User,
+                required: true,
+                attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
             },
         ],
         where: {

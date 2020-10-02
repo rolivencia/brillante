@@ -52,34 +52,34 @@ async function getAll({ startDate, endDate }) {
     });
 }
 
-async function openCashRegister() {
+async function openCashRegister({ user }) {
     return cash.CashTransaction.create({
         amount: 0,
         note: 'Apertura de Caja',
         transactionTypeId: 1,
         transactionConceptId: 49,
-        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+        createdBy: user.id,
     });
 }
 
-async function closeCashRegister() {
+async function closeCashRegister({ user }) {
     return cash.CashTransaction.create({
         amount: 0,
         note: 'Apertura de Caja',
         transactionTypeId: 1,
         transactionConceptId: 163,
-        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+        createdBy: user.id,
     });
 }
 
-async function create({ amount, date, note, concept, ...cashTransaction }) {
+async function create({ transaction, user }) {
     return cash.CashTransaction.create({
-        amount: amount,
-        date: date,
-        note: note,
-        transactionTypeId: concept.transactionType.id,
-        transactionConceptId: concept.id,
-        createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+        amount: transaction.amount,
+        date: transaction.date,
+        note: transaction.note,
+        transactionTypeId: transaction.concept.transactionType.id,
+        transactionConceptId: transaction.concept.id,
+        createdBy: user.id, //TODO: Issue #21 - Assign transactions to creator user
     });
 }
 async function update({ id, amount, date, note, concept, ...cashTransaction }) {

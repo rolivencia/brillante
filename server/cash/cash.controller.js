@@ -15,14 +15,14 @@ module.exports = router;
 
 function openCashRegister(req, res, next) {
     cashService
-        .openCashRegister()
+        .openCashRegister(req.body)
         .then((transaction) => res.json(transaction))
         .catch((err) => next(err));
 }
 
 function closeCashRegister(req, res, next) {
     cashService
-        .closeCashRegister()
+        .closeCashRegister(req.body)
         .then((transaction) => res.json(transaction))
         .catch((err) => next(err));
 }

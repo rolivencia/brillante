@@ -18,13 +18,13 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
 
     public editDevice: boolean = false;
 
-    columns: any[] = [
+    columns: { header: string; binding: string; width: string | number }[] = [
         { header: 'Estado', binding: 'status.status', width: '*' },
         { header: 'Cambió', binding: 'updatedAt', width: 110 },
         { header: 'Costo', binding: 'cost', width: 80 },
         { header: 'Precio', binding: 'price', width: 80 },
         { header: 'Nota', binding: 'note', width: '*' },
-        { header: 'Usuario', biding: 'updatedBy.userName', width: 70 },
+        { header: 'Usuario', binding: 'user.userName', width: 70 },
     ];
 
     constructor(
