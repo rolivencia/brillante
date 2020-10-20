@@ -1,3 +1,16 @@
+<!-- TODO: Generate admin header component -->
+<div class="row mb-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-white border-bottom-0">
+                <button class="btn btn-sm btn-outline-secondary" (click)="navigateTo(null, 'grid', 'selected')">💱 Caja Diaria</button>
+                <button class="ml-3 btn btn-sm btn-outline-secondary" (click)="navigateTo('categories')">📑 Categorías</button>
+                <button class="ml-3 btn btn-sm btn-outline-secondary" (click)="navigateTo('report')">📊 Generar Reporte</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div id="top-container" class="col-12">
         <router-outlet name="top"></router-outlet>

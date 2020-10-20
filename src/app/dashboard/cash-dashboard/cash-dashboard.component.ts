@@ -3,6 +3,7 @@ import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboa
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DateHandlerService } from '@app/_services/date-handler.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -16,7 +17,8 @@ export class CashDashboardComponent implements OnInit {
     constructor(
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
-        private dateHandlerService: DateHandlerService
+        private dateHandlerService: DateHandlerService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -32,5 +34,9 @@ export class CashDashboardComponent implements OnInit {
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;
         });
+    }
+
+    public navigateTo(top = null, left = null, right = null) {
+        this.router.navigate(['cash-dashboard/manage', { outlets: { top: top, left: left, right: right } }]);
     }
 }

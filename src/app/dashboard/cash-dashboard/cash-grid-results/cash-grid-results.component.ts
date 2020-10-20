@@ -67,8 +67,4 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     public getRegisterDetails(currentItem: CashTransaction) {
         this.cashDashboardService.selectedTransaction = currentItem;
     }
-
-    public generateReport() {
-        this.router.navigate(['cash-dashboard/manage', { outlets: { top: 'report', left: null, right: null } }]);
-    }
 }
