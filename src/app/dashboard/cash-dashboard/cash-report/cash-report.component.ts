@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CashReportService } from '@app/dashboard/cash-dashboard/cash-report/cash-report.service';
-import { Router } from '@angular/router';
-import { CashDashboardService, formatDate } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { DateObject } from '@app/_models/date-object';
 import * as moment from 'moment';
 import * as wjcGridXlsx from '@grapecity/wijmo.grid.xlsx';
+import { CashDashboardService, formatDate } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
+import { CashReportService } from '@app/dashboard/cash-dashboard/cash-report/cash-report.service';
+import { CellType } from '@grapecity/wijmo.grid';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { DateObject } from '@app/_models/date-object';
+import { Router } from '@angular/router';
 import { WjFlexGrid } from '@grapecity/wijmo.angular2.grid';
 
 @Component({
@@ -36,6 +37,7 @@ export class CashReportComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.cashDashboardService.ngbDateFrom = { year: moment().year(), month: moment().month() % 13, day: moment().date() };
         this.cashDashboardService.ngbDateTo = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
+        this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
     }
 
     ngOnDestroy(): void {
@@ -58,8 +60,22 @@ export class CashReportComponent implements OnInit, OnDestroy {
                 includeColumnHeaders: true,
                 includeCellStyles: false,
                 formatItem: (item) => {
-                    if (item.row !== 0 && item.col === 7) {
-                        console.log('ITEM:' + item);
+                    if (item.panel.cellType === CellType.ColumnHeader) {
+                        item.xlsxCell.style.fill = { color: '#e9ecef' }; //TODO: Generalize color - Select from service
+                    }
+                    if (item.panel.cellType === CellType.Cell && item.col === 7) {
+                        item.xlsxCell.value = moment(item.xlsxCell.value).format('YYYY/MM/DD HH:mm');
+                    }
+                    if (item.panel.cellType === CellType.ColumnFooter && !isNaN(item.xlsxCell.value)) {
+                        if (item.col === 6) {
+                            item.xlsxCell.style.fill = { color: '#d4edda' }; //TODO: Generalize color - Select from service
+                        }
+                        if (item.col === 5) {
+                            item.xlsxCell.style.fill = { color: '#f8d7da' }; //TODO: Generalize color - Select from service
+                        }
+                        if (item.col === 4) {
+                            item.xlsxCell.style.fill = { color: '#d1ecf1' }; //TODO: Generalize color - Select from service
+                        }
                     }
                 },
             },

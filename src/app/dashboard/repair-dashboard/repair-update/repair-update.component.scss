@@ -22,7 +22,7 @@
 }
 
 #repair-history-grid {
-    max-height: 260px;
+    max-height: 130px;
 }
 
 #repair-data {
@@ -30,10 +30,13 @@
         height: 450px;
     }
     #issue-description {
-        height: 150px;
+        height: 300px;
         width: 540px;
         text-align: justify;
         overflow-x: auto;
+      textarea{
+        height: calc(100% - 24px);
+      }
     }
 }
 #warranty-input-group {

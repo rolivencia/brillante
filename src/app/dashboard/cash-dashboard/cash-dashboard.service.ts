@@ -9,6 +9,7 @@ import { DateObject } from '@app/_models/date-object';
 import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { Injectable } from '@angular/core';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
+import { AuthenticationService } from '@app/_services';
 
 @Injectable({
     providedIn: 'root',
@@ -30,6 +31,7 @@ export class CashDashboardService {
     public selectedTransaction: CashTransaction = null;
 
     constructor(
+        public authenticationService: AuthenticationService,
         public cashService: CashService,
         private cashFormHandler: CashFormHandlerService,
         private progressLoaderService: ProgressLoaderService
@@ -46,7 +48,7 @@ export class CashDashboardService {
 
     async openCashRegister() {
         // TODO: Replace for new NodeJS API
-        const result = await this.cashService.openCashRegister().toPromise();
+        const result = await this.cashService.openCashRegister(this.authenticationService.currentUserValue).toPromise();
         if (result && result.id) {
             this.load(moment());
         }

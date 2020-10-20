@@ -1,4 +1,4 @@
-import { DeviceType, Repair, RepairStatus } from '@app/_models';
+import { DeviceType, Repair, RepairStatus, User } from '@app/_models';
 import { environment } from '@environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -89,16 +89,20 @@ export class RepairService {
         return this.http.delete<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
     }
 
-    public create(repair: Repair) {
-        return this.http.post<any>(`${environment.apiUrl}/repair/create`, { ...toRepairDTO(repair) });
+    public create(repair: Repair, user: User) {
+        return this.http.post<any>(`${environment.apiUrl}/repair/create`, { repairToCreate: toRepairDTO(repair), user: user });
     }
 
     public updateDeviceInfo(repair: Repair) {
         return this.http.put<any>(`${environment.apiUrl}/repair/updateDeviceInfo`, { ...repair });
     }
 
-    public updateTrackingInfo(repair: Repair, generateTransaction: boolean) {
-        return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, { repairToUpdate: repair, generateTransaction });
+    public updateTrackingInfo(repair: Repair, user: User, generateTransaction: boolean) {
+        return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, {
+            repairToUpdate: repair,
+            user: user,
+            generateTransaction,
+        });
     }
 }
 
@@ -110,6 +114,7 @@ export function toRepair(repairDTO): Repair {
         ...repairDTO,
         audit: {
             ...repairDTO.audit,
+            createdBy: repairDTO.user,
             createdAt: moment(repairDTO.audit.createdAt),
             updatedAt: moment(repairDTO.audit.createdAt),
         },

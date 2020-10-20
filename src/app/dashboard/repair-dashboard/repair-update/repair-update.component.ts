@@ -1,10 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/repair-voucher-generator.service';
+import { CollectionView, SortDescription } from '@grapecity/wijmo';
 
 @Component({
     selector: 'app-repair-update',
@@ -13,13 +14,17 @@ import { RepairVoucherGeneratorService } from '@app/dashboard/repair-dashboard/r
 })
 export class RepairUpdateComponent implements OnInit, OnDestroy {
     public repair: Repair;
-    public statusHistory = [];
+    public statusHistory = new CollectionView([]);
 
     public editDevice: boolean = false;
 
-    columns: any[] = [
-        { header: 'Estados Anteriores', binding: 'status.status', width: '*' },
-        { header: 'Fecha de modificación', binding: 'updatedAt', width: '*' },
+    columns: { header: string; binding: string; width: string | number }[] = [
+        { header: 'Estado', binding: 'status.status', width: '*' },
+        { header: 'Cambió', binding: 'updatedAt', width: 110 },
+        { header: 'Costo', binding: 'cost', width: 80 },
+        { header: 'Precio', binding: 'price', width: 80 },
+        { header: 'Nota', binding: 'note', width: '*' },
+        { header: 'Usuario', binding: 'user.userName', width: 70 },
     ];
 
     constructor(
@@ -52,7 +57,9 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
 
     public async getHistory() {
         const response = await this.repairService.getHistory(this.repairFormHandlerService.repair.id).toPromise();
-        this.statusHistory = [].concat(response);
+        this.statusHistory = new CollectionView([].concat(response));
+        const sortDescription = new SortDescription('updatedAt', true);
+        this.statusHistory.sortDescriptions.push(sortDescription);
     }
 
     public print() {

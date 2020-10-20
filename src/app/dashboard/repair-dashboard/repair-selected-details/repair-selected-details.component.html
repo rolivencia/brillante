@@ -66,6 +66,9 @@
             <p *ngIf="repairDashboardService.selectedRepair.warrantyTerm">
                 <strong>Período de garantía: </strong>{{ repairDashboardService.selectedRepair.warrantyTerm }} meses
             </p>
+            <p *ngIf="repairDashboardService.selectedRepair.audit.createdBy">
+                <strong>Usuario creador: </strong>{{ repairDashboardService.selectedRepair.audit.createdBy.userName }}
+            </p>
         </ng-container>
         <ng-container *ngIf="!repairDashboardService.selectedRepair">
             <p>Para ver los detalles, seleccione una reparación de la grilla</p>
