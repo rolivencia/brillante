@@ -5,6 +5,7 @@ module.exports = { get };
 async function get() {
     const transactionDAOs = await transaction.CashTransactionConcept.findAll({
         attributes: ['id', 'description', 'parentId', 'transactionTypeId', 'userAssignable'],
+        order: [['description', 'ASC']],
     });
 
     return new Promise((resolve, reject) => {
