@@ -29,6 +29,7 @@ export class CashReportComponent implements OnInit, OnDestroy {
         { header: 'Ingreso', binding: 'income', width: 80 },
         { header: 'Egreso', binding: 'expense', width: 80 },
         { header: 'Saldo', binding: 'amount', width: 80 },
+        { header: 'Creador', binding: 'audit.createdBy.userName', width: 80 },
         { header: 'Fecha y Hora', binding: 'date', width: 120 },
     ];
 
