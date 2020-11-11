@@ -3,10 +3,11 @@ import * as wjcGridXlsx from '@grapecity/wijmo.grid.xlsx';
 import { CashDashboardService, formatDate } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashReportService } from '@app/dashboard/cash-dashboard/cash-report/cash-report.service';
 import { CellType } from '@grapecity/wijmo.grid';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
 import { Router } from '@angular/router';
 import { WjFlexGrid } from '@grapecity/wijmo.angular2.grid';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-cash-report',
@@ -14,6 +15,9 @@ import { WjFlexGrid } from '@grapecity/wijmo.angular2.grid';
     styleUrls: ['./cash-report.component.scss'],
 })
 export class CashReportComponent implements OnInit, OnDestroy {
+    loading: boolean = false;
+    private loadingSubscription: Subscription;
+
     //TODO: Refactor these variables to the dashboard service
     displayMonths = 1;
     navigation = 'select';
@@ -33,9 +37,18 @@ export class CashReportComponent implements OnInit, OnDestroy {
         { header: 'Fecha y Hora', binding: 'date', width: 120 },
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, public cashReportService: CashReportService, private router: Router) {}
+    constructor(
+        public cashDashboardService: CashDashboardService,
+        public cashReportService: CashReportService, // Dot not remove. Will be used in the future.
+        private changeDetectorRef: ChangeDetectorRef,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
+        this.loadingSubscription = this.cashDashboardService.loading.subscribe((result) => {
+            this.loading = result;
+            this.changeDetectorRef.detectChanges();
+        });
         this.cashDashboardService.ngbDateFrom = { year: moment().year(), month: moment().month() % 13, day: moment().date() };
         this.cashDashboardService.ngbDateTo = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
         this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
@@ -43,6 +56,8 @@ export class CashReportComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.cashDashboardService.setTodayDate();
+        this.loadingSubscription.unsubscribe();
+        this.loading = false;
     }
 
     refreshGrid(fromNgb: DateObject, toNgb: DateObject) {

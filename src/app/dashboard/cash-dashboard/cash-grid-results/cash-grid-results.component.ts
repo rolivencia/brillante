@@ -1,10 +1,11 @@
 import * as moment from 'moment';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
 import { FlexGrid } from '@grapecity/wijmo.grid';
 import { CashTransaction } from '@app/_models/cash-transaction';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -15,10 +16,15 @@ import { Router } from '@angular/router';
 export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('cashGrid', { static: false }) cashGrid: FlexGrid;
 
-    displayMonths = 1;
-    navigation = 'select';
-    outsideDays = 'visible';
-    editMode: boolean = false;
+    public displayMonths = 1;
+    public navigation = 'select';
+    public outsideDays = 'visible';
+
+    public editMode: boolean = false;
+    public loading: boolean = false;
+
+    private editModeSubscription: Subscription;
+    private loadingSubscription: Subscription;
 
     columns: any[] = [
         { header: 'ID', binding: 'id', width: 60 },
@@ -30,11 +36,16 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, private router: Router) {}
+    constructor(public cashDashboardService: CashDashboardService, private changeDetectorRef: ChangeDetectorRef, private router: Router) {}
 
     ngOnInit(): void {
-        this.cashDashboardService.editMode.subscribe((result) => {
+        this.editModeSubscription = this.cashDashboardService.editMode.subscribe((result) => {
             this.editMode = result;
+            this.changeDetectorRef.detectChanges();
+        });
+        this.loadingSubscription = this.cashDashboardService.loading.subscribe((result) => {
+            this.loading = result;
+            this.changeDetectorRef.detectChanges();
         });
     }
 
@@ -44,6 +55,10 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
 
     ngOnDestroy(): void {
         this.setTodayDate();
+        this.loadingSubscription.unsubscribe();
+        this.editModeSubscription.unsubscribe();
+        this.editMode = false;
+        this.loading = false;
     }
 
     //FIXME: Move this method to a service

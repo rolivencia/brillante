@@ -15,9 +15,10 @@ import { AuthenticationService } from '@app/_services';
     providedIn: 'root',
 })
 export class CashDashboardService {
-    public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    public loading: boolean = false;
+    public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
     public date: Moment = moment();
 
     public ngbDateFrom: DateObject;
@@ -56,7 +57,7 @@ export class CashDashboardService {
 
     async load(from: Moment, to?: Moment, filterConcepts: any[] = []) {
         // TODO: Return transactions to display them where desired
-        this.loading = true;
+        this.loading.next(true);
         this.progressLoaderService.showWithOverlay();
 
         const dateFrom = moment(from);
@@ -76,7 +77,7 @@ export class CashDashboardService {
         this.gridCollection.sortDescriptions.clear();
         this.gridCollection.sortDescriptions.push(sortById);
         this.progressLoaderService.hide();
-        this.loading = false;
+        this.loading.next(false);
     }
 
     setTodayDate() {

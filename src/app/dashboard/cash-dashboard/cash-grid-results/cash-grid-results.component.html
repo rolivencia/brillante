@@ -12,7 +12,7 @@
                         class="form-control"
                         placeholder="yyyy-mm-dd"
                         name="from"
-                        [disabled]="cashDashboardService.loading"
+                        [disabled]="loading"
                         [minDate]="cashDashboardService.ngbMinDate"
                         [maxDate]="cashDashboardService.ngbMaxDate"
                         [displayMonths]="displayMonths"
@@ -35,12 +35,12 @@
     </div>
     <div id="cash-transaction-grid" class="card-body">
         <div id="grid-container">
-            <ng-container *ngIf="cashDashboardService.loading">
+            <ng-container *ngIf="loading">
                 <div class="alert alert-info">
                     <h3>Cargando...</h3>
                 </div>
             </ng-container>
-            <ng-container *ngIf="!cashDashboardService.loading">
+            <ng-container *ngIf="!loading">
                 <div *ngIf="editMode && cashDashboardService.gridCollection.itemCount > 0" class="alert alert-info">
                     Presioná en "Volver" arriba en el menú derecho para desactivar el <b>modo edición</b> y poder seleccionar transacciones
                     de la grilla.
