@@ -4,10 +4,10 @@ import {Moment} from 'moment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '@app/_services/authentication.service';
-import {Repair, User} from '@app/_models';
+import {User} from '@app/_models';
 import {environment} from '@environments/environment';
 import {map} from 'rxjs/operators';
-import {CashTransaction} from '@app/_models/cash-transaction';
+import {CashTransaction, TransactionConcept} from '@app/_models/cash-transaction';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -40,8 +40,8 @@ export class CashService {
         return this.http.delete<any>(`${environment.apiUrl}/cash/remove/${id}`);
     }
 
-    public getConcepts(): Observable<any> {
-        return this.http.get<Repair>(`${environment.apiUrl}/cash/transaction/get`, { headers: headers });
+    public getConcepts(): Observable<TransactionConcept[]> {
+        return this.http.get<TransactionConcept[]>(`${environment.apiUrl}/cash/transaction/get`, { headers: headers });
     }
 
     public create(transaction: CashTransaction, user: User): Observable<CashTransaction> {

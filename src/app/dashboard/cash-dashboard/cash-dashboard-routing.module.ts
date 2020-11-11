@@ -1,4 +1,5 @@
 import { CashDashboardComponent } from '@app/dashboard/cash-dashboard/cash-dashboard.component';
+import { CashDashboardResolverService } from './cash-dashboard.resolver.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -6,6 +7,9 @@ const routes: Routes = [
     {
         path: '',
         component: CashDashboardComponent,
+        resolve: {
+            concepts: CashDashboardResolverService,
+        },
         children: [
             {
                 path: 'manage',

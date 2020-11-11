@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import {CashCategoriesService} from "@app/dashboard/cash-dashboard/cash-categories/cash-categories.service";
 
 @Component({
     selector: 'app-cash-update',
@@ -10,39 +11,31 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
     styleUrls: ['./cash-update.component.scss'],
 })
 export class CashUpdateComponent implements OnDestroy, OnInit {
-    public controlsLoaded = false;
     public dateTime: Date;
 
     constructor(
         public cashDashboardService: CashDashboardService,
-        public cashFormHandler: CashFormHandlerService,
+        public cashFormHandlerService: CashFormHandlerService,
+        private cashCategoriesService: CashCategoriesService,
         private route: ActivatedRoute,
         private router: Router
     ) {}
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(true);
-        this.cashFormHandler.controlsLoaded.subscribe((result) => {
-            if (result) {
-                const cashTransaction = this.route.snapshot.data['cashTransaction'];
-                if (cashTransaction) {
-                    this.cashFormHandler.saved = false;
-                    this.cashFormHandler.cashTransaction = cashTransaction;
-
-                    // Assign parent transaction concept for usage in the update form
-                    this.cashFormHandler.transactionParentConcept = this.cashFormHandler.selectableTransactionConcepts.filter(
-                        (concept) => this.cashFormHandler.cashTransaction.concept.parent.id === concept.id
-                    )[0];
-
-                    // Assign date
-                    this.dateTime = this.cashFormHandler.cashTransaction.date.toDate();
-
-                    this.cashFormHandler.formGroup = this.cashFormHandler.load();
-                    this.cashFormHandler.patch();
-                    this.controlsLoaded = true;
-                }
-            }
-        });
+          const cashTransaction = this.route.snapshot.data['cashTransaction'];
+          if (cashTransaction) {
+            this.cashFormHandlerService.saved = false;
+            this.cashFormHandlerService.cashTransaction = cashTransaction;
+            // Assign parent transaction concept for usage in the update form
+            this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts.filter(
+              (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
+            )[0];
+            // Assign date
+            this.dateTime = this.cashFormHandlerService.cashTransaction.date.toDate();
+            this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
+            this.cashFormHandlerService.patch();
+          }
     }
 
     ngOnDestroy(): void {
@@ -50,9 +43,9 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     }
 
     async update() {
-        this.cashFormHandler.cashTransaction.audit.createdAt = moment(this.dateTime);
-        this.cashFormHandler.formGroup.patchValue({ date: moment(this.dateTime) });
-        const result = await this.cashFormHandler.update();
+        this.cashFormHandlerService.cashTransaction.audit.createdAt = moment(this.dateTime);
+        this.cashFormHandlerService.formGroup.patchValue({ date: moment(this.dateTime) });
+        const result = await this.cashFormHandlerService.update();
         if (result) {
             this.cashDashboardService.load(this.cashDashboardService.date);
             this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
@@ -60,7 +53,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     }
 
     back() {
-        this.cashFormHandler.clean();
+        this.cashFormHandlerService.clean();
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
     }
 }

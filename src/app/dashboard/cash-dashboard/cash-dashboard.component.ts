@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 })
 export class CashDashboardComponent implements OnInit {
     editMode: boolean;
-    controlsLoaded: boolean = false;
 
     constructor(
         public cashDashboardService: CashDashboardService,
@@ -25,9 +24,7 @@ export class CashDashboardComponent implements OnInit {
         this.cashDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
         this.cashDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
         this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
-        this.cashFormHandlerService.controlsLoaded.subscribe((result) => {
-            this.controlsLoaded = result;
-        });
+
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;
         });

@@ -7,6 +7,7 @@ import { formatDate } from '@angular/common';
 import { AuthenticationService } from '@app/_services';
 import { User } from '@app/_models';
 import * as moment from 'moment';
+import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
 
 @Component({
     selector: 'app-cash-add-new',
@@ -18,6 +19,7 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     public currentUser: User;
 
     constructor(
+        public cashCategoriesService: CashCategoriesService,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private router: Router,
@@ -28,10 +30,12 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(true);
+        this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts.slice(0, 1).pop();
     }
 
     ngAfterViewInit() {
         interval(1000).subscribe((result) => {
+            // Current Date Time variable must be updated when displaying the component. Do not modify this.
             this.currentDateTime = formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US', '-0300');
         });
     }

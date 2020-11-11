@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     // apiUrl: "http://brillante-server.herokuapp.com"
-    apiUrl: 'http://localhost:4000',
+    apiUrl: 'https://localhost:443',
 };
 
 /*

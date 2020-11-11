@@ -1,7 +1,5 @@
-import * as _ from 'lodash';
 import { Audit } from '@app/_models/audit';
 import { AuthenticationService } from '@app/_services';
-import { BehaviorSubject } from 'rxjs';
 import { CashService } from '@app/_services/cash.service';
 import { CashTransaction, Operation, TransactionConcept } from '@app/_models/cash-transaction';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,14 +11,6 @@ import { ToastrService } from 'ngx-toastr';
     providedIn: 'root',
 })
 export class CashFormHandlerService implements FormHandler<FormGroup, CashTransaction> {
-    get selectableTransactionConcepts(): TransactionConcept[] {
-        return this._selectableTransactionConcepts;
-    }
-
-    get transactionConcepts(): TransactionConcept[] {
-        return this._transactionConcepts;
-    }
-
     get submitted(): boolean {
         return this._submitted;
     }
@@ -58,11 +48,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _submitted: boolean = false;
     private _saved: boolean = false;
 
-    public controlsLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
     private _transactionOperations: Operation[] = [];
-    private _transactionConcepts: TransactionConcept[] = [];
-    private _selectableTransactionConcepts: TransactionConcept[] = [];
     public transactionParentConcept: TransactionConcept = new TransactionConcept();
 
     private _formGroup: FormGroup;
@@ -73,23 +59,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         private cashService: CashService,
         private formBuilder: FormBuilder,
         private toastrService: ToastrService
-    ) {
-        this.loadConcepts().then((concepts) => {
-            this._transactionConcepts = _.cloneDeep(concepts);
-
-            const selectableParentTransactionConcepts: TransactionConcept[] = concepts.filter(
-                (parentConcept) => parentConcept.userAssignable
-            );
-
-            selectableParentTransactionConcepts.forEach((parentConcept) => {
-                parentConcept.children = parentConcept.children.filter((childrenConcept) => childrenConcept.userAssignable);
-            });
-
-            this._selectableTransactionConcepts = [].concat(selectableParentTransactionConcepts);
-
-            this.controlsLoaded.next(true);
-        });
-    }
+    ) {}
 
     public load(transaction: CashTransaction = this.cashTransaction): FormGroup {
         return this.formBuilder.group({
@@ -177,9 +147,5 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
 
     get(): CashTransaction {
         return this.cashTransaction;
-    }
-
-    async loadConcepts(): Promise<TransactionConcept[]> {
-        return await this.cashService.getConcepts().toPromise();
     }
 }
