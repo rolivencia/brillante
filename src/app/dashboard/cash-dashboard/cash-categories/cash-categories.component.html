@@ -1,49 +1,87 @@
 <div class="row">
-    <div class="col-8">
+    <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                Gestión de Categorías
-            </div>
+            <div class="card-header">Gestión de Conceptos de Transacciones de Caja</div>
             <div id="cash-categories" class="card-body">
-                <label><b>Concepto:</b></label>
-                <div class="input-group input-group-sm mb-2">
-                    <wj-combo-box
-                        class="form-control form-control-sm p-0"
-                        [(ngModel)]="cashFormHandlerService.transactionParentConcept"
-                        [isEditable]="false"
-                        [isReadOnly]="cashFormHandlerService.saved"
-                        [itemsSource]="cashCategoriesService.selectableTransactionConcepts"
-                        [selectedItem]="cashFormHandlerService.transactionParentConcept"
-                        [displayMemberPath]="'description'"
-                    >
-                    </wj-combo-box>
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>Conceptos</div>
+                        <div>
+                            <app-cash-transaction-concept-actions></app-cash-transaction-concept-actions>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="px-2">
+                                    <label><b>Concepto:</b></label>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <wj-combo-box
+                                            class="form-control form-control-sm p-0"
+                                            [(ngModel)]="cashCategoriesService.transactionParentConcept"
+                                            [isEditable]="false"
+                                            [isDisabled]="editMode"
+                                            [isReadOnly]="cashCategoriesService.saved"
+                                            [itemsSource]="cashCategoriesService.transactionConcepts"
+                                            [selectedItem]="cashCategoriesService.transactionParentConcept"
+                                            [displayMemberPath]="'description'"
+                                        >
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <app-cash-transaction-concept-info
+                                    class="d-flex"
+                                    *ngIf="cashCategoriesService.transactionParentConcept"
+                                    [transactionConcept]="cashCategoriesService.transactionParentConcept"
+                                ></app-cash-transaction-concept-info>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <label><b>Subconcepto:</b></label>
-                <div class="input-group input-group-sm mb-2">
-                    <wj-combo-box
-                        class="form-control form-control-sm p-0"
-                        id="concept"
-                        name="concept"
-                        aria-describedby="concept"
-                        [isEditable]="false"
-                        [isReadOnly]="cashFormHandlerService.saved"
-                        [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
-                        [selectedItem]="cashFormHandlerService.cashTransaction.concept"
-                        [displayMemberPath]="'description'"
-                    >
-                    </wj-combo-box>
+
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>Subconceptos</div>
+                        <div>
+                            <app-cash-transaction-concept-actions></app-cash-transaction-concept-actions>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="px-2">
+                                    <label><b>Subconcepto:</b></label>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <wj-combo-box
+                                            class="form-control form-control-sm p-0"
+                                            id="concept"
+                                            name="concept"
+                                            aria-describedby="concept"
+                                            [(ngModel)]="cashCategoriesService.transactionConcept"
+                                            [isEditable]="false"
+                                            [isDisabled]="editMode"
+                                            [isReadOnly]="cashCategoriesService.saved"
+                                            [itemsSource]="cashCategoriesService.transactionParentConcept.children"
+                                            [selectedItem]="cashCategoriesService.transactionConcept"
+                                            [displayMemberPath]="'description'"
+                                        >
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <app-cash-transaction-concept-info
+                                    class="d-flex"
+                                    *ngIf="cashCategoriesService.transactionConcept"
+                                    [transactionConcept]="cashCategoriesService.transactionConcept"
+                                ></app-cash-transaction-concept-info>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-4">
-        <div class="card">
-            <div class="card-header">
-                <button class="btn btn-sm btn-outline-success">Agregar</button>
-                <button class="ml-3 btn btn-sm btn-outline-primary">Editar</button>
-                <button class="ml-3 btn btn-sm btn-outline-danger">Deshabilitar</button>
-            </div>
-            <div id="selected-category" class="card-body"></div>
         </div>
     </div>
 </div>

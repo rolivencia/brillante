@@ -50,6 +50,7 @@ function toTransactionDTO(transactionDAO, parentConcepts = []) {
     };
 }
 
+//TODO: See Issue #74. Refactor hardcoded transaction type handling.
 const _transactionTypes = [
     { id: 0, description: 'Egreso' },
     { id: 1, description: 'Ingreso' },

@@ -1,0 +1,4 @@
+<button class="btn btn-sm btn-outline-success" (click)="addNew()">Agregar</button>
+<button class="ml-3 btn btn-sm btn-outline-primary" *ngIf="editMode" (click)="toggleEditMode(false)">Descartar</button>
+<button class="ml-3 btn btn-sm btn-outline-primary" *ngIf="!editMode" (click)="toggleEditMode(true)">Editar</button>
+<button class="ml-3 btn btn-sm btn-outline-danger" (click)="toggleStatus()">Deshabilitar</button>

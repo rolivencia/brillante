@@ -1,0 +1,35 @@
+<div class="px-3">
+    <label><b>Número de ID:</b></label>
+    <div class="input-group input-group-sm mb-2">
+        <label>{{ transactionConcept.id }}</label>
+    </div>
+</div>
+<div class="px-3 flex-grow-1">
+    <label><b>Descripción:</b></label>
+    <div class="input-group input-group-sm mb-2">
+        <input *ngIf="editMode" class="form-control" [(ngModel)]="transactionConcept.description" />
+        <label *ngIf="!editMode">{{ transactionConcept.description }}</label>
+    </div>
+</div>
+<div class="px-3">
+    <label><b>Tipo de Transacción:</b></label>
+    <div class="input-group input-group-sm mb-2">
+        <label *ngIf="!editMode">{{ transactionConcept.transactionType.description }}</label>
+        <wj-combo-box
+            *ngIf="editMode"
+            class="form-control form-control-sm p-0"
+            [(ngModel)]="transactionConcept.transactionType"
+            [isEditable]="false"
+            [itemsSource]="cashCategoriesService.transactionTypes"
+            [selectedIndex]="transactionConcept.transactionType.id"
+            [selectedItem]="transactionConcept.transactionType"
+            [displayMemberPath]="'description'"
+        ></wj-combo-box>
+    </div>
+</div>
+<div class="px-3">
+  <label><b>Status:</b></label>
+  <div class="input-group input-group-sm mb-2">
+    <label>{{ '' }}</label>
+  </div>
+</div>
