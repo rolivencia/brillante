@@ -8,8 +8,8 @@
             <div id="cash-categories" class="card-body">
                 <ng-container>
                     <div class="row">
-                        <div class="col-3">
-                            <div class="px-2">
+                        <div class="col-3 d-flex align-items-center">
+                            <div class="px-2 flex-grow-1">
                                 <label><b>Concepto:</b></label>
                                 <div class="input-group input-group-sm mb-2">
                                     <wj-combo-box
@@ -26,14 +26,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-8 d-flex align-items-center">
                             <app-cash-transaction-concept-info
-                                class="d-flex"
                                 *ngIf="cashCategoriesService.transactionParentConcept"
+                                class="w-100"
                                 [transactionConcept]="cashCategoriesService.transactionParentConcept"
                             ></app-cash-transaction-concept-info>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1 d-flex justify-content-end">
                             <app-cash-transaction-concept-actions></app-cash-transaction-concept-actions>
                         </div>
                     </div>
@@ -41,8 +41,8 @@
                 </ng-container>
                 <ng-container *ngIf="cashCategoriesService.transactionParentConcept.children.length > 0">
                     <div class="row">
-                        <div class="col-3">
-                            <div class="px-2">
+                      <div class="col-3 d-flex align-items-center">
+                            <div class="px-2 flex-grow-1">
                                 <label><b>Subconcepto:</b></label>
                                 <div class="input-group input-group-sm mb-2">
                                     <wj-combo-box
@@ -62,14 +62,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-8 d-flex align-items-center">
                             <app-cash-transaction-concept-info
-                                class="d-flex"
                                 *ngIf="cashCategoriesService.transactionConcept"
+                                class="w-100"
                                 [transactionConcept]="cashCategoriesService.transactionConcept"
                             ></app-cash-transaction-concept-info>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1 d-flex justify-content-end">
                             <app-cash-transaction-concept-actions></app-cash-transaction-concept-actions>
                         </div>
                     </div>
