@@ -1,4 +1,45 @@
-<button class="btn btn-block btn-sm btn-outline-success" (click)="addNew()">Agregar</button>
-<button class="btn btn-block btn-sm btn-outline-primary" *ngIf="editMode" (click)="toggleEditMode(false)">Descartar</button>
-<button class="btn btn-block btn-sm btn-outline-primary" *ngIf="!editMode" (click)="toggleEditMode(true)">Editar</button>
-<button class="btn btn-block btn-sm btn-outline-danger" (click)="toggleStatus()">Deshabilitar</button>
+<div class="h-100 d-flex flex-column justify-content-center">
+    <!-- Agregado de nuevas -->
+    <button
+        *ngIf="!editMode.value"
+        class="btn btn-block btn-sm btn-outline-success"
+        (click)="addNew()"
+    >
+        Agregar
+    </button>
+
+    <!-- Edición y descarte-->
+    <ng-container *ngIf="editMode.value && editMode.concept.id === concept.id">
+        <button
+            class="btn btn-block btn-sm btn-outline-success"
+            (click)="save()"
+        >
+            Guardar
+        </button>
+        <button
+            class="btn btn-block btn-sm btn-outline-primary"
+            (click)="toggleEditMode(false, null)"
+        >
+            Descartar
+        </button>
+    </ng-container>
+
+    <button
+        *ngIf="!editMode.value && !editMode.concept"
+        class="btn btn-block btn-sm btn-outline-primary"
+        (click)="toggleEditMode(true, concept)"
+    >
+        Editar
+    </button>
+
+    <!-- Habilitar/Deshabilitar -->
+    <!-- TODO: Enable the trigger status feature -->
+    <button
+        *ngIf="!editMode.value"
+        class="btn btn-block btn-sm btn-outline-danger"
+        (click)="toggleStatus()"
+        [disabled]="true"
+    >
+        {{ concept.audit?.enabled ? 'Deshabilitar' : 'Habilitar' }}
+    </button>
+</div>

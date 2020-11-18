@@ -1,9 +1,9 @@
 module.exports = {
-    printWidth: 140,
+    printWidth: 80,
     singleQuote: true,
     useTabs: false,
     tabWidth: 4,
     semi: true,
     bracketSpacing: true,
-    arrowFunctionParentheses: true
+    arrowFunctionParentheses: true,
 };

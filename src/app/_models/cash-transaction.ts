@@ -46,6 +46,7 @@ export class TransactionConcept {
     public parent: null | TransactionConcept;
     public children: TransactionConcept[];
     public userAssignable: boolean;
+    public audit?: Audit;
 
     constructor(
         id?: number,

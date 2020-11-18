@@ -24,10 +24,14 @@
         <app-cash-transaction-concept-info
             *ngIf="concept && concept.id"
             class="w-100"
+            [canEditType]="canEditType"
             [transactionConcept]="concept"
         ></app-cash-transaction-concept-info>
     </div>
     <div class="col-1 d-flex justify-content-end">
-        <app-cash-transaction-concept-actions></app-cash-transaction-concept-actions>
+        <app-cash-transaction-concept-actions
+            [concept]="concept"
+            (editedConcept)="onConceptEdit()"
+        ></app-cash-transaction-concept-actions>
     </div>
 </div>

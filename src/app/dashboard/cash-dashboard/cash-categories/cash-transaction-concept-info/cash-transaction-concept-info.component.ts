@@ -1,5 +1,11 @@
 import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+} from '@angular/core';
 import { TransactionConcept } from '@app/_models/cash-transaction';
 import { Subscription } from 'rxjs';
 
@@ -10,19 +16,28 @@ import { Subscription } from 'rxjs';
 })
 export class CashTransactionConceptInfoComponent implements OnInit, OnDestroy {
     @Input() transactionConcept: TransactionConcept;
+    @Input() canEditType: boolean = true;
 
-    editMode: boolean = false;
+    editMode: { value: boolean } & { concept: TransactionConcept } = {
+        value: false,
+        concept: null,
+    };
     editModeSubscription: Subscription;
 
     constructor(public cashCategoriesService: CashCategoriesService) {}
 
     ngOnInit(): void {
-        this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
-            this.editMode = result;
-        });
+        this.editModeSubscription = this.cashCategoriesService.editMode.subscribe(
+            (result) => {
+                this.editMode.value = result.value;
+                this.editMode.concept = result.concept;
+            }
+        );
     }
 
     ngOnDestroy() {
         this.editModeSubscription.unsubscribe();
     }
+
+    onConceptEdit() {}
 }

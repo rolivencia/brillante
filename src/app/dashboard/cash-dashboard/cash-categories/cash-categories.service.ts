@@ -1,6 +1,9 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import { TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
+import {
+    TransactionConcept,
+    TransactionType,
+} from '@app/_models/cash-transaction';
 import { Behavior } from 'popper.js';
 import { BehaviorSubject } from 'rxjs';
 
@@ -29,7 +32,14 @@ export class CashCategoriesService {
     private _transactionConcepts: TransactionConcept[] = [];
     private _selectableTransactionConcepts: TransactionConcept[] = [];
 
-    public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public editMode: BehaviorSubject<
+        { value: boolean } & { concept: TransactionConcept }
+    > = new BehaviorSubject<
+        { value: boolean } & { concept: TransactionConcept }
+    >({
+        value: false,
+        concept: null,
+    });
 
     //TODO: See Issue #74. Refactor hardcoded transaction type handling.
     private _transactionTypes: TransactionType[] = [
@@ -47,17 +57,25 @@ export class CashCategoriesService {
     initialize(concepts: TransactionConcept[]) {
         this._transactionConcepts = _.cloneDeep(concepts);
 
-        const selectableParentTransactionConcepts: TransactionConcept[] = concepts.filter((parentConcept) => parentConcept.userAssignable);
+        const selectableParentTransactionConcepts: TransactionConcept[] = concepts.filter(
+            (parentConcept) => parentConcept.userAssignable
+        );
 
         selectableParentTransactionConcepts.forEach((parentConcept) => {
-            parentConcept.children = parentConcept.children.filter((childrenConcept) => childrenConcept.userAssignable);
+            parentConcept.children = parentConcept.children.filter(
+                (childrenConcept) => childrenConcept.userAssignable
+            );
         });
 
-        this._selectableTransactionConcepts = [].concat(selectableParentTransactionConcepts);
+        this._selectableTransactionConcepts = [].concat(
+            selectableParentTransactionConcepts
+        );
     }
 
     updateTransactionType(updated: TransactionConcept) {
-        this.transactionParentConcept.transactionType = _.cloneDeep(updated.transactionType);
+        this.transactionParentConcept.transactionType = _.cloneDeep(
+            updated.transactionType
+        );
     }
 
     log(toPrint) {
