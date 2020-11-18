@@ -18,9 +18,6 @@ import { TransactionConcept } from '@app/_models/cash-transaction';
 export class CashTransactionConceptActionsComponent
     implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;
-    @Output() editedConcept: EventEmitter<
-        TransactionConcept
-    > = new EventEmitter<TransactionConcept>();
 
     editMode: { value: boolean } & { concept: TransactionConcept } = {
         value: false,
