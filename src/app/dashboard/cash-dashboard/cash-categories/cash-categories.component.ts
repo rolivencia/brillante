@@ -8,22 +8,11 @@ import { Subscription } from 'rxjs';
     templateUrl: './cash-categories.component.html',
     styleUrls: ['./cash-categories.component.scss'],
 })
-export class CashCategoriesComponent implements OnInit, OnDestroy {
-    editMode: boolean = false;
-    editModeSubscription: Subscription;
-    constructor(public cashCategoriesService: CashCategoriesService, public cashFormHandlerService: CashFormHandlerService) {}
+export class CashCategoriesComponent implements OnInit {
+    constructor(public cashCategoriesService: CashCategoriesService) {}
 
     ngOnInit(): void {
         this.cashCategoriesService.transactionParentConcept = this.cashCategoriesService.transactionConcepts.slice(0, 1).pop();
         this.cashCategoriesService.transactionConcept = this.cashCategoriesService.transactionParentConcept.children.slice(0, 1).pop();
-        this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
-            this.editMode = result;
-        });
     }
-
-    ngOnDestroy() {
-        this.editModeSubscription.unsubscribe();
-    }
-
-
 }

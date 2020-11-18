@@ -6,9 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 import { CashTransactionConceptActionsComponent } from './cash-transaction-concept-actions/cash-transaction-concept-actions.component';
+import { CashTransactionConceptInputGroupComponent } from './cash-transaction-concept-input-group/cash-transaction-concept-input-group.component';
 
 @NgModule({
-    declarations: [CashCategoriesComponent, CashTransactionConceptInfoComponent, CashTransactionConceptActionsComponent],
+    declarations: [
+        CashCategoriesComponent,
+        CashTransactionConceptInfoComponent,
+        CashTransactionConceptActionsComponent,
+        CashTransactionConceptInputGroupComponent,
+    ],
     imports: [CommonModule, CashCategoriesRoutingModule, FormsModule, WjInputModule],
 })
 export class CashCategoriesModule {}
