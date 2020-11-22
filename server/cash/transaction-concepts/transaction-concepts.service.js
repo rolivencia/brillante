@@ -1,10 +1,16 @@
 const transaction = require('./transaction-concepts.model');
 
-module.exports = { get };
+module.exports = { create, get, update, disable, enable };
 
 async function get() {
     const transactionDAOs = await transaction.CashTransactionConcept.findAll({
-        attributes: ['id', 'description', 'parentId', 'transactionTypeId', 'userAssignable'],
+        attributes: [
+            'id',
+            'description',
+            'parentId',
+            'transactionTypeId',
+            'userAssignable',
+        ],
         order: [['description', 'ASC']],
     });
 
@@ -16,13 +22,19 @@ async function get() {
                 .map((transactionDAO) => toTransactionDTO(transactionDAO, []));
 
             const childrenConcepts = transactionDAOs
-                .filter((transactionDAO) => !!transactionDAO.dataValues.parentId)
+                .filter(
+                    (transactionDAO) => !!transactionDAO.dataValues.parentId
+                )
                 .map((transactionDAO) => transactionDAO.dataValues)
-                .map((transactionDAO) => toTransactionDTO(transactionDAO, parentConcepts));
+                .map((transactionDAO) =>
+                    toTransactionDTO(transactionDAO, parentConcepts)
+                );
 
             const transactionDTOs = parentConcepts.map((concept) => ({
                 ...concept,
-                children: childrenConcepts.filter((children) => children.parent.id === concept.id),
+                children: childrenConcepts.filter(
+                    (children) => children.parent.id === concept.id
+                ),
             }));
 
             resolve(transactionDTOs);
@@ -33,18 +45,45 @@ async function get() {
 }
 
 //TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
-async function create() {}
+async function create({ concept }) {
+    return transaction.CashTransactionConcept.findOrCreate({
+        description: concept.description,
+        parentId: concept.parent.id,
+        transactionTypeId: concept.transactionType.id,
+        userAssignable: concept.userAssignable,
+    });
+}
 //TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
-async function update() {}
+async function update({ concept }) {
+    return transaction.CashTransactionConcept.update(
+        {
+            description: concept.description,
+            parentId: concept.parent ? concept.parent.id : null,
+            transactionTypeId: concept.transactionType.id,
+            userAssignable: concept.userAssignable,
+            updatedAt: null,
+        },
+        { where: { id: concept.id } }
+    );
+}
 //TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
-async function remove() {}
+async function disable({ concept }) {}
+async function enable({ concept }) {}
 
 function toTransactionDTO(transactionDAO, parentConcepts = []) {
     return {
         id: transactionDAO.id,
         description: transactionDAO.description,
-        transactionType: _transactionTypes.filter((transactionType) => transactionDAO.transactionTypeId === transactionType.id)[0],
-        parent: parentConcepts.length === 0 ? null : parentConcepts.filter((parent) => parent.id === transactionDAO.parentId)[0],
+        transactionType: _transactionTypes.filter(
+            (transactionType) =>
+                transactionDAO.transactionTypeId === transactionType.id
+        )[0],
+        parent:
+            parentConcepts.length === 0
+                ? null
+                : parentConcepts.filter(
+                      (parent) => parent.id === transactionDAO.parentId
+                  )[0],
         userAssignable: !!transactionDAO.userAssignable,
         children: [],
     };

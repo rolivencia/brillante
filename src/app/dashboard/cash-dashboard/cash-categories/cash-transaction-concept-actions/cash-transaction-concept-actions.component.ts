@@ -9,6 +9,7 @@ import {
 import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@app/_models/cash-transaction';
+import { CashConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-categories/cash-concepts.http.service';
 
 @Component({
     selector: 'app-cash-transaction-concept-actions',
@@ -25,7 +26,10 @@ export class CashTransactionConceptActionsComponent
     };
     editModeSubscription: Subscription;
 
-    constructor(private cashCategoriesService: CashCategoriesService) {}
+    constructor(
+        private cashCategoriesService: CashCategoriesService,
+        private cashConceptsHttpService: CashConceptsHttpService
+    ) {}
 
     ngOnInit(): void {
         this.editModeSubscription = this.cashCategoriesService.editMode.subscribe(
@@ -44,9 +48,10 @@ export class CashTransactionConceptActionsComponent
         //TODO: Implement method
     }
 
-    save() {
+    async save() {
         //TODO: Implement method
         console.log(this.concept);
+        const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
     }
 
     toggleEditMode(editModeStatus: boolean, concept: TransactionConcept) {
