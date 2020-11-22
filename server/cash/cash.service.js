@@ -1,4 +1,5 @@
 const cash = require('server/cash/cash.model');
+const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
 const user = require('server/users/user.model');
 
 const Sequelize = require('sequelize');
@@ -122,13 +123,13 @@ function cashGetDefinition() {
     return [
         {
             as: 'concept',
-            model: cash.TransactionConcept,
+            model: transaction.CashTransactionConcept,
             required: true,
             attributes: ['id', 'description', 'userAssignable'],
             include: [
                 {
                     as: 'parent',
-                    model: cash.TransactionConcept,
+                    model: transaction.CashTransactionConcept,
                     required: false,
                     attributes: ['id', 'description', 'userAssignable'],
                 },

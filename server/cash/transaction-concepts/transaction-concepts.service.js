@@ -61,7 +61,6 @@ async function update({ concept }) {
             parentId: concept.parent ? concept.parent.id : null,
             transactionTypeId: concept.transactionType.id,
             userAssignable: concept.userAssignable,
-            updatedAt: null,
         },
         { where: { id: concept.id } }
     );

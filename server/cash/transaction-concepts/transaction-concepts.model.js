@@ -13,6 +13,7 @@ CashTransactionConcept.init(
             allowNull: false,
             primaryKey: true,
             field: 'transaction_concept_id',
+            autoIncrement: true,
         },
         description: {
             type: Sequelize.STRING,
@@ -36,7 +37,17 @@ CashTransactionConcept.init(
         },
     },
     {
+        timestamps: false,
         sequelize: sequelizeConnector,
         modelName: 'sh_tab_transaction_concept',
     }
 );
+
+CashTransactionConcept.belongsTo(CashTransactionConcept, {
+    as: 'parent',
+    foreignKey: 'transaction_parent_concept_id',
+});
+CashTransactionConcept.hasOne(CashTransactionConcept, {
+    as: 'children',
+    foreignKey: 'transaction_concept_id',
+});

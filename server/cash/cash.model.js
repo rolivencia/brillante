@@ -4,10 +4,10 @@ const sequelizeConnector = connector.sequelizeConnector();
 const repair = require('server/repair/repair.model');
 
 const user = require('server/users/user.model');
+const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
 
 class CashTransaction extends Sequelize.Model {}
 class RepairCashTransaction extends Sequelize.Model {}
-class TransactionConcept extends Sequelize.Model {}
 class TransactionType extends Sequelize.Model {}
 
 CashTransaction.init(
@@ -74,42 +74,6 @@ CashTransaction.init(
     }
 );
 
-TransactionConcept.init(
-    {
-        id: {
-            type: Sequelize.SMALLINT,
-            autoIncrement: true,
-            primaryKey: true,
-            field: 'transaction_concept_id',
-        },
-        description: {
-            type: Sequelize.TEXT,
-            allowNull: false,
-            field: 'description',
-        },
-        parentConceptId: {
-            type: Sequelize.SMALLINT,
-            allowNull: true,
-            field: 'transaction_parent_concept_id',
-        },
-        transactionTypeId: {
-            type: Sequelize.SMALLINT,
-            allowNull: true,
-            field: 'transaction_type_id',
-        },
-        userAssignable: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false,
-            field: 'user_assignable',
-        },
-    },
-    {
-        timestamps: false,
-        sequelize: sequelizeConnector,
-        modelName: 'sh_tab_transaction_concept',
-    }
-);
-
 RepairCashTransaction.init(
     {
         id: {
@@ -168,19 +132,16 @@ TransactionType.init(
 RepairCashTransaction.belongsTo(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
 RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repair_id' });
 
-TransactionConcept.belongsTo(TransactionConcept, { as: 'parent', foreignKey: 'transaction_parent_concept_id' });
-TransactionConcept.hasOne(TransactionConcept, { as: 'children', foreignKey: 'transaction_concept_id' });
-
 CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'transaction_id' });
 repair.Repair.hasOne(RepairCashTransaction, { as: 'repairCashTransaction', foreignKey: 'repair_id' });
 
-CashTransaction.belongsTo(TransactionConcept, { as: 'concept', foreignKey: 'transaction_concept_id' });
-TransactionConcept.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_concept_id' });
+CashTransaction.belongsTo(transaction.CashTransactionConcept, { as: 'concept', foreignKey: 'transaction_concept_id' });
+transaction.CashTransactionConcept.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_concept_id' });
 
 CashTransaction.belongsTo(user.User, { as: 'user', foreignKey: 'created_user_id' });
 user.User.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
 
-TransactionConcept.belongsTo(TransactionType, { as: 'transactionType', foreignKey: 'transaction_type_id' });
-TransactionType.hasMany(TransactionConcept, { as: 'transaction', foreignKey: 'transaction_type_id' });
+transaction.CashTransactionConcept.belongsTo(TransactionType, { as: 'transactionType', foreignKey: 'transaction_type_id' });
+TransactionType.hasMany(transaction.CashTransactionConcept, { as: 'transaction', foreignKey: 'transaction_type_id' });
 
-module.exports = { CashTransaction, RepairCashTransaction, TransactionConcept, TransactionType };
+module.exports = { CashTransaction, RepairCashTransaction, TransactionType };
