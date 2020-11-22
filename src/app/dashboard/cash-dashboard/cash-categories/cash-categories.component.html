@@ -3,7 +3,6 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div>Gestión de Conceptos de Transacciones de Caja</div>
-                <div>Mostrar deshabilitados</div>
             </div>
             <div id="cash-categories" class="card-body">
                 <app-cash-transaction-concept-input-group
@@ -11,25 +10,18 @@
                     [label]="'Concepto'"
                     [itemsSource]="cashCategoriesService.transactionConcepts"
                     [concept]="cashCategoriesService.transactionParentConcept"
-                    (conceptChanged)="
-                        cashCategoriesService.transactionParentConcept = $event
-                    "
+                    (conceptChanged)="changeParentConcept($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
+
                 <app-cash-transaction-concept-input-group
-                    *ngIf="
-                        cashCategoriesService.transactionParentConcept.children
-                            .length > 0
-                    "
+                    *ngIf="cashCategoriesService.transactionParentConcept.children.length > 0"
                     [canEditType]="false"
                     [label]="'Subconcepto'"
-                    [itemsSource]="
-                        cashCategoriesService.transactionParentConcept.children
-                    "
+                    [itemsSource]="cashCategoriesService.transactionParentConcept.children"
                     [concept]="cashCategoriesService.transactionConcept"
-                    (conceptChanged)="
-                        cashCategoriesService.transactionConcept = $event
-                    "
+                    [showSiblingsGrid]="true"
+                    (conceptChanged)="cashCategoriesService.transactionConcept = $event"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
             </div>

@@ -1,47 +1,25 @@
 <div class="row w-100">
-    <div class="col-1">
-        <label><b>ID:</b></label>
-        <div class="input-group input-group-sm">
-            <label>{{ transactionConcept.id }}</label>
-        </div>
-    </div>
-    <div class="col-5">
+    <div *ngIf="showDescriptionLabel || editMode" class="col-6">
         <label><b>Descripción:</b></label>
         <div class="input-group input-group-sm">
             <input
-                *ngIf="
-                    editMode.value &&
-                    editMode.concept.id === transactionConcept.id
-                "
+                *ngIf="editMode.value && editMode.concept.id === transactionConcept.id"
                 class="form-control"
                 [(ngModel)]="transactionConcept.description"
             />
-            <label
-                *ngIf="
-                    !editMode.value ||
-                    editMode.concept.id !== transactionConcept.id
-                "
-                >{{ transactionConcept.description }}</label
-            >
+            <label *ngIf="!editMode.value || editMode.concept.id !== transactionConcept.id">{{
+                transactionConcept.description
+            }}</label>
         </div>
     </div>
     <div class="col-4">
         <label><b>Tipo de Transacción:</b></label>
         <div class="input-group input-group-sm">
-            <label
-                *ngIf="
-                    !canEditType ||
-                    !editMode.value ||
-                    editMode.concept.id !== transactionConcept.id
-                "
-                >{{ transactionConcept.transactionType.description }}</label
-            >
+            <label *ngIf="!canEditType || !editMode.value || editMode.concept.id !== transactionConcept.id">{{
+                transactionConcept.transactionType.description
+            }}</label>
             <wj-combo-box
-                *ngIf="
-                    canEditType &&
-                    editMode.value &&
-                    editMode.concept.id === transactionConcept.id
-                "
+                *ngIf="canEditType && editMode.value && editMode.concept.id === transactionConcept.id"
                 class="form-control form-control-sm p-0"
                 [(ngModel)]="transactionConcept.transactionType"
                 [isEditable]="false"

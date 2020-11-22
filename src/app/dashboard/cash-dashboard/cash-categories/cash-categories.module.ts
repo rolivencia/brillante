@@ -8,6 +8,8 @@ import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 import { CashTransactionConceptActionsComponent } from './cash-transaction-concept-actions/cash-transaction-concept-actions.component';
 import { CashTransactionConceptInputGroupComponent } from './cash-transaction-concept-input-group/cash-transaction-concept-input-group.component';
 import { CashConceptsHttpService } from './cash-concepts.http.service';
+import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
+import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
 
 @NgModule({
     declarations: [
@@ -16,12 +18,7 @@ import { CashConceptsHttpService } from './cash-concepts.http.service';
         CashTransactionConceptActionsComponent,
         CashTransactionConceptInputGroupComponent,
     ],
-    imports: [
-        CommonModule,
-        CashCategoriesRoutingModule,
-        FormsModule,
-        WjInputModule,
-    ],
+    imports: [CommonModule, CashCategoriesRoutingModule, FormsModule, WjInputModule, WjGridModule, WjGridFilterModule],
     providers: [CashConceptsHttpService],
 })
 export class CashCategoriesModule {}

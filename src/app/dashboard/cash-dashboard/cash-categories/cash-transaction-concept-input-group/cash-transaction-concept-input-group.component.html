@@ -1,10 +1,43 @@
+<div *ngIf="showSiblingsGrid">
+    <wj-flex-grid
+        id="subconcepts-grid"
+        #conceptsGrid
+        [itemsSource]="conceptsCollection"
+        [selectionMode]="'Row'"
+        [headersVisibility]="'Column'"
+        [autoGenerateColumns]="false"
+        [allowResizing]="'Columns'"
+        [showSelectedHeaders]="'Row'"
+        [isReadOnly]="true"
+        (selectionChanged)="gridSelectionChange(conceptsCollection.currentItem)"
+    >
+        <wj-flex-grid-filter></wj-flex-grid-filter>
+        <wj-flex-grid-column
+            *ngFor="let column of conceptsGridColumns"
+            [width]="column.width"
+            [binding]="column.binding"
+            [header]="column.header"
+            [visible]="true"
+        >
+        </wj-flex-grid-column>
+    </wj-flex-grid>
+</div>
+
 <div class="row">
-    <div class="col-3 d-flex align-items-center">
+    <div class="col-1 d-flex align-items-center">
+        <div class="px-2 flex-grow-1">
+            <label><b>ID:</b></label>
+            <div class="input-group input-group-sm">
+                <label>{{ concept.id }}</label>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!showSiblingsGrid" class="col-2 d-flex align-items-center">
         <div class="px-2 flex-grow-1">
             <label
-                ><b>{{ label }}</b></label
+                ><b>{{ label }}:</b></label
             >
-            <div class="input-group input-group-sm mb-2">
+            <div class="input-group input-group-sm">
                 <wj-combo-box
                     class="form-control form-control-sm p-0"
                     [(ngModel)]="concept"
@@ -20,17 +53,16 @@
             </div>
         </div>
     </div>
-    <div class="col-8 d-flex align-items-center">
+    <div [ngClass]="{ 'col-8': !showSiblingsGrid, 'col-11': showSiblingsGrid }" class="col-8 d-flex align-items-center">
         <app-cash-transaction-concept-info
             *ngIf="concept && concept.id"
             class="w-100"
+            [showDescriptionLabel]="showSiblingsGrid"
             [canEditType]="canEditType"
             [transactionConcept]="concept"
         ></app-cash-transaction-concept-info>
     </div>
     <div class="col-1 d-flex justify-content-end">
-        <app-cash-transaction-concept-actions
-            [concept]="concept"
-        ></app-cash-transaction-concept-actions>
+        <app-cash-transaction-concept-actions [concept]="concept"></app-cash-transaction-concept-actions>
     </div>
 </div>
