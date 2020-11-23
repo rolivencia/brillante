@@ -30,7 +30,14 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(true);
-        this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts.slice(0, 1).pop();
+        this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts
+            .slice(0, 1)
+            .pop();
+        this.cashFormHandlerService.cashTransaction.concept = this.cashFormHandlerService.transactionParentConcept.children
+            .slice(0, 1)
+            .pop();
+        this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
+        this.cashFormHandlerService.patch();
     }
 
     ngAfterViewInit() {

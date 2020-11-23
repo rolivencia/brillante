@@ -29,11 +29,11 @@
                             id="concept"
                             name="concept"
                             aria-describedby="concept"
-                            formControlName="concept"
                             [isEditable]="false"
                             [isReadOnly]="cashFormHandlerService.saved"
                             [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
                             [selectedItem]="cashFormHandlerService.cashTransaction.concept"
+                            [selectedIndex]="cashFormHandlerService.cashTransaction.concept.id"
                             [displayMemberPath]="'description'"
                         >
                         </wj-combo-box>
@@ -44,11 +44,17 @@
                             *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
                             class="badge p-2 w-100"
                             [ngClass]="{
-                                'badge-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
-                                'badge-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                'badge-danger':
+                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
+                                'badge-success':
+                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 1
                             }"
                         >
-                            {{ cashFormHandlerService.transactionParentConcept.transactionType.id === 1 ? '💰 Ingreso' : '💸 Egreso' }}
+                            {{
+                                cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                    ? '💰 Ingreso'
+                                    : '💸 Egreso'
+                            }}
                         </span>
                         <!-- TODO: Think about filtering the concept list depending on the transaction type also -->
                         <!--  <wj-combo-box
@@ -69,7 +75,9 @@ formControlName="type"
                     <label><b>Monto:</b></label>
                     <div
                         class="text-danger"
-                        *ngIf="this.cashFormHandlerService.submitted && cashFormHandlerService.cashControl['amount'].errors"
+                        *ngIf="
+                            this.cashFormHandlerService.submitted && cashFormHandlerService.cashControl['amount'].errors
+                        "
                     >
                         <small>Ingrese un monto válido</small>
                     </div>
@@ -83,12 +91,15 @@ formControlName="type"
                     <label><b>Nota:</b></label>
                     <div
                         class="text-danger"
-                        *ngIf="this.cashFormHandlerService.submitted && cashFormHandlerService.cashControl['note'].errors"
+                        *ngIf="
+                            this.cashFormHandlerService.submitted && cashFormHandlerService.cashControl['note'].errors
+                        "
                     >
                         <small>Ingrese una nota descriptiva con 10 caracteres o más</small>
                     </div>
                     <div class="input-group input-group-sm pb-0 mb-2">
-                        <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note"> </textarea>
+                        <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note">
+                        </textarea>
                     </div>
                     <label><b>Fecha y Hora:</b></label>
                     <div class="input-group input-group-sm">
