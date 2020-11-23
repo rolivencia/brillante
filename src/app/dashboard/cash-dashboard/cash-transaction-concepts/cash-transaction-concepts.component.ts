@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
+import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
 
 @Component({
     selector: 'app-cash-categories',
-    templateUrl: './cash-categories.component.html',
-    styleUrls: ['./cash-categories.component.scss'],
+    templateUrl: './cash-transaction-concepts.component.html',
+    styleUrls: ['./cash-transaction-concepts.component.scss'],
 })
-export class CashCategoriesComponent implements OnInit {
-    constructor(public cashCategoriesService: CashCategoriesService) {}
+export class CashTransactionConceptsComponent implements OnInit {
+    constructor(public cashCategoriesService: CashTransactionConceptsService) {}
 
     ngOnInit(): void {
         this.cashCategoriesService.transactionParentConcept = this.cashCategoriesService.transactionConcepts
@@ -24,5 +24,9 @@ export class CashCategoriesComponent implements OnInit {
 
     changeSelectedConcept(event) {
         this.cashCategoriesService.transactionConcept = event;
+    }
+
+    onDataChanged(event) {
+        console.log(event);
     }
 }

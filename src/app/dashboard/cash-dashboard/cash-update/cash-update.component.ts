@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {CashCategoriesService} from "@app/dashboard/cash-dashboard/cash-categories/cash-categories.service";
+import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
 
 @Component({
     selector: 'app-cash-update',
@@ -16,26 +16,26 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     constructor(
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
-        private cashCategoriesService: CashCategoriesService,
+        private cashCategoriesService: CashTransactionConceptsService,
         private route: ActivatedRoute,
         private router: Router
     ) {}
 
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(true);
-          const cashTransaction = this.route.snapshot.data['cashTransaction'];
-          if (cashTransaction) {
+        const cashTransaction = this.route.snapshot.data['cashTransaction'];
+        if (cashTransaction) {
             this.cashFormHandlerService.saved = false;
             this.cashFormHandlerService.cashTransaction = cashTransaction;
             // Assign parent transaction concept for usage in the update form
             this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts.filter(
-              (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
+                (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
             )[0];
             // Assign date
             this.dateTime = this.cashFormHandlerService.cashTransaction.date.toDate();
             this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
             this.cashFormHandlerService.patch();
-          }
+        }
     }
 
     ngOnDestroy(): void {

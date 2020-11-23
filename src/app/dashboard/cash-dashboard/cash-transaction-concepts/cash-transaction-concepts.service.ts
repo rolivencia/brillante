@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
     providedIn: 'root',
 })
-export class CashCategoriesService {
+export class CashTransactionConceptsService {
     get saved(): boolean {
         return this._saved;
     }

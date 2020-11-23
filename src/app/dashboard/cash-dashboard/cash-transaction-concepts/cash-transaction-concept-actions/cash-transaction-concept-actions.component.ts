@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
+import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@app/_models/cash-transaction';
-import { CashConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-categories/cash-concepts.http.service';
+import { CashTransactionConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -21,8 +21,8 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
     editModeSubscription: Subscription;
 
     constructor(
-        private cashCategoriesService: CashCategoriesService,
-        private cashConceptsHttpService: CashConceptsHttpService,
+        private cashCategoriesService: CashTransactionConceptsService,
+        private cashConceptsHttpService: CashTransactionConceptsHttpService,
         private toastrService: ToastrService
     ) {}
 

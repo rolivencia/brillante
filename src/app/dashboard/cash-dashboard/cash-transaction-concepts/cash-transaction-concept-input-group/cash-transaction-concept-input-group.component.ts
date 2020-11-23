@@ -1,4 +1,4 @@
-import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
+import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
 import { CollectionView } from '@grapecity/wijmo';
 import {
     ChangeDetectionStrategy,
@@ -46,7 +46,7 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
         { header: 'Status', binding: 'enabled', width: '*' },
     ];
 
-    constructor(public cashCategoriesService: CashCategoriesService) {}
+    constructor(public cashCategoriesService: CashTransactionConceptsService) {}
 
     ngOnInit(): void {
         this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {

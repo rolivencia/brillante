@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 import { AuthenticationService } from '@app/_services';
 import { User } from '@app/_models';
 import * as moment from 'moment';
-import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
+import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
 
 @Component({
     selector: 'app-cash-add-new',
@@ -19,7 +19,7 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     public currentUser: User;
 
     constructor(
-        public cashCategoriesService: CashCategoriesService,
+        public cashCategoriesService: CashTransactionConceptsService,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private router: Router,

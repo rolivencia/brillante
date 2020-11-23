@@ -52,7 +52,9 @@ const routes: Routes = [
                     {
                         path: 'categories',
                         loadChildren: () =>
-                            import('./cash-categories/cash-categories.module').then((m) => m.CashCategoriesModule),
+                            import('./cash-transaction-concepts/cash-transaction-concepts.module').then(
+                                (m) => m.CashTransactionConceptsModule
+                            ),
                         resolve: {
                             concepts: CashDashboardResolverService,
                         },
