@@ -1,11 +1,10 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import {
-    TransactionConcept,
-    TransactionType,
-} from '@app/_models/cash-transaction';
+import { TransactionConcept, TransactionType } from '@app/_models/cash-transaction';
 import { Behavior } from 'popper.js';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '@environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -32,9 +31,7 @@ export class CashCategoriesService {
     private _transactionConcepts: TransactionConcept[] = [];
     private _selectableTransactionConcepts: TransactionConcept[] = [];
 
-    public editMode: BehaviorSubject<
-        { value: boolean } & { concept: TransactionConcept }
-    > = new BehaviorSubject<
+    public editMode: BehaviorSubject<{ value: boolean } & { concept: TransactionConcept }> = new BehaviorSubject<
         { value: boolean } & { concept: TransactionConcept }
     >({
         value: false,
@@ -52,9 +49,13 @@ export class CashCategoriesService {
 
     private _saved: boolean = false;
 
-    constructor() {}
+    constructor(private http: HttpClient) {}
 
-    initialize(concepts: TransactionConcept[]) {
+    public getConcepts(): Observable<TransactionConcept[]> {
+        return this.http.get<TransactionConcept[]>(`${environment.apiUrl}/cash/transaction/get`);
+    }
+
+    public assign(concepts: TransactionConcept[]) {
         this._transactionConcepts = _.cloneDeep(concepts);
 
         const selectableParentTransactionConcepts: TransactionConcept[] = concepts.filter(
@@ -62,20 +63,19 @@ export class CashCategoriesService {
         );
 
         selectableParentTransactionConcepts.forEach((parentConcept) => {
-            parentConcept.children = parentConcept.children.filter(
-                (childrenConcept) => childrenConcept.userAssignable
-            );
+            parentConcept.children = parentConcept.children.filter((childrenConcept) => childrenConcept.userAssignable);
         });
 
-        this._selectableTransactionConcepts = [].concat(
-            selectableParentTransactionConcepts
-        );
+        this._selectableTransactionConcepts = [].concat(selectableParentTransactionConcepts);
+    }
+
+    public async reloadConcepts() {
+        const response: TransactionConcept[] = await this.getConcepts().toPromise();
+        this.assign(response);
     }
 
     updateTransactionType(updated: TransactionConcept) {
-        this.transactionParentConcept.transactionType = _.cloneDeep(
-            updated.transactionType
-        );
+        this.transactionParentConcept.transactionType = _.cloneDeep(updated.transactionType);
     }
 
     log(toPrint) {

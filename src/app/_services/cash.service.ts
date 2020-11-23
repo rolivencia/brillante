@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import {Moment} from 'moment';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {AuthenticationService} from '@app/_services/authentication.service';
-import {User} from '@app/_models';
-import {environment} from '@environments/environment';
-import {map} from 'rxjs/operators';
-import {CashTransaction, TransactionConcept} from '@app/_models/cash-transaction';
+import { Moment } from 'moment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthenticationService } from '@app/_services/authentication.service';
+import { User } from '@app/_models';
+import { environment } from '@environments/environment';
+import { map } from 'rxjs/operators';
+import { CashTransaction, TransactionConcept } from '@app/_models/cash-transaction';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -25,7 +25,9 @@ export class CashService {
             .get<CashTransaction[]>(`${environment.apiUrl}/cash`, { headers: headers, params: params })
             .pipe(
                 map((cashTransactionsDTO): CashTransaction[] =>
-                    cashTransactionsDTO.map((cashTransactionDTO): CashTransaction => toCashTransaction(cashTransactionDTO))
+                    cashTransactionsDTO.map(
+                        (cashTransactionDTO): CashTransaction => toCashTransaction(cashTransactionDTO)
+                    )
                 )
             );
     }
@@ -40,16 +42,15 @@ export class CashService {
         return this.http.delete<any>(`${environment.apiUrl}/cash/remove/${id}`);
     }
 
-    public getConcepts(): Observable<TransactionConcept[]> {
-        return this.http.get<TransactionConcept[]>(`${environment.apiUrl}/cash/transaction/get`, { headers: headers });
-    }
-
     public create(transaction: CashTransaction, user: User): Observable<CashTransaction> {
-        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/create`, { transaction: transaction, user: user });
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/create`, {
+            transaction: transaction,
+            user: user,
+        });
     }
 
     public openCashRegister(user: User) {
-        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, {user: user});
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, { user: user });
     }
 
     // TODO: Finish implementation (add CronJob + Manual)

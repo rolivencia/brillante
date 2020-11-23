@@ -11,6 +11,7 @@
                     [itemsSource]="cashCategoriesService.transactionConcepts"
                     [concept]="cashCategoriesService.transactionParentConcept"
                     (conceptChanged)="changeParentConcept($event)"
+                    (conceptEdited)="onDataChanged($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
 
@@ -22,6 +23,7 @@
                     [concept]="cashCategoriesService.transactionConcept"
                     [showSiblingsGrid]="true"
                     (conceptChanged)="cashCategoriesService.transactionConcept = $event"
+                    (conceptEdited)="onDataChanged($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
             </div>

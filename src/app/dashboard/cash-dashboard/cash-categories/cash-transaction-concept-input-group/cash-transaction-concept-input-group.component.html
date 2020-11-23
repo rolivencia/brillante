@@ -114,5 +114,8 @@
         </div>
     </div>
 
-    <app-cash-transaction-concept-actions [concept]="concept"></app-cash-transaction-concept-actions>
+    <app-cash-transaction-concept-actions
+        [concept]="concept"
+        (dataChanged)="onDataChange($event)"
+    ></app-cash-transaction-concept-actions>
 </div>

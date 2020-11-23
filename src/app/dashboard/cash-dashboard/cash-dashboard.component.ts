@@ -4,6 +4,8 @@ import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DateHandlerService } from '@app/_services/date-handler.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '@app/_services';
+import { EUser } from '@app/_enums/user.enum';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -12,8 +14,10 @@ import { Router } from '@angular/router';
 })
 export class CashDashboardComponent implements OnInit {
     editMode: boolean;
+    displayManagementHeader: boolean = false;
 
     constructor(
+        public authenticationService: AuthenticationService,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private dateHandlerService: DateHandlerService,
@@ -21,12 +25,22 @@ export class CashDashboardComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.cashDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
-        this.cashDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(this.cashDashboardService.date);
+        this.cashDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(
+            this.cashDashboardService.date
+        );
+        this.cashDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(
+            this.cashDashboardService.date
+        );
         this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
 
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;
+        });
+
+        this.authenticationService.currentUser.subscribe((user) => {
+            this.displayManagementHeader =
+                user.roles.map((role) => role.id).filter((roleId) => [EUser.ADMIN, EUser.OWNER].includes(roleId))
+                    .length > 0;
         });
     }
 

@@ -41,6 +41,7 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
         const result = await this.cashConceptsHttpService.create(this.concept).toPromise();
         if (result.pop()) {
             this.toastrService.success(`Nuevo concepto agregado con ID: ${this.concept.id}.`);
+            this.dataChanged.emit(this.concept);
         } else {
             this.toastrService.error(`Error al agregar el nuevo concepto.`);
         }
@@ -53,9 +54,11 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
         const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
         if (result.pop()) {
             this.toastrService.info(`Concepto ID: ${this.concept.id} actualizado correctamente.`);
+            this.dataChanged.emit(this.concept);
         } else {
             this.toastrService.error(`Error al actualizar el concepto ID: ${this.concept.id}.`);
         }
+
         this.toggleEditMode(false, null);
         //TODO: Add transaction concepts reload
         // TODO:Add form checking

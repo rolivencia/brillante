@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
+import { Component, OnInit } from '@angular/core';
 import { CashCategoriesService } from '@app/dashboard/cash-dashboard/cash-categories/cash-categories.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-cash-categories',

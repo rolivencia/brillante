@@ -26,6 +26,7 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     @Input() showSiblingsGrid: boolean = false;
 
     @Output() conceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+    @Output() conceptEdited: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     editMode: boolean = false;
     editedConcept: TransactionConcept = null;
@@ -66,6 +67,10 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
         if (concept) {
             this.concept = concept;
         }
+    }
+
+    onDataChange($event: TransactionConcept) {
+        this.conceptEdited.emit($event);
     }
 
     onSelectionChange($event: TransactionConcept) {

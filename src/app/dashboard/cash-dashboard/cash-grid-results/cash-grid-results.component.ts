@@ -1,11 +1,21 @@
 import * as moment from 'moment';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
 import { FlexGrid } from '@grapecity/wijmo.grid';
 import { CashTransaction } from '@app/_models/cash-transaction';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from '@app/_services';
+import { EUser } from '@app/_enums/user.enum';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -22,6 +32,7 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
 
     public editMode: boolean = false;
     public loading: boolean = false;
+    public canUserNavigateDates: boolean = false;
 
     private editModeSubscription: Subscription;
     private loadingSubscription: Subscription;
@@ -36,7 +47,12 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
         { header: 'Hora', binding: 'date', width: 60 },
     ];
 
-    constructor(public cashDashboardService: CashDashboardService, private changeDetectorRef: ChangeDetectorRef, private router: Router) {}
+    constructor(
+        public authenticationService: AuthenticationService,
+        public cashDashboardService: CashDashboardService,
+        private changeDetectorRef: ChangeDetectorRef,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         this.editModeSubscription = this.cashDashboardService.editMode.subscribe((result) => {
@@ -46,6 +62,12 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
         this.loadingSubscription = this.cashDashboardService.loading.subscribe((result) => {
             this.loading = result;
             this.changeDetectorRef.detectChanges();
+        });
+        this.authenticationService.currentUser.subscribe((user) => {
+            this.canUserNavigateDates =
+                user.roles
+                    .map((role) => role.id)
+                    .filter((roleId) => [EUser.ADMIN, EUser.COUNTER_CLERK, EUser.OWNER].includes(roleId)).length > 0;
         });
     }
 

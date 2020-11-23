@@ -2,32 +2,37 @@ import { CashDashboardComponent } from '@app/dashboard/cash-dashboard/cash-dashb
 import { CashDashboardResolverService } from './cash-dashboard.resolver.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CashRolesGuard } from '../../_services/cash-roles-guard.service';
 
 const routes: Routes = [
     {
         path: '',
         component: CashDashboardComponent,
-        resolve: {
-            concepts: CashDashboardResolverService,
-        },
         children: [
             {
                 path: 'manage',
                 children: [
                     {
                         path: 'grid',
-                        loadChildren: () => import('./cash-grid-results/cash-grid-results.module').then((m) => m.CashGridResultsModule),
+                        loadChildren: () =>
+                            import('./cash-grid-results/cash-grid-results.module').then((m) => m.CashGridResultsModule),
+                        resolve: {
+                            concepts: CashDashboardResolverService,
+                        },
                         outlet: 'left',
                     },
                     {
                         path: 'selected',
                         loadChildren: () =>
-                            import('./cash-selected-details/cash-selected-details.module').then((m) => m.CashSelectedDetailsModule),
+                            import('./cash-selected-details/cash-selected-details.module').then(
+                                (m) => m.CashSelectedDetailsModule
+                            ),
                         outlet: 'right',
                     },
                     {
                         path: 'add',
-                        loadChildren: () => import('./cash-add-new/cash-add-new.module').then((m) => m.CashAddNewModule),
+                        loadChildren: () =>
+                            import('./cash-add-new/cash-add-new.module').then((m) => m.CashAddNewModule),
                         outlet: 'right',
                     },
                     {
@@ -38,11 +43,20 @@ const routes: Routes = [
                     {
                         path: 'report',
                         loadChildren: () => import('./cash-report/cash-report.module').then((m) => m.CashReportModule),
+                        resolve: {
+                            concepts: CashDashboardResolverService,
+                        },
+                        canActivate: [CashRolesGuard],
                         outlet: 'top',
                     },
                     {
                         path: 'categories',
-                        loadChildren: () => import('./cash-categories/cash-categories.module').then((m) => m.CashCategoriesModule),
+                        loadChildren: () =>
+                            import('./cash-categories/cash-categories.module').then((m) => m.CashCategoriesModule),
+                        resolve: {
+                            concepts: CashDashboardResolverService,
+                        },
+                        canActivate: [CashRolesGuard],
                         outlet: 'top',
                     },
                 ],
