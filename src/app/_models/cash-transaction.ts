@@ -47,6 +47,8 @@ export class TransactionConcept {
     public children: TransactionConcept[];
     public userAssignable: boolean;
     public audit?: Audit;
+    public enabled: boolean;
+    public modifiable: boolean;
 
     constructor(
         id?: number,
@@ -54,7 +56,9 @@ export class TransactionConcept {
         transactionType?: TransactionType,
         parent: TransactionConcept = null,
         children: [] = [],
-        userAssignable: boolean = true
+        userAssignable: boolean = true,
+        enabled: boolean = true,
+        modifiable: boolean = true
     ) {
         this.id = id;
         this.description = description;
@@ -62,5 +66,7 @@ export class TransactionConcept {
         this.parent = parent;
         this.children = children;
         this.userAssignable = userAssignable;
+        this.modifiable = modifiable;
+        this.enabled = enabled;
     }
 }

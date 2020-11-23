@@ -24,22 +24,24 @@
         </button>
     </ng-container>
 
+  <ng-container *ngIf="concept.modifiable">
     <button
-        *ngIf="!editMode.value && !editMode.concept"
-        class="btn btn-block btn-sm btn-outline-primary"
-        (click)="toggleEditMode(true, concept)"
+      *ngIf="!editMode.value && !editMode.concept"
+      class="btn btn-block btn-sm btn-outline-primary"
+      (click)="toggleEditMode(true, concept)"
     >
-        Editar
+      Editar
     </button>
 
     <!-- Habilitar/Deshabilitar -->
     <!-- TODO: Enable the trigger status feature -->
     <button
-        *ngIf="!editMode.value"
-        class="btn btn-block btn-sm btn-outline-danger"
-        (click)="toggleStatus()"
-        [disabled]="true"
+      *ngIf="!editMode.value"
+      class="btn btn-block btn-sm btn-outline-danger"
+      (click)="toggleStatus()"
+      [disabled]="true"
     >
-        {{ concept.audit?.enabled ? 'Deshabilitar' : 'Habilitar' }}
+      {{ concept.audit?.enabled ? 'Deshabilitar' : 'Habilitar' }}
     </button>
+  </ng-container>
 </div>

@@ -1,6 +1,5 @@
 import { CashCategoriesComponent } from './cash-categories.component';
 import { CashCategoriesRoutingModule } from './cash-categories-routing.module';
-import { CashTransactionConceptInfoComponent } from './cash-transaction-concept-info/cash-transaction-concept-info.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -14,7 +13,6 @@ import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
 @NgModule({
     declarations: [
         CashCategoriesComponent,
-        CashTransactionConceptInfoComponent,
         CashTransactionConceptActionsComponent,
         CashTransactionConceptInputGroupComponent,
     ],

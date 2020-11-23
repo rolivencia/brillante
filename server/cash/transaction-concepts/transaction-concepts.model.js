@@ -35,6 +35,16 @@ CashTransactionConcept.init(
             allowNull: false,
             field: 'user_assignable',
         },
+        enabled: {
+            type: Sequelize.SMALLINT,
+            allowNull: false,
+            field: 'enabled',
+        },
+        modifiable: {
+            type: Sequelize.SMALLINT,
+            allowNull: false,
+            field: 'modifiable',
+        },
     },
     {
         timestamps: false,

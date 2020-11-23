@@ -4,13 +4,7 @@ module.exports = { create, get, update, disable, enable };
 
 async function get() {
     const transactionDAOs = await transaction.CashTransactionConcept.findAll({
-        attributes: [
-            'id',
-            'description',
-            'parentId',
-            'transactionTypeId',
-            'userAssignable',
-        ],
+        attributes: ['id', 'description', 'parentId', 'transactionTypeId', 'userAssignable', 'enabled', 'modifiable'],
         order: [['description', 'ASC']],
     });
 
@@ -22,19 +16,13 @@ async function get() {
                 .map((transactionDAO) => toTransactionDTO(transactionDAO, []));
 
             const childrenConcepts = transactionDAOs
-                .filter(
-                    (transactionDAO) => !!transactionDAO.dataValues.parentId
-                )
+                .filter((transactionDAO) => !!transactionDAO.dataValues.parentId)
                 .map((transactionDAO) => transactionDAO.dataValues)
-                .map((transactionDAO) =>
-                    toTransactionDTO(transactionDAO, parentConcepts)
-                );
+                .map((transactionDAO) => toTransactionDTO(transactionDAO, parentConcepts));
 
             const transactionDTOs = parentConcepts.map((concept) => ({
                 ...concept,
-                children: childrenConcepts.filter(
-                    (children) => children.parent.id === concept.id
-                ),
+                children: childrenConcepts.filter((children) => children.parent.id === concept.id),
             }));
 
             resolve(transactionDTOs);
@@ -51,6 +39,8 @@ async function create({ concept }) {
         parentId: concept.parent.id,
         transactionTypeId: concept.transactionType.id,
         userAssignable: concept.userAssignable,
+        enabled: concept.enabled,
+        modifiable: concept.modifiable,
     });
 }
 //TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
@@ -74,17 +64,16 @@ function toTransactionDTO(transactionDAO, parentConcepts = []) {
         id: transactionDAO.id,
         description: transactionDAO.description,
         transactionType: _transactionTypes.filter(
-            (transactionType) =>
-                transactionDAO.transactionTypeId === transactionType.id
+            (transactionType) => transactionDAO.transactionTypeId === transactionType.id
         )[0],
         parent:
             parentConcepts.length === 0
                 ? null
-                : parentConcepts.filter(
-                      (parent) => parent.id === transactionDAO.parentId
-                  )[0],
+                : parentConcepts.filter((parent) => parent.id === transactionDAO.parentId)[0],
         userAssignable: !!transactionDAO.userAssignable,
         children: [],
+        enabled: transactionDAO.enabled,
+        modifiable: transactionDAO.modifiable,
     };
 }
 

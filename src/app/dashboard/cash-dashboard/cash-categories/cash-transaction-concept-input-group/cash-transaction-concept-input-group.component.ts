@@ -28,10 +28,10 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     @Output() conceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     editMode: boolean = false;
+    editedConcept: TransactionConcept = null;
     editModeSubscription: Subscription;
 
     conceptsCollection: CollectionView<TransactionConcept>;
-    editedConcept: TransactionConcept = null;
 
     conceptsGridColumns: any[] = [
         { header: 'ID', binding: 'id', width: 50 },
@@ -41,7 +41,8 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
             binding: 'transactionType.description',
             width: '*',
         },
-        { header: 'Status', binding: '', width: '*' },
+        { header: 'Modificable', binding: 'modifiable', width: '*' },
+        { header: 'Status', binding: 'enabled', width: '*' },
     ];
 
     constructor(public cashCategoriesService: CashCategoriesService) {}
@@ -62,7 +63,9 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     }
 
     gridSelectionChange(concept: TransactionConcept) {
-        this.concept = concept;
+        if (concept) {
+            this.concept = concept;
+        }
     }
 
     onSelectionChange($event: TransactionConcept) {
