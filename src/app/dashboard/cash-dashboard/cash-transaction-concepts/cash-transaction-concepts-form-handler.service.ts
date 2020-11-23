@@ -1,4 +1,4 @@
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -42,16 +42,16 @@ export class CashTransactionConceptsFormHandlerService implements FormHandler<Fo
 
     constructor(private formBuilder: FormBuilder, private toastrService: ToastrService) {}
 
-    public load(transactionConcept: TransactionConcept): FormGroup {
+    public load(transactionConcept: TransactionConcept = this.transactionConcept): FormGroup {
         return this.formBuilder.group({
             id: [transactionConcept.id],
-            description: [transactionConcept.description],
-            transactionType: [transactionConcept.transactionType],
+            description: [transactionConcept.description, [Validators.required, Validators.minLength(3)]],
+            transactionType: [transactionConcept.transactionType, [Validators.required]],
             parent: [transactionConcept.parent],
             children: [transactionConcept.children],
-            userAssignable: [transactionConcept.userAssignable],
-            enabled: [transactionConcept.enabled],
-            modifiable: [transactionConcept.modifiable],
+            userAssignable: [transactionConcept.userAssignable, [Validators.required]],
+            enabled: [transactionConcept.enabled, [Validators.required]],
+            modifiable: [transactionConcept.modifiable, [Validators.required]],
         });
     }
 
