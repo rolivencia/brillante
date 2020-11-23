@@ -2,33 +2,24 @@ const transaction = require('./transaction-concepts.model');
 
 module.exports = { create, get, update, disable, enable };
 
+const transactionAttributes = [
+    'id',
+    'description',
+    'parentId',
+    'transactionTypeId',
+    'userAssignable',
+    'enabled',
+    'modifiable',
+];
+
 async function get() {
     const transactionDAOs = await transaction.CashTransactionConcept.findAll({
-        attributes: ['id', 'description', 'parentId', 'transactionTypeId', 'userAssignable', 'enabled', 'modifiable'],
+        attributes: transactionAttributes,
         order: [['description', 'ASC']],
     });
 
     return new Promise((resolve, reject) => {
-        if (transactionDAOs) {
-            const parentConcepts = transactionDAOs
-                .filter((transactionDAO) => !transactionDAO.dataValues.parentId)
-                .map((transactionDAO) => transactionDAO.dataValues)
-                .map((transactionDAO) => toTransactionDTO(transactionDAO, []));
-
-            const childrenConcepts = transactionDAOs
-                .filter((transactionDAO) => !!transactionDAO.dataValues.parentId)
-                .map((transactionDAO) => transactionDAO.dataValues)
-                .map((transactionDAO) => toTransactionDTO(transactionDAO, parentConcepts));
-
-            const transactionDTOs = parentConcepts.map((concept) => ({
-                ...concept,
-                children: childrenConcepts.filter((children) => children.parent.id === concept.id),
-            }));
-
-            resolve(transactionDTOs);
-        } else {
-            reject(error);
-        }
+        transactionDAOs ? resolve(buildTransactionDTOs(transactionDAOs)) : reject(error);
     });
 }
 
@@ -43,7 +34,7 @@ async function create({ concept }) {
         modifiable: concept.modifiable,
     });
 }
-//TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
+
 async function update({ concept }) {
     return transaction.CashTransactionConcept.update(
         {
@@ -55,9 +46,23 @@ async function update({ concept }) {
         { where: { id: concept.id } }
     );
 }
-//TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
-async function disable({ concept }) {}
-async function enable({ concept }) {}
+
+async function disable({ concept }) {
+    return transaction.CashTransactionConcept.update(
+        {
+            enabled: false,
+        },
+        { where: { id: concept.id } }
+    );
+}
+async function enable({ concept }) {
+    return transaction.CashTransactionConcept.update(
+        {
+            enabled: true,
+        },
+        { where: { id: concept.id } }
+    );
+}
 
 function toTransactionDTO(transactionDAO, parentConcepts = []) {
     return {
@@ -75,6 +80,23 @@ function toTransactionDTO(transactionDAO, parentConcepts = []) {
         enabled: transactionDAO.enabled,
         modifiable: transactionDAO.modifiable,
     };
+}
+
+function buildTransactionDTOs(transactionDAOs) {
+    const parentConcepts = transactionDAOs
+        .filter((transactionDAO) => !transactionDAO.dataValues.parentId)
+        .map((transactionDAO) => transactionDAO.dataValues)
+        .map((transactionDAO) => toTransactionDTO(transactionDAO, []));
+
+    const childrenConcepts = transactionDAOs
+        .filter((transactionDAO) => !!transactionDAO.dataValues.parentId)
+        .map((transactionDAO) => transactionDAO.dataValues)
+        .map((transactionDAO) => toTransactionDTO(transactionDAO, parentConcepts));
+
+    return parentConcepts.map((concept) => ({
+        ...concept,
+        children: childrenConcepts.filter((children) => children.parent.id === concept.id),
+    }));
 }
 
 //TODO: See Issue #74. Refactor hardcoded transaction type handling.

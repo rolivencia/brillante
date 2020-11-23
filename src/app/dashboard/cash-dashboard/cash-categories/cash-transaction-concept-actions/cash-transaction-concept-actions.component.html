@@ -1,7 +1,7 @@
 <div class="h-100 d-flex flex-column justify-content-center">
     <!-- Agregado de nuevas -->
     <button
-        *ngIf="!editMode.value"
+        *ngIf="((concept.parent && concept.parent.userAssignable) || !concept.parent) && !editMode.value"
         class="btn btn-block btn-sm btn-outline-success"
         (click)="create()"
     >
@@ -10,38 +10,30 @@
 
     <!-- Edición y descarte-->
     <ng-container *ngIf="editMode.value && editMode.concept.id === concept.id">
-        <button
-            class="btn btn-block btn-sm btn-outline-success"
-            (click)="save()"
-        >
-            Guardar
-        </button>
-        <button
-            class="btn btn-block btn-sm btn-outline-primary"
-            (click)="toggleEditMode(false, null)"
-        >
+        <button class="btn btn-block btn-sm btn-outline-success" (click)="save()">Guardar</button>
+        <button class="btn btn-block btn-sm btn-outline-primary" (click)="toggleEditMode(false, null)">
             Descartar
         </button>
     </ng-container>
 
-  <ng-container *ngIf="concept.modifiable">
-    <button
-      *ngIf="!editMode.value && !editMode.concept"
-      class="btn btn-block btn-sm btn-outline-primary"
-      (click)="toggleEditMode(true, concept)"
-    >
-      Editar
-    </button>
+    <ng-container *ngIf="concept.modifiable">
+        <button
+            *ngIf="!editMode.value && !editMode.concept"
+            class="btn btn-block btn-sm btn-outline-primary"
+            (click)="toggleEditMode(true, concept)"
+        >
+            Editar
+        </button>
 
-    <!-- Habilitar/Deshabilitar -->
-    <!-- TODO: Enable the trigger status feature -->
-    <button
-      *ngIf="!editMode.value"
-      class="btn btn-block btn-sm btn-outline-danger"
-      (click)="toggleStatus()"
-      [disabled]="true"
-    >
-      {{ concept.audit?.enabled ? 'Deshabilitar' : 'Habilitar' }}
-    </button>
-  </ng-container>
+        <!-- Habilitar/Deshabilitar -->
+        <!-- TODO: Enable the trigger status feature -->
+        <button
+            *ngIf="concept.modifiable && !editMode.value"
+            [ngClass]="{ 'btn-outline-danger': concept.enabled, 'btn-outline-info': !concept.enabled }"
+            class="btn btn-block btn-sm"
+            (click)="toggleStatus()"
+        >
+            {{ concept.enabled ? 'Deshabilitar' : 'Habilitar' }}
+        </button>
+    </ng-container>
 </div>
