@@ -1,6 +1,6 @@
 <div *ngIf="showSiblingsGrid">
     <wj-flex-grid
-        id="subconcepts-grid"
+        id="concepts-grid"
         #conceptsGrid
         [selectionMode]="editMode ? 'None' : 'Row'"
         [itemsSource]="conceptsCollection"
@@ -78,7 +78,7 @@
         </div>
     </div>
     <div class="px-2 flex-grow-1">
-        <label><b>Tipo de Transacción:</b></label>
+        <label><b>Tipo:</b></label>
         <div class="input-group input-group-sm">
             <label class="mb-0" *ngIf="!canEditType || !editMode || editedConcept.id !== concept.id">{{
                 concept.transactionType.description

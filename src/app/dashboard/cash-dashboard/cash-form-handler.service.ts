@@ -18,6 +18,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     set submitted(value: boolean) {
         this._submitted = value;
     }
+
     get formGroup(): FormGroup {
         return this._formGroup;
     }
