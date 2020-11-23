@@ -72,8 +72,12 @@ export class RepairService {
                 map((historical) =>
                     historical.map((register) => ({
                         ...register,
-                        createdAt: register.createdAt ? moment(register.createdAt).format('YYYY/MM/DD HH:mm') : register.createdAt,
-                        updatedAt: register.updatedAt ? moment(register.updatedAt).format('YYYY/MM/DD HH:mm') : register.updatedAt,
+                        createdAt: register.createdAt
+                            ? moment(register.createdAt).format('YYYY/MM/DD HH:mm')
+                            : register.createdAt,
+                        updatedAt: register.updatedAt
+                            ? moment(register.updatedAt).format('YYYY/MM/DD HH:mm')
+                            : register.updatedAt,
                     }))
                 )
             );
@@ -86,11 +90,16 @@ export class RepairService {
     }
 
     public delete(id: number): Observable<{ response: string }> {
-        return this.http.delete<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, { headers: headers });
+        return this.http.delete<{ response: string }>(`${environment.apiUrl}/repair/remove/${id}`, {
+            headers: headers,
+        });
     }
 
     public create(repair: Repair, user: User) {
-        return this.http.post<any>(`${environment.apiUrl}/repair/create`, { repairToCreate: toRepairDTO(repair), user: user });
+        return this.http.post<any>(`${environment.apiUrl}/repair/create`, {
+            repairToCreate: toRepairDTO(repair),
+            user: user,
+        });
     }
 
     public updateDeviceInfo(repair: Repair) {
@@ -106,9 +115,6 @@ export class RepairService {
     }
 }
 
-/**
- * @param repairDTO
- */
 export function toRepair(repairDTO): Repair {
     return {
         ...repairDTO,

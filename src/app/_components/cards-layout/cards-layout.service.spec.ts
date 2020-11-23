@@ -6,7 +6,7 @@ describe('CardsLayoutService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: CardsLayoutService = TestBed.get(CardsLayoutService);
+        const service: CardsLayoutService = TestBed.inject(CardsLayoutService);
         expect(service).toBeTruthy();
     });
 });
