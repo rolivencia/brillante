@@ -14,11 +14,18 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
     @Input() concept: TransactionConcept;
     @Output() dataChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
+    addMode: { value: boolean } & { concept: TransactionConcept } = {
+        value: false,
+        concept: null,
+    };
+
     editMode: { value: boolean } & { concept: TransactionConcept } = {
         value: false,
         concept: null,
     };
-    editModeSubscription: Subscription;
+
+    public addModeSubscription: Subscription;
+    public editModeSubscription: Subscription;
 
     constructor(
         private cashCategoriesService: CashTransactionConceptsService,
@@ -27,6 +34,10 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
     ) {}
 
     ngOnInit(): void {
+        this.addModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
+            this.addMode.value = result.value;
+            this.addMode.concept = result.concept;
+        });
         this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
             this.editMode.value = result.value;
             this.editMode.concept = result.concept;
@@ -34,6 +45,7 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
     }
 
     ngOnDestroy(): void {
+        this.addModeSubscription.unsubscribe();
         this.editModeSubscription.unsubscribe();
     }
 

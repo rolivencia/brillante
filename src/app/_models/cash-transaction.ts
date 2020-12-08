@@ -58,15 +58,17 @@ export class TransactionConcept {
         children: [] = [],
         userAssignable: boolean = true,
         enabled: boolean = true,
-        modifiable: boolean = true
+        modifiable: boolean = true,
+        audit: Audit = null
     ) {
         this.id = id;
         this.description = description;
-        this.transactionType = transactionType;
+        this.transactionType = transactionType ? transactionType : new TransactionType();
         this.parent = parent;
-        this.children = children;
+        this.children = children ? children : [];
         this.userAssignable = userAssignable;
         this.modifiable = modifiable;
         this.enabled = enabled;
+        this.audit = audit ? audit : new Audit();
     }
 }

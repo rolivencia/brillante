@@ -29,12 +29,14 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     @Output() conceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
     @Output() conceptEdited: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
-    addMode: boolean = false;
-    editMode: boolean = false;
-    editedConcept: TransactionConcept = null;
-    editModeSubscription: Subscription;
+    public addMode: boolean = false;
+    public editMode: boolean = false;
+    public selectedConcept: TransactionConcept = null;
 
-    conceptsCollection: CollectionView<TransactionConcept>;
+    public addModeSubscription: Subscription;
+    public editModeSubscription: Subscription;
+
+    public conceptsCollection: CollectionView<TransactionConcept>;
 
     conceptsGridColumns: any[] = [
         { header: 'ID', binding: 'id', width: 50 },
@@ -48,12 +50,17 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
         { header: 'Status', binding: 'enabled', width: '*' },
     ];
 
-    constructor(public cashCategoriesService: CashTransactionConceptsService) {}
+    constructor(public cashTransactionConceptsService: CashTransactionConceptsService) {}
 
     ngOnInit(): void {
-        this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
+        this.addModeSubscription = this.cashTransactionConceptsService.addMode.subscribe((result) => {
+            this.addMode = result.value;
+            this.selectedConcept = result.concept;
+        });
+
+        this.editModeSubscription = this.cashTransactionConceptsService.editMode.subscribe((result) => {
             this.editMode = result.value;
-            this.editedConcept = result.concept;
+            this.selectedConcept = result.concept;
         });
     }
 
@@ -62,6 +69,7 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     }
 
     ngOnDestroy() {
+        this.addModeSubscription.unsubscribe();
         this.editModeSubscription.unsubscribe();
     }
 
@@ -73,5 +81,9 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
 
     onDataChange($event: TransactionConcept) {
         this.conceptEdited.emit($event);
+    }
+
+    onSelectionChange($event: TransactionConcept) {
+        this.conceptChanged.emit($event);
     }
 }

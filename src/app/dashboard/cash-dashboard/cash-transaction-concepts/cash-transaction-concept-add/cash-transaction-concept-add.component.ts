@@ -1,6 +1,6 @@
 import { CashTransactionConceptsFormHandlerService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts-form-handler.service';
 import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@app/_models/cash-transaction';
 
@@ -10,10 +10,11 @@ import { TransactionConcept } from '@app/_models/cash-transaction';
     styleUrls: ['./cash-transaction-concept-add.component.scss'],
 })
 export class CashTransactionConceptAddComponent implements OnInit, OnDestroy {
-    concept: TransactionConcept;
-    editMode: boolean = false;
-    editedConcept: TransactionConcept = null;
-    editModeSubscription: Subscription;
+    @Input() label: string = '';
+
+    concept: TransactionConcept = new TransactionConcept();
+    addMode: boolean = false;
+    addModeModeSubscription: Subscription;
 
     constructor(
         public cashTransactionConceptsFormHandlerService: CashTransactionConceptsFormHandlerService,
@@ -21,13 +22,14 @@ export class CashTransactionConceptAddComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
-            this.editMode = result.value;
+        this.addModeModeSubscription = this.cashCategoriesService.addMode.subscribe((result) => {
+            this.addMode = result.value;
+            this.concept = result.concept;
         });
     }
 
     ngOnDestroy() {
-        this.editModeSubscription.unsubscribe();
+        this.addModeModeSubscription.unsubscribe();
         //TODO: Add removal of editMode
     }
 

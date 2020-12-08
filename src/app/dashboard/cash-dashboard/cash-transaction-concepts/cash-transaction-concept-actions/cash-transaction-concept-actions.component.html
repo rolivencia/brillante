@@ -8,6 +8,14 @@
         Agregar
     </button>
 
+    <!-- Agregado y descarte-->
+    <ng-container *ngIf="addMode.value">
+        <button class="btn btn-block btn-sm btn-outline-success" (click)="save()">Guardar</button>
+        <button class="btn btn-block btn-sm btn-outline-primary" (click)="toggleEditMode(false, null)">
+            Descartar
+        </button>
+    </ng-container>
+
     <!-- Edición y descarte-->
     <ng-container *ngIf="editMode.value && editMode.concept.id === concept.id">
         <button class="btn btn-block btn-sm btn-outline-success" (click)="save()">Guardar</button>

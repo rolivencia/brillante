@@ -4,28 +4,7 @@
             ><b>{{ label }}:</b></label
         >
         <div class="input-group input-group-sm">
-            <wj-combo-box
-                *ngIf="!editMode && !showSiblingsGrid"
-                class="form-control form-control-sm p-0"
-                [(ngModel)]="concept"
-                [isEditable]="false"
-                [isDisabled]="editMode"
-                [isReadOnly]="editMode"
-                [itemsSource]="itemsSource"
-                [selectedItem]="concept"
-                [displayMemberPath]="'description'"
-                (ngModelChange)="onSelectionChange($event)"
-            >
-            </wj-combo-box>
-            <label *ngIf="(!editMode && showSiblingsGrid) || (editedConcept && editedConcept.id !== concept.id)">{{
-                concept.description
-            }}</label>
-
-            <input
-                *ngIf="editMode && editedConcept.id === concept.id"
-                class="form-control"
-                [(ngModel)]="concept.description"
-            />
+            <input class="form-control" [(ngModel)]="concept.description" />
         </div>
     </div>
     <div class="px-2 flex-grow-1">

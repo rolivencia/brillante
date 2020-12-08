@@ -4,7 +4,18 @@
             ><b>{{ label }}:</b></label
         >
         <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.description }}</label>
+            <wj-combo-box
+                *ngIf="!showSiblingsGrid && !editMode"
+                class="form-control form-control-sm p-0"
+                [(ngModel)]="concept"
+                [isEditable]="false"
+                [itemsSource]="itemsSource"
+                [selectedItem]="concept"
+                [displayMemberPath]="'description'"
+                (ngModelChange)="onSelectionChange($event)"
+            >
+            </wj-combo-box>
+            <label *ngIf="showSiblingsGrid || editMode" class="mb-0">{{ concept.description }}</label>
         </div>
     </div>
 

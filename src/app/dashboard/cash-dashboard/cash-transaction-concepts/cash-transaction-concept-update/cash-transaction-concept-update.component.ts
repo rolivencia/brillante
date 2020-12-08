@@ -41,8 +41,4 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy,
     ngOnDestroy() {
         this.editModeSubscription.unsubscribe();
     }
-
-    onSelectionChange($event: TransactionConcept) {
-        this.conceptChanged.emit($event);
-    }
 }
