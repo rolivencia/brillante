@@ -64,6 +64,16 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
         // TODO:Add form checking
     }
 
+    toggleAddMode(addModeStatus: boolean) {
+        const concept = new TransactionConcept();
+        concept.parent = this.concept.parent;
+
+        this.cashCategoriesService.addMode.next({
+            value: addModeStatus,
+            concept: concept,
+        });
+    }
+
     toggleEditMode(editModeStatus: boolean, concept: TransactionConcept) {
         this.cashCategoriesService.editMode.next({
             value: editModeStatus,

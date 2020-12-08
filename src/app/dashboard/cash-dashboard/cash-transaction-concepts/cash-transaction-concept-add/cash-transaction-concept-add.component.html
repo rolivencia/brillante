@@ -1,1 +1,63 @@
-<p>cash-transaction-concept-add works!</p>
+<div class="d-flex justify-content-between align-items-center">
+    <div class="pr-2 flex-grow-1">
+        <label
+            ><b>{{ label }}:</b></label
+        >
+        <div class="input-group input-group-sm">
+            <input class="form-control" [(ngModel)]="concept.description" />
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Tipo:</b></label>
+        <div class="input-group input-group-sm">
+            <wj-combo-box
+                class="form-control form-control-sm p-0"
+                [(ngModel)]="concept.transactionType"
+                [isEditable]="false"
+                [itemsSource]="cashCategoriesService.transactionTypes"
+                [selectedIndex]="concept.transactionType.id"
+                [selectedItem]="concept.transactionType"
+                [displayMemberPath]="'description'"
+            ></wj-combo-box>
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Modificable:</b></label>
+        <div class="input-group input-group-sm">
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="modifiable"
+                    [(ngModel)]="concept.modifiable"
+                />
+                <label class="form-check-label" for="modifiable"> Modificable </label>
+            </div>
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Asignable:</b></label>
+        <div class="input-group input-group-sm">
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="userAssignable"
+                    [(ngModel)]="concept.userAssignable"
+                />
+                <label class="form-check-label" for="userAssignable"> Asignable por usuario </label>
+            </div>
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Status:</b></label>
+        <div class="input-group input-group-sm">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="status" [(ngModel)]="concept.status" />
+                <label class="form-check-label" for="status"> Habilitado </label>
+            </div>
+        </div>
+    </div>
+</div>

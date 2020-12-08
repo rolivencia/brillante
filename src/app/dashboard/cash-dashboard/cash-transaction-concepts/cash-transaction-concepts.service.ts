@@ -31,6 +31,13 @@ export class CashTransactionConceptsService {
     private _transactionConcepts: TransactionConcept[] = [];
     private _selectableTransactionConcepts: TransactionConcept[] = [];
 
+    public addMode: BehaviorSubject<{ value: boolean } & { concept: TransactionConcept }> = new BehaviorSubject<
+        { value: boolean } & { concept: TransactionConcept }
+    >({
+        value: false,
+        concept: null,
+    });
+
     public editMode: BehaviorSubject<{ value: boolean } & { concept: TransactionConcept }> = new BehaviorSubject<
         { value: boolean } & { concept: TransactionConcept }
     >({

@@ -12,6 +12,7 @@ import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
 import { CashTransactionConceptUpdateComponent } from './cash-transaction-concept-update/cash-transaction-concept-update.component';
 import { CashTransactionConceptAddComponent } from './cash-transaction-concept-add/cash-transaction-concept-add.component';
 import { CashTransactionConceptsFormHandlerService } from './cash-transaction-concepts-form-handler.service';
+import { CashTransactionConceptInfoComponent } from './cash-transaction-concept-info/cash-transaction-concept-info.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { CashTransactionConceptsFormHandlerService } from './cash-transaction-co
         CashTransactionConceptInputGroupComponent,
         CashTransactionConceptUpdateComponent,
         CashTransactionConceptAddComponent,
+        CashTransactionConceptInfoComponent,
     ],
     imports: [
         CommonModule,

@@ -3,7 +3,7 @@
     <button
         *ngIf="((concept.parent && concept.parent.userAssignable) || !concept.parent) && !editMode.value"
         class="btn btn-block btn-sm btn-outline-success"
-        (click)="create()"
+        (click)="toggleAddMode(true)"
     >
         Agregar
     </button>

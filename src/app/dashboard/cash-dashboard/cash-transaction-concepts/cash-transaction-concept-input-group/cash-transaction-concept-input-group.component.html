@@ -1,7 +1,6 @@
 <div *ngIf="showSiblingsGrid">
     <wj-flex-grid
         id="concepts-grid"
-        #conceptsGrid
         [selectionMode]="editMode ? 'None' : 'Row'"
         [itemsSource]="conceptsCollection"
         [selectionMode]="'Row'"
@@ -42,78 +41,22 @@
 </div>
 
 <div class="d-flex justify-content-between align-items-center">
-    <div class="pr-2 flex-grow-1">
-        <label
-            ><b>{{ label }}:</b></label
-        >
-        <div class="input-group input-group-sm">
-            <wj-combo-box
-                *ngIf="!editMode && !showSiblingsGrid"
-                class="form-control form-control-sm p-0"
-                [(ngModel)]="concept"
-                [isEditable]="false"
-                [isDisabled]="editMode"
-                [isReadOnly]="editMode"
-                [itemsSource]="itemsSource"
-                [selectedItem]="concept"
-                [displayMemberPath]="'description'"
-                (ngModelChange)="onSelectionChange($event)"
-            >
-            </wj-combo-box>
-            <label *ngIf="(!editMode && showSiblingsGrid) || (editedConcept && editedConcept.id !== concept.id)">{{
-                concept.description
-            }}</label>
-
-            <input
-                *ngIf="editMode && editedConcept.id === concept.id"
-                class="form-control"
-                [(ngModel)]="concept.description"
-            />
-        </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>ID:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.id }}</label>
-        </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Tipo:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0" *ngIf="!canEditType || !editMode || editedConcept.id !== concept.id">{{
-                concept.transactionType.description
-            }}</label>
-            <wj-combo-box
-                *ngIf="canEditType && editMode && editedConcept.id === concept.id"
-                class="form-control form-control-sm p-0"
-                [(ngModel)]="concept.transactionType"
-                [isEditable]="false"
-                [itemsSource]="cashCategoriesService.transactionTypes"
-                [selectedIndex]="concept.transactionType.id"
-                [selectedItem]="concept.transactionType"
-                [displayMemberPath]="'description'"
-            ></wj-combo-box>
-        </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Modificable:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.modifiable ? 'Sí' : 'No' }}</label>
-        </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Asignable:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.userAssignable ? 'Sí' : 'No' }}</label>
-        </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Status:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.enabled ? 'Habilitado' : 'Deshabilitado' }}</label>
-        </div>
-    </div>
-
+    <app-cash-transaction-concept-info
+        *ngIf="!addMode && !editMode"
+        class="w-100"
+        [concept]="concept"
+        [label]="label"
+    ></app-cash-transaction-concept-info>
+    <app-cash-transaction-concept-add *ngIf="addMode"></app-cash-transaction-concept-add>
+    <app-cash-transaction-concept-update
+        *ngIf="editMode"
+        class="w-100"
+        [canEditType]="false"
+        [label]="label"
+        [concept]="concept"
+        [itemsSource]="itemsSource"
+    >
+    </app-cash-transaction-concept-update>
     <app-cash-transaction-concept-actions
         [concept]="concept"
         (dataChanged)="onDataChange($event)"

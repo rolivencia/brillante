@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between align-items-center">
+    <div class="pr-2 flex-grow-1">
+        <label
+            ><b>{{ label }}:</b></label
+        >
+        <div class="input-group input-group-sm">
+            <label class="mb-0">{{ concept.description }}</label>
+        </div>
+    </div>
+
+    <div class="px-2 flex-grow-1">
+        <label><b>ID:</b></label>
+        <div class="input-group input-group-sm">
+            <label class="mb-0">{{ concept.id }}</label>
+        </div>
+    </div>
+
+    <div class="px-2 flex-grow-1">
+        <label><b>Tipo:</b></label>
+        <div class="input-group input-group-sm">
+            <label class="mb-0">{{ concept.transactionType.description }}</label>
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Modificable:</b></label>
+        <div class="input-group input-group-sm">
+            <label class="mb-0">{{ concept.modifiable ? 'Sí' : 'No' }}</label>
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Asignable:</b></label>
+        <div class="input-group input-group-sm">
+            <label class="mb-0">{{ concept.userAssignable ? 'Sí' : 'No' }}</label>
+        </div>
+    </div>
+    <div class="px-2 flex-grow-1">
+        <label><b>Status:</b></label>
+        <div class="input-group input-group-sm">
+            <label class="mb-0">{{ concept.enabled ? 'Habilitado' : 'Deshabilitado' }}</label>
+        </div>
+    </div>
+</div>
