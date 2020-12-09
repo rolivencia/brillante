@@ -45,7 +45,7 @@
         *ngIf="
             (!addMode && !editMode) ||
             (editMode && selectedConcept.id !== concept.id) ||
-            (addMode && selectedConcept.parent?.id !== concept.parent?.id)
+            (addMode && selectedConcept && concept && selectedConcept.parent?.id !== concept.parent?.id)
         "
         class="w-100"
         [concept]="concept"
@@ -58,10 +58,10 @@
         (selectionChanged)="onSelectionChange($event)"
     ></app-cash-transaction-concept-info>
     <app-cash-transaction-concept-add
-        *ngIf="addMode && selectedConcept.parent?.id === concept.parent?.id"
+        *ngIf="addMode && (selectedConcept?.parent?.id === concept?.parent?.id || !concept)"
         class="w-100"
         [label]="label"
-        [parent]="concept.parent"
+        [parent]="parent"
     >
     </app-cash-transaction-concept-add>
     <app-cash-transaction-concept-update

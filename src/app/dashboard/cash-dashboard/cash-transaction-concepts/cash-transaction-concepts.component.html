@@ -8,21 +8,21 @@
                 <app-cash-transaction-concept-input-group
                     [canEditType]="false"
                     [label]="'Concepto'"
-                    [itemsSource]="cashCategoriesService.transactionConcepts"
-                    [concept]="cashCategoriesService.transactionParentConcept"
+                    [itemsSource]="cashTransactionConceptsService.transactionConcepts"
+                    [concept]="cashTransactionConceptsService.transactionParentConcept"
                     (conceptChanged)="changeParentConcept($event)"
                     (conceptEdited)="onDataChanged($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
 
                 <app-cash-transaction-concept-input-group
-                    *ngIf="cashCategoriesService.transactionParentConcept.children.length > 0"
                     [canEditType]="false"
                     [label]="'Subconcepto'"
-                    [itemsSource]="cashCategoriesService.transactionParentConcept.children"
-                    [concept]="cashCategoriesService.transactionConcept"
+                    [itemsSource]="cashTransactionConceptsService.transactionParentConcept.children"
+                    [concept]="cashTransactionConceptsService.transactionConcept"
+                    [parent]="cashTransactionConceptsService.transactionParentConcept"
                     [showSiblingsGrid]="true"
-                    (conceptChanged)="cashCategoriesService.transactionConcept = $event"
+                    (conceptChanged)="changeSelectedConcept($event)"
                     (conceptEdited)="onDataChanged($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />

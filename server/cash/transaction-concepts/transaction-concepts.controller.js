@@ -6,6 +6,7 @@ router.get('/get', get);
 router.put('/update', update);
 router.put('/enable', enable);
 router.put('/disable', disable);
+router.post('/create', create);
 
 module.exports = router;
 
@@ -13,6 +14,13 @@ function get(req, res, next) {
     transactionConceptsService
         .get()
         .then((concepts) => res.json(concepts))
+        .catch((err) => next(err));
+}
+
+function create(req, res, next) {
+    transactionConceptsService
+        .create(req.body)
+        .then((result) => res.json(result))
         .catch((err) => next(err));
 }
 

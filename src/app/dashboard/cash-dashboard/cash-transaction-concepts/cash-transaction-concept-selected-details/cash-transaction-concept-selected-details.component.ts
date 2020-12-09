@@ -37,7 +37,9 @@ export class CashTransactionConceptSelectedDetailsComponent implements OnInit, O
 
     enableAddMode() {
         const concept = new TransactionConcept();
-        concept.parent = this.concept.parent;
+        concept.parent = this.concept
+            ? this.concept.parent
+            : this.cashTransactionConceptsService.transactionParentConcept;
 
         this.cashTransactionConceptsService.addMode.next({
             value: true,

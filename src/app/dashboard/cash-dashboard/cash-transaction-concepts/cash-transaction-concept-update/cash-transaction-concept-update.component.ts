@@ -53,7 +53,9 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
     }
 
     async save() {
-        // TODO:Add form checking
+        // TODO: Issue #77 - Make it work using the form handler service
+        // const result = await this.cashTransactionConceptsFormHandlerService.create();
+
         const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
         if (result.pop()) {
             this.toastrService.info(`Concepto ID: ${this.concept.id} actualizado correctamente.`);

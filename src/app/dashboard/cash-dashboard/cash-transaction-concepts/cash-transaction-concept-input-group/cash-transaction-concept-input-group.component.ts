@@ -20,6 +20,8 @@ import { TransactionConcept } from '@app/_models/cash-transaction';
 })
 export class CashTransactionConceptInputGroupComponent implements OnInit, OnDestroy, OnChanges {
     @Input() concept: TransactionConcept;
+    @Input() parent: TransactionConcept;
+
     @Input() itemsSource: TransactionConcept[] = [];
     @Input() label: string = '';
     @Input() canEditType: boolean = true;
@@ -74,11 +76,8 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     }
 
     gridSelectionChange(concept: TransactionConcept) {
-        if (concept) {
-            this.concept = concept;
-        }
+        this.concept = concept;
     }
-
     onDataChange($event: TransactionConcept) {
         this.conceptEdited.emit($event);
     }

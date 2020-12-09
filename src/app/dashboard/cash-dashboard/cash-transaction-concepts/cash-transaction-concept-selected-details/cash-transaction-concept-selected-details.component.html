@@ -1,67 +1,75 @@
 <div class="d-flex justify-content-between align-items-center">
-    <div class="pr-2 flex-grow-1">
+    <ng-container *ngIf="!concept">
         <label
-            ><b>{{ label }}:</b></label
+            >El concepto de primera jerarquía no tiene subconceptos hijos. Pueden agregarse clickeando
+            <b>"Agregar"</b> a la derecha.</label
         >
-        <div class="input-group input-group-sm">
-            <wj-combo-box
-                *ngIf="!showSiblingsGrid && !editMode"
-                class="form-control form-control-sm p-0"
-                [(ngModel)]="concept"
-                [isEditable]="false"
-                [itemsSource]="itemsSource"
-                [selectedItem]="concept"
-                [displayMemberPath]="'description'"
-                (ngModelChange)="onSelectionChange($event)"
+    </ng-container>
+    <ng-container *ngIf="concept">
+        <div class="pr-2 flex-grow-1">
+            <label
+                ><b>{{ label }}:</b></label
             >
-            </wj-combo-box>
-            <label *ngIf="showSiblingsGrid || editMode" class="mb-0">{{ concept.description }}</label>
+            <div class="input-group input-group-sm">
+                <wj-combo-box
+                    *ngIf="!showSiblingsGrid && !editMode"
+                    class="form-control form-control-sm p-0"
+                    [(ngModel)]="concept"
+                    [isEditable]="false"
+                    [itemsSource]="itemsSource"
+                    [selectedItem]="concept"
+                    [displayMemberPath]="'description'"
+                    (ngModelChange)="onSelectionChange($event)"
+                >
+                </wj-combo-box>
+                <label *ngIf="showSiblingsGrid || editMode" class="mb-0">{{ concept.description }}</label>
+            </div>
         </div>
-    </div>
 
-    <div class="px-2 flex-grow-1">
-        <label><b>ID:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.id }}</label>
+        <div class="px-2 flex-grow-1">
+            <label><b>ID:</b></label>
+            <div class="input-group input-group-sm">
+                <label class="mb-0">{{ concept.id }}</label>
+            </div>
         </div>
-    </div>
 
-    <div class="px-2 flex-grow-1">
-        <label><b>Tipo:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.transactionType.description }}</label>
+        <div class="px-2 flex-grow-1">
+            <label><b>Tipo:</b></label>
+            <div class="input-group input-group-sm">
+                <label class="mb-0">{{ concept.transactionType.description }}</label>
+            </div>
         </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Modificable:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.modifiable ? 'Sí' : 'No' }}</label>
+        <div class="px-2 flex-grow-1">
+            <label><b>Modificable:</b></label>
+            <div class="input-group input-group-sm">
+                <label class="mb-0">{{ concept.modifiable ? 'Sí' : 'No' }}</label>
+            </div>
         </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Asignable:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.userAssignable ? 'Sí' : 'No' }}</label>
+        <div class="px-2 flex-grow-1">
+            <label><b>Asignable:</b></label>
+            <div class="input-group input-group-sm">
+                <label class="mb-0">{{ concept.userAssignable ? 'Sí' : 'No' }}</label>
+            </div>
         </div>
-    </div>
-    <div class="px-2 flex-grow-1">
-        <label><b>Status:</b></label>
-        <div class="input-group input-group-sm">
-            <label class="mb-0">{{ concept.enabled ? 'Habilitado' : 'Deshabilitado' }}</label>
+        <div class="px-2 flex-grow-1">
+            <label><b>Status:</b></label>
+            <div class="input-group input-group-sm">
+                <label class="mb-0">{{ concept.enabled ? 'Habilitado' : 'Deshabilitado' }}</label>
+            </div>
         </div>
-    </div>
+    </ng-container>
 
     <div *ngIf="!addMode && !editMode" class="d-block">
         <!-- Agregado de nuevas -->
         <button
-            *ngIf="(concept.parent && concept.parent.userAssignable) || !concept.parent"
+            *ngIf="!concept || (concept.parent && concept.parent.userAssignable) || !concept.parent"
             class="btn btn-block btn-sm btn-outline-success"
             (click)="enableAddMode()"
         >
             Agregar
         </button>
 
-        <ng-container *ngIf="concept.modifiable">
+        <ng-container *ngIf="concept?.modifiable">
             <button class="btn btn-block btn-sm btn-outline-primary" (click)="enableEditMode()">Editar</button>
 
             <!-- Habilitar/Deshabilitar -->

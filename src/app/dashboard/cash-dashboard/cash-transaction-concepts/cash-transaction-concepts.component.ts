@@ -7,23 +7,23 @@ import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/ca
     styleUrls: ['./cash-transaction-concepts.component.scss'],
 })
 export class CashTransactionConceptsComponent implements OnInit {
-    constructor(public cashCategoriesService: CashTransactionConceptsService) {}
+    constructor(public cashTransactionConceptsService: CashTransactionConceptsService) {}
 
     ngOnInit(): void {
-        this.cashCategoriesService.transactionParentConcept = this.cashCategoriesService.transactionConcepts
+        this.cashTransactionConceptsService.transactionParentConcept = this.cashTransactionConceptsService.transactionConcepts
             .slice(0, 1)
             .pop();
-        this.cashCategoriesService.transactionConcept = this.cashCategoriesService.transactionParentConcept.children
+        this.cashTransactionConceptsService.transactionConcept = this.cashTransactionConceptsService.transactionParentConcept.children
             .slice(0, 1)
             .pop();
     }
 
     changeParentConcept(event) {
-        this.cashCategoriesService.transactionParentConcept = event;
+        this.cashTransactionConceptsService.transactionParentConcept = event;
     }
 
     changeSelectedConcept(event) {
-        this.cashCategoriesService.transactionConcept = event;
+        this.cashTransactionConceptsService.transactionConcept = event;
     }
 
     onDataChanged(event) {

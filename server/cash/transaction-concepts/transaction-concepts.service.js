@@ -25,9 +25,9 @@ async function get() {
 
 //TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
 async function create({ concept }) {
-    return transaction.CashTransactionConcept.findOrCreate({
+    return transaction.CashTransactionConcept.create({
         description: concept.description,
-        parentId: concept.parent.id,
+        parentId: concept.parent ? concept.parent.id : null,
         transactionTypeId: concept.transactionType.id,
         userAssignable: concept.userAssignable,
         enabled: concept.enabled,

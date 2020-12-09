@@ -3,6 +3,7 @@ import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/ca
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@app/_models/cash-transaction';
+import { CashTransactionConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
 
 @Component({
     selector: 'app-cash-transaction-concept-add',
@@ -21,13 +22,23 @@ export class CashTransactionConceptAddComponent implements OnInit {
 
     constructor(
         public cashTransactionConceptsFormHandlerService: CashTransactionConceptsFormHandlerService,
-        public cashTransactionConceptsService: CashTransactionConceptsService
+        public cashTransactionConceptsService: CashTransactionConceptsService,
+        private cashTransactionConceptsHttpService: CashTransactionConceptsHttpService
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.concept.transactionType = [].concat(this.cashTransactionConceptsService.transactionTypes).pop();
+        if (this.parent) {
+            this.concept.parent = this.parent; // Contemplates case where parent has no children and concept no siblings
+        }
+    }
 
     public async create() {
-        const result = await this.cashTransactionConceptsFormHandlerService.create();
+        // TODO: Issue #77 - Make it work using the form handler service
+        // const result = await this.cashTransactionConceptsFormHandlerService.create();
+
+        const result = await this.cashTransactionConceptsHttpService.create(this.concept).toPromise();
+
         if (result) {
             this.cashTransactionConceptsService.addMode.next({
                 value: false,
