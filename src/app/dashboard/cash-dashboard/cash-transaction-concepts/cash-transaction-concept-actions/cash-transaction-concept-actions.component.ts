@@ -62,20 +62,6 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
         // TODO:Add form checking
     }
 
-    async save() {
-        const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
-        if (result.pop()) {
-            this.toastrService.info(`Concepto ID: ${this.concept.id} actualizado correctamente.`);
-            this.dataChanged.emit(this.concept);
-        } else {
-            this.toastrService.error(`Error al actualizar el concepto ID: ${this.concept.id}.`);
-        }
-
-        this.toggleEditMode(false, null);
-        //TODO: Add transaction concepts reload
-        // TODO:Add form checking
-    }
-
     toggleAddMode(addModeStatus: boolean) {
         const concept = new TransactionConcept();
         concept.parent = this.concept.parent;
@@ -91,23 +77,5 @@ export class CashTransactionConceptActionsComponent implements OnInit, OnDestroy
             value: editModeStatus,
             concept: concept,
         });
-    }
-
-    async toggleStatus() {
-        const result = this.concept.enabled
-            ? await this.cashConceptsHttpService.disable(this.concept).toPromise()
-            : await this.cashConceptsHttpService.enable(this.concept).toPromise();
-
-        if (result.pop()) {
-            this.concept.enabled = !this.concept.enabled; // Toggle status to opposite if update was done in DB
-            this.toastrService.info(
-                `Concepto ID: ${this.concept.id} ${
-                    this.concept.enabled ? 'habilitado' : 'deshabilitado'
-                } correctamente.`
-            );
-            this.dataChanged.emit(this.concept);
-        } else {
-            this.toastrService.error(`Error al actualizar status del concepto ID: ${this.concept.id}.`);
-        }
     }
 }

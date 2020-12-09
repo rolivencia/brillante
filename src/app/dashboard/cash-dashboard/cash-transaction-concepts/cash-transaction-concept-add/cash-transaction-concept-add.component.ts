@@ -1,6 +1,6 @@
 import { CashTransactionConceptsFormHandlerService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts-form-handler.service';
 import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@app/_models/cash-transaction';
 
@@ -8,37 +8,42 @@ import { TransactionConcept } from '@app/_models/cash-transaction';
     selector: 'app-cash-transaction-concept-add',
     templateUrl: './cash-transaction-concept-add.component.html',
     styleUrls: ['./cash-transaction-concept-add.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CashTransactionConceptAddComponent implements OnInit, OnDestroy {
+export class CashTransactionConceptAddComponent implements OnInit {
     @Input() label: string = '';
+    @Input() parent: TransactionConcept;
+
+    @Output() dataChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     concept: TransactionConcept = new TransactionConcept();
     addMode: boolean = false;
-    addModeModeSubscription: Subscription;
 
     constructor(
         public cashTransactionConceptsFormHandlerService: CashTransactionConceptsFormHandlerService,
-        public cashCategoriesService: CashTransactionConceptsService
+        public cashTransactionConceptsService: CashTransactionConceptsService
     ) {}
 
-    ngOnInit(): void {
-        this.addModeModeSubscription = this.cashCategoriesService.addMode.subscribe((result) => {
-            this.addMode = result.value;
-            this.concept = result.concept;
-        });
-    }
-
-    ngOnDestroy() {
-        this.addModeModeSubscription.unsubscribe();
-        //TODO: Add removal of editMode
-    }
+    ngOnInit(): void {}
 
     public async create() {
         const result = await this.cashTransactionConceptsFormHandlerService.create();
         if (result) {
-            console.log(result);
+            this.cashTransactionConceptsService.addMode.next({
+                value: false,
+                concept: null,
+            });
         }
     }
 
-    cancel() {}
+    cancel() {
+        this.goBack();
+    }
+
+    goBack(concept: TransactionConcept = null) {
+        this.cashTransactionConceptsService.addMode.next({
+            value: false,
+            concept: concept,
+        });
+    }
 }

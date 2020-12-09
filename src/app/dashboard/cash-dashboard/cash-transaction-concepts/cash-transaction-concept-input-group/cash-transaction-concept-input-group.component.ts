@@ -86,4 +86,8 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     onSelectionChange($event: TransactionConcept) {
         this.conceptChanged.emit($event);
     }
+
+    onConceptChanged($event: TransactionConcept) {
+        // TODO: Reload data
+    }
 }

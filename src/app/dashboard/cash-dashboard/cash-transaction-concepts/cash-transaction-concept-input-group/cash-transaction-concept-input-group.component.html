@@ -42,26 +42,34 @@
 
 <div class="d-flex justify-content-between align-items-center">
     <app-cash-transaction-concept-info
-        *ngIf="(!addMode && !editMode) || (editMode && selectedConcept.id !== concept.id)"
+        *ngIf="
+            (!addMode && !editMode) ||
+            (editMode && selectedConcept.id !== concept.id) ||
+            (addMode && selectedConcept.parent?.id !== concept.parent?.id)
+        "
         class="w-100"
         [concept]="concept"
+        [addMode]="addMode"
         [editMode]="editMode"
         [itemsSource]="itemsSource"
         [label]="label"
         [showSiblingsGrid]="showSiblingsGrid"
-        (conceptChanged)="onSelectionChange($event)"
+        (conceptChanged)="onConceptChanged($event)"
+        (selectionChanged)="onSelectionChange($event)"
     ></app-cash-transaction-concept-info>
-    <app-cash-transaction-concept-add *ngIf="addMode" [label]="label"></app-cash-transaction-concept-add>
+    <app-cash-transaction-concept-add
+        *ngIf="addMode && selectedConcept.parent?.id === concept.parent?.id"
+        class="w-100"
+        [label]="label"
+        [parent]="concept.parent"
+    >
+    </app-cash-transaction-concept-add>
     <app-cash-transaction-concept-update
         *ngIf="editMode && selectedConcept.id === concept.id"
         class="w-100"
+        [concept]="concept"
         [canEditType]="false"
         [label]="label"
-        [itemsSource]="itemsSource"
     >
     </app-cash-transaction-concept-update>
-    <app-cash-transaction-concept-actions
-        [concept]="concept"
-        (dataChanged)="onDataChange($event)"
-    ></app-cash-transaction-concept-actions>
 </div>

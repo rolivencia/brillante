@@ -1,6 +1,6 @@
 import { CashTransactionConceptActionsComponent } from './cash-transaction-concept-actions/cash-transaction-concept-actions.component';
 import { CashTransactionConceptAddComponent } from './cash-transaction-concept-add/cash-transaction-concept-add.component';
-import { CashTransactionConceptInfoComponent } from './cash-transaction-concept-info/cash-transaction-concept-info.component';
+import { CashTransactionConceptSelectedDetailsComponent } from './cash-transaction-concept-selected-details/cash-transaction-concept-selected-details.component';
 import { CashTransactionConceptInputGroupComponent } from './cash-transaction-concept-input-group/cash-transaction-concept-input-group.component';
 import { CashTransactionConceptsComponent } from './cash-transaction-concepts.component';
 import { CashTransactionConceptsFormHandlerService } from './cash-transaction-concepts-form-handler.service';
@@ -21,7 +21,7 @@ import { WjInputModule } from '@grapecity/wijmo.angular2.input';
         CashTransactionConceptInputGroupComponent,
         CashTransactionConceptUpdateComponent,
         CashTransactionConceptAddComponent,
-        CashTransactionConceptInfoComponent,
+        CashTransactionConceptSelectedDetailsComponent,
     ],
     imports: [
         CommonModule,

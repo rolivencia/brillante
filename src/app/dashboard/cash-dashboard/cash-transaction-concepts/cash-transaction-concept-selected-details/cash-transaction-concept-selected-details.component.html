@@ -50,4 +50,30 @@
             <label class="mb-0">{{ concept.enabled ? 'Habilitado' : 'Deshabilitado' }}</label>
         </div>
     </div>
+
+    <div *ngIf="!addMode && !editMode" class="d-block">
+        <!-- Agregado de nuevas -->
+        <button
+            *ngIf="(concept.parent && concept.parent.userAssignable) || !concept.parent"
+            class="btn btn-block btn-sm btn-outline-success"
+            (click)="enableAddMode()"
+        >
+            Agregar
+        </button>
+
+        <ng-container *ngIf="concept.modifiable">
+            <button class="btn btn-block btn-sm btn-outline-primary" (click)="enableEditMode()">Editar</button>
+
+            <!-- Habilitar/Deshabilitar -->
+            <!-- TODO: Enable the trigger status feature -->
+            <button
+                *ngIf="concept.modifiable"
+                [ngClass]="{ 'btn-outline-danger': concept.enabled, 'btn-outline-info': !concept.enabled }"
+                class="btn btn-block btn-sm"
+                (click)="toggleStatus()"
+            >
+                {{ concept.enabled ? 'Deshabilitar' : 'Habilitar' }}
+            </button>
+        </ng-container>
+    </div>
 </div>

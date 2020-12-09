@@ -3,15 +3,16 @@ import { TransactionConcept } from '@app/_models/cash-transaction';
 import { Subscription } from 'rxjs';
 import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
 import { CollectionView } from '@grapecity/wijmo';
+import { CashTransactionConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-transaction-concept-update',
     templateUrl: './cash-transaction-concept-update.component.html',
     styleUrls: ['./cash-transaction-concept-update.component.scss'],
 })
-export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy, OnChanges {
+export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;
-    @Input() itemsSource: TransactionConcept[] = [];
     @Input() label: string = '';
     @Input() canEditType: boolean = true;
     @Input() showSiblingsGrid: boolean = false;
@@ -23,22 +24,44 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy,
     public editedConcept: TransactionConcept = null;
     public editModeSubscription: Subscription;
 
-    public conceptsCollection: CollectionView<TransactionConcept>;
-
-    constructor(public cashCategoriesService: CashTransactionConceptsService) {}
+    constructor(
+        private cashConceptsHttpService: CashTransactionConceptsHttpService,
+        public cashTransactionConceptsService: CashTransactionConceptsService,
+        private toastrService: ToastrService
+    ) {}
 
     ngOnInit(): void {
-        this.editModeSubscription = this.cashCategoriesService.editMode.subscribe((result) => {
+        this.editModeSubscription = this.cashTransactionConceptsService.editMode.subscribe((result) => {
             this.editMode = result.value;
             this.editedConcept = result.concept;
         });
     }
 
-    ngOnChanges() {
-        this.conceptsCollection = new CollectionView<TransactionConcept>(this.itemsSource);
-    }
-
     ngOnDestroy() {
         this.editModeSubscription.unsubscribe();
+    }
+
+    cancel() {
+        this.goBack();
+    }
+
+    goBack(concept: TransactionConcept = null) {
+        this.cashTransactionConceptsService.editMode.next({
+            value: false,
+            concept: concept,
+        });
+    }
+
+    async save() {
+        // TODO:Add form checking
+        const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
+        if (result.pop()) {
+            this.toastrService.info(`Concepto ID: ${this.concept.id} actualizado correctamente.`);
+            this.conceptChanged.emit(this.concept);
+        } else {
+            this.toastrService.error(`Error al actualizar el concepto ID: ${this.concept.id}.`);
+        }
+
+        this.goBack();
     }
 }

@@ -14,7 +14,7 @@
                 class="form-control form-control-sm p-0"
                 [(ngModel)]="concept.transactionType"
                 [isEditable]="false"
-                [itemsSource]="cashCategoriesService.transactionTypes"
+                [itemsSource]="cashTransactionConceptsService.transactionTypes"
                 [selectedIndex]="concept.transactionType.id"
                 [selectedItem]="concept.transactionType"
                 [displayMemberPath]="'description'"
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="px-2 flex-grow-1">
-        <label><b>Asignable:</b></label>
+        <label><b>Asignable por el usuario:</b></label>
         <div class="input-group input-group-sm">
             <div class="form-check">
                 <input
@@ -60,8 +60,18 @@
             </div>
         </div>
     </div>
+    <div class="d-block">
+        <!-- Agregado y descarte-->
+        <button class="btn btn-block btn-sm btn-outline-success" (click)="create()">Guardar</button>
+        <button class="btn btn-block btn-sm btn-outline-primary" (click)="cancel()">Descartar</button>
+    </div>
 </div>
 
-<div *ngIf="concept.parent" class="mt-2">
-    Este subconcepto será agregado como hijo del concepto <b>{{ concept.parent.description }}</b>
+<div *ngIf="!parent" class="mt-2">
+    Este concepto será agregado en el primer nivel jerárquico. Deberán agregarse luego subconceptos hijos para este
+    concepto.
+</div>
+
+<div *ngIf="parent" class="mt-2">
+    Este subconcepto será agregado como hijo del concepto <b>{{ parent.description }}</b>
 </div>

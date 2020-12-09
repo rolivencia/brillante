@@ -16,15 +16,15 @@
     <div class="px-2 flex-grow-1">
         <label><b>Tipo:</b></label>
         <div class="input-group input-group-sm">
-            <label class="mb-0" *ngIf="!canEditType || !editMode || editedConcept.id !== concept.id">{{
+            <label class="mb-0" *ngIf="!canEditType || editedConcept.id !== concept.id">{{
                 concept.transactionType.description
             }}</label>
             <wj-combo-box
-                *ngIf="canEditType && editMode && editedConcept.id === concept.id"
+                *ngIf="canEditType && editedConcept.id === concept.id"
                 class="form-control form-control-sm p-0"
                 [(ngModel)]="concept.transactionType"
                 [isEditable]="false"
-                [itemsSource]="cashCategoriesService.transactionTypes"
+                [itemsSource]="cashTransactionConceptsService.transactionTypes"
                 [selectedIndex]="concept.transactionType.id"
                 [selectedItem]="concept.transactionType"
                 [displayMemberPath]="'description'"
@@ -48,5 +48,10 @@
         <div class="input-group input-group-sm">
             <label class="mb-0">{{ concept.enabled ? 'Habilitado' : 'Deshabilitado' }}</label>
         </div>
+    </div>
+    <div class="d-block">
+        <!-- Edición y descarte-->
+        <button class="btn btn-block btn-sm btn-outline-success" (click)="save()">Guardar</button>
+        <button class="btn btn-block btn-sm btn-outline-primary" (click)="cancel()">Descartar</button>
     </div>
 </div>
