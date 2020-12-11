@@ -10,8 +10,8 @@ import { environment } from '@environments/environment';
 export class CashTransactionConceptsHttpService {
     constructor(private http: HttpClient) {}
 
-    public create(concept: TransactionConcept): Observable<TransactionConcept[]> {
-        return this.http.post<TransactionConcept[]>(`${environment.apiUrl}/cash/transaction/create`, {
+    public create(concept: TransactionConcept): Observable<TransactionConcept> {
+        return this.http.post<TransactionConcept>(`${environment.apiUrl}/cash/transaction/create`, {
             concept: concept,
         });
     }

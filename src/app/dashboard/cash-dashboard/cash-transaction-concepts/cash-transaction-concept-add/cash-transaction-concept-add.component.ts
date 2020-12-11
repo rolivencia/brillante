@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnI
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@app/_models/cash-transaction';
 import { CashTransactionConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-transaction-concept-add',
@@ -15,7 +16,7 @@ export class CashTransactionConceptAddComponent implements OnInit {
     @Input() label: string = '';
     @Input() parent: TransactionConcept;
 
-    @Output() dataChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+    @Output() created: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     concept: TransactionConcept = new TransactionConcept();
     addMode: boolean = false;
@@ -23,7 +24,8 @@ export class CashTransactionConceptAddComponent implements OnInit {
     constructor(
         public cashTransactionConceptsFormHandlerService: CashTransactionConceptsFormHandlerService,
         public cashTransactionConceptsService: CashTransactionConceptsService,
-        private cashTransactionConceptsHttpService: CashTransactionConceptsHttpService
+        private cashTransactionConceptsHttpService: CashTransactionConceptsHttpService,
+        private toastrService: ToastrService
     ) {}
 
     ngOnInit(): void {
@@ -40,10 +42,11 @@ export class CashTransactionConceptAddComponent implements OnInit {
         const result = await this.cashTransactionConceptsHttpService.create(this.concept).toPromise();
 
         if (result) {
-            this.cashTransactionConceptsService.addMode.next({
-                value: false,
-                concept: null,
-            });
+            this.created.emit(result);
+            this.toastrService.success(`El concepto ID: ${result.id} fue agregado exitosamente.`);
+            this.goBack();
+        } else {
+            this.toastrService.error(`Ocurrió un error al intentar agregar el nuevo concepto.`);
         }
     }
 

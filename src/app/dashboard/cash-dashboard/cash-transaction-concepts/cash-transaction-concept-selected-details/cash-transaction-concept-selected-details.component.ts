@@ -6,7 +6,7 @@ import { CashTransactionConceptsHttpService } from '@app/dashboard/cash-dashboar
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: 'app-cash-transaction-concept-info',
+    selector: 'app-cash-transaction-concept-details',
     templateUrl: './cash-transaction-concept-selected-details.component.html',
     styleUrls: ['./cash-transaction-concept-selected-details.component.scss'],
 })
@@ -18,7 +18,7 @@ export class CashTransactionConceptSelectedDetailsComponent implements OnInit, O
     @Input() label: string = '';
     @Input() showSiblingsGrid: boolean = false;
 
-    @Output() conceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+    @Output() statusChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
     @Output() selectionChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     public conceptsCollection: CollectionView<TransactionConcept>;
@@ -66,13 +66,15 @@ export class CashTransactionConceptSelectedDetailsComponent implements OnInit, O
                     this.concept.enabled ? 'habilitado' : 'deshabilitado'
                 } correctamente.`
             );
-            this.conceptChanged.emit(this.concept);
+            this.statusChanged.emit(this.concept);
         } else {
             this.toastrService.error(`Error al actualizar status del concepto ID: ${this.concept.id}.`);
         }
     }
 
     onSelectionChange($event: TransactionConcept) {
-        this.selectionChanged.emit($event);
+        if ($event) {
+            this.selectionChanged.emit($event);
+        }
     }
 }

@@ -20,16 +20,31 @@ import { TransactionConcept } from '@app/_models/cash-transaction';
 })
 export class CashTransactionConceptInputGroupComponent implements OnInit, OnDestroy, OnChanges {
     @Input() concept: TransactionConcept;
-    @Input() parent: TransactionConcept;
+    @Input() parent: TransactionConcept = null;
 
     @Input() itemsSource: TransactionConcept[] = [];
     @Input() label: string = '';
     @Input() canEditType: boolean = true;
     @Input() showSiblingsGrid: boolean = false;
 
-    @Output() conceptAdded: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
-    @Output() conceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+    @Output() conceptCreated: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
     @Output() conceptEdited: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+    @Output() selectedConceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+
+    get createConditions(): boolean {
+        return this.addMode && (this.selectedConcept.parent?.id === this.concept.parent?.id || !this.concept);
+    }
+    get editConditions(): boolean {
+        return this.editMode && this.selectedConcept && this.concept && this.selectedConcept.id === this.concept.id;
+    }
+
+    get detailsConditions(): boolean {
+        return (
+            (!this.addMode && !this.editMode) ||
+            (this.editMode && this.selectedConcept.id !== this.concept.id) ||
+            (this.addMode && this.selectedConcept.parent?.id !== this.concept.parent?.id)
+        );
+    }
 
     public addMode: boolean = false;
     public editMode: boolean = false;
@@ -76,17 +91,21 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     }
 
     gridSelectionChange(concept: TransactionConcept) {
-        this.concept = concept;
-    }
-    onDataChange($event: TransactionConcept) {
-        this.conceptEdited.emit($event);
+        if (concept) {
+            this.concept = concept;
+            this.selectedConceptChanged.emit(concept);
+        }
     }
 
     onSelectionChange($event: TransactionConcept) {
-        this.conceptChanged.emit($event);
+        this.selectedConceptChanged.emit($event);
     }
 
-    onConceptChanged($event: TransactionConcept) {
-        // TODO: Reload data
+    onConceptCreated($event: TransactionConcept) {
+        this.conceptCreated.emit($event);
+    }
+
+    onConceptUpdated($event: TransactionConcept) {
+        this.conceptEdited.emit($event);
     }
 }

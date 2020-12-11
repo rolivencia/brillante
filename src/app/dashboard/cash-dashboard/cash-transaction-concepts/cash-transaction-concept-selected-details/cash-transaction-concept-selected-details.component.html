@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-between align-items-center">
-    <ng-container *ngIf="!concept">
+    <ng-container *ngIf="!concept || itemsSource.length === 0">
         <label
             >El concepto de primera jerarquía no tiene subconceptos hijos. Pueden agregarse clickeando
             <b>"Agregar"</b> a la derecha.</label
         >
     </ng-container>
-    <ng-container *ngIf="concept">
+    <ng-container *ngIf="concept && itemsSource.length > 0">
         <div class="pr-2 flex-grow-1">
             <label
                 ><b>{{ label }}:</b></label
@@ -69,7 +69,7 @@
             Agregar
         </button>
 
-        <ng-container *ngIf="concept?.modifiable">
+        <ng-container *ngIf="concept && itemsSource.length > 0 && concept?.modifiable">
             <button class="btn btn-block btn-sm btn-outline-primary" (click)="enableEditMode()">Editar</button>
 
             <!-- Habilitar/Deshabilitar -->

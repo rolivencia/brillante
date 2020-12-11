@@ -10,8 +10,9 @@
                     [label]="'Concepto'"
                     [itemsSource]="cashTransactionConceptsService.transactionConcepts"
                     [concept]="cashTransactionConceptsService.transactionParentConcept"
-                    (conceptChanged)="changeParentConcept($event)"
-                    (conceptEdited)="onDataChanged($event)"
+                    (selectedConceptChanged)="changeParentConcept($event)"
+                    (conceptCreated)="onCreateParentConcept($event)"
+                    (conceptEdited)="onUpdateParentConcept($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
 
@@ -22,8 +23,9 @@
                     [concept]="cashTransactionConceptsService.transactionConcept"
                     [parent]="cashTransactionConceptsService.transactionParentConcept"
                     [showSiblingsGrid]="true"
-                    (conceptChanged)="changeSelectedConcept($event)"
-                    (conceptEdited)="onDataChanged($event)"
+                    (selectedConceptChanged)="changeSelectedConcept($event)"
+                    (conceptCreated)="onCreateConcept($event)"
+                    (conceptEdited)="onUpdateConcept($event)"
                 ></app-cash-transaction-concept-input-group>
                 <hr />
             </div>

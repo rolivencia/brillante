@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TransactionConcept } from '@app/_models/cash-transaction';
 import { Subscription } from 'rxjs';
 import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
-import { CollectionView } from '@grapecity/wijmo';
 import { CashTransactionConceptsHttpService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -10,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
     selector: 'app-cash-transaction-concept-update',
     templateUrl: './cash-transaction-concept-update.component.html',
     styleUrls: ['./cash-transaction-concept-update.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;
@@ -17,8 +17,7 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
     @Input() canEditType: boolean = true;
     @Input() showSiblingsGrid: boolean = false;
 
-    @Output() conceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
-    @Output() conceptEdited: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
+    @Output() updated: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     public editMode: boolean = false;
     public editedConcept: TransactionConcept = null;
@@ -45,10 +44,10 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
         this.goBack();
     }
 
-    goBack(concept: TransactionConcept = null) {
+    goBack() {
         this.cashTransactionConceptsService.editMode.next({
             value: false,
-            concept: concept,
+            concept: this.concept,
         });
     }
 
@@ -59,11 +58,10 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
         const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
         if (result.pop()) {
             this.toastrService.info(`Concepto ID: ${this.concept.id} actualizado correctamente.`);
-            this.conceptChanged.emit(this.concept);
+            this.updated.emit(this.concept);
+            this.goBack();
         } else {
             this.toastrService.error(`Error al actualizar el concepto ID: ${this.concept.id}.`);
         }
-
-        this.goBack();
     }
 }

@@ -1,6 +1,8 @@
 const transaction = require('./transaction-concepts.model');
+const connector = require('server/_helpers/mysql-connector');
+const sequelizeConnector = connector.sequelizeConnector();
 
-module.exports = { create, get, update, disable, enable };
+module.exports = { create, get, getById, update, disable, enable };
 
 const transactionAttributes = [
     'id',
@@ -13,7 +15,9 @@ const transactionAttributes = [
 ];
 
 async function get() {
-    const transactionDAOs = await transaction.CashTransactionConcept.findAll({
+    let transactionDAOs;
+
+    transactionDAOs = await transaction.CashTransactionConcept.findAll({
         attributes: transactionAttributes,
         order: [['description', 'ASC']],
     });
@@ -23,15 +27,57 @@ async function get() {
     });
 }
 
+async function getById(idTransactionConcept = undefined) {
+    let transactionDAOs;
+    transactionDAOs = await transaction.CashTransactionConcept.findAll({
+        where: { id: idTransactionConcept },
+        attributes: transactionAttributes,
+        order: [['description', 'ASC']],
+    });
+    return new Promise((resolve, reject) => {
+        transactionDAOs ? resolve(buildTransactionDTOs(transactionDAOs).pop()) : reject(error);
+    });
+}
+
 //TODO: Phase 2 - Implement method for CRUD of Transaction Concepts
 async function create({ concept }) {
-    return transaction.CashTransactionConcept.create({
-        description: concept.description,
-        parentId: concept.parent ? concept.parent.id : null,
-        transactionTypeId: concept.transactionType.id,
-        userAssignable: concept.userAssignable,
-        enabled: concept.enabled,
-        modifiable: concept.modifiable,
+    return new Promise(async (resolve, reject) => {
+        const t = await sequelizeConnector.transaction();
+
+        let transactionDAO;
+        let transactionDTO;
+        let parentTransactionDAO;
+        let parentTransactionDTO;
+
+        try {
+            transactionDAO = await transaction.CashTransactionConcept.create(
+                {
+                    description: concept.description,
+                    parentId: concept.parent ? concept.parent.id : null,
+                    transactionTypeId: concept.transactionType.id,
+                    userAssignable: concept.userAssignable,
+                    enabled: concept.enabled,
+                    modifiable: concept.modifiable,
+                },
+                { transaction: t }
+            );
+
+            // If parent exists, then retrieve it and set it on the returned value.
+            if (transactionDAO.dataValues.parentId) {
+                parentTransactionDAO = await getById(transactionDAO.dataValues.parentId);
+                parentTransactionDTO = toTransactionDTO(parentTransactionDAO, []);
+                transactionDTO = toTransactionDTO(transactionDAO, [parentTransactionDTO]);
+            } else {
+                transactionDTO = toTransactionDTO(transactionDAO, []);
+            }
+
+            await t.commit();
+            resolve(transactionDTO);
+        } catch (error) {
+            console.error(error);
+            await t.rollback();
+            reject(error);
+        }
     });
 }
 
