@@ -66,7 +66,9 @@
     </div>
     <div class="d-block">
         <!-- Agregado y descarte-->
-        <button class="btn btn-block btn-sm btn-outline-success" (click)="create()">Guardar</button>
+        <button class="btn btn-block btn-sm btn-outline-success" [disabled]="!concept.description" (click)="create()">
+            Guardar
+        </button>
         <button class="btn btn-block btn-sm btn-outline-primary" (click)="cancel()">Descartar</button>
     </div>
 </div>

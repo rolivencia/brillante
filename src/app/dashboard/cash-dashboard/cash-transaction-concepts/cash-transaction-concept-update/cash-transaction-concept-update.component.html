@@ -4,7 +4,7 @@
             ><b>{{ label }}:</b></label
         >
         <div class="input-group input-group-sm">
-            <input class="form-control" [(ngModel)]="concept.description" />
+            <input class="form-control" [(ngModel)]="concept.description" (di />
         </div>
     </div>
     <div class="px-2 flex-grow-1">
@@ -51,7 +51,9 @@
     </div>
     <div class="d-block">
         <!-- Edición y descarte-->
-        <button class="btn btn-block btn-sm btn-outline-success" (click)="save()">Guardar</button>
+        <button class="btn btn-block btn-sm btn-outline-success" [disabled]="!concept.description" (click)="save()">
+            Guardar
+        </button>
         <button class="btn btn-block btn-sm btn-outline-primary" (click)="cancel()">Descartar</button>
     </div>
 </div>
