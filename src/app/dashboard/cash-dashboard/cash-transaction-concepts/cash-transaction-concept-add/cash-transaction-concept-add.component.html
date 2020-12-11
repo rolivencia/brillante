@@ -49,6 +49,7 @@
                     value=""
                     id="userAssignable"
                     [(ngModel)]="concept.userAssignable"
+                    [disabled]="!concept.parent"
                 />
                 <label class="form-check-label" for="userAssignable"> Asignable por usuario </label>
             </div>

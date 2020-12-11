@@ -28,7 +28,12 @@ export class CashTransactionConceptsService {
         return this._selectableTransactionConcepts;
     }
 
+    get modifiableTransactionConcepts(): TransactionConcept[] {
+        return this._modifiableTransactionConcepts;
+    }
+
     private _transactionConcepts: TransactionConcept[] = [];
+    private _modifiableTransactionConcepts: TransactionConcept[] = [];
     private _selectableTransactionConcepts: TransactionConcept[] = [];
 
     public addMode: BehaviorSubject<{ value: boolean } & { concept: TransactionConcept }> = new BehaviorSubject<
@@ -72,6 +77,8 @@ export class CashTransactionConceptsService {
         selectableParentTransactionConcepts.forEach((parentConcept) => {
             parentConcept.children = parentConcept.children.filter((childrenConcept) => childrenConcept.userAssignable);
         });
+
+        this._modifiableTransactionConcepts = [].concat(selectableParentTransactionConcepts);
 
         this._selectableTransactionConcepts = []
             .concat(selectableParentTransactionConcepts)

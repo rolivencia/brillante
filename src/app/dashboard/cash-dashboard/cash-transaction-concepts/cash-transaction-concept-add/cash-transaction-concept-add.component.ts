@@ -33,6 +33,8 @@ export class CashTransactionConceptAddComponent implements OnInit {
         if (this.parent) {
             this.concept.parent = this.parent; // Contemplates case where parent has no children and concept no siblings
             this.concept.transactionType = this.parent.transactionType;
+        } else {
+            this.concept.userAssignable = true; // If parent concept, it should be user assignable by default.
         }
     }
 

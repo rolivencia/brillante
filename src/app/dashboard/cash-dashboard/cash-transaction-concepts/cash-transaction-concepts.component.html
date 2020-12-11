@@ -8,7 +8,7 @@
                 <app-cash-transaction-concept-input-group
                     [canEditType]="false"
                     [label]="'Concepto'"
-                    [itemsSource]="cashTransactionConceptsService.transactionConcepts"
+                    [itemsSource]="cashTransactionConceptsService.modifiableTransactionConcepts"
                     [concept]="cashTransactionConceptsService.transactionParentConcept"
                     (selectedConceptChanged)="changeParentConcept($event)"
                     (conceptCreated)="onCreateParentConcept($event)"
