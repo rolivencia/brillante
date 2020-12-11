@@ -73,7 +73,9 @@ export class CashTransactionConceptsService {
             parentConcept.children = parentConcept.children.filter((childrenConcept) => childrenConcept.userAssignable);
         });
 
-        this._selectableTransactionConcepts = [].concat(selectableParentTransactionConcepts);
+        this._selectableTransactionConcepts = []
+            .concat(selectableParentTransactionConcepts)
+            .filter((parentConcept) => parentConcept.children.length > 0);
     }
 
     public async reloadConcepts() {

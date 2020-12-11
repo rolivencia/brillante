@@ -32,18 +32,20 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
     @Output() selectedConceptChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     get createConditions(): boolean {
-        return this.addMode && (this.selectedConcept.parent?.id === this.concept.parent?.id || !this.concept);
+        const sameParents = this.selectedConcept?.parent?.id === this.concept?.parent?.id;
+        return (this.addMode && sameParents) || !this.concept;
     }
     get editConditions(): boolean {
-        return this.editMode && this.selectedConcept && this.concept && this.selectedConcept.id === this.concept.id;
+        return this.editMode && !this.detailsConditions;
     }
 
     get detailsConditions(): boolean {
-        return (
-            (!this.addMode && !this.editMode) ||
-            (this.editMode && this.selectedConcept.id !== this.concept.id) ||
-            (this.addMode && this.selectedConcept.parent?.id !== this.concept.parent?.id)
-        );
+        const diffConcept = this.selectedConcept?.id !== this.concept.id;
+        const diffParents = this.selectedConcept?.parent?.id !== this.concept?.parent?.id;
+        const isViewMode = !this.addMode && !this.editMode;
+        const notViewMode = this.editMode || this.addMode;
+
+        return isViewMode || (notViewMode && diffConcept && diffParents);
     }
 
     public addMode: boolean = false;

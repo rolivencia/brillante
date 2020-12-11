@@ -12,7 +12,7 @@
             >
             <div class="input-group input-group-sm">
                 <wj-combo-box
-                    *ngIf="!showSiblingsGrid && !editMode"
+                    *ngIf="!showSiblingsGrid && !editMode && !addMode"
                     class="form-control form-control-sm p-0"
                     [(ngModel)]="concept"
                     [isEditable]="false"
@@ -22,7 +22,7 @@
                     (ngModelChange)="onSelectionChange($event)"
                 >
                 </wj-combo-box>
-                <label *ngIf="showSiblingsGrid || editMode" class="mb-0">{{ concept.description }}</label>
+                <label *ngIf="showSiblingsGrid || editMode || addMode" class="mb-0">{{ concept.description }}</label>
             </div>
         </div>
 
