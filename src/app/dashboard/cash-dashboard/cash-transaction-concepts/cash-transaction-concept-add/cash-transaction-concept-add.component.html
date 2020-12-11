@@ -7,10 +7,12 @@
             <input class="form-control" [(ngModel)]="concept.description" />
         </div>
     </div>
+
     <div class="px-2 flex-grow-1">
         <label><b>Tipo:</b></label>
         <div class="input-group input-group-sm">
             <wj-combo-box
+                *ngIf="!concept.parent"
                 class="form-control form-control-sm p-0"
                 [(ngModel)]="concept.transactionType"
                 [isEditable]="false"
@@ -19,6 +21,7 @@
                 [selectedItem]="concept.transactionType"
                 [displayMemberPath]="'description'"
             ></wj-combo-box>
+            <div *ngIf="!!concept.parent">{{ concept.parent.transactionType.description }}</div>
         </div>
     </div>
     <div class="px-2 flex-grow-1">

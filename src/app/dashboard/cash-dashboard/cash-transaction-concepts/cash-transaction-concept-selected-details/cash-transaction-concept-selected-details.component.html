@@ -61,13 +61,7 @@
 
     <div *ngIf="!addMode && !editMode" class="d-block">
         <!-- Agregado de nuevas -->
-        <button
-            *ngIf="!concept || (concept.parent && concept.parent.userAssignable) || !concept.parent"
-            class="btn btn-block btn-sm btn-outline-success"
-            (click)="enableAddMode()"
-        >
-            Agregar
-        </button>
+        <button class="btn btn-block btn-sm btn-outline-success" (click)="enableAddMode()">Agregar</button>
 
         <ng-container *ngIf="concept && itemsSource.length > 0 && concept?.modifiable">
             <button class="btn btn-block btn-sm btn-outline-primary" (click)="enableEditMode()">Editar</button>

@@ -32,6 +32,7 @@ export class CashTransactionConceptAddComponent implements OnInit {
         this.concept.transactionType = [].concat(this.cashTransactionConceptsService.transactionTypes).pop();
         if (this.parent) {
             this.concept.parent = this.parent; // Contemplates case where parent has no children and concept no siblings
+            this.concept.transactionType = this.parent.transactionType;
         }
     }
 

@@ -33,14 +33,14 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
 
     get createConditions(): boolean {
         const sameParents = this.selectedConcept?.parent?.id === this.concept?.parent?.id;
-        return (this.addMode && sameParents) || !this.concept;
+        return ((this.addMode && sameParents) || !this.concept) && !this.detailsConditions;
     }
     get editConditions(): boolean {
         return this.editMode && !this.detailsConditions;
     }
 
     get detailsConditions(): boolean {
-        const diffConcept = this.selectedConcept?.id !== this.concept.id;
+        const diffConcept = this.selectedConcept?.id !== this.concept?.id;
         const diffParents = this.selectedConcept?.parent?.id !== this.concept?.parent?.id;
         const isViewMode = !this.addMode && !this.editMode;
         const notViewMode = this.editMode || this.addMode;
