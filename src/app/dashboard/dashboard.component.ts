@@ -1,10 +1,9 @@
-﻿import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
-
-import { User } from '@app/_models';
+﻿import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService, AuthenticationService, UserService } from '@app/_services';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { User } from '@app/_models';
 
 @Component({
     selector: 'app-main-dashboard',
