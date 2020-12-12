@@ -1,4 +1,4 @@
-﻿import { AfterViewInit, Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import {
     NavigationCancel,
     NavigationEnd,
@@ -9,11 +9,11 @@ import {
     Router,
     RouterEvent,
 } from '@angular/router';
-
 import * as wjcCore from '@grapecity/wijmo';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from '@app/_services';
+import { EUser } from '@app/_enums/user.enum';
 
 wjcCore.setLicenseKey(
     '988775697861712#B05eulUMp9WMJh6T0VUS5BTQCF6RrcWWhRXSGp7Rp94RwVHUrkVM5UETUtSR6QkYZN7YvxWMXRlaOBXNqN5b9UkUhlHMR56YCBlN4N7ZykHbQJje6AVdrBlRZJld994NlRXVKZkTuhGSyF7LwUDe9gmWvJWcCtiTygVcxMVQF5mcYBDR6o7TJVmYQZGMnVUeMtkcQNEM0tESytkUWBje6VHRHdTRqh7YxRXazlles3CbmdkUxYmY6MVRUZlQjFGW0ZmYVBDOslTZ5Q4S9AnYK36TwR7d4kmMjJFc7UmThpHTHF4RWdzUXJiOiMlIsIiRzEjRzIjQiojIIJCL6gTN6QzN4kDO0IicfJye#4Xfd5nIzMEMCJiOiMkIsISZy36Qg2Wbql6ViojIOJyebpjIkJHUiwiI8AzN4QDMgETMyEDOxAjMiojI4J7QiwiIDxETgE6cl5EbhV7cpZlI0ISYONkIsIiMxcTM6gzN9YTN7cDO8kjI0ICZJJCL3JyM6hTMwIjI0IiclZnIsU6csFmZ0IiczRmI1pjIs9WQisnOiQkIsISP3EUTzglWslXd4YTWQtGdndjerEkZhdVW8dkY5B5UWx6Z4JEbW54bulnTxIFaWZkNHRnewJDeqZWWZdTU7d6aL36Q4tiWTFDTMhEOM3EWx3yRztGSIZVTtN5VxokNkB5Q6YHeEBHOltibl3EZ5RqQwR'
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.authenticationService.currentUser.subscribe((user) => {
-            if (user && !user.roles.includes[5]) {
+            if (user && !user.roles.includes[EUser.CUSTOMER]) {
                 this.titleService.setTitle('Brillante Store - Shine (Sistema de Gestión)');
             } else {
                 this.titleService.setTitle('Brillante Store');
