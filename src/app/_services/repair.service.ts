@@ -35,17 +35,7 @@ export class RepairService {
         },
     ];
 
-    //FIXME: Cargar desde base de datos
-    public repairStatuses: RepairStatus[] = [
-        { id: 0, description: 'Ingresada al Sistema' },
-        { id: 1, description: 'En proceso' },
-        { id: 2, description: 'Esperando por repuestos' },
-        { id: 3, description: 'Requiere intervención del cliente (Comunicarse con Brillante)' },
-        { id: 4, description: 'Listo para entrega' },
-        { id: 5, description: 'Finalizada y abonada' },
-        { id: 6, description: 'Reingresado' },
-        { id: 7, description: 'Devuelto sin reparar' },
-    ];
+    public repairStatuses: RepairStatus[] = [];
 
     constructor(private http: HttpClient) {}
 
@@ -112,6 +102,10 @@ export class RepairService {
             user: user,
             generateTransaction,
         });
+    }
+
+    public getStatusData(): Observable<RepairStatus[]> {
+        return this.http.get<RepairStatus[]>(`${environment.apiUrl}/repair/getStatusData`);
     }
 }
 

@@ -6,6 +6,7 @@ router.post('/create', create);
 router.put('/updateDeviceInfo', updateDeviceInfo);
 router.put('/updateTrackingInfo', updateTrackingInfo);
 router.get('/', getAll);
+router.get('/getStatusData', getStatusData);
 router.get('/:id', getById);
 router.get('/getByClientId/:id', getByClientId);
 router.get('/history/:idRepair', getHistoryByRepairId);
@@ -75,4 +76,11 @@ function remove(req, res, next) {
             }
         })
         .catch((err) => next(res.status(400).json({ message: err })));
+}
+
+function getStatusData(req, res, next) {
+    repairService
+        .getStatusData()
+        .then((repairs) => res.json(repairs))
+        .catch((err) => next(err));
 }

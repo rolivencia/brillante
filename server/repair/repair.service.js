@@ -22,7 +22,12 @@ module.exports = {
     remove,
     updateDeviceInfo,
     updateTrackingInfo,
+    getStatusData,
 };
+
+async function getStatusData() {
+    return repairStatus.RepairStatus.findAll({ attributes: ['id', 'description'], order: [['id', 'ASC']] });
+}
 
 async function create({ repairToCreate, user }) {
     return new Promise(async (resolve, reject) => {
@@ -220,7 +225,17 @@ async function getAll({ showFinished, startDate, endDate }) {
                 as: 'user',
                 model: user.User,
                 required: true,
-                attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
+                attributes: [
+                    'id',
+                    'firstName',
+                    'lastName',
+                    'userName',
+                    'avatar',
+                    'createdAt',
+                    'updatedAt',
+                    'enabled',
+                    'deleted',
+                ],
             },
         ],
         where: {
@@ -287,7 +302,17 @@ async function getById(id) {
                 as: 'user',
                 model: user.User,
                 required: true,
-                attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
+                attributes: [
+                    'id',
+                    'firstName',
+                    'lastName',
+                    'userName',
+                    'avatar',
+                    'createdAt',
+                    'updatedAt',
+                    'enabled',
+                    'deleted',
+                ],
             },
         ],
         where: {
@@ -362,7 +387,17 @@ async function getHistoryByRepairId(idRepair) {
                 as: 'user',
                 model: user.User,
                 required: true,
-                attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
+                attributes: [
+                    'id',
+                    'firstName',
+                    'lastName',
+                    'userName',
+                    'avatar',
+                    'createdAt',
+                    'updatedAt',
+                    'enabled',
+                    'deleted',
+                ],
             },
         ],
         where: {
