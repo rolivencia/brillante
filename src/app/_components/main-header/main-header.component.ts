@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@app/_models';
+import { Role, User } from '@app/_models';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services';
+import { EUser } from '@app/_enums/user.enum';
+
+export class NavigationLink {
+    label: string;
+    route: string | Object;
+    enabled: boolean;
+    visible: boolean;
+    roles?: number[];
+}
 
 @Component({
     selector: 'app-main-header',
@@ -11,26 +20,47 @@ import { AuthenticationService } from '@app/_services';
 export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
+    private _adminLinks: NavigationLink[] = [];
     //FIXME: Centralizar navegación
-    private _adminLinks = [
-        { label: 'Dashboard', route: '/dashboard', enabled: true, visible: true },
-        { label: 'Clientes', route: '/client-dashboard', enabled: true, visible: true },
+    private _allAdminLinks: NavigationLink[] = [
+        {
+            label: 'Dashboard',
+            route: '/dashboard',
+            enabled: true,
+            visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN],
+        },
+        {
+            label: 'Clientes',
+            route: '/client-dashboard',
+            enabled: true,
+            visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
+        },
         {
             label: 'Reparaciones',
             route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN],
         },
         {
             label: 'Caja',
             route: ['/cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
         },
-        { label: 'Stock', route: '/products-dashboard', enabled: true, visible: true },
+        {
+            label: 'Stock',
+            route: '/products-dashboard',
+            enabled: true,
+            visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN],
+        },
     ];
 
-    private _userLinks = [
+    private _userLinks: NavigationLink[] = [
         { label: 'Inicio', route: '/home', enabled: true, visible: false },
         { label: 'Productos', route: '/products', enabled: true, visible: true },
         { label: 'Celulares', route: '/smartphones', enabled: false, visible: true },
@@ -49,7 +79,16 @@ export class MainHeaderComponent implements OnInit {
         this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.authenticationService.currentUserSubject.subscribe((user) => {
+            if (user) {
+                const currentUserRoles = user.roles.map((UserRole) => UserRole.id);
+                this._adminLinks = this._allAdminLinks.filter((Link) =>
+                    Link.roles.some((role) => currentUserRoles.includes(role))
+                );
+            }
+        });
+    }
 
     logout() {
         this.authenticationService.logout();
