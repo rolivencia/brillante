@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CashRolesGuard } from './cash-roles-guard.service';
+import { CustomerDashboardGuard } from './customer-dashboard.guard';
 
-describe('UserRoleGuard', () => {
-    let guard: CashRolesGuard;
+describe('CustomerDashboardGuard', () => {
+    let guard: CustomerDashboardGuard;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        guard = TestBed.inject(CashRolesGuard);
+        guard = TestBed.inject(CustomerDashboardGuard);
     });
 
     it('should be created', () => {
