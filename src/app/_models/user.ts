@@ -6,5 +6,10 @@
     lastName: string;
     token: string;
     avatar: string;
-    roles: any[];
+    roles: Role[];
+}
+
+export class Role {
+    id: number;
+    description: string;
 }

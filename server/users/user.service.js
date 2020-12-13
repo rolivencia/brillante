@@ -41,5 +41,26 @@ async function authenticate({ username, password }) {
 }
 
 async function getAll() {
-    return user.User.findAll({ where: { enabled: true, deleted: false } });
+    return user.User.findAll({
+        attributes: [
+            'id',
+            'firstName',
+            'lastName',
+            'userName',
+            'avatar',
+            'createdAt',
+            'updatedAt',
+            'enabled',
+            'deleted',
+        ],
+        include: [
+            {
+                model: role.Role,
+                required: true,
+                attributes: ['id', 'description'],
+                through: { attributes: [] },
+            },
+        ],
+        where: { enabled: true, deleted: false },
+    });
 }

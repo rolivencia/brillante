@@ -8,6 +8,7 @@ const routes: Routes = [
     {
         path: '',
         component: CashDashboardComponent,
+        canActivate: [CashRolesGuard],
         children: [
             {
                 path: 'manage',

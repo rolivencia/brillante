@@ -36,7 +36,9 @@
 <h3>Usuarios registrados:</h3>
 <ul>
     <li *ngFor="let user of users">
-        {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
-        <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>-->
+        {{ user.userName }} ({{ user.firstName }} {{ user.lastName }}) - [<label
+            *ngFor="let role of user.roles; index as i"
+            >{{ role.description }} <ng-container *ngIf="i !== user.roles.length - 1">,</ng-container></label
+        >]
     </li>
 </ul>

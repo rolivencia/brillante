@@ -1,11 +1,11 @@
-import * as moment from 'moment';
 import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DateHandlerService } from '@app/_services/date-handler.service';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@app/_services';
+import { AuthenticationService, hasRoles } from '@app/_services';
 import { EUser } from '@app/_enums/user.enum';
+import { Role } from '@app/_models';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -15,6 +15,7 @@ import { EUser } from '@app/_enums/user.enum';
 export class CashDashboardComponent implements OnInit {
     editMode: boolean;
     displayManagementHeader: boolean = false;
+    displayReportsButton: boolean = false;
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -38,9 +39,8 @@ export class CashDashboardComponent implements OnInit {
         });
 
         this.authenticationService.currentUser.subscribe((user) => {
-            this.displayManagementHeader =
-                user.roles.map((role) => role.id).filter((roleId) => [EUser.ADMIN, EUser.OWNER].includes(roleId))
-                    .length > 0;
+            this.displayManagementHeader = hasRoles(user.roles, [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK]);
+            this.displayReportsButton = hasRoles(user.roles, [EUser.ADMIN, EUser.OWNER]);
         });
     }
 
