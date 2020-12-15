@@ -28,7 +28,7 @@ export class MainHeaderComponent implements OnInit {
             route: '/dashboard',
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN],
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
         },
         {
             label: 'Clientes',
@@ -42,21 +42,21 @@ export class MainHeaderComponent implements OnInit {
             route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN],
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
         },
         {
             label: 'Caja',
             route: ['/cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
         },
         {
             label: 'Stock',
             route: '/products-dashboard',
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN],
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
         },
     ];
 
