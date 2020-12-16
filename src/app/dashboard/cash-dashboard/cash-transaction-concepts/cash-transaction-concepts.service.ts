@@ -82,7 +82,7 @@ export class CashTransactionConceptsService {
 
         this._selectableTransactionConcepts = []
             .concat(selectableParentTransactionConcepts)
-            .filter((parentConcept) => parentConcept.children.length > 0);
+            .filter((parentConcept) => parentConcept.children.length > 0 && parentConcept.enabled);
     }
 
     public async reloadConcepts() {
