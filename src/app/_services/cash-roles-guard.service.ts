@@ -16,7 +16,7 @@ export class CashRolesGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         const userRoles = this.authService.currentUserValue.roles;
-        const allowedRoles = [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK];
+        const allowedRoles = [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE];
         return hasRoles(userRoles, allowedRoles);
     }
 }
