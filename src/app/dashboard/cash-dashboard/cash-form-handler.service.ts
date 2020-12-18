@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root',
@@ -110,6 +111,8 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         }
         this.cashTransaction = this.assign();
         this.patch();
+
+        this.cashTransaction.date = moment();
 
         const result = await this.cashService
             .create(this.cashTransaction, this.authenticationService.currentUserValue)
