@@ -562,7 +562,7 @@ a.footerAlmaLogo:hover {
 }
 .product_component {
     position: relative;
-    margin: 6px;
+    /*margin: 6px;*/
 }
 .product_component img {
     filter: brightness(0.95);
