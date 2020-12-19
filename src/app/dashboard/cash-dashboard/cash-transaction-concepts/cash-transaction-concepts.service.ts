@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root',
 })
 export class CashTransactionConceptsService {
+    //region Getters & Setters
     get saved(): boolean {
         return this._saved;
     }
@@ -31,6 +32,7 @@ export class CashTransactionConceptsService {
     get modifiableTransactionConcepts(): TransactionConcept[] {
         return this._modifiableTransactionConcepts;
     }
+    //endregion
 
     private _transactionConcepts: TransactionConcept[] = [];
     private _modifiableTransactionConcepts: TransactionConcept[] = [];

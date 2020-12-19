@@ -21,6 +21,7 @@ export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
     private _adminLinks: NavigationLink[] = [];
+
     //FIXME: Centralizar navegación
     private _allAdminLinks: NavigationLink[] = [
         {
@@ -53,7 +54,7 @@ export class MainHeaderComponent implements OnInit {
         },
         {
             label: 'Stock',
-            route: '/products-dashboard',
+            route: '/products-list-dashboard',
             enabled: true,
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],

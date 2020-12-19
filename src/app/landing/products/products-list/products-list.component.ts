@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-products',
-    templateUrl: './products.component.html',
-    styleUrls: ['./products.component.scss'],
+    templateUrl: './products-list.component.html',
+    styleUrls: ['./products-list.component.scss'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsListComponent implements OnInit {
     public manufacturers: Manufacturer[] = [
         { id: 1, title: 'Apple', link: 'apple' },
         { id: 2, title: 'Anker', link: 'anker' },
@@ -39,39 +40,15 @@ export class ProductsComponent implements OnInit {
         { id: 8, title: 'Templados', link: 'templados' },
     ];
 
-    public products: Product[] = [
-        {
-            id: 1,
-            name: '3D Samsung S8',
-            price: 950,
-            description: '',
-            imageUrls: ['assets/imagenes-s/productos/productos-imagen-226.png'],
-            categories: [{ id: 1, title: 'Templados', link: 'templados' }],
-            manufacturer: { id: 7, title: 'Samsung', link: 'samsung' },
-        },
-        {
-            id: 2,
-            name: '5D iPhone 7 Plus/8 Plus',
-            price: 950,
-            description: '',
-            imageUrls: ['assets/imagenes-s/productos/productos-imagen-225.png'],
-            categories: [{ id: 1, title: 'Templados', link: 'templados' }],
-            manufacturer: { id: 1, title: 'Apple', link: 'apple' },
-        },
-        {
-            id: 3,
-            name: '5D iPhone 7/8',
-            price: 850,
-            description: '',
-            imageUrls: ['assets/imagenes-s/productos/productos-imagen-224.png'],
-            categories: [{ id: 1, title: 'Templados', link: 'templados' }],
-            manufacturer: { id: 1, title: 'Apple', link: 'apple' },
-        },
-    ];
+    public products: Product[] = [];
 
-    constructor() {}
+    constructor(private route: ActivatedRoute) {}
 
-    ngOnInit() {}
+    ngOnInit(): void {
+        if (this.route.snapshot.data['products']) {
+            this.products = this.route.snapshot.data['products'];
+        }
+    }
 
     addToCart(id: number) {
         console.log('IMPLEMENT ADDTOCART METHOD');

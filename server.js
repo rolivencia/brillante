@@ -11,7 +11,7 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 
-const existingRoutes = ['/', '/login', '/repair-dashboard', '/client-dashboard', '/cash-dashboard'];
+const existingRoutes = ['/', '/login', '/repair-dashboard', '/client-dashboard', '/cash-dashboard', 'products'];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -34,6 +34,7 @@ const apiRoutes = [
     { path: '/repair', controller: './server/repair/repair.controller' },
     { path: '/cash', controller: './server/cash/cash.controller' },
     { path: '/cash/transaction', controller: './server/cash/transaction-concepts/transaction-concepts.controller' },
+    { path: '/products', controller: './server/products/products.controller' },
 ];
 
 // use JWT auth to secure the api

@@ -165,7 +165,7 @@
   </nav-->
 
     <section class="w-100">
-        <img class="w-100" src="assets/imagenes/tema/slides/productos.jpg" alt="" />
+        <img class="w-100" src="../../../../assets/imagenes/tema/slides/productos.jpg" alt="" />
     </section>
 
     <br />
@@ -181,7 +181,7 @@
                             </li>
                             <li class="_active" *ngFor="let category of categories">
                                 <!-- TODO: Issue #82. Apply count of existing items for each category -->
-                                <a [href]="'/products/' + category.link"
+                                <a [href]="'/products-list/' + category.link"
                                     >{{ category.title }} <span class="count">(9)</span>
                                 </a>
                             </li>
@@ -193,7 +193,7 @@
                                 <h6>Marcas</h6>
                             </li>
                             <li class="_active" *ngFor="let manufacturer of manufacturers">
-                                <a [href]="'products/' + manufacturer.link">
+                                <a [href]="'products-list/' + manufacturer.link">
                                     <!-- TODO: Issue #83. Apply count of existing items for each manufacturer -->
                                     {{ manufacturer.title }} <span class="count">(5)</span></a
                                 >
@@ -205,7 +205,7 @@
             <div class="col-12 col-sm-9 col-md-10">
                 <div class="row">
                     <div *ngFor="let product of products" class="col-6 col-sm-4">
-                        <div class="product_component">
+                        <div class="product_component" [routerLink]="'/products/product-detail/' + product.id">
                             <img [src]="product.imageUrls[0]" [alt]="product.name" />
                             <div class="badge badge-secondary">{{ product.name }}</div>
                             <div class="hovercard">
