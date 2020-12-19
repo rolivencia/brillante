@@ -1,27 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Product } from '@app/landing/products/products-list/products-list.component';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@environments/environment';
-import { map } from 'rxjs/operators';
+import { Category, Manufacturer, Product } from '@app/_models/product';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProductsService {
-    constructor(private http: HttpClient) {}
+    public manufacturers: Manufacturer[] = [
+        { id: 1, title: 'Apple', link: 'apple' },
+        { id: 2, title: 'Anker', link: 'anker' },
+        { id: 3, title: 'Incipio', link: 'incipio' },
+        { id: 4, title: 'Spigen', link: 'spigen' },
+        { id: 5, title: 'Griffin', link: 'griffin' },
+        { id: 6, title: 'iLuv', link: 'iluv' },
+        { id: 7, title: 'Samsung', link: 'samsung' },
+        { id: 8, title: 'Belkin', link: 'belkin' },
+        { id: 9, title: 'Case Mate', link: 'case-mate' },
+        { id: 10, title: 'Tech 21', link: 'tech-21' },
+        { id: 11, title: 'Caselogy', link: 'caselogy' },
+        { id: 12, title: 'Twelve South', link: 'twelve-south' },
+        { id: 13, title: 'Ewtec', link: 'ewtec' },
+        { id: 14, title: 'Pure Gear ', link: 'pure-gear' },
+        { id: 15, title: 'Mophie', link: 'mophie' },
+        { id: 16, title: 'Ringke', link: 'ringke' },
+        { id: 17, title: 'JBL', link: 'jbl' },
+        { id: 18, title: 'Philips', link: 'philips' },
+        { id: 19, title: 'Genéricos', link: 'genericos' },
+    ];
 
-    public getById(id: number | string): Observable<Product> {
-        return this.http
-            .get<Product>(`${environment.apiUrl}/products/getById/${id}`)
-            .pipe(map((productDTO) => toProduct(productDTO)));
-    }
+    public categories: Category[] = [
+        { id: 1, title: 'Accesorios', link: 'accesorios' },
+        { id: 2, title: 'Audio', link: 'audio' },
+        { id: 3, title: 'Auriculares', link: 'auriculares' },
+        { id: 4, title: 'Cables', link: 'cables' },
+        { id: 5, title: 'Cargadores', link: 'cargadores' },
+        { id: 6, title: 'Fundas', link: 'fundas' },
+        { id: 7, title: '¡Precios Regalados!', link: 'ofertas' },
+        { id: 8, title: 'Templados', link: 'templados' },
+    ];
 
-    public getAll(): Observable<Product[]> {
-        return this.http
-            .get<Product[]>(`${environment.apiUrl}/products/getAll`)
-            .pipe(map((productsDTO) => productsDTO.map((productDTO) => toProduct(productDTO))));
-    }
+    constructor() {}
 }
 
 export function toProduct(productDTO): Product {
