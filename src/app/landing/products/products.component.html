@@ -181,9 +181,10 @@
                                 <h6>Categorías</h6>
                             </li>
                             <li class="_active" *ngFor="let category of productsService.categories">
-                                <!-- TODO: Issue #82. Apply count of existing items for each category -->
+                                <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
                                 <a [href]="'/products-list/' + category.link"
-                                    >{{ category.title }} <span class="count">(9)</span>
+                                    >{{ category.title }}
+                                    <span class="count">({{ productsService.categories.length }})</span>
                                 </a>
                             </li>
                         </ul>
@@ -195,8 +196,9 @@
                             </li>
                             <li class="_active" *ngFor="let manufacturer of productsService.manufacturers">
                                 <a [href]="'products-list/' + manufacturer.link">
-                                    <!-- TODO: Issue #83. Apply count of existing items for each manufacturer -->
-                                    {{ manufacturer.title }} <span class="count">(5)</span></a
+                                    <!-- TODO: Issue #83. Apply count of existing items for each manufacturer. Build a pipe. -->
+                                    {{ manufacturer.title }}
+                                    <span class="count">({{ productsService.manufacturers.length }})</span></a
                                 >
                             </li>
                         </ul>
