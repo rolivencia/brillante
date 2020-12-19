@@ -5,9 +5,10 @@ import { ProductsHttpService } from './products.http.service';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsRoutingModule } from './products.routing.module';
 import { ProductsService } from './products.service';
+import { ProductsComponent } from './products.component';
 
 @NgModule({
-    declarations: [ProductsListComponent, ProductDetailComponent],
+    declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent],
     imports: [CommonModule, ProductsRoutingModule],
     providers: [ProductsService, ProductsHttpService],
 })

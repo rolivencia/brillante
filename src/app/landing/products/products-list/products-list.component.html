@@ -1,271 +1,61 @@
-<!-- TODO: Issue #84 - Make the modal visible after adding an item to the cart -->
-<div class="modal fade" id="carrito-mensaje" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4>&nbsp;</h4>
-            </div>
-            <div class="modal-body">
-                <i class="fa fa-check icono-ok"></i>
-                <h2>Producto Agregado</h2>
-                <p>Se agrego un nuevo producto al carrito</p>
-            </div>
-            <div class="modal-footer">
-                <a href="/carrito" class="btn btn-success">Ver Carrito</a>
-                <a href="#" class="btn btn-default" data-dismiss="modal">Seguir Comprando</a>
+<div class="row">
+    <div *ngFor="let product of products" class="col-6 col-sm-4">
+        <div class="product_component" [routerLink]="'/products/product-detail/' + product.id">
+            <img [src]="product.imageUrls[0]" [alt]="product.name" />
+            <div class="badge badge-secondary">{{ product.name }}</div>
+            <div class="hovercard">
+                <h6>{{ product.name }}</h6>
+                <p>${{ product.price }}</p>
+                <!-- TODO: See Issue #80 for creation of a price pipe -->
+                <small>o 12 cuotas de ${{ product.price / 12 }}</small>
+                <div class="btns">
+                    <!-- TODO: See Issue #81 for creation of navigation to product details -->
+                    <a [href]="'product/' + product.id" class="btn btn-light"
+                        ><span>VER MÁS</span> <i class="fas fa-eye"></i
+                    ></a>
+                    <!-- TODO: See Issue #82. Put to work the "add to cart" feature -->
+                    <button
+                        class="btn btn-light boton-carrito-agregar"
+                        [id]="'boton-carrito-agregar-' + product.id"
+                        (click)="addToCart(product.id)"
+                    >
+                        <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="global-wrapper clearfix" id="global-wrapper">
-    <!-- TODO: Issue #85 - Make the login/register modal visible and componentize -->
-    <div class="mfp-with-anim mfp-hide mfp-dialog clearfix" id="nav-login-dialog">
-        <h3 class="widget-title">Ingreso de Usuario</h3>
-        <p>Bienvenido de nuevo!</p>
-        <hr />
-        <form name="usuario-login" id="usuario-login" action="" method="post">
-            <div class="alert alert-danger alert-dismissable mensaje-error">
-                <a href="#" class="close boton-cerrar" data-cerrar="mensaje-error" aria-label="close">&times;</a>
-                <div class="texto"><strong>Ups!</strong> Datos incorrectos</div>
-            </div>
-            <div class="form-group">
-                <label>Correo</label>
-                <input class="form-control" type="text" name="correo-ajax" id="correo-ajax" />
-            </div>
-            <div class="form-group">
-                <label>Clave</label>
-                <input class="form-control" type="password" name="clave-ajax" id="clave-ajax" />
-            </div>
-            <input class="btn btn-primary boton-login" type="submit" value="Ingresar" />
-            <br />
-            <div class="ajax-login"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Ingresando...</div>
-        </form>
-
-        <div class="gap gap-small"></div>
-        <ul class="list-inline botones-login">
-            <li>
-                <a href="#nav-account-dialog" class="popup-text boton-crear-usuario"
-                    ><i class="fa fa-pencil-square-o"></i> Crear Cuenta</a
-                >
-            </li>
-            <li>
-                <a href="/olvido-clave" class="boton-olvido-clave">Olvidaste tu clave?</a>
-            </li>
-        </ul>
-    </div>
-    <!-- TODO: Issue #85 - Make the login/register modal visible and componentize -->
-    <div class="mfp-with-anim mfp-hide mfp-dialog clearfix" id="nav-account-dialog">
-        <h3 class="widget-title">Crear una cuenta</h3>
-        <p>Creá una cuenta y comenzá a comprar en nuestra tienda!</p>
-        <hr />
-        <div class="alert alert-danger alert-dismissable registro-mensaje-error">
-            <a href="#" class="close boton-cerrar" data-cerrar="registro-mensaje-error" aria-label="close">&times;</a>
-            <div class="texto"><strong>Ups!</strong> Todos los campos son obligatorios</div>
-        </div>
-        <form name="usuario-registro" id="usuario-registro" action="" method="post">
-            <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" name="reg-nombre" id="reg-nombre" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Apellido</label>
-                <input type="text" name="reg-apellido" id="reg-apellido" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>DNI</label>
-                <input type="text" name="reg-dni" id="reg-dni" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Correo</label>
-                <input type="text" name="reg-correo" id="reg-correo" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Clave</label>
-                <input type="password" name="reg-clave" id="reg-clave" class="form-control" />
-            </div>
-            <input class="btn btn-primary boton-crear-cuenta" type="submit" value="Crear Cuenta" />
-            <br />
-            <div class="ajax-login"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Procesando datos...</div>
-        </form>
-        <div class="gap gap-small"></div>
-    </div>
-
-    <!--nav class="navbar navbar-inverse navbar-main-white navbar-main menu-navegacion">
-      <div class="container">
-          <div class="navbar-header">
-              <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse"><span class="sr-only">Main Menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="/">
-
-              </a>
-          </div>
-          <div class="collapse navbar-collapse" id="main-nav-collapse">
-              <ul class="nav navbar-nav menu-principal">
-
-                  <li class="dropdown"><a href="/productos"><i class="fa fa-fire-extinguisher"></i> Productos<i class="drop-caret" data-toggle="dropdown"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-category">
-                                                                                          <li>
-                          <a href="/productos/accesorios"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Accesorios</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/audio"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Audio</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/auriculares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Auriculares</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/cables"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cables</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/cargadores"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cargadores</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/celulares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Celulares</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/fundas"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Fundas</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/precios-regalados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>¡Precios regalados!</a>
-                          </li>
-                                                          <li>
-                          <a href="/productos/templados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Templados</a>
-                          </li>
-                                                          <li>
-                          <a href="/carteleria"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cartelería y Señalética</a>
-                          </li>
-                                                      </ul>
-                  </li>
-                  <li>
-                      <a href="/tienda" ><i class="fa fa-shopping-cart"></i> Tienda</a>
-                  </li>
-
-              </ul>
-
-              <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown contenedor-boton-usuario">
-                          <li><a href="/usuario" class="btn btn-sm btn-light d-none d-sm-block" >INGRESAR</a>
-              <li><a href="/registro" class="btn btn-sm btn-light d-none d-sm-block">REGISTRATE</a></li>
-              <li><a href="/usuario" id="UserMenu_OpenBtn" class="btn btn-default d-sm-none"><i class= "far fa-user"></i></a></li>
-                  </li>
-                  <li class="dropdown">
-                      <a href="/carrito" class="fa fa-shopping-cart"></a>
-                      <ul class="dropdown-menu dropdown-menu-shipping-cart">
-
-                      </ul>
-                  </li>
-              </ul>
-
-          </div>
-      </div>
-  </nav-->
-
-    <section class="w-100">
-        <img class="w-100" src="../../../../assets/imagenes/tema/slides/productos.jpg" alt="" />
-    </section>
-
-    <br />
-
-    <section class="product_grid">
+<section class="product_grid_pagination">
+    <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-3 col-md-2">
-                <aside class="category-filters">
-                    <nav class="category-filters-section">
-                        <ul class="cateogry-filters-list">
-                            <li>
-                                <h6>Categorías</h6>
-                            </li>
-                            <li class="_active" *ngFor="let category of categories">
-                                <!-- TODO: Issue #82. Apply count of existing items for each category -->
-                                <a [href]="'/products-list/' + category.link"
-                                    >{{ category.title }} <span class="count">(9)</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <br />
-                        <br />
-                        <ul class="cateogry-filters-list">
-                            <li>
-                                <h6>Marcas</h6>
-                            </li>
-                            <li class="_active" *ngFor="let manufacturer of manufacturers">
-                                <a [href]="'products-list/' + manufacturer.link">
-                                    <!-- TODO: Issue #83. Apply count of existing items for each manufacturer -->
-                                    {{ manufacturer.title }} <span class="count">(5)</span></a
-                                >
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-            </div>
-            <div class="col-12 col-sm-9 col-md-10">
-                <div class="row">
-                    <div *ngFor="let product of products" class="col-6 col-sm-4">
-                        <div class="product_component" [routerLink]="'/products/product-detail/' + product.id">
-                            <img [src]="product.imageUrls[0]" [alt]="product.name" />
-                            <div class="badge badge-secondary">{{ product.name }}</div>
-                            <div class="hovercard">
-                                <h6>{{ product.name }}</h6>
-                                <p>${{ product.price }}</p>
-                                <!-- TODO: See Issue #80 for creation of a price pipe -->
-                                <small>o 12 cuotas de ${{ product.price / 12 }}</small>
-                                <div class="btns">
-                                    <!-- TODO: See Issue #81 for creation of navigation to product details -->
-                                    <a [href]="'product/' + product.id" class="btn btn-light"
-                                        ><span>VER MÁS</span> <i class="fas fa-eye"></i
-                                    ></a>
-                                    <!-- TODO: See Issue #82. Put to work the "add to cart" feature -->
-                                    <button
-                                        class="btn btn-light boton-carrito-agregar"
-                                        [id]="'boton-carrito-agregar-' + product.id"
-                                        (click)="addToCart(product.id)"
-                                    >
-                                        <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-12 col-sm-9 col-md-10 offset-sm-3 offset-md-2">
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-6">
+                        <!-- TODO: Issue #86 - Get pagination data from component/service and processed data -->
+                        <p class="category-pagination-sign">50 productos encontrados. Mostrando 1 - 18</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="product_grid_pagination">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-9 col-md-10 offset-sm-3 offset-md-2">
-                    <div class="row no-gutters">
-                        <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
+                        <nav>
                             <!-- TODO: Issue #86 - Get pagination data from component/service and processed data -->
-                            <p class="category-pagination-sign">50 productos encontrados. Mostrando 1 - 18</p>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <nav>
-                                <!-- TODO: Issue #86 - Get pagination data from component/service and processed data -->
-                                <ul class="pagination category-pagination pull-right">
-                                    <li class="disabled">
-                                        <a href="#"><i class="fa fa-chevron-left"></i></a>
-                                    </li>
-                                    <li>
-                                        <a class="active">1</a>
-                                    </li>
-                                    <li><a href="/productos/?p=2 ">2</a></li>
-                                    <li><a href="/productos/?p=3 ">3</a></li>
-                                    <li>
-                                        <a href="/productos/?p=2 "><i class="fa fa-chevron-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                            <ul class="pagination category-pagination pull-right">
+                                <li class="disabled">
+                                    <a href="#"><i class="fa fa-chevron-left"></i></a>
+                                </li>
+                                <li>
+                                    <a class="active">1</a>
+                                </li>
+                                <li><a href="/productos/?p=2 ">2</a></li>
+                                <li><a href="/productos/?p=3 ">3</a></li>
+                                <li>
+                                    <a href="/productos/?p=2 "><i class="fa fa-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <br />
-</div>
+    </div>
+</section>
