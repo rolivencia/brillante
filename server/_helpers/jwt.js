@@ -10,6 +10,7 @@ function jwt() {
             // public routes that don't require authentication
             '/users/authenticate',
             '/dashboard',
+            '/login',
             new RegExp('/cash-dashboard/*', 'i'),
             new RegExp('/repair-dashboard/*', 'i'),
             new RegExp('/client-dashboard/*', 'i'),

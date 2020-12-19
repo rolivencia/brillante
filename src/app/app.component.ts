@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
         // Subscribing to router events, in order to show loading indicator
         router.events.subscribe((event: RouterEvent) => {
             // We don't show any progress loader in the login view
-            switch (!this.isLoggingIn()) {
+            switch (true) {
                 case event instanceof NavigationStart:
                 case event instanceof ResolveStart: {
                     progressLoaderService.show();
