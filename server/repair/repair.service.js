@@ -301,7 +301,7 @@ async function getById(id) {
             {
                 as: 'user',
                 model: user.User,
-                required: true,
+                required: false,
                 attributes: [
                     'id',
                     'firstName',

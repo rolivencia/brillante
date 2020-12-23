@@ -1,6 +1,10 @@
+const _ = require('lodash/array');
+
 module.exports = {
     getAll,
     getById,
+    getCategories,
+    getManufacturers,
 };
 
 const products = [
@@ -38,4 +42,15 @@ async function getAll() {
 }
 async function getById(id) {
     return products.filter((product) => product.id === parseInt(id)).pop();
+}
+
+async function getCategories(id) {
+    return _.uniqBy(products.map((product) => product.categories).flat(), 'id');
+}
+
+async function getManufacturers(id) {
+    return _.uniqBy(
+        products.map((product) => product.manufacturer),
+        'id'
+    );
 }
