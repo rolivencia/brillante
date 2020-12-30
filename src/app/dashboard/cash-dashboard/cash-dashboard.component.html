@@ -9,7 +9,11 @@
                 <button class="ml-3 btn btn-sm btn-outline-secondary" (click)="navigateTo('categories')">
                     📑 Conceptos & Subconceptos
                 </button>
-                <button class="ml-3 btn btn-sm btn-outline-secondary" (click)="navigateTo('report')">
+                <button
+                    *ngIf="displayReportsButton"
+                    class="ml-3 btn btn-sm btn-outline-secondary"
+                    (click)="navigateTo('report')"
+                >
                     📊 Generar Reporte
                 </button>
             </div>
