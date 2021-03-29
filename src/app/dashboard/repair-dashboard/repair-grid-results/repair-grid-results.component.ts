@@ -10,14 +10,17 @@ import { DateHandlerService } from '@app/_services/date-handler.service';
     styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairGridResultsComponent implements OnInit {
-    constructor(private dateHandlerService: DateHandlerService, public repairDashboardService: RepairDashboardService) {}
+    constructor(
+        private dateHandlerService: DateHandlerService,
+        public repairDashboardService: RepairDashboardService
+    ) {}
 
     columns: any[] = [
         { header: 'ID', binding: 'id', width: 50 },
         { header: 'Cliente', binding: 'customer.fullName', width: '*' },
         { header: 'Marca', binding: 'device.manufacturer', width: 100 },
         { header: 'Modelo', binding: 'device.model', width: '*' },
-        { header: 'IMEI', binding: 'device.deviceId', width: '*' },
+        // { header: 'IMEI', binding: 'device.deviceId', width: '*' },
         { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
         { header: 'Estado', binding: 'status.status', width: '*' },
     ];
@@ -30,9 +33,15 @@ export class RepairGridResultsComponent implements OnInit {
         this.repairDashboardService._dateTo = moment();
         this.repairDashboardService._dateFrom = moment().subtract(1, 'month');
 
-        this.repairDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(this.repairDashboardService._dateTo);
-        this.repairDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(this.repairDashboardService._dateFrom);
-        this.repairDashboardService.ngbMaxDate = this.dateHandlerService.formatMomentToObject(this.repairDashboardService._dateTo);
+        this.repairDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(
+            this.repairDashboardService._dateTo
+        );
+        this.repairDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(
+            this.repairDashboardService._dateFrom
+        );
+        this.repairDashboardService.ngbMaxDate = this.dateHandlerService.formatMomentToObject(
+            this.repairDashboardService._dateTo
+        );
 
         this.repairDashboardService.getGridData();
     }

@@ -29,7 +29,11 @@ export class RepairDashboardService {
     public ngbDateTo: DateObject;
 
     public ngbMinDate: DateObject = { year: 2020, month: 1, day: 1 };
-    public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
+    public ngbMaxDate: DateObject = {
+        year: this.date.year(),
+        month: (this.date.month() + 1) % 13,
+        day: this.date.date(),
+    };
 
     public _showFinished = false;
     _dateFrom: Moment;
@@ -51,7 +55,7 @@ export class RepairDashboardService {
 
     async getGridData() {
         this.progressLoaderService.showWithOverlay();
-        this.gridData = await this.repairService.getAll(this._showFinished, this._dateFrom, this._dateTo).toPromise();
+        this.gridData = await this.repairService.getAll(this._showFinished).toPromise();
         this.gridCollection = new CollectionView(this.gridData);
         this.gridCollection.pageSize = this.pageSize;
         this.gridCollection.currentItem = null;

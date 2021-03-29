@@ -4,9 +4,6 @@ const cash = require('server/cash/cash.model');
 const user = require('server/users/user.model');
 
 const repairStatus = require('server/repair/repair.status');
-
-const repairService = require('server/cash/cash.service');
-
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
@@ -16,6 +13,7 @@ const Op = Sequelize.Op;
 module.exports = {
     create,
     getAll,
+    getAllByDate,
     getByClientId,
     getById,
     getHistoryByRepairId,
@@ -177,7 +175,84 @@ async function remove(id) {
     return repair.Repair.update({ deleted: 1 }, { where: { id: id } });
 }
 
-async function getAll({ showFinished, startDate, endDate }) {
+async function getAll({ showFinished }) {
+    showFinished = showFinished !== 'false';
+    const repairDAOs = await repair.Repair.findAll({
+        attributes: [
+            'id',
+            'manufacturer',
+            'model',
+            'imei',
+            'issue',
+            'note',
+            'dischargeDate',
+            'updatedDate',
+            'finishedDate',
+            'paymentInAdvance',
+            'repairCost',
+            'repairPrice',
+            'equipmentTurnedOn',
+            'enabled',
+            'deleted',
+            'idEquipment',
+            'warrantyTerm',
+        ],
+        include: [
+            {
+                as: 'customer',
+                model: customer.Customer,
+                required: true,
+                attributes: [
+                    'id',
+                    'dni',
+                    'address',
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'telephone',
+                    [Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName'],
+                ],
+            },
+            {
+                as: 'status',
+                model: repairStatus.RepairStatus,
+                required: true,
+                attributes: ['id', 'status'],
+            },
+            {
+                as: 'user',
+                model: user.User,
+                required: true,
+                attributes: [
+                    'id',
+                    'firstName',
+                    'lastName',
+                    'userName',
+                    'avatar',
+                    'createdAt',
+                    'updatedAt',
+                    'enabled',
+                    'deleted',
+                ],
+            },
+        ],
+        where: {
+            idStatus: { [Op.notIn]: showFinished ? [] : [5, 7] },
+            enabled: 1,
+            deleted: 0,
+        },
+    });
+
+    return new Promise((resolve, reject) => {
+        if (repairDAOs) {
+            const repairDTOs = repairDAOs.map((repairDAO) => toRepairDTO(repairDAO.dataValues));
+            resolve(repairDTOs);
+        } else {
+            reject(error);
+        }
+    });
+}
+async function getAllByDate({ showFinished, startDate, endDate }) {
     showFinished = showFinished !== 'false';
     const repairDAOs = await repair.Repair.findAll({
         attributes: [
