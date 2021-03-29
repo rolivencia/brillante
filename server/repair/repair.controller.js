@@ -6,6 +6,7 @@ router.post('/create', create);
 router.put('/updateDeviceInfo', updateDeviceInfo);
 router.put('/updateTrackingInfo', updateTrackingInfo);
 router.get('/', getAll);
+router.get('/byDate', getAllByDate);
 router.get('/getStatusData', getStatusData);
 router.get('/:id', getById);
 router.get('/getByClientId/:id', getByClientId);
@@ -52,6 +53,13 @@ function getByClientId(req, res, next) {
 function getAll(req, res, next) {
     repairService
         .getAll(req.query)
+        .then((repairs) => res.json(repairs))
+        .catch((err) => next(err));
+}
+
+function getAllByDate(req, res, next) {
+    repairService
+        .getAllByDate(req.query)
         .then((repairs) => res.json(repairs))
         .catch((err) => next(err));
 }

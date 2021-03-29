@@ -45,13 +45,20 @@ export class RepairService {
             .pipe(map((repairDTO): Repair => toRepair(repairDTO)));
     }
 
-    public getAll(showFinished: boolean, dateFrom: Moment, dateTo: Moment): Observable<Repair[]> {
+    public getAll(showFinished: boolean): Observable<Repair[]> {
+        const params = new HttpParams().set('showFinished', showFinished.toString());
+        return this.http
+            .get<Repair[]>(`${environment.apiUrl}/repair`, { headers: headers, params: params })
+            .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
+    }
+
+    public getAllByDate(showFinished: boolean, dateFrom: Moment, dateTo: Moment): Observable<Repair[]> {
         const params = new HttpParams()
             .set('showFinished', showFinished.toString())
             .append('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
             .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
         return this.http
-            .get<Repair[]>(`${environment.apiUrl}/repair`, { headers: headers, params: params })
+            .get<Repair[]>(`${environment.apiUrl}/repair/byDate`, { headers: headers, params: params })
             .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
     }
 
