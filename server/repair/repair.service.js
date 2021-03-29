@@ -4,9 +4,6 @@ const cash = require('server/cash/cash.model');
 const user = require('server/users/user.model');
 
 const repairStatus = require('server/repair/repair.status');
-
-const repairService = require('server/cash/cash.service');
-
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
@@ -178,7 +175,7 @@ async function remove(id) {
     return repair.Repair.update({ deleted: 1 }, { where: { id: id } });
 }
 
-async function getAll({ showFinished, startDate, endDate }) {
+async function getAll({ showFinished }) {
     showFinished = showFinished !== 'false';
     const repairDAOs = await repair.Repair.findAll({
         attributes: [
@@ -241,7 +238,6 @@ async function getAll({ showFinished, startDate, endDate }) {
         ],
         where: {
             idStatus: { [Op.notIn]: showFinished ? [] : [5, 7] },
-            dischargeDate: { [Op.between]: [startDate, endDate] },
             enabled: 1,
             deleted: 0,
         },

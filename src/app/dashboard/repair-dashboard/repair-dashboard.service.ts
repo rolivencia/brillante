@@ -55,9 +55,7 @@ export class RepairDashboardService {
 
     async getGridData() {
         this.progressLoaderService.showWithOverlay();
-        this.gridData = await this.repairService
-            .getAllByDate(this._showFinished, this._dateFrom, this._dateTo)
-            .toPromise();
+        this.gridData = await this.repairService.getAll(this._showFinished).toPromise();
         this.gridCollection = new CollectionView(this.gridData);
         this.gridCollection.pageSize = this.pageSize;
         this.gridCollection.currentItem = null;
