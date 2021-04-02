@@ -86,7 +86,7 @@ async function create({ transaction, user }) {
         transactionTypeId: transaction.concept.transactionType.id,
         transactionConceptId: transaction.concept.id,
         createdBy: user.id, //TODO: Issue #21 - Assign transactions to creator user
-        paymentMethodId: 1, //TODO: Issue #57 - Add different payment methods when creating transaction
+        paymentMethodId: transaction.paymentMethod.id,
     });
 }
 async function update({ id, amount, date, note, concept, ...cashTransaction }) {

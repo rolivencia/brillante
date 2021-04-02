@@ -30,6 +30,7 @@ export class CashReportComponent implements OnInit, OnDestroy {
         { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
         { header: 'Subconcepto', binding: 'concept.description', width: '*' },
         { header: 'Nota', binding: 'note', width: 150 },
+        { header: 'Método', binding: 'paymentMethod.description', width: 90 },
         { header: 'Ingreso', binding: 'income', width: 80 },
         { header: 'Egreso', binding: 'expense', width: 80 },
         { header: 'Saldo', binding: 'amount', width: 80 },
@@ -49,8 +50,16 @@ export class CashReportComponent implements OnInit, OnDestroy {
             this.loading = result;
             this.changeDetectorRef.detectChanges();
         });
-        this.cashDashboardService.ngbDateFrom = { year: moment().year(), month: moment().month() % 13, day: moment().date() };
-        this.cashDashboardService.ngbDateTo = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
+        this.cashDashboardService.ngbDateFrom = {
+            year: moment().year(),
+            month: moment().month() % 13,
+            day: moment().date(),
+        };
+        this.cashDashboardService.ngbDateTo = {
+            year: moment().year(),
+            month: (moment().month() + 1) % 13,
+            day: moment().date(),
+        };
         this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
     }
 

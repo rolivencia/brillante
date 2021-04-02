@@ -10,12 +10,14 @@ export class CashTransaction {
     public note: string;
     public audit: Audit;
     public operation?: Operation;
+    public paymentMethod: PaymentMethod;
 
     constructor() {
         this.concept = new TransactionConcept();
         this.date = moment();
         this.audit = new Audit();
         this.operation = new Operation();
+        this.paymentMethod = new PaymentMethod();
     }
 }
 

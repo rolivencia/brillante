@@ -53,10 +53,6 @@ export class CashService {
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, { user: user });
     }
 
-    public getPaymentMethods() {
-        return this.http.get<PaymentMethod>(`${environment.apiUrl}/cash/getPaymentMethods`);
-    }
-
     // TODO: Finish implementation (add CronJob + Manual)
     public closeCashRegister() {
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/close`, {});

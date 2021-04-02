@@ -67,11 +67,6 @@ export class CashDashboardService {
         const dateTo = to ? moment(to) : moment(from);
 
         const transactions = await this.cashService.getAll(dateFrom, dateTo).toPromise();
-        const paymentMethods = await this.cashService.getPaymentMethods().toPromise();
-
-        console.log('Payment Methods:');
-        console.log(paymentMethods);
-
         this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
 
         if (filterConcepts.length) {

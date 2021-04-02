@@ -1,7 +1,7 @@
 import { Audit } from '@app/_models/audit';
 import { AuthenticationService } from '@app/_services';
 import { CashService } from '@app/_services/cash.service';
-import { CashTransaction, Operation, TransactionConcept } from '@app/_models/cash-transaction';
+import { CashTransaction, Operation, PaymentMethod, TransactionConcept } from '@app/_models/cash-transaction';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
@@ -71,6 +71,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             date: [transaction.date, [Validators.required]],
             note: [transaction.note, [Validators.required, Validators.minLength(10)]],
             operation: [transaction.operation],
+            paymentMethod: [transaction.paymentMethod, [Validators.required]],
         });
     }
 
@@ -82,6 +83,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             date: transaction.date,
             note: transaction.note,
             operation: transaction.operation,
+            paymentMethod: transaction.paymentMethod,
         });
     }
 
@@ -100,6 +102,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             note: cashTransactionForm.note.value,
             operation: cashTransactionForm.operation.value,
             audit: new Audit(), // FIXME: Check on how to load/refresh audit here
+            paymentMethod: cashTransactionForm.paymentMethod.value,
         };
     }
 
