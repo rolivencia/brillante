@@ -1,9 +1,7 @@
 <div class="card">
     <div class="card-header">
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-sm btn-outline-success" (click)="add()">
-                ➕ Agregar
-            </button>
+            <button type="button" class="btn btn-sm btn-outline-success" (click)="add()">➕ Agregar</button>
             <button
                 type="button"
                 class="btn btn-sm btn-outline-primary"
@@ -41,20 +39,22 @@
             <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.device.deviceId }}</p>
             <p>
                 <strong>Encendido: </strong>
-                <input
-                    type="checkbox"
-                    class="form-check-input"
-                    disabled
-                    [ngModel]="repairDashboardService.selectedRepair.device.turnedOn"
-                />
+                <input type="checkbox" disabled [ngModel]="repairDashboardService.selectedRepair.device.turnedOn" />
             </p>
             <hr />
             <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.issue }}</p>
             <hr />
-            <p><strong>Fecha de Ingreso: </strong>{{ repairDashboardService.selectedRepair.checkIn.format('YYYY-MM-DD HH:mm') }}</p>
-            <p><strong>Última Actualización: </strong>{{ repairDashboardService.selectedRepair.lastUpdate.format('YYYY-MM-DD HH:mm') }}</p>
+            <p>
+                <strong>Fecha de Ingreso: </strong
+                >{{ repairDashboardService.selectedRepair.checkIn.format('YYYY-MM-DD HH:mm') }}
+            </p>
+            <p>
+                <strong>Última Actualización: </strong
+                >{{ repairDashboardService.selectedRepair.lastUpdate.format('YYYY-MM-DD HH:mm') }}
+            </p>
             <p *ngIf="repairDashboardService.selectedRepair.checkOut">
-                <strong>Fecha de Término: </strong>{{ repairDashboardService.selectedRepair.checkOut.format('YYYY-MM-DD HH:mm') }}
+                <strong>Fecha de Término: </strong
+                >{{ repairDashboardService.selectedRepair.checkOut.format('YYYY-MM-DD HH:mm') }}
             </p>
             <hr />
             <p *ngIf="repairDashboardService.selectedRepair.cost">
@@ -88,9 +88,7 @@
         <p class="mb-0"><strong>ID Reparación: </strong> {{ repairDashboardService.selectedRepair.id }}</p>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-sm btn-outline-secondary" (click)="modal.close('Cancel')">
-            ⬅️️ Cancelar
-        </button>
+        <button class="btn btn-sm btn-outline-secondary" (click)="modal.close('Cancel')">⬅️️ Cancelar</button>
         <button class="ml-3 btn btn-sm btn-outline-danger" (click)="delete(repairDashboardService.selectedRepair.id)">
             ❌ Eliminar
         </button>
