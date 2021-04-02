@@ -65,6 +65,7 @@ async function openCashRegister({ user }) {
         transactionTypeId: 1,
         transactionConceptId: 49,
         createdBy: user.id,
+        paymentMethodId: 0,
     });
 }
 
@@ -75,6 +76,7 @@ async function closeCashRegister({ user }) {
         transactionTypeId: 1,
         transactionConceptId: 163,
         createdBy: user.id,
+        paymentMethodId: 0,
     });
 }
 
