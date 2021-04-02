@@ -8,6 +8,7 @@ import { AuthenticationService } from '@app/_services';
 import { User } from '@app/_models';
 import * as moment from 'moment';
 import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
+import { PaymentMethodsService } from '@app/_services/payment-methods.service';
 
 @Component({
     selector: 'app-cash-add-new',
@@ -23,7 +24,8 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private router: Router,
-        public authenticationService: AuthenticationService
+        public authenticationService: AuthenticationService,
+        public paymentMethodsService: PaymentMethodsService
     ) {
         this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
@@ -31,6 +33,9 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     ngOnInit(): void {
         this.cashDashboardService.editMode.next(true);
         this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts
+            .slice(0, 1)
+            .pop();
+        this.cashFormHandlerService.cashTransaction.paymentMethod = this.paymentMethodsService.paymentMethods
             .slice(0, 1)
             .pop();
         this.cashFormHandlerService.cashTransaction.concept = this.cashFormHandlerService.transactionParentConcept.children

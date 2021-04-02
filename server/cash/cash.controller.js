@@ -3,7 +3,7 @@ const router = express.Router();
 const cashService = require('./cash.service');
 
 router.get('/', getAll);
-router.get('/:id', getById);
+router.get('/getById/:id', getById);
 router.post('/create', create);
 router.put('/update', update);
 router.delete('/remove/:id', remove);
@@ -11,7 +11,16 @@ router.delete('/remove/:id', remove);
 router.post('/open', openCashRegister);
 router.post('/close', closeCashRegister);
 
+router.get('/getPaymentMethods', getPaymentMethods);
+
 module.exports = router;
+
+function getPaymentMethods(req, res, next) {
+    cashService
+        .getPaymentMethods()
+        .then((paymentMethods) => res.json(paymentMethods))
+        .catch((err) => next(err));
+}
 
 function openCashRegister(req, res, next) {
     cashService
