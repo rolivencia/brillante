@@ -7,7 +7,7 @@ import { AuthenticationService } from '@app/_services/authentication.service';
 import { User } from '@app/_models';
 import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
-import { CashTransaction, TransactionConcept } from '@app/_models/cash-transaction';
+import { CashTransaction, PaymentMethod, TransactionConcept } from '@app/_models/cash-transaction';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -34,7 +34,7 @@ export class CashService {
 
     public getById(id: number | string): Observable<any> {
         return this.http
-            .get<CashTransaction>(`${environment.apiUrl}/cash/${id}`)
+            .get<CashTransaction>(`${environment.apiUrl}/cash/getById/${id}`)
             .pipe(map((cashTransactionDTO) => toCashTransaction(cashTransactionDTO)));
     }
 
@@ -51,6 +51,10 @@ export class CashService {
 
     public openCashRegister(user: User) {
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, { user: user });
+    }
+
+    public getPaymentMethods() {
+        return this.http.get<PaymentMethod>(`${environment.apiUrl}/cash/getPaymentMethods`);
     }
 
     // TODO: Finish implementation (add CronJob + Manual)

@@ -13,7 +13,12 @@ module.exports = {
     remove,
     openCashRegister,
     closeCashRegister,
+    getPaymentMethods,
 };
+
+async function getPaymentMethods() {
+    return cash.PaymentMethod.findAll();
+}
 
 async function getById(id) {
     const transactionDAO = await cash.CashTransaction.findOne({

@@ -15,7 +15,6 @@ import { AuthenticationService } from '@app/_services';
     providedIn: 'root',
 })
 export class CashDashboardService {
-
     public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -25,7 +24,11 @@ export class CashDashboardService {
     public ngbDateTo: DateObject;
 
     public ngbMinDate: DateObject = { year: 2020, month: 8, day: 1 };
-    public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
+    public ngbMaxDate: DateObject = {
+        year: this.date.year(),
+        month: (this.date.month() + 1) % 13,
+        day: this.date.date(),
+    };
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView = new CollectionView([]);
@@ -64,10 +67,17 @@ export class CashDashboardService {
         const dateTo = to ? moment(to) : moment(from);
 
         const transactions = await this.cashService.getAll(dateFrom, dateTo).toPromise();
+        const paymentMethods = await this.cashService.getPaymentMethods().toPromise();
+
+        console.log('Payment Methods:');
+        console.log(paymentMethods);
+
         this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
 
         if (filterConcepts.length) {
-            this.transactions = this.transactions.filter((transaction) => !filterConcepts.includes(transaction.concept.id));
+            this.transactions = this.transactions.filter(
+                (transaction) => !filterConcepts.includes(transaction.concept.id)
+            );
         }
 
         this.gridCollection = new CollectionView<any>(this.transactions);
