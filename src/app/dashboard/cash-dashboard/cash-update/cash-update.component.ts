@@ -4,6 +4,7 @@ import { CashDashboardService } from '@app/dashboard/cash-dashboard/cash-dashboa
 import { CashFormHandlerService } from '@app/dashboard/cash-dashboard/cash-form-handler.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CashTransactionConceptsService } from '@app/dashboard/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
+import { PaymentMethodsService } from '@app/_services/payment-methods.service';
 
 @Component({
     selector: 'app-cash-update',
@@ -17,6 +18,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private cashCategoriesService: CashTransactionConceptsService,
+        public paymentMethodsService: PaymentMethodsService,
         private route: ActivatedRoute,
         private router: Router
     ) {}
@@ -27,10 +29,16 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
         if (cashTransaction) {
             this.cashFormHandlerService.saved = false;
             this.cashFormHandlerService.cashTransaction = cashTransaction;
+
             // Assign parent transaction concept for usage in the update form
             this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts.filter(
                 (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
             )[0];
+            // Assign payment method
+            this.cashFormHandlerService.cashTransaction.paymentMethod = this.paymentMethodsService.paymentMethods.filter(
+                (paymentMethod) => this.cashFormHandlerService.cashTransaction.paymentMethod.id === paymentMethod.id
+            )[0];
+
             // Assign date
             this.dateTime = this.cashFormHandlerService.cashTransaction.date.toDate();
             this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
