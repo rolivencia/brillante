@@ -29,13 +29,23 @@
                             <div class="px-2">
                                 <p>
                                     <strong>Nombre y Apellido: </strong>
-                                    {{ repairFormHandlerService.customer.firstName + ' ' + repairFormHandlerService.customer.lastName }}
+                                    {{
+                                        repairFormHandlerService.customer.firstName +
+                                            ' ' +
+                                            repairFormHandlerService.customer.lastName
+                                    }}
                                 </p>
                                 <p><strong>eMail: </strong> {{ repairFormHandlerService.customer.email }}</p>
                             </div>
                             <div class="px-2">
-                                <p><strong>Teléfono Primario: </strong> {{ repairFormHandlerService.customer.telephone }}</p>
-                                <p><strong>Teléfono Secundario: </strong> {{ repairFormHandlerService.customer.telephone }}</p>
+                                <p>
+                                    <strong>Teléfono Primario: </strong>
+                                    {{ repairFormHandlerService.customer.telephone }}
+                                </p>
+                                <p>
+                                    <strong>Teléfono Secundario: </strong>
+                                    {{ repairFormHandlerService.customer.telephone }}
+                                </p>
                             </div>
                             <div class="px-2">
                                 <p><strong>Email: </strong> {{ repairFormHandlerService.customer.email }}</p>
@@ -54,15 +64,23 @@
                     <div id="device-data" class="card mb-3" formGroupName="device">
                         <div class="card-header text-white bg-secondary d-flex justify-content-between py-2">
                             <div>📱 Datos del Equipo</div>
-                            <button class="btn btn-sm btn-outline-light" type="button" (click)="toggleEditDevice()">✏️ Editar</button>
+                            <button class="btn btn-sm btn-outline-light" type="button" (click)="toggleEditDevice()">
+                                ✏️ Editar
+                            </button>
                         </div>
                         <div class="card-body p-2">
                             <div *ngIf="!editDevice" id="device-read-only" class="d-flex justify-content-between">
                                 <div class="px-2">
-                                    <p><strong>Dispositivo: </strong> {{ repairFormHandlerService.repair.device.type.description }}</p>
+                                    <p>
+                                        <strong>Dispositivo: </strong>
+                                        {{ repairFormHandlerService.repair.device.type.description }}
+                                    </p>
                                 </div>
                                 <div class="px-2">
-                                    <p><strong>Marca: </strong> {{ repairFormHandlerService.repair.device.manufacturer }}</p>
+                                    <p>
+                                        <strong>Marca: </strong>
+                                        {{ repairFormHandlerService.repair.device.manufacturer }}
+                                    </p>
                                 </div>
                                 <div class="px-2">
                                     <p><strong>Modelo: </strong> {{ repairFormHandlerService.repair.device.model }}</p>
@@ -74,7 +92,10 @@
                                     </p>
                                 </div>
                                 <div class="px-2" *ngIf="repairFormHandlerService.repair.device.deviceId">
-                                    <p><strong>IMEI | S/N: </strong> {{ repairFormHandlerService.repair.device.deviceId }}</p>
+                                    <p>
+                                        <strong>IMEI | S/N: </strong>
+                                        {{ repairFormHandlerService.repair.device.deviceId }}
+                                    </p>
                                 </div>
                             </div>
                             <div *ngIf="editDevice" id="device-edit-data" class="d-flex justify-content-between">
@@ -143,7 +164,6 @@
                                             type="checkbox"
                                             id="arrivedTurnedOn"
                                             formControlName="turnedOn"
-                                            disabled
                                         />
                                         <label class="form-check-label" for="arrivedTurnedOn"> </label>
                                     </div>
@@ -229,7 +249,7 @@
                                                 </wj-flex-grid>
                                             </div>
 
-                                            <div class="px-2" style="display: none;">
+                                            <div class="px-2" style="display: none">
                                                 <!--FIXME: Borrar hardcode de esta sección. Mostrar quién hizo el añadido/modificación -->
                                                 <p><strong>Responsable de Carga</strong></p>
                                                 {{ repairFormHandlerService.repair.audit.createdBy.firstName }}
@@ -259,9 +279,7 @@
                                             <p><strong>Costo: </strong></p>
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        $
-                                                    </span>
+                                                    <span class="input-group-text"> $ </span>
                                                 </div>
                                                 <input
                                                     name="cost"
@@ -277,9 +295,7 @@
                                             <p><strong>Precio: </strong></p>
                                             <div class="input-group input-group-sm">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        $
-                                                    </span>
+                                                    <span class="input-group-text"> $ </span>
                                                 </div>
                                                 <input
                                                     name="price"
@@ -306,9 +322,7 @@
                                                     formControlName="warrantyTerm"
                                                 />
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        meses
-                                                    </span>
+                                                    <span class="input-group-text"> meses </span>
                                                 </div>
                                             </div>
                                         </div>
