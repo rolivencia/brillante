@@ -19,6 +19,7 @@ import * as wjInput from '@grapecity/wijmo.angular2.input';
 export class PaymentMethodSelectorComponent implements ControlValueAccessor, OnInit {
     @Input() id: string;
     @Input() isReadOnly: boolean = false;
+    @Input() isDisabled: boolean = false;
     @Input() selectedItem: PaymentMethod;
     @Input() selectedIndex: number;
 

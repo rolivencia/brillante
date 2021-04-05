@@ -4,6 +4,7 @@
         #combobox
         class="form-control form-control-sm p-0"
         [isEditable]="false"
+        [isDisabled]="isDisabled"
         [isReadOnly]="isReadOnly"
         [itemsSource]="paymentMethodsService.paymentMethods"
         [displayMemberPath]="'description'"
