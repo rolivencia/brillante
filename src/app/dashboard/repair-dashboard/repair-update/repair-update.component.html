@@ -257,7 +257,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-100 d-flex justify-content-between">
+                                    <div class="w-100 d-flex justify-content-between pb-2">
                                         <div class="px-2 flex-grow-1">
                                             <p><strong>Estado: </strong></p>
                                             <div class="form-inline">
@@ -328,23 +328,26 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-100 d-flex justify-content-between align-content-center">
-                                        <div class="form-check pl-1">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                id="register-repair-payment"
-                                                [disabled]="!repairFormHandlerService.canRegisterPayment()"
-                                                [readOnly]="repairFormHandlerService.saved"
-                                                [(ngModel)]="repairFormHandlerService.registerPayment"
-                                                [ngModelOptions]="{ standalone: true }"
-                                            />
-                                            <label class="ml-4 form-check-label" for="register-repair-payment">
-                                                Anotar pago de reparación en caja
-                                            </label>
+                                    <div class="w-100 d-flex justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <div class="form-check pl-1">
+                                                <input
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    id="register-repair-payment"
+                                                    [disabled]="!repairFormHandlerService.canRegisterPayment()"
+                                                    [readOnly]="repairFormHandlerService.saved"
+                                                    [(ngModel)]="repairFormHandlerService.registerPayment"
+                                                    [ngModelOptions]="{ standalone: true }"
+                                                />
+                                                <label class="ml-4 form-check-label" for="register-repair-payment">
+                                                    Anotar pago de reparación en caja
+                                                </label>
+                                            </div>
                                         </div>
                                         <app-payment-method-selector
                                             id="paymentMethod"
+                                            class="px-2"
                                             [(ngModel)]="repairFormHandlerService.paymentMethod"
                                             [ngModelOptions]="{ standalone: true }"
                                             [isDisabled]="
@@ -356,13 +359,13 @@
                                         ></app-payment-method-selector>
                                     </div>
                                     <div class="w-100 d-flex">
-                                        <div class="px-2 mb-2 w-100">
+                                        <div class="px-2 w-100">
                                             <p><strong>Notas sobre la Reparación: </strong></p>
                                             <textarea
                                                 class="form-control form-control-sm w-100"
                                                 id="note"
                                                 name="note"
-                                                rows="5"
+                                                rows="4"
                                                 placeholder="Notas de la reparación. Incluya aquí procedimientos e información valiosa para colegas de trabajo y el cliente."
                                                 [readOnly]="repairFormHandlerService.saved"
                                                 formControlName="note"
