@@ -149,7 +149,7 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
                         transactionTypeId: 1,
                         transactionConceptId: 158, // TODO: Define enums for server-side APIs (Transaction Concepts)
                         createdBy: user.id,
-                        paymentMethodId: paymentMethod.id, // TODO - Issue #96: Add payment method picker in repair update view
+                        paymentMethodId: paymentMethod.id,
                     },
                     { transaction: t }
                 );
