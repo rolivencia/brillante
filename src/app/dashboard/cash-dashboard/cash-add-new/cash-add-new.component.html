@@ -75,23 +75,15 @@
                         <input class="form-control" type="number" aria-describedby="amount" formControlName="amount" />
                     </div>
 
-                    <label><b>Método de pago:</b></label>
-                    <div class="input-group input-group-sm mb-2">
-                        <wj-combo-box
-                            class="form-control form-control-sm p-0"
-                            id="paymentMethod"
-                            name="paymentMethod"
-                            aria-describedby="paymentMethod"
-                            formControlName="paymentMethod"
-                            [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="paymentMethodsService.paymentMethods"
-                            [selectedItem]="cashFormHandlerService.cashTransaction.paymentMethod"
-                            [selectedIndex]="cashFormHandlerService.cashTransaction.paymentMethod.id"
-                            [displayMemberPath]="'description'"
-                        >
-                        </wj-combo-box>
-                    </div>
+                    <app-payment-method-selector
+                        id="paymentMethod"
+                        name="paymentMethod"
+                        aria-describedby="paymentMethod"
+                        formControlName="paymentMethod"
+                        [isReadOnly]="cashFormHandlerService.saved"
+                        [selectedItem]="cashFormHandlerService.cashTransaction.paymentMethod"
+                        [selectedIndex]="cashFormHandlerService.cashTransaction.paymentMethod.id"
+                    ></app-payment-method-selector>
 
                     <label><b>Nota:</b></label>
                     <div

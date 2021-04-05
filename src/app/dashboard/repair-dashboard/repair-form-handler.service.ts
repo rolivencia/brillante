@@ -6,11 +6,19 @@ import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '@app/_services';
+import { PaymentMethod } from '@app/_models/cash-transaction';
 
 @Injectable({
     providedIn: 'root',
 })
 export class RepairFormHandlerService {
+    get paymentMethod(): PaymentMethod {
+        return this._paymentMethod;
+    }
+
+    set paymentMethod(value: PaymentMethod) {
+        this._paymentMethod = value;
+    }
     get registerPayment(): boolean {
         return this._registerPayment;
     }
@@ -81,6 +89,7 @@ export class RepairFormHandlerService {
     private _submitted: boolean = false;
     private _saved: boolean = false;
     private _registerPayment: boolean = false;
+    private _paymentMethod: PaymentMethod = new PaymentMethod();
 
     private _customer: Customer = new Customer();
     private _repair: Repair = new Repair();
@@ -260,7 +269,9 @@ export class RepairFormHandlerService {
             }
         }
 
-        const result = await this.repairService.create(this.repair, this.authenticationService.currentUserValue).toPromise();
+        const result = await this.repairService
+            .create(this.repair, this.authenticationService.currentUserValue)
+            .toPromise();
 
         if (result && result.id) {
             this.saved = true;
@@ -297,9 +308,12 @@ export class RepairFormHandlerService {
             }
         }
 
-        const registerPayment = this.canRegisterPayment() ? this.registerPayment : false;
+        const generateTransaction = this.canRegisterPayment() ? this.registerPayment : false;
         const [trackingUpdateResult] = await this.repairService
-            .updateTrackingInfo(this.repair, this.authenticationService.currentUserValue, registerPayment)
+            .updateTrackingInfo(this.repair, this.authenticationService.currentUserValue, {
+                generateTransaction: generateTransaction,
+                paymentMethod: this.paymentMethod,
+            })
             .toPromise();
 
         return new Promise((resolve, reject) => {

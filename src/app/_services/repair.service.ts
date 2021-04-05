@@ -103,11 +103,12 @@ export class RepairService {
         return this.http.put<any>(`${environment.apiUrl}/repair/updateDeviceInfo`, { ...repair });
     }
 
-    public updateTrackingInfo(repair: Repair, user: User, generateTransaction: boolean) {
+    public updateTrackingInfo(repair: Repair, user: User, { generateTransaction, paymentMethod }) {
         return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, {
             repairToUpdate: repair,
             user: user,
             generateTransaction,
+            paymentMethod,
         });
     }
 
