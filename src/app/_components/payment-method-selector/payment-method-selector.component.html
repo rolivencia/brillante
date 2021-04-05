@@ -1,0 +1,15 @@
+<label><b>Método de pago:</b></label>
+<div class="input-group input-group-sm mb-2">
+    <wj-combo-box
+        #combobox
+        class="form-control form-control-sm p-0"
+        [isEditable]="false"
+        [isReadOnly]="isReadOnly"
+        [itemsSource]="paymentMethodsService.paymentMethods"
+        [displayMemberPath]="'description'"
+        [selectedItem]="selectedItem"
+        [selectedIndex]="selectedIndex"
+        (selectedIndexChanged)="selectedItemChanged(combobox.selectedItem)"
+    >
+    </wj-combo-box>
+</div>
