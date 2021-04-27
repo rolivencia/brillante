@@ -10,7 +10,7 @@
                     placeholder="yyyy-mm-dd"
                     name="from"
                     [disabled]="loading"
-                    [minDate]="cashDashboardService.ngbMinDate"
+                    [minDate]="cashDashboardService.ngbSystemInitialDate"
                     [maxDate]="cashDashboardService.ngbMaxDate"
                     [displayMonths]="displayMonths"
                     [navigation]="navigation"
@@ -21,9 +21,7 @@
                     #from="ngbDatepicker"
                 />
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">
-                        📅
-                    </button>
+                    <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">📅</button>
                 </div>
             </div>
             <div class="col-3 col-xl-3 input-group input-group-sm">
@@ -46,9 +44,7 @@
                     #to="ngbDatepicker"
                 />
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">
-                        📅
-                    </button>
+                    <button class="btn btn-outline-secondary" (click)="from.toggle()" type="button">📅</button>
                 </div>
             </div>
 
@@ -101,10 +97,17 @@
                             [header]="column.header"
                             [visible]="true"
                             [aggregate]="
-                                column.header === 'Ingreso' || column.header === 'Egreso' || column.header === 'Saldo' ? 'Sum' : 'None'
+                                column.header === 'Ingreso' || column.header === 'Egreso' || column.header === 'Saldo'
+                                    ? 'Sum'
+                                    : 'None'
                             "
                         >
-                            <ng-template *ngIf="column.header === 'Ingreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <ng-template
+                                *ngIf="column.header === 'Ingreso'"
+                                wjFlexGridCellTemplate
+                                [cellType]="'Cell'"
+                                let-cell="cell"
+                            >
                                 <ng-container *ngIf="cell.item.concept.transactionType.id === 1">
                                     <div class="d-flex justify-content-between">
                                         <div>$</div>
@@ -125,7 +128,12 @@
                                 </div>
                             </ng-template>
 
-                            <ng-template *ngIf="column.header === 'Egreso'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <ng-template
+                                *ngIf="column.header === 'Egreso'"
+                                wjFlexGridCellTemplate
+                                [cellType]="'Cell'"
+                                let-cell="cell"
+                            >
                                 <ng-container *ngIf="cell.item.concept.transactionType.id === 0">
                                     <div class="d-flex justify-content-between">
                                         <div>$</div>
@@ -146,7 +154,12 @@
                                 </div>
                             </ng-template>
 
-                            <ng-template *ngIf="column.header === 'Saldo'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <ng-template
+                                *ngIf="column.header === 'Saldo'"
+                                wjFlexGridCellTemplate
+                                [cellType]="'Cell'"
+                                let-cell="cell"
+                            >
                                 <div class="d-flex justify-content-between">
                                     <div>$</div>
                                     <div>{{ cell.item.amount }}</div>
