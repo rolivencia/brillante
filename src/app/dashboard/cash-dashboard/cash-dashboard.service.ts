@@ -38,7 +38,6 @@ export class CashDashboardService {
     };
 
     public ngbSystemInitialDate: DateObject = { year: 2020, month: 8, day: 1 };
-
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView = new CollectionView([]);
