@@ -18,17 +18,25 @@ export class CashDashboardService {
     public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+    // TODO: Issue #98 - Limit how many days can an employee with access to the cash register can see in the past. Make it configurable.
     public date: Moment = moment();
+    public minimumGridDate: Moment = moment().subtract(14, 'days');
 
     public ngbDateFrom: DateObject;
     public ngbDateTo: DateObject;
 
-    public ngbMinDate: DateObject = { year: 2020, month: 8, day: 1 };
+    public ngbMinDate: DateObject = {
+        year: this.minimumGridDate.year(),
+        month: (this.minimumGridDate.month() + 1) % 13,
+        day: this.minimumGridDate.date(),
+    };
+
     public ngbMaxDate: DateObject = {
         year: this.date.year(),
         month: (this.date.month() + 1) % 13,
         day: this.date.date(),
     };
+
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView = new CollectionView([]);
