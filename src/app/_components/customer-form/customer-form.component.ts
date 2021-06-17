@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@app/_services/repair.service';
-import { ControlContainer, FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { ControlContainer, FormGroup } from '@angular/forms';
+import { CustomerFormService } from '@components/customer-form/customer-form.service';
 
 @Component({
     selector: 'app-customer-form',
@@ -10,16 +11,18 @@ import { ControlContainer, FormControl, FormGroup, FormGroupDirective } from '@a
 })
 export class CustomerFormComponent implements OnInit {
     public form: FormGroup;
+    public displayMonths = 1;
+    public navigation = 'select';
+    public outsideDays = 'visible';
 
     constructor(
         public repairFormHandlerService: RepairFormHandlerService,
         public repairService: RepairService,
-        private controlContainer: ControlContainer
+        private controlContainer: ControlContainer,
+        public customerFormService: CustomerFormService
     ) {}
 
     ngOnInit(): void {
-        // this.form = this.parentForm.form;
-        // this.form.addControl('customer', this.parentForm.form['customer']);
         this.form = <FormGroup>this.controlContainer.control;
     }
 }

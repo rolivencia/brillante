@@ -1,12 +1,13 @@
+import { AuthenticationService } from '@app/_services';
 import { Customer } from '@app/_models/customer';
 import { CustomerService } from '@app/_services/customer.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { PaymentMethod } from '@app/_models/cash-transaction';
 import { Repair } from '@app/_models';
 import { RepairService } from '@app/_services/repair.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthenticationService } from '@app/_services';
-import { PaymentMethod } from '@app/_models/cash-transaction';
+import { toMoment } from '@app/_models/date-object';
 
 @Injectable({
     providedIn: 'root',
@@ -111,6 +112,7 @@ export class RepairFormHandlerService {
                 dni: [customer.dni, [Validators.required, Validators.minLength(7)]],
                 firstName: [customer.firstName, [Validators.required, Validators.minLength(2)]],
                 lastName: [customer.lastName, [Validators.required, Validators.minLength(2)]],
+                birthDate: [customer.birthDate],
                 email: [customer.email, [Validators.required, Validators.email]],
                 address: [customer.address, [Validators.required]],
                 telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]],
@@ -156,6 +158,7 @@ export class RepairFormHandlerService {
                 dni: customer.dni,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
+                birthDate: customer.birthDate,
                 email: customer.email,
                 address: customer.address,
                 telephone: customer.telephone,
@@ -239,6 +242,7 @@ export class RepairFormHandlerService {
             dni: customerForm.dni.value,
             firstName: customerForm.firstName.value,
             lastName: customerForm.lastName.value,
+            birthDate: toMoment(customerForm.birthDate.value),
             email: customerForm.email.value,
             telephone: customerForm.telephone.value,
             address: customerForm.address.value,
