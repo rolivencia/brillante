@@ -10,6 +10,8 @@ import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { Injectable } from '@angular/core';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 import { AuthenticationService } from '@app/_services';
+import { EUSerRoles } from '@app/_enums/user.enum';
+import { Role } from '@app/_models';
 
 @Injectable({
     providedIn: 'root',
@@ -57,6 +59,27 @@ export class CashDashboardService {
             currentDateTime.month() === this.date.month() &&
             currentDateTime.date() === this.date.date()
         );
+    }
+
+    ngbMinDateByRole(): DateObject {
+        const userRoles: any = this.authenticationService.currentUserValue.roles;
+        let minimumGridDate: DateObject = {
+            year: this.minimumGridDate.year(),
+            month: (this.minimumGridDate.month() + 1) % 13,
+            day: this.minimumGridDate.date(),
+        };
+        if (isAdministrator(userRoles)) {
+            minimumGridDate = {
+                year: 2016,
+                month: 1,
+                day: 1,
+            };
+        }
+        return {
+            year: minimumGridDate.year,
+            month: minimumGridDate.month,
+            day: minimumGridDate.day,
+        };
     }
 
     async openCashRegister() {
@@ -121,3 +144,5 @@ export function formatDate(date: DateObject) {
     const dateString = `${date.year}-${date.month}-${date.day}`;
     return moment(dateString);
 }
+
+export const isAdministrator = (roles: Role[]): boolean => roles.filter((role) => role.id === 1).length > 0;
