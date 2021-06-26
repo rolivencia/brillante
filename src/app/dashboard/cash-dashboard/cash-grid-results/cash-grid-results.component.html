@@ -15,7 +15,7 @@
                         placeholder="yyyy-mm-dd"
                         name="from"
                         [disabled]="loading || !canUserNavigateDates"
-                        [minDate]="cashDashboardService.ngbMinDate"
+                        [minDate]="minDate"
                         [maxDate]="cashDashboardService.ngbMaxDate"
                         [displayMonths]="displayMonths"
                         [navigation]="navigation"

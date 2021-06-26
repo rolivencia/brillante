@@ -34,6 +34,8 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     public loading: boolean = false;
     public canUserNavigateDates: boolean = false;
 
+    public minDate: DateObject;
+
     private editModeSubscription: Subscription;
     private loadingSubscription: Subscription;
 
@@ -51,8 +53,7 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     constructor(
         public authenticationService: AuthenticationService,
         public cashDashboardService: CashDashboardService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private router: Router
+        private changeDetectorRef: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -74,6 +75,7 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
 
     ngAfterViewInit() {
         this.refreshGrid(this.cashDashboardService.ngbDateFrom);
+        this.minDate = this.cashDashboardService.ngbMinDateByRole();
     }
 
     ngOnDestroy(): void {
