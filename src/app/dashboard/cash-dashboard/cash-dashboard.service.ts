@@ -40,6 +40,12 @@ export class CashDashboardService {
     };
 
     public ngbSystemInitialDate: DateObject = { year: 2020, month: 8, day: 1 };
+    public ngbSystemMaxDate: DateObject = {
+        year: this.date.year(),
+        month: (this.date.month() + 1) % 13,
+        day: this.date.date(),
+    };
+
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView = new CollectionView([]);
