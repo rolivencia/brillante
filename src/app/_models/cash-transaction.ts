@@ -10,12 +10,14 @@ export class CashTransaction {
     public note: string;
     public audit: Audit;
     public operation?: Operation;
+    public paymentMethod: PaymentMethod;
 
     constructor() {
         this.concept = new TransactionConcept();
         this.date = moment();
         this.audit = new Audit();
         this.operation = new Operation();
+        this.paymentMethod = new PaymentMethod();
     }
 }
 
@@ -70,5 +72,15 @@ export class TransactionConcept {
         this.modifiable = modifiable;
         this.enabled = enabled;
         this.audit = audit ? audit : new Audit();
+    }
+}
+
+export class PaymentMethod {
+    public id: number;
+    public description: string;
+
+    constructor(id?: number, description?: string) {
+        this.id = id;
+        this.description = description;
     }
 }

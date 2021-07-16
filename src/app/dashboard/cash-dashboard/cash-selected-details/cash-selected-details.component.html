@@ -15,21 +15,32 @@
             >
                 ✏️ Editar
             </button>
-            <button class="btn btn-sm btn-outline-danger mr-3" (click)="delete()" [disabled]="!cashDashboardService.selectedTransaction">
+            <button
+                class="btn btn-sm btn-outline-danger mr-3"
+                (click)="delete()"
+                [disabled]="!cashDashboardService.selectedTransaction"
+            >
                 ❌ Borrar
             </button>
         </ng-container>
     </div>
     <div id="cash-transaction-selected" class="card-body">
-        <ng-container *ngIf="!cashDashboardService.selectedTransaction && cashDashboardService.gridCollection.itemCount > 0">
-            <div class="alert alert-info">Seleccioná una transacción de la grilla para visualizar sus detalles</div></ng-container
+        <ng-container
+            *ngIf="!cashDashboardService.selectedTransaction && cashDashboardService.gridCollection.itemCount > 0"
+        >
+            <div class="alert alert-info">
+                Seleccioná una transacción de la grilla para visualizar sus detalles
+            </div></ng-container
         >
         <ng-container *ngIf="cashDashboardService.selectedTransaction">
             <div class="px-0">
                 <p><strong>ID: </strong> {{ cashDashboardService.selectedTransaction.id }}</p>
             </div>
             <div class="px-0">
-                <p><strong>Concepto: </strong> {{ cashDashboardService.selectedTransaction.concept.parent.description }}</p>
+                <p>
+                    <strong>Concepto: </strong>
+                    {{ cashDashboardService.selectedTransaction.concept.parent.description }}
+                </p>
             </div>
             <div class="px-0">
                 <p><strong>Subconcepto: </strong> {{ cashDashboardService.selectedTransaction.concept.description }}</p>
@@ -39,16 +50,28 @@
             </div>
             <div class="px-0">
                 <p>
-                    <strong>Tipo de Transacción: </strong>{{ cashDashboardService.selectedTransaction.concept.transactionType.description }}
+                    <strong>Método de Pago: </strong
+                    >{{ cashDashboardService.selectedTransaction.paymentMethod.description }}
+                </p>
+            </div>
+            <div class="px-0">
+                <p>
+                    <strong>Tipo de Transacción: </strong
+                    >{{ cashDashboardService.selectedTransaction.concept.transactionType.description }}
                 </p>
             </div>
             <ng-container *ngIf="cashDashboardService.selectedTransaction.operation">
                 <hr />
                 <div id="associated-operation" class="card bg-primary text-white" (click)="navigate()">
                     <div class="card-body">
-                        <p><b>Operación Asociada: </b>{{ cashDashboardService.selectedTransaction.operation.description }}</p>
+                        <p>
+                            <b>Operación Asociada: </b
+                            >{{ cashDashboardService.selectedTransaction.operation.description }}
+                        </p>
                         <!-- TODO: Cambiar asociación para que sea genérica y no sólo responda a idRepair -->
-                        <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation['idRepair'] }}</p>
+                        <p class="mb-0">
+                            <b>ID: </b>{{ cashDashboardService.selectedTransaction.operation['idRepair'] }}
+                        </p>
                     </div>
                 </div>
             </ng-container>

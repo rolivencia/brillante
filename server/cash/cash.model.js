@@ -9,6 +9,7 @@ const transaction = require('server/cash/transaction-concepts/transaction-concep
 class CashTransaction extends Sequelize.Model {}
 class RepairCashTransaction extends Sequelize.Model {}
 class TransactionType extends Sequelize.Model {}
+class PaymentMethod extends Sequelize.Model {}
 
 CashTransaction.init(
     {
@@ -65,6 +66,15 @@ CashTransaction.init(
             type: Sequelize.TINYINT,
             defaultValue: 0,
             field: 'deleted',
+        },
+        paymentMethodId: {
+            type: Sequelize.SMALLINT,
+            allowNull: false,
+            references: {
+                model: 'sh_payment_methods',
+                key: 'payment_method_id',
+            },
+            field: 'payment_method_id',
         },
     },
     {
@@ -129,6 +139,27 @@ TransactionType.init(
     }
 );
 
+PaymentMethod.init(
+    {
+        id: {
+            type: Sequelize.SMALLINT,
+            auto: false,
+            primaryKey: true,
+            field: 'payment_method_id',
+        },
+        description: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+            field: 'description',
+        },
+    },
+    {
+        timestamps: false,
+        sequelize: sequelizeConnector,
+        modelName: 'sh_tab_payment_methods',
+    }
+);
+
 RepairCashTransaction.belongsTo(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
 RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repair_id' });
 
@@ -136,12 +167,21 @@ CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'tr
 repair.Repair.hasOne(RepairCashTransaction, { as: 'repairCashTransaction', foreignKey: 'repair_id' });
 
 CashTransaction.belongsTo(transaction.CashTransactionConcept, { as: 'concept', foreignKey: 'transaction_concept_id' });
-transaction.CashTransactionConcept.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_concept_id' });
+transaction.CashTransactionConcept.hasMany(CashTransaction, {
+    as: 'transaction',
+    foreignKey: 'transaction_concept_id',
+});
 
 CashTransaction.belongsTo(user.User, { as: 'user', foreignKey: 'created_user_id' });
 user.User.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
 
-transaction.CashTransactionConcept.belongsTo(TransactionType, { as: 'transactionType', foreignKey: 'transaction_type_id' });
+transaction.CashTransactionConcept.belongsTo(TransactionType, {
+    as: 'transactionType',
+    foreignKey: 'transaction_type_id',
+});
 TransactionType.hasMany(transaction.CashTransactionConcept, { as: 'transaction', foreignKey: 'transaction_type_id' });
 
-module.exports = { CashTransaction, RepairCashTransaction, TransactionType };
+CashTransaction.belongsTo(PaymentMethod, { as: 'paymentMethod', foreignKey: 'payment_method_id' });
+PaymentMethod.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
+
+module.exports = { CashTransaction, RepairCashTransaction, TransactionType, PaymentMethod };

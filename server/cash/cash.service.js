@@ -13,7 +13,12 @@ module.exports = {
     remove,
     openCashRegister,
     closeCashRegister,
+    getPaymentMethods,
 };
+
+async function getPaymentMethods() {
+    return cash.PaymentMethod.findAll();
+}
 
 async function getById(id) {
     const transactionDAO = await cash.CashTransaction.findOne({
@@ -60,6 +65,7 @@ async function openCashRegister({ user }) {
         transactionTypeId: 1,
         transactionConceptId: 49,
         createdBy: user.id,
+        paymentMethodId: 1,
     });
 }
 
@@ -70,6 +76,7 @@ async function closeCashRegister({ user }) {
         transactionTypeId: 1,
         transactionConceptId: 163,
         createdBy: user.id,
+        paymentMethodId: 1,
     });
 }
 
@@ -81,9 +88,10 @@ async function create({ transaction, user }) {
         transactionTypeId: transaction.concept.transactionType.id,
         transactionConceptId: transaction.concept.id,
         createdBy: user.id, //TODO: Issue #21 - Assign transactions to creator user
+        paymentMethodId: transaction.paymentMethod.id,
     });
 }
-async function update({ id, amount, date, note, concept, ...cashTransaction }) {
+async function update({ id, amount, date, note, concept, paymentMethod, ...cashTransaction }) {
     return cash.CashTransaction.update(
         {
             amount: amount,
@@ -92,6 +100,7 @@ async function update({ id, amount, date, note, concept, ...cashTransaction }) {
             transactionTypeId: concept.transactionType.id,
             transactionConceptId: concept.id,
             createdBy: 1, //TODO: Issue #21 - Assign transactions to creator user
+            paymentMethodId: paymentMethod.id,
         },
         { where: { id: id } }
     );
@@ -142,10 +151,26 @@ function cashGetDefinition() {
             ],
         },
         {
+            as: 'paymentMethod',
+            model: cash.PaymentMethod,
+            required: true,
+            attributes: ['id', 'description'],
+        },
+        {
             as: 'user',
             model: user.User,
             required: true,
-            attributes: ['id', 'firstName', 'lastName', 'userName', 'avatar', 'createdAt', 'updatedAt', 'enabled', 'deleted'],
+            attributes: [
+                'id',
+                'firstName',
+                'lastName',
+                'userName',
+                'avatar',
+                'createdAt',
+                'updatedAt',
+                'enabled',
+                'deleted',
+            ],
         },
         {
             as: 'operation',

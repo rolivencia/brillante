@@ -10,22 +10,42 @@ import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { Injectable } from '@angular/core';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 import { AuthenticationService } from '@app/_services';
+import { EUSerRoles } from '@app/_enums/user.enum';
+import { Role } from '@app/_models';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CashDashboardService {
-
     public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+    // TODO: Issue #98 - Limit how many days can an employee with access to the cash register can see in the past. Make it configurable.
     public date: Moment = moment();
+    public minimumGridDate: Moment = moment().subtract(14, 'days');
 
     public ngbDateFrom: DateObject;
     public ngbDateTo: DateObject;
 
-    public ngbMinDate: DateObject = { year: 2020, month: 8, day: 1 };
-    public ngbMaxDate: DateObject = { year: this.date.year(), month: (this.date.month() + 1) % 13, day: this.date.date() };
+    public ngbMinDate: DateObject = {
+        year: this.minimumGridDate.year(),
+        month: (this.minimumGridDate.month() + 1) % 13,
+        day: this.minimumGridDate.date(),
+    };
+
+    public ngbMaxDate: DateObject = {
+        year: this.date.year(),
+        month: (this.date.month() + 1) % 13,
+        day: this.date.date(),
+    };
+
+    public ngbSystemInitialDate: DateObject = { year: 2020, month: 8, day: 1 };
+    public ngbSystemMaxDate: DateObject = {
+        year: this.date.year(),
+        month: (this.date.month() + 1) % 13,
+        day: this.date.date(),
+    };
+
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView = new CollectionView([]);
@@ -45,6 +65,27 @@ export class CashDashboardService {
             currentDateTime.month() === this.date.month() &&
             currentDateTime.date() === this.date.date()
         );
+    }
+
+    ngbMinDateByRole(): DateObject {
+        const userRoles: any = this.authenticationService.currentUserValue.roles;
+        let minimumGridDate: DateObject = {
+            year: this.minimumGridDate.year(),
+            month: (this.minimumGridDate.month() + 1) % 13,
+            day: this.minimumGridDate.date(),
+        };
+        if (isAdministrator(userRoles)) {
+            minimumGridDate = {
+                year: 2016,
+                month: 1,
+                day: 1,
+            };
+        }
+        return {
+            year: minimumGridDate.year,
+            month: minimumGridDate.month,
+            day: minimumGridDate.day,
+        };
     }
 
     async openCashRegister() {
@@ -67,7 +108,9 @@ export class CashDashboardService {
         this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
 
         if (filterConcepts.length) {
-            this.transactions = this.transactions.filter((transaction) => !filterConcepts.includes(transaction.concept.id));
+            this.transactions = this.transactions.filter(
+                (transaction) => !filterConcepts.includes(transaction.concept.id)
+            );
         }
 
         this.gridCollection = new CollectionView<any>(this.transactions);
@@ -107,3 +150,5 @@ export function formatDate(date: DateObject) {
     const dateString = `${date.year}-${date.month}-${date.day}`;
     return moment(dateString);
 }
+
+export const isAdministrator = (roles: Role[]): boolean => roles.filter((role) => role.id === 1).length > 0;

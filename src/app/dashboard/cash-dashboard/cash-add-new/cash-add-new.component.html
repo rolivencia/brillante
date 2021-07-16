@@ -75,6 +75,16 @@
                         <input class="form-control" type="number" aria-describedby="amount" formControlName="amount" />
                     </div>
 
+                    <app-payment-method-selector
+                        id="paymentMethod"
+                        name="paymentMethod"
+                        aria-describedby="paymentMethod"
+                        formControlName="paymentMethod"
+                        [isReadOnly]="cashFormHandlerService.saved"
+                        [selectedItem]="cashFormHandlerService.cashTransaction.paymentMethod"
+                        [selectedIndex]="cashFormHandlerService.cashTransaction.paymentMethod.id"
+                    ></app-payment-method-selector>
+
                     <label><b>Nota:</b></label>
                     <div
                         class="text-danger"

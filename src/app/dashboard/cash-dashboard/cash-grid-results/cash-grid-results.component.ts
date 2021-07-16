@@ -34,24 +34,26 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     public loading: boolean = false;
     public canUserNavigateDates: boolean = false;
 
+    public minDate: DateObject;
+
     private editModeSubscription: Subscription;
     private loadingSubscription: Subscription;
 
     columns: any[] = [
-        { header: 'ID', binding: 'id', width: 60 },
+        { header: 'ID', binding: 'id', width: 50 },
         { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
         { header: 'Subconcepto', binding: 'concept.description', width: '*' },
-        { header: 'Ingreso', binding: 'income', width: 80 },
-        { header: 'Egreso', binding: 'expense', width: 80 },
-        { header: 'Saldo', binding: 'amount', width: 80 },
-        { header: 'Hora', binding: 'date', width: 60 },
+        { header: 'Método', binding: 'paymentMethod.description', width: 90 },
+        { header: 'Ingreso', binding: 'income', width: 70 },
+        { header: 'Egreso', binding: 'expense', width: 70 },
+        { header: 'Saldo', binding: 'amount', width: 70 },
+        { header: 'Hora', binding: 'date', width: 55 },
     ];
 
     constructor(
         public authenticationService: AuthenticationService,
         public cashDashboardService: CashDashboardService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private router: Router
+        private changeDetectorRef: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -73,6 +75,7 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
 
     ngAfterViewInit() {
         this.refreshGrid(this.cashDashboardService.ngbDateFrom);
+        this.minDate = this.cashDashboardService.ngbMinDateByRole();
     }
 
     ngOnDestroy(): void {

@@ -66,11 +66,17 @@
                             *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
                             class="badge p-2 w-100"
                             [ngClass]="{
-                                'badge-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
-                                'badge-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                'badge-danger':
+                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
+                                'badge-success':
+                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 1
                             }"
                         >
-                            {{ cashFormHandlerService.transactionParentConcept.transactionType.id === 1 ? '💰 Ingreso' : '💸 Egreso' }}
+                            {{
+                                cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                    ? '💰 Ingreso'
+                                    : '💸 Egreso'
+                            }}
                         </span>
                         <!-- TODO: Think about filtering the concept list depending on the transaction type also -->
                     </div>
@@ -81,6 +87,17 @@
                         </div>
                         <input class="form-control" aria-describedby="amount" formControlName="amount" type="number" />
                     </div>
+
+                    <app-payment-method-selector
+                        id="paymentMethod"
+                        name="paymentMethod"
+                        aria-describedby="paymentMethod"
+                        formControlName="paymentMethod"
+                        [isReadOnly]="cashFormHandlerService.saved"
+                        [selectedItem]="cashFormHandlerService.cashTransaction.paymentMethod"
+                        [selectedIndex]="cashFormHandlerService.cashTransaction.paymentMethod.id"
+                    ></app-payment-method-selector>
+
                     <label><b>Fecha y Hora:</b></label>
                     <div class="input-group input-group-sm mb-2">
                         <wj-input-date-time
@@ -93,7 +110,8 @@
                     </div>
                     <label><b>Nota:</b></label>
                     <div class="form-group pb-0 mb-0">
-                        <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note"> </textarea>
+                        <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note">
+                        </textarea>
                     </div>
                 </div>
             </div>
