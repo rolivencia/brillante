@@ -86,6 +86,7 @@ async function updateDeviceInfo({ id, device, issue, ...discarded }) {
             model: device.model,
             imei: device.deviceId,
             issue: issue,
+            equipmentTurnedOn: device.turnedOn
         },
         { where: { id: id } }
     );
