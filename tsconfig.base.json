@@ -19,6 +19,7 @@
         "lib": ["es2020", "dom"],
         "paths": {
             "@app/*": ["src/app/*"],
+            "@components/*": ["src/app/_components/*"],
             "@environments/*": ["src/environments/*"],
             "@grapecity/*": ["../node_modules/@grapecity/*"],
             "jszip": ["../node_modules/jszip/dist/jszip.js"]

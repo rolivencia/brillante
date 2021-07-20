@@ -54,6 +54,11 @@ Customer.init(
             allowNull: true,
             field: 'email',
         },
+        birthDate: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            field: 'birth_date',
+        },
         createdAt: {
             type: Sequelize.DATE,
             allowNull: false,
