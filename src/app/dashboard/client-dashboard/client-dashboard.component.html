@@ -48,9 +48,7 @@
     <div class="col-5">
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between">
-                <button class="btn btn-sm btn-primary" (click)="update(selectedClientData)">
-                    💾️ Actualizar
-                </button>
+                <button class="btn btn-sm btn-primary" (click)="update(selectedClientData)">💾️ Actualizar</button>
                 <button type="button" class="ml-3 btn btn-sm btn-danger" (click)="delete(selectedClientData)">
                     ❌ Eliminar
                 </button>
@@ -70,6 +68,13 @@
                         {{ selectedClientData.secondaryTelephone }}
                     </p>
                     <p><strong>eMail: </strong> {{ selectedClientData.email }}</p>
+                    <p>
+                        <strong>Natalicio: </strong>
+                        <ng-container *ngIf="selectedClientData.birthDate">{{
+                            selectedClientData.birthDate
+                        }}</ng-container>
+                        <ng-container *ngIf="!selectedClientData.birthDate">No registrado</ng-container>
+                    </p>
                     <p><strong>Dirección: </strong> {{ selectedClientData.address }}</p>
                     <hr />
                 </ng-container>
@@ -102,9 +107,14 @@
                                 [header]="column.header"
                                 [visible]="true"
                             >
-                              <ng-template *ngIf="column.binding === 'lastUpdate'" wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                {{ cell.item.lastUpdate.format('YYYY-MM-DD') }}
-                              </ng-template>
+                                <ng-template
+                                    *ngIf="column.binding === 'lastUpdate'"
+                                    wjFlexGridCellTemplate
+                                    [cellType]="'Cell'"
+                                    let-cell="cell"
+                                >
+                                    {{ cell.item.lastUpdate.format('YYYY-MM-DD') }}
+                                </ng-template>
                             </wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>

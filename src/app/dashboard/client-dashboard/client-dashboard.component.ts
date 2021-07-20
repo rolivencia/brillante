@@ -5,6 +5,7 @@ import { CollectionView } from '@grapecity/wijmo';
 import { Repair } from '@app/_models';
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-client-dashboard',
@@ -76,14 +77,20 @@ export class ClientDashboardComponent implements OnInit {
     }
 
     goToUpdate(repair: Repair) {
-        this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'update/' + repair.id, left: null, right: null } }]);
+        this.router.navigate([
+            'repair-dashboard/manage',
+            { outlets: { top: 'update/' + repair.id, left: null, right: null } },
+        ]);
     }
 
     getGridData() {
         this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
-                this.clientGridData = data.rows;
+                this.clientGridData = data.rows.map((customer) => ({
+                    ...customer,
+                    birthDate: customer.birthDate ? moment(customer.birthDate).format('YYYY-MM-DD') : null,
+                }));
                 this.clientGridCollection = new CollectionView(this.clientGridData);
                 this.clientGridCollection.pageSize = this.pageSize;
                 this.clientGridCollection.currentItem = null;
