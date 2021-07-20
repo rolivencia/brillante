@@ -27,8 +27,7 @@ export class ClientDashboardComponent implements OnInit {
         { header: 'DNI', binding: 'dni', width: '*' },
         { header: 'Nombre', binding: 'firstName', width: '*' },
         { header: 'Apellido', binding: 'lastName', width: '*' },
-        { header: 'eMail', binding: 'email', width: '*' },
-        { header: 'Dirección', binding: 'address', width: '*' },
+        { header: 'Natalicio', binding: 'birthDate', width: '*' },
     ];
 
     repairColumns: any[] = [
