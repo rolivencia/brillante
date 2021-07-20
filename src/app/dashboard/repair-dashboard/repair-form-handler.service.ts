@@ -242,7 +242,7 @@ export class RepairFormHandlerService {
             dni: customerForm.dni.value,
             firstName: customerForm.firstName.value,
             lastName: customerForm.lastName.value,
-            birthDate: toMoment(customerForm.birthDate.value),
+            birthDate: customerForm.birthDate.value ? toMoment(customerForm.birthDate.value) : null,
             email: customerForm.email.value,
             telephone: customerForm.telephone.value,
             address: customerForm.address.value,
