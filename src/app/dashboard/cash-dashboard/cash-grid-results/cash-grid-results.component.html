@@ -60,11 +60,16 @@
                     [headersVisibility]="'Column'"
                     [autoGenerateColumns]="false"
                     [allowResizing]="'Columns'"
+                    [allowSorting]="false"
                     [showSelectedHeaders]="'Row'"
                     [isReadOnly]="true"
                     (initialized)="cashDashboardService.initializeGrid(cashGrid)"
                     (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
                 >
+                    <wj-flex-grid-filter
+                        [filterColumns]="['paymentMethod.description']"
+                        [showSortButtons]="false"
+                    ></wj-flex-grid-filter>
                     <wj-flex-grid-column
                         *ngFor="let column of columns"
                         [width]="column.width"
