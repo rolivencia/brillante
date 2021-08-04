@@ -11,13 +11,26 @@ export class CashTransaction {
     public audit: Audit;
     public operation?: Operation;
     public paymentMethod: PaymentMethod;
+    public payments?: (number & PaymentMethod)[]; // TODO: Create the "Payment" class
 
-    constructor() {
-        this.concept = new TransactionConcept();
-        this.date = moment();
-        this.audit = new Audit();
-        this.operation = new Operation();
-        this.paymentMethod = new PaymentMethod();
+    constructor(
+        id?: number,
+        concept?: TransactionConcept,
+        amount?: number,
+        date?: Moment,
+        note?: string,
+        audit?: Audit,
+        operation?: Operation,
+        paymentMethod?: PaymentMethod,
+        payments?: (number & PaymentMethod)[]
+    ) {
+        this.id = id;
+        this.concept = concept ? concept : new TransactionConcept();
+        this.date = date ? date : moment();
+        this.audit = audit ? audit : new Audit();
+        this.operation = operation ? operation : new Operation();
+        this.paymentMethod = paymentMethod ? paymentMethod : new PaymentMethod();
+        this.payments = payments ? payments : [];
     }
 }
 
