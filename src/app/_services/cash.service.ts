@@ -43,9 +43,9 @@ export class CashService {
     }
 
     public create(transaction: CashTransaction, user: User): Observable<CashTransaction> {
+        const array = [{ ...transaction, user }];
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/create`, {
-            transaction: transaction,
-            user: user,
+            transactions: array,
         });
     }
 
