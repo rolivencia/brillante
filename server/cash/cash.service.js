@@ -5,6 +5,9 @@ const user = require('server/users/user.model');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+const connector = require('server/_helpers/mysql-connector');
+const sequelizeConnector = connector.sequelizeConnector();
+
 module.exports = {
     getAll,
     getById,
@@ -80,15 +83,31 @@ async function closeCashRegister({ user }) {
     });
 }
 
-async function create({ transaction, user }) {
-    return cash.CashTransaction.create({
-        amount: transaction.amount,
-        date: transaction.date,
-        note: transaction.note,
-        transactionTypeId: transaction.concept.transactionType.id,
-        transactionConceptId: transaction.concept.id,
-        createdBy: user.id, //TODO: Issue #21 - Assign transactions to creator user
-        paymentMethodId: transaction.paymentMethod.id,
+async function create(cashTransactions) {
+    return new Promise(async (resolve, reject) => {
+        let returnedData = [];
+        const dbTransaction = await sequelizeConnector.transaction();
+
+        try {
+            for (const cashTransaction of cashTransactions) {
+                let tranaux = await cash.CashTransaction.create({
+                    amount: cashTransaction.amount,
+                    date: cashTransaction.date,
+                    note: cashTransaction.note,
+                    transactionTypeId: cashTransaction.concept.transactionType.id,
+                    transactionConceptId: cashTransaction.concept.id,
+                    createdBy: cashTransaction.user.id, //TODO: Issue #21 - Assign transactions to creator user
+                    paymentMethodId: cashTransaction.paymentMethod.id,
+                });
+                returnedData.push(tranaux);
+            }
+            await dbTransaction.commit();
+            resolve(returnedData);
+        } catch (error) {
+            console.error(error);
+            await dbTransaction.rollback();
+            reject(error);
+        }
     });
 }
 async function update({ id, amount, date, note, concept, paymentMethod, ...cashTransaction }) {
