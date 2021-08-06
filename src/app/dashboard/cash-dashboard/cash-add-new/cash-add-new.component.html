@@ -59,41 +59,50 @@
                         </span>
                     </div>
 
-                    <div class="row">
-                        <div class="col-5">
-                            <label><b>Monto:</b></label>
-                            <div
-                                class="text-danger"
-                                *ngIf="
-                                    this.cashFormHandlerService.submitted &&
-                                    cashFormHandlerService.cashControl['amount'].errors
-                                "
-                            >
-                                <small>Ingrese un monto válido</small>
-                            </div>
-                            <div class="input-group input-group-sm mb-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">$</span>
+                    <div formArrayName="payments">
+                        <ng-container
+                            *ngFor="let payment of cashFormHandlerService.paymentsArray.controls; let i = index"
+                        >
+                            <div [formGroupName]="i" class="row">
+                                <div class="col-5">
+                                    <label
+                                        ><b>Monto {{ i + 1 }}:</b></label
+                                    >
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.cashFormHandlerService.submitted &&
+                                            cashFormHandlerService.cashControl['amount'].errors
+                                        "
+                                    >
+                                        <small>Ingrese un monto válido</small>
+                                    </div>
+                                    <div class="input-group input-group-sm mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input
+                                            id="amount"
+                                            class="form-control"
+                                            type="number"
+                                            aria-describedby="amount"
+                                            formControlName="amount"
+                                        />
+                                    </div>
                                 </div>
-                                <input
-                                    id="amount"
-                                    class="form-control"
-                                    type="number"
-                                    aria-describedby="amount"
-                                    formControlName="amount"
-                                />
-                            </div>
-                        </div>
 
-                        <div class="col-7">
-                            <app-payment-method-selector
-                                id="paymentMethod"
-                                name="paymentMethod"
-                                aria-describedby="paymentMethod"
-                                formControlName="paymentMethod"
-                                [isReadOnly]="cashFormHandlerService.saved"
-                            ></app-payment-method-selector>
-                        </div>
+                                <div class="col-7">
+                                    <app-payment-method-selector
+                                        id="method"
+                                        name="method"
+                                        aria-describedby="method"
+                                        formControlName="method"
+                                        [label]="'Método de pago ' + (i + 1)"
+                                        [isReadOnly]="cashFormHandlerService.saved"
+                                    ></app-payment-method-selector>
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
 
                     <label><b>Nota:</b></label>

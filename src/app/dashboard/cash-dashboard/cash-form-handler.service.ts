@@ -71,13 +71,19 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         return this.formBuilder.group({
             id: [transaction.id],
             concept: [transaction.concept, [Validators.required]],
-            amount: [transaction.amount, [Validators.required]],
             date: [transaction.date, [Validators.required]],
             note: [transaction.note, [Validators.required, Validators.minLength(10)]],
             operation: [transaction.operation],
+            amount: [transaction.amount, [Validators.required]],
             paymentMethod: [transaction.paymentMethod, [Validators.required]],
-            payments: this.formBuilder.array(transaction.payments ? transaction.payments : []),
+            payments: this.formBuilder.array(
+                transaction.payments.length ? transaction.payments : [this.createPayment(), this.createPayment()]
+            ),
         });
+    }
+
+    private createPayment() {
+        return this.formBuilder.group({ amount: 0, method: new PaymentMethod() });
     }
 
     public patch(transaction: CashTransaction = this.cashTransaction) {
