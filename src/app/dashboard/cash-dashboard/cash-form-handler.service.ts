@@ -2,7 +2,7 @@ import { Audit } from '@app/_models/audit';
 import { AuthenticationService } from '@app/_services';
 import { CashService } from '@app/_services/cash.service';
 import { CashTransaction, Operation, PaymentMethod, TransactionConcept } from '@app/_models/cash-transaction';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@app/_interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -47,6 +47,10 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         return this.formGroup.controls;
     }
 
+    get paymentsArray(): FormArray {
+        return this._formGroup.get('payments') as FormArray;
+    }
+
     private _submitted: boolean = false;
     private _saved: boolean = false;
 
@@ -72,6 +76,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             note: [transaction.note, [Validators.required, Validators.minLength(10)]],
             operation: [transaction.operation],
             paymentMethod: [transaction.paymentMethod, [Validators.required]],
+            payments: this.formBuilder.array(transaction.payments ? transaction.payments : []),
         });
     }
 
@@ -84,6 +89,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             note: transaction.note,
             operation: transaction.operation,
             paymentMethod: transaction.paymentMethod,
+            payments: transaction.payments ? transaction.payments : [],
         });
     }
 
@@ -103,6 +109,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             operation: cashTransactionForm.operation.value,
             audit: new Audit(), // FIXME: Check on how to load/refresh audit here
             paymentMethod: cashTransactionForm.paymentMethod.value,
+            payments: cashTransactionForm.payments.value,
         };
     }
 
