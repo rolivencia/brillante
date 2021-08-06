@@ -52,7 +52,7 @@ function getById(req, res, next) {
 
 function create(req, res, next) {
     cashService
-        .create(req.body)
+        .create(req.body.transactions)
         .then((result) => res.json(result))
         .catch((err) => next(err));
 }

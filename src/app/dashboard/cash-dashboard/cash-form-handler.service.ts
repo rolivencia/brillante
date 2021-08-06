@@ -125,7 +125,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
                 this.toastrService.error('Ocurrió un error. La reparación no pudo ser creada.');
                 reject(false);
             } else {
-                this.toastrService.success(`Transacción ID: ${result.id} agregada con éxito`);
+                this.toastrService.success(`Transacción ID: ${result[0].id} agregada con éxito`);
                 this.clean();
                 resolve(true);
             }
