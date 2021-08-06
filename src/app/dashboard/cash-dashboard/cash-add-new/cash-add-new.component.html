@@ -68,15 +68,6 @@
                                     <label
                                         ><b>Monto {{ i + 1 }}:</b></label
                                     >
-                                    <div
-                                        class="text-danger"
-                                        *ngIf="
-                                            this.cashFormHandlerService.submitted &&
-                                            cashFormHandlerService.cashControl['amount'].errors
-                                        "
-                                    >
-                                        <small>Ingrese un monto válido</small>
-                                    </div>
                                     <div class="input-group input-group-sm mb-2">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">$</span>
@@ -85,6 +76,7 @@
                                             id="amount"
                                             class="form-control"
                                             type="number"
+                                            min="0"
                                             aria-describedby="amount"
                                             formControlName="amount"
                                         />
@@ -100,6 +92,19 @@
                                         [label]="'Método de pago ' + (i + 1)"
                                         [isReadOnly]="cashFormHandlerService.saved"
                                     ></app-payment-method-selector>
+                                </div>
+                                <div class="col-12">
+                                    <div
+                                        class="text-danger"
+                                        *ngIf="
+                                            this.cashFormHandlerService.submitted &&
+                                            cashFormHandlerService.cashControl['payments']['controls'][i]['controls'][
+                                                'amount'
+                                            ].errors
+                                        "
+                                    >
+                                        <small>Ingrese un monto válido</small>
+                                    </div>
                                 </div>
                             </div>
                         </ng-container>

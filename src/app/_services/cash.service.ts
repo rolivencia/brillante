@@ -43,9 +43,9 @@ export class CashService {
     }
 
     public create(transaction: CashTransaction, user: User): Observable<CashTransaction> {
-        const array = [{ ...transaction, user }];
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/create`, {
-            transactions: array,
+            ...transaction,
+            user,
         });
     }
 
@@ -68,6 +68,8 @@ export function toCashTransaction(cashTransactionDTO): CashTransaction {
         ...cashTransactionDTO,
         date: moment(cashTransactionDTO.date),
         amount: parseFloat(cashTransactionDTO.amount),
+        paymentMethod: cashTransactionDTO.paymentMethod,
+        payments: cashTransactionDTO.payments.map((payment) => ({ ...payment, amount: parseFloat(payment.amount) })),
         audit: {
             ...cashTransactionDTO.audit,
             createdAt: moment(cashTransactionDTO.audit.createdAt),

@@ -26,6 +26,7 @@ export class CashTransaction {
     ) {
         this.id = id;
         this.concept = concept ? concept : new TransactionConcept();
+        this.amount = amount ? amount : 0;
         this.date = date ? date : moment();
         this.audit = audit ? audit : new Audit();
         this.operation = operation ? operation : new Operation();

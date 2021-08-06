@@ -84,22 +84,26 @@ async function closeCashRegister({ user }) {
 }
 
 async function create(cashTransactions) {
+    const transactionPayments = dissectPayments(cashTransactions);
+
     return new Promise(async (resolve, reject) => {
         let returnedData = [];
         const dbTransaction = await sequelizeConnector.transaction();
 
         try {
-            for (const cashTransaction of cashTransactions) {
-                let tranaux = await cash.CashTransaction.create({
-                    amount: cashTransaction.amount,
-                    date: cashTransaction.date,
-                    note: cashTransaction.note,
-                    transactionTypeId: cashTransaction.concept.transactionType.id,
-                    transactionConceptId: cashTransaction.concept.id,
-                    createdBy: cashTransaction.user.id, //TODO: Issue #21 - Assign transactions to creator user
-                    paymentMethodId: cashTransaction.paymentMethod.id,
-                });
-                returnedData.push(tranaux);
+            for (const cashTransaction of transactionPayments) {
+                if (cashTransaction.payments[0].amount > 0) {
+                    let tranaux = await cash.CashTransaction.create({
+                        amount: cashTransaction.payments[0].amount,
+                        date: cashTransaction.date,
+                        note: cashTransaction.note,
+                        transactionTypeId: cashTransaction.concept.transactionType.id,
+                        transactionConceptId: cashTransaction.concept.id,
+                        createdBy: cashTransaction.user.id, //TODO: Issue #21 - Assign transactions to creator user
+                        paymentMethodId: cashTransaction.payments[0].method.id,
+                    });
+                    returnedData.push(tranaux);
+                }
             }
             await dbTransaction.commit();
             resolve(returnedData);
@@ -129,9 +133,12 @@ async function remove(id) {
     return cash.CashTransaction.update({ deleted: 1 }, { where: { id: id } });
 }
 
-function toTransactionDTO({ createdBy, deleted, enabled, user, operation, ...transactionDAO }) {
+function toTransactionDTO({ createdBy, deleted, enabled, user, operation, amount, paymentMethod, ...transactionDAO }) {
     return {
         ...transactionDAO,
+        amount: amount,
+        paymentMethod: paymentMethod.dataValues,
+        payments: [{ amount: amount, method: paymentMethod.dataValues }],
         operation: operation ? operation.dataValues : operation,
         concept: {
             ...transactionDAO.concept.dataValues,
@@ -145,6 +152,20 @@ function toTransactionDTO({ createdBy, deleted, enabled, user, operation, ...tra
             enabled: !!enabled,
         },
     };
+}
+
+function dissectPayments(cashTransaction) {
+    const { payments, ...transactionWithoutPayments } = cashTransaction;
+    let transactionWithPayments = [];
+
+    for (const payment of payments) {
+        transactionWithPayments = transactionWithPayments.concat({
+            ...transactionWithoutPayments,
+            payments: [payment],
+        });
+    }
+
+    return transactionWithPayments;
 }
 
 function cashGetDefinition() {
