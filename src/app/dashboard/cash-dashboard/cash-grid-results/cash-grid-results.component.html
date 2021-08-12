@@ -34,7 +34,7 @@
         </div>
     </div>
     <div id="cash-transaction-grid" class="card-body">
-        <div id="grid-container">
+        <div id="grid-container" class="h-100 d-flex flex-column">
             <ng-container *ngIf="loading">
                 <div class="alert alert-info">
                     <h3>Cargando...</h3>
@@ -55,6 +55,7 @@
                 <wj-flex-grid
                     #cashGrid
                     *ngIf="cashDashboardService.gridCollection.itemCount > 0"
+                    class="flex-grow-1"
                     [selectionMode]="editMode ? 'None' : 'Row'"
                     [itemsSource]="cashDashboardService.gridCollection"
                     [headersVisibility]="'Column'"
