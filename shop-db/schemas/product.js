@@ -28,7 +28,12 @@ export default {
             description: 'Determina si el producto actual se muestra o no en el sistema.',
         },
         {
-            name: 'images',
+            name: 'logo',
+            title: 'Imagen Principal',
+            type: 'image',
+        },
+        {
+            name: 'primary-image',
             type: 'array',
             title: 'Galería de imágenes',
             description: 'Imágenes del producto que se visualizarán en el sitio',
@@ -106,7 +111,7 @@ export default {
         select: {
             title: 'title',
             subtitle: 'manufacturer.title',
-            media: 'images[0]',
+            media: 'primary-image',
         },
     },
 };
