@@ -14,7 +14,8 @@
         "serve": "ng serve --ssl --ssl-key ./src/assets/certificates/localhost.key  --ssl-cert ./src/assets/certificates/localhost.crt",
         "serve-aot": "ng serve --aot --ssl --ssl-key ./src/assets/certificates/localhost.key  --ssl-cert ./src/assets/certificates/localhost.crt",
         "build-serve": "npm run-script build && npm run-script start",
-        "build-prod": "npm run-script build --prod --aot && npm run-script start"
+        "build-prod": "npm run-script build --prod --aot && npm run-script start",
+        "sanity-start": "cd shop-db && sanity start"
     },
     "private": true,
     "dependencies": {
