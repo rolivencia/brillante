@@ -132,6 +132,10 @@ export class CashDashboardService {
         flex.columnFooters.rows.push(new GroupRow());
         flex.bottomLeftCells.setCellData(0, 0, '$');
     }
+
+    decimalSeparatorParser(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
 }
 
 export function mapTransactionType(transaction: CashTransaction) {
