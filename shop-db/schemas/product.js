@@ -1,12 +1,13 @@
 export default {
     name: 'product',
-    title: 'Product',
+    title: 'Productos',
     type: 'document',
     fields: [
         {
             name: 'title',
-            title: 'Title',
+            title: 'Nombre',
             type: 'string',
+            description: 'Nombre del producto',
         },
         {
             name: 'slug',
@@ -16,45 +17,70 @@ export default {
                 source: 'title',
                 maxLength: 96,
             },
+            description: 'Código único asignado al producto',
         },
         {
-            title: 'Default variant',
-            name: 'defaultProductVariant',
-            type: 'productVariant',
+            title: 'Habilitado',
+            name: 'enabled',
+            type: 'boolean',
+            initialValue: true,
+            layout: 'checkbox',
+            description: 'Determina si el producto actual se muestra o no en el sistema.',
         },
         {
-            title: 'Variants',
-            name: 'variants',
+            name: 'images',
             type: 'array',
+            title: 'Galería de imágenes',
+            description: 'Imágenes del producto que se visualizarán en el sitio',
             of: [
                 {
-                    title: 'Variant',
-                    type: 'productVariant',
-                },
-            ],
-        },
-        {
-            title: 'Tags',
-            name: 'tags',
-            type: 'array',
-            of: [
-                {
-                    type: 'string',
+                    name: 'image',
+                    type: 'image',
+                    title: 'Image',
+                    options: {
+                        hotspot: true,
+                    },
+                    fields: [
+                        {
+                            name: 'alt',
+                            type: 'string',
+                            title: 'Alternative text',
+                        },
+                    ],
                 },
             ],
             options: {
-                layout: 'tags',
+                layout: 'grid',
             },
         },
         {
-            name: 'vendor',
-            title: 'Vendor',
+            title: 'Productos relacionados',
+            name: 'products',
+            type: 'array',
+            description:
+                'Productos relacionados al actual. Pensar en combo de productos, por ejemplo. Se puede hacer uso de esta característica para vincular productos que van en combo, como un iPhone y los AirPods.',
+            of: [
+                {
+                    title: 'Producto',
+                    type: 'product',
+                },
+            ],
+        },
+        {
+            name: 'manufacturer',
+            title: 'Marca',
             type: 'reference',
-            to: { type: 'vendor' },
+            to: { type: 'manufacturer' },
+        },
+        {
+            name: 'retailPrice',
+            title: 'Precio',
+            type: 'number',
+            description: 'Precio de lista que debe pagar el cliente para adquirir el producto.',
         },
         {
             name: 'blurb',
-            title: 'Blurb',
+            title: 'Descripción breve del producto, en pocas palabras.',
             type: 'localeString',
         },
         {
@@ -70,7 +96,8 @@ export default {
         },
         {
             name: 'body',
-            title: 'Body',
+            title: 'Descripción Completa',
+            description: 'Descripción del producto en vista de detalle, en varios párrafos.',
             type: 'localeBlockContent',
         },
     ],
@@ -78,8 +105,8 @@ export default {
     preview: {
         select: {
             title: 'title',
-            manufactor: 'manufactor.title',
-            media: 'defaultProductVariant.images[0]',
+            subtitle: 'manufacturer.title',
+            media: 'images[0]',
         },
     },
 };
