@@ -59,6 +59,12 @@ const appRoutes: Routes = [
             import('./dashboard/products-dashboard/products-dashboard.module').then((m) => m.ProductsDashboardModule),
         canActivate: [AuthGuard],
     },
+    {
+        path: 'settings-dashboard',
+        loadChildren: () =>
+            import('./dashboard/settings-dashboard/settings-dashboard.module').then((m) => m.SettingsDashboardModule),
+        canActivate: [AuthGuard],
+    },
 
     { path: 'login', component: LoginComponent },
 
