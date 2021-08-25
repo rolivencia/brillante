@@ -65,9 +65,10 @@
                         >
                             <div [formGroupName]="i" class="row">
                                 <div class="col-5">
-                                    <label
-                                        ><b>Monto {{ i + 1 }}:</b></label
-                                    >
+                                    <label>
+                                        <!--                                        <b>Monto {{ i + 1 }}:</b>  TODO - #156: add back when two payment methods are implemented-->
+                                        <b>Monto:</b>
+                                    </label>
                                     <div class="input-group input-group-sm mb-2">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">$</span>
@@ -89,7 +90,7 @@
                                         name="method"
                                         aria-describedby="method"
                                         formControlName="method"
-                                        [label]="'Método de pago ' + (i + 1)"
+                                        [label]="'Método de pago'"
                                         [isReadOnly]="cashFormHandlerService.saved"
                                     ></app-payment-method-selector>
                                 </div>
