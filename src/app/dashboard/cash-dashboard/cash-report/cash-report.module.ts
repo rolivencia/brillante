@@ -5,11 +5,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
+import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
 import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
 
 @NgModule({
     declarations: [CashReportComponent],
-    imports: [CommonModule, CashReportRoutingModule, FormsModule, NgbDatepickerModule, WjGridModule],
+    imports: [
+        CommonModule,
+        CashReportRoutingModule,
+        FormsModule,
+        NgbDatepickerModule,
+        WjGridFilterModule,
+        WjGridModule,
+    ],
     providers: [CashReportService],
 })
 export class CashReportModule {}
