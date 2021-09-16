@@ -15,11 +15,8 @@ export class ProductsListResolverService
         route: ActivatedRouteSnapshot
     ): Promise<{ list: Product[]; categories: Category[]; manufacturers: Manufacturer[] }> {
         const products = await this.productsHttpService.getAll().toPromise();
-        const categories = _.uniqBy(products.map((product) => product.categories).flat(), 'id');
-        const manufacturers = _.uniqBy(
-            products.map((product) => product.manufacturer),
-            'id'
-        );
+        const manufacturers = await this.productsHttpService.getManufacturers().toPromise();
+        const categories = await this.productsHttpService.getCategories().toPromise();
 
         return new Promise((resolve, reject) => {
             if (products) {

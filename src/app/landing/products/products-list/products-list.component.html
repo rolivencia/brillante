@@ -1,6 +1,6 @@
 <div class="row">
     <div *ngFor="let product of products" class="col-6 col-sm-4">
-        <div class="product_component" [routerLink]="'/products/product-detail/' + product.id">
+        <div class="product product_component" [routerLink]="'/products/product-detail/' + product.id">
             <img [src]="product.imageUrls[0]" [alt]="product.name" />
             <div class="badge badge-secondary">{{ product.name }}</div>
             <div class="hovercard">
@@ -10,7 +10,7 @@
                 <small>o 12 cuotas de ${{ product.price / 12 }}</small>
                 <div class="btns">
                     <!-- TODO: See Issue #81 for creation of navigation to product details -->
-                    <a [href]="'product/' + product.id" class="btn btn-light"
+                    <a [href]="'products/product-detail/' + product.id" class="btn btn-light"
                         ><span>VER MÁS</span> <i class="fas fa-eye"></i
                     ></a>
                     <!-- TODO: See Issue #82. Put to work the "add to cart" feature -->

@@ -4,14 +4,14 @@ const productsService = require('./products.service');
 
 module.exports = router;
 
-router.get('/getAll', getAll);
+router.get('/getAll', get);
 router.get('/getById/:id', getById);
-router.get('/getCategories/:id', getById);
-router.get('/getManufacturers/:id', getById);
+router.get('/getCategories', getCategories);
+router.get('/getManufacturers', getManufacturers);
 
-function getAll(req, res, next) {
+function get(req, res, next) {
     return productsService
-        .getAll()
+        .get()
         .then((products) => res.json(products))
         .catch((err) => next(err));
 }
@@ -31,7 +31,7 @@ function getCategories(req, res, next) {
 }
 function getManufacturers(req, res, next) {
     return productsService
-        .getManufacturers(req.params.id)
+        .getManufacturers()
         .then((manufacturers) => res.json(manufacturers))
         .catch((err) => next(err));
 }

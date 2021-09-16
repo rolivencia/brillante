@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductDetailResolverService } from './product-detail/product-detail.resolver.service';
+import { ProductsComponent } from './products.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsListResolverService } from './products-list/products-list-resolver.service';
-import { ProductsComponent } from './products.component';
+import { ProductsResolverService } from './products.resolver.service';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
     {
         path: '',
         component: ProductsComponent,
+        resolve: {
+            filters: ProductsResolverService,
+        },
         children: [
             {
                 path: 'product-detail/:id',

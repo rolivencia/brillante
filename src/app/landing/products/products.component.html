@@ -184,7 +184,7 @@
                                 <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
                                 <a [href]="'/products-list/' + category.link"
                                     >{{ category.title }}
-                                    <span class="count">({{ productsService.categories.length }})</span>
+                                    <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
                                 </a>
                             </li>
                         </ul>
@@ -198,8 +198,8 @@
                                 <a [href]="'products-list/' + manufacturer.link">
                                     <!-- TODO: Issue #83. Apply count of existing items for each manufacturer. Build a pipe. -->
                                     {{ manufacturer.title }}
-                                    <span class="count">({{ productsService.manufacturers.length }})</span></a
-                                >
+                                    <!-- <span class="count">({{ productsService.manufacturers.length }})</span>-->
+                                </a>
                             </li>
                         </ul>
                     </nav>
