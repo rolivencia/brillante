@@ -35,7 +35,11 @@ async function getManufacturers(id = null) {
     const query = "*[_type == 'manufacturer'] | order(title)";
     const manufacturers = await sanityConnector.client.fetch(query, {});
     // console.log(manufacturers);
-    return manufacturers;
+    return manufacturers.map((manufacturer) => ({
+        id: manufacturer._id,
+        title: manufacturer.title,
+        logo: manufacturer.logo,
+    }));
 }
 
 async function getById(id) {
@@ -65,6 +69,5 @@ async function getById(id) {
 async function getCategories(id = null) {
     const query = "*[_type == 'category']{_id, title, parents} | order(title)";
     const categories = await sanityConnector.client.fetch(query, {});
-    console.log(categories);
-    return categories;
+    return categories.map((category) => ({ id: category._id, title: category.title, parents: category.parents }));
 }

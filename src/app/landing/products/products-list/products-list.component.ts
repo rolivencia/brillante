@@ -19,9 +19,7 @@ export class ProductsListComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.route.snapshot.data['products']) {
-            this.products = this.route.snapshot.data['products']['list'];
-            this.productsService.categories = this.route.snapshot.data['products']['categories'];
-            this.productsService.manufacturers = this.route.snapshot.data['products']['manufacturers'];
+            this.products = this.route.snapshot.data['products'];
             this.changeDetectorRef.detectChanges();
         }
     }
