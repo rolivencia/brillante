@@ -17,8 +17,8 @@ if (!('error' in result)) {
         secret: process.env.SECRET,
         mySqlDatabase: process.env.MYSQL_DATABASE,
         sanity: {
-            projectId: result.parsed.SANITY_PROJECT_ID,
-            dataset: result.parsed.SANITY_DATASET,
+            projectId: result.env.SANITY_PROJECT_ID,
+            dataset: result.env.SANITY_DATASET,
         },
     };
 }
