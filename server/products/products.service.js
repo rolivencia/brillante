@@ -1,56 +1,87 @@
 const _ = require('lodash/array');
+const sanityConnector = require('../_helpers/sanity-connector');
+const imageUrlBuilder = require('@sanity/image-url');
+
+const builder = imageUrlBuilder(sanityConnector.client);
+
+function urlFor(source) {
+    return builder.image(source);
+}
 
 module.exports = {
-    getAll,
+    get,
     getById,
     getCategories,
     getManufacturers,
 };
 
-const products = [
-    {
-        id: 1,
-        name: '3D Samsung S8',
-        price: 950,
-        description: '',
-        imageUrls: ['assets/imagenes-s/productos/productos-imagen-226.png'],
-        categories: [{ id: 1, title: 'Templados', link: 'templados' }],
-        manufacturer: { id: 7, title: 'Samsung', link: 'samsung' },
-    },
-    {
-        id: 2,
-        name: '5D iPhone 7 Plus/8 Plus',
-        price: 950,
-        description: '',
-        imageUrls: ['assets/imagenes-s/productos/productos-imagen-225.png'],
-        categories: [{ id: 1, title: 'Templados', link: 'templados' }],
-        manufacturer: { id: 1, title: 'Apple', link: 'apple' },
-    },
-    {
-        id: 3,
-        name: '5D iPhone 7/8',
-        price: 850,
-        description: '',
-        imageUrls: ['assets/imagenes-s/productos/productos-imagen-224.png'],
-        categories: [{ id: 1, title: 'Templados', link: 'templados' }],
-        manufacturer: { id: 1, title: 'Apple', link: 'apple' },
-    },
-];
+async function get({ offset, manufacturer, category }) {
+    //TODO: Add offset-based selection for query
+    const queryOffset = `[${12 * (offset - 1)}...${12 + (offset - 1) * 12}]`;
+    let queryManufacturer = '';
+    let queryCategory = '';
 
-async function getAll() {
-    return products;
+    if (manufacturer !== 'all') {
+        queryManufacturer = ` && references('${manufacturer}')`;
+    }
+    if (category !== 'all') {
+        queryCategory = ` && references('${category}')`;
+    }
+
+    const query = `*[_type == 'product'${queryManufacturer}${queryCategory}]${queryOffset}{_id, title, retailPrice, images, manufacturer->}`;
+    const countQuery = `count(*[_type == 'product'${queryManufacturer}${queryCategory}])`;
+    const count = await sanityConnector.client.fetch(countQuery, {});
+    const products = await sanityConnector.client.fetch(query, {});
+    // return products;
+    const mappedProducts = products.map((product) => ({
+        id: product._id,
+        name: product.title,
+        price: product.retailPrice,
+        imageUrls: product.images.map((image) => urlFor(image).url()),
+        categories: [],
+        manufacturer: product.manufacturer,
+    }));
+    // console.log(mappedProducts);
+    return { products: mappedProducts, count: count };
 }
+
+async function getManufacturers(id = null) {
+    const query = "*[_type == 'manufacturer'] | order(title)";
+    const manufacturers = await sanityConnector.client.fetch(query, {});
+    // console.log(manufacturers);
+    return manufacturers.map((manufacturer) => ({
+        id: manufacturer._id,
+        title: manufacturer.title,
+        logo: manufacturer.logo,
+    }));
+}
+
 async function getById(id) {
-    return products.filter((product) => product.id === parseInt(id)).pop();
+    const query = `*[_type == 'product' && _id == '${id}']{_id, title, retailPrice, body, images, manufacturer->}`;
+    const product = await sanityConnector.client.fetch(query, {});
+    const mappedProduct =
+        product.length === 0
+            ? null
+            : product
+                  .map((product) => ({
+                      id: product._id,
+                      name: product.title,
+                      price: product.retailPrice,
+                      imageUrls: product.images.map((image) => urlFor(image).url()),
+                      categories: [],
+                      description: product.body,
+                      manufacturer: {
+                          id: product.manufacturer._id,
+                          title: product.manufacturer.title,
+                          logo: urlFor(product.manufacturer.logo).url(),
+                      },
+                  }))
+                  .pop();
+    return mappedProduct;
 }
 
-async function getCategories(id) {
-    return _.uniqBy(products.map((product) => product.categories).flat(), 'id');
-}
-
-async function getManufacturers(id) {
-    return _.uniqBy(
-        products.map((product) => product.manufacturer),
-        'id'
-    );
+async function getCategories(id = null) {
+    const query = "*[_type == 'category']{_id, title, parents} | order(title)";
+    const categories = await sanityConnector.client.fetch(query, {});
+    return categories.map((category) => ({ id: category._id, title: category.title, parents: category.parents }));
 }

@@ -1,26 +1,26 @@
-<div class="row">
-    <div *ngFor="let product of products" class="col-6 col-sm-4">
-        <div class="product_component" [routerLink]="'/products/product-detail/' + product.id">
+<div class="card-columns">
+    <div *ngFor="let product of products" class="card border-0">
+        <div class="product product_component">
             <img [src]="product.imageUrls[0]" [alt]="product.name" />
             <div class="badge badge-secondary">{{ product.name }}</div>
             <div class="hovercard">
                 <h6>{{ product.name }}</h6>
                 <p>${{ product.price }}</p>
                 <!-- TODO: See Issue #80 for creation of a price pipe -->
-                <small>o 12 cuotas de ${{ product.price / 12 }}</small>
+                <small>o 12 cuotas de ${{ (product.price / 12).toFixed(2) }}</small>
                 <div class="btns">
                     <!-- TODO: See Issue #81 for creation of navigation to product details -->
-                    <a [href]="'product/' + product.id" class="btn btn-light"
-                        ><span>VER MÁS</span> <i class="fas fa-eye"></i
-                    ></a>
+                    <!--                    <a [routerLink]="'/products/product-detail/' + product.id" class="btn btn-light"-->
+                    <!--                        ><span>VER MÁS</span> <i class="fas fa-eye"></i-->
+                    <!--                    ></a>-->
                     <!-- TODO: See Issue #82. Put to work the "add to cart" feature -->
-                    <button
-                        class="btn btn-light boton-carrito-agregar"
-                        [id]="'boton-carrito-agregar-' + product.id"
-                        (click)="addToCart(product.id)"
-                    >
-                        <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
-                    </button>
+                    <!--                    <button-->
+                    <!--                        class="btn btn-light boton-carrito-agregar"-->
+                    <!--                        [id]="'boton-carrito-agregar-' + product.id"-->
+                    <!--                        (click)="addToCart(product.id)"-->
+                    <!--                    >-->
+                    <!--                        <span>AGREGAR</span> <i class="far fa-cart-plus"></i>-->
+                    <!--                    </button>-->
                 </div>
             </div>
         </div>
@@ -43,13 +43,14 @@
                                 <li class="disabled">
                                     <a href="#"><i class="fa fa-chevron-left"></i></a>
                                 </li>
-                                <li>
-                                    <a class="active">1</a>
+                                <!--                                <li>-->
+                                <!--                                    <a class="active">1</a>-->
+                                <!--                                </li>-->
+                                <li *ngFor="let page of pages">
+                                    <a (click)="productsService.generatePageRoute(page, null, null)">{{ page }}</a>
                                 </li>
-                                <li><a href="/productos/?p=2 ">2</a></li>
-                                <li><a href="/productos/?p=3 ">3</a></li>
                                 <li>
-                                    <a href="/productos/?p=2 "><i class="fa fa-chevron-right"></i></a>
+                                    <a href="#"><i class="fa fa-chevron-right"></i></a>
                                 </li>
                             </ul>
                         </nav>

@@ -19,7 +19,7 @@ export class Product {
 }
 
 export class Manufacturer {
-    id: number;
+    id: number | string;
     link: string;
     title: string;
 
@@ -31,7 +31,7 @@ export class Manufacturer {
 }
 
 export class Category {
-    id: number;
+    id: number | string;
     link: string;
     title: string;
 
