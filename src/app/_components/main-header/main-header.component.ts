@@ -53,6 +53,13 @@ export class MainHeaderComponent implements OnInit {
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
         },
         {
+            label: 'Productos',
+            route: '/products',
+            enabled: true,
+            visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
+        },
+        {
             label: 'Stock',
             route: '/products-list-dashboard',
             enabled: true,
