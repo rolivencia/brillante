@@ -11,7 +11,7 @@ router.get('/getManufacturers', getManufacturers);
 
 function get(req, res, next) {
     return productsService
-        .get()
+        .get({ offset: req.query['offset'], manufacturer: req.query['manufacturer'], category: req.query['category'] })
         .then((products) => res.json(products))
         .catch((err) => next(err));
 }

@@ -18,8 +18,10 @@ export class ProductsHttpService {
             .pipe(map((productDTO) => toProduct(productDTO)));
     }
 
-    public getAll(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${environment.apiUrl}/products/getAll`);
+    public get({ offset, manufacturer, category }): Observable<Product[]> {
+        return this.http.get<Product[]>(
+            `${environment.apiUrl}/products/getAll?offset=${offset}&manufacturer=${manufacturer}&category=${category}`
+        );
         // .pipe(map((productsDTO) => productsDTO.map((productDTO) => toProduct(productDTO))));
     }
 

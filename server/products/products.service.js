@@ -15,8 +15,22 @@ module.exports = {
     getManufacturers,
 };
 
-async function get({ offset, category, manufacturer } = {}) {
-    const query = "*[_type == 'product']{_id, title, retailPrice, images, manufacturer->}";
+async function get({ offset, manufacturer, category }) {
+    //TODO: Add offset-based selection for query
+    const queryOffset = `[${12 * (offset - 1)}...${12 + (offset - 1) * 12}]`;
+    let queryManufacturer = '';
+    let queryCategory = '';
+
+    if (manufacturer !== 'all') {
+        queryManufacturer = ` && references('${manufacturer}')`;
+    }
+    if (category !== 'all') {
+        queryCategory = ` && references('${category}')`;
+    }
+
+    const query = `*[_type == 'product'${queryManufacturer}${queryCategory}]${queryOffset}{_id, title, retailPrice, images, manufacturer->}`;
+    const countQuery = `count(*[_type == 'product'${queryManufacturer}${queryCategory}])`;
+    const count = await sanityConnector.client.fetch(countQuery, {});
     const products = await sanityConnector.client.fetch(query, {});
     // return products;
     const mappedProducts = products.map((product) => ({
@@ -28,7 +42,7 @@ async function get({ offset, category, manufacturer } = {}) {
         manufacturer: product.manufacturer,
     }));
     // console.log(mappedProducts);
-    return mappedProducts;
+    return { products: mappedProducts, count: count };
 }
 
 async function getManufacturers(id = null) {

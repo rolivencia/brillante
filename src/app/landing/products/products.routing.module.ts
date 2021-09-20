@@ -23,13 +23,13 @@ const routes: Routes = [
                 },
             },
             {
-                path: 'products-list',
+                path: 'products-list/:offset/:category/:manufacturer',
                 component: ProductsListComponent,
                 resolve: {
                     products: ProductsListResolverService,
                 },
             },
-            { path: '**', redirectTo: 'products-list' },
+            { path: '**', redirectTo: 'products-list/1/all/all' },
         ],
     },
 ];

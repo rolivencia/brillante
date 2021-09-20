@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ProductsHttpService } from '@app/landing/products/products.http.service';
-import { Category, Manufacturer, Product } from '@app/_models/product';
-import * as _ from 'lodash';
+import { Product } from '@app/_models/product';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProductsListResolverService implements Resolve<Product[]> {
-    constructor(private productsHttpService: ProductsHttpService, private route: ActivatedRoute) {}
+    constructor(private productsHttpService: ProductsHttpService) {}
 
-    resolve(): Observable<Product[]> {
-        return this.productsHttpService.getAll();
+    resolve(route: ActivatedRouteSnapshot): Observable<Product[]> {
+        const offset = route.params['offset'];
+        const manufacturer = route.params['manufacturer'];
+        const category = route.params['category'];
+        return this.productsHttpService.get({ offset, manufacturer, category });
     }
 }
