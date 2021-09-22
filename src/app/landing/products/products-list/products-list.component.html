@@ -47,7 +47,9 @@
                                 <!--                                    <a class="active">1</a>-->
                                 <!--                                </li>-->
                                 <li *ngFor="let page of pages">
-                                    <a (click)="productsService.generatePageRoute(page, null, null)">{{ page }}</a>
+                                    <a href="#" (click)="productsService.generatePageRoute(page, null, null)">{{
+                                        page
+                                    }}</a>
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-chevron-right"></i></a>
