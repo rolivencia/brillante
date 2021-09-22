@@ -12,6 +12,7 @@
 /shop-db/config/.checksums
 
 # dependencies
+/brillante-alma
 /node_modules
 
 # profiling files

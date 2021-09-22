@@ -6,6 +6,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsListResolverService } from './products-list/products-list-resolver.service';
 import { ProductsResolverService } from './products.resolver.service';
 import { Routes, RouterModule } from '@angular/router';
+import { CartResolverService } from './cart/cart.resolver.service';
 
 const routes: Routes = [
     {
@@ -15,6 +16,13 @@ const routes: Routes = [
             filters: ProductsResolverService,
         },
         children: [
+            {
+                path: 'cart',
+                loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
+                resolve: {
+                    cart: CartResolverService,
+                },
+            },
             {
                 path: 'product-detail/:id',
                 component: ProductDetailComponent,

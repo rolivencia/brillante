@@ -26,31 +26,43 @@
         <ul class="nav justify-content-end align-items-center nav-sup">
             <ng-container *ngIf="!currentUser">
                 <li>
-                    <a routerLink="/login" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                    <a
+                        routerLink="/login"
+                        data-effect="mfp-move-from-top"
+                        class="btn btn-sm btn-light d-none d-sm-block popup-text"
                         >INGRESAR</a
                     >
                 </li>
                 <li>
-                    <a href="#nav-account-dialog" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                    <a
+                        href="#nav-account-dialog"
+                        data-effect="mfp-move-from-top"
+                        class="btn btn-sm btn-light d-none d-sm-block popup-text"
                         >REGISTRATE</a
                     >
                 </li>
             </ng-container>
             <ng-container *ngIf="currentUser">
                 <li>
-                    <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light d-none d-sm-block popup-text"
+                    <a
+                        (click)="logout()"
+                        data-effect="mfp-move-from-top"
+                        class="btn btn-sm btn-light d-none d-sm-block popup-text"
                         >CERRAR SESIÓN</a
                     >
                 </li>
 
                 <li>
-                    <a href="#nav-login-dialog" data-effect="mfp-move-from-top" class="btn btn-default d-sm-none popup-text"
+                    <a
+                        href="#nav-login-dialog"
+                        data-effect="mfp-move-from-top"
+                        class="btn btn-default d-sm-none popup-text"
                         ><i class="far fa-user"></i
                     ></a>
                 </li>
 
                 <li>
-                    <a href="carrito" class="btn btn-default"><i class="far fa-shopping-cart"></i></a>
+                    <a [routerLink]="'products/cart'" class="btn btn-default"><i class="far fa-shopping-cart"></i></a>
                 </li>
             </ng-container>
         </ul>
@@ -59,9 +71,12 @@
         <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
             <ng-container *ngFor="let route of userLinks">
                 <li class="nav-item" *ngIf="route.visible">
-                    <a class="nav-link" [ngClass]="{ disabled: !route.enabled, active: route.enabled }" [routerLink]="route.route">{{
-                        route.label
-                    }}</a>
+                    <a
+                        class="nav-link"
+                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                        [routerLink]="route.route"
+                        >{{ route.label }}</a
+                    >
                 </li>
             </ng-container>
         </ul>
