@@ -17,7 +17,7 @@ export default {
                 source: 'title',
                 maxLength: 96,
             },
-            description: 'Código único asignado al producto',
+            description: 'Código único asignado al producto. Llenar siempre luego de que un producto se da de alta.',
         },
         {
             title: 'Habilitado',
@@ -29,14 +29,15 @@ export default {
         },
         {
             name: 'logo',
-            title: 'Imagen Principal',
+            title: 'Imagen Principal, para mostrar en grilla. Tamaño obligatorio: 800px * 800px',
             type: 'image',
         },
         {
-            name: 'primary-image',
+            name: 'images',
             type: 'array',
             title: 'Galería de imágenes',
-            description: 'Imágenes del producto que se visualizarán en el sitio',
+            description:
+                'Imágenes del producto que se visualizarán en el sitio. Tamaño obligatorio de imágenes: 800px * 800px',
             of: [
                 {
                     name: 'image',
@@ -75,6 +76,8 @@ export default {
             name: 'manufacturer',
             title: 'Marca',
             type: 'reference',
+            description:
+                'Marca del producto. Si la marca del producto no existe, debe cargarse en el sistema previamente',
             to: { type: 'manufacturer' },
         },
         {
@@ -92,6 +95,8 @@ export default {
             name: 'categories',
             title: 'Categories',
             type: 'array',
+            description:
+                'Categoría del producto. Si la categoría del producto no existe, debe cargarse en el sistema previamente',
             of: [
                 {
                     type: 'reference',
@@ -111,7 +116,7 @@ export default {
         select: {
             title: 'title',
             subtitle: 'manufacturer.title',
-            media: 'primary-image',
+            media: 'logo',
         },
     },
 };

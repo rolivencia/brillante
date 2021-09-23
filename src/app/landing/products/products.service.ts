@@ -24,9 +24,11 @@ export class ProductsService {
             this.listFilters.category = category;
         }
 
-        this.router.navigate([
-            `/products/products-list/${this.listFilters.offset}/${this.listFilters.manufacturer}/${this.listFilters.category}`,
-        ]);
+        return `/products/products-list/${this.listFilters.offset}/${this.listFilters.manufacturer}/${this.listFilters.category}`;
+
+        // this.router.navigate([
+        //     `/products/products-list/${this.listFilters.offset}/${this.listFilters.manufacturer}/${this.listFilters.category}`,
+        // ]);
     }
 }
 
