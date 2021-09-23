@@ -1,5 +1,5 @@
-<div class="card-columns">
-    <div *ngFor="let product of products" class="card border-0">
+<div class="row no-gutters">
+    <div *ngFor="let product of products" class="col-6 col-md-4 card border-0">
         <div class="product product_component">
             <img [src]="product.imageUrls[0]" [alt]="product.name" />
             <div class="badge badge-secondary">{{ product.name }}</div>
