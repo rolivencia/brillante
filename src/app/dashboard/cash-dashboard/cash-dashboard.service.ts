@@ -12,6 +12,7 @@ import { ProgressLoaderService } from '@app/_components/progress-loader/progress
 import { AuthenticationService } from '@app/_services';
 import { EUSerRoles } from '@app/_enums/user.enum';
 import { Role } from '@app/_models';
+import { decimalsSeparator } from '@app/_functions/numeric-utils';
 
 @Injectable({
     providedIn: 'root',
@@ -132,9 +133,9 @@ export class CashDashboardService {
         flex.columnFooters.rows.push(new GroupRow());
         flex.bottomLeftCells.setCellData(0, 0, '$');
     }
-
+    // TODO: Refactor import
     decimalSeparatorParser(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return decimalsSeparator(x);
     }
 }
 
