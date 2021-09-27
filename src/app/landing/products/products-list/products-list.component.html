@@ -40,7 +40,9 @@
                             <!-- TODO: Issue #86 - Get pagination data from component/service and processed data -->
                             <ul class="pagination category-pagination pull-right">
                                 <li>
-                                    <a href="#"><fa-icon [icon]="faChevronLeft"></fa-icon></a>
+                                    <a (click)="productsService.navigateToPrevious()"
+                                        ><fa-icon [icon]="faChevronLeft"></fa-icon
+                                    ></a>
                                 </li>
                                 <li *ngFor="let page of pages">
                                     <a
@@ -50,7 +52,9 @@
                                     >
                                 </li>
                                 <li>
-                                    <a href="#"><fa-icon [icon]="faChevronRight"></fa-icon></a>
+                                    <a (click)="productsService.navigateToNext(pages.length)"
+                                        ><fa-icon [icon]="faChevronRight"></fa-icon
+                                    ></a>
                                 </li>
                             </ul>
                         </nav>
