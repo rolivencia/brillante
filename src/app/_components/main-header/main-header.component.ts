@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Role, User } from '@app/_models';
+import { User } from '@app/_models';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services';
 import { EUser } from '@app/_enums/user.enum';
-import { faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export class NavigationLink {
     label: string;
@@ -21,6 +21,7 @@ export class NavigationLink {
 export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
+    public barsIcon: IconDefinition = faBars;
     public cartIcon: IconDefinition = faShoppingCart;
 
     private _adminLinks: NavigationLink[] = [];

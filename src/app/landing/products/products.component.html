@@ -189,7 +189,9 @@
                             </li>
                             <li class="_active" *ngFor="let category of productsService.categories">
                                 <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
-                                <a [routerLink]="productsService.generatePageRoute(1, 'all', category.id)"
+                                <a
+                                    [ngClass]="{ active: productsService.currentCategory === category.id }"
+                                    [routerLink]="productsService.generatePageRoute(1, 'all', category.id)"
                                     >{{ category.title }}
                                     <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
                                 </a>
@@ -209,7 +211,10 @@
                                 </a>
                             </li>
                             <li class="_active" *ngFor="let manufacturer of productsService.manufacturers">
-                                <a [routerLink]="productsService.generatePageRoute(1, manufacturer.id, 'all')">
+                                <a
+                                    [ngClass]="{ active: productsService.currentManufacturer === manufacturer.id }"
+                                    [routerLink]="productsService.generatePageRoute(1, manufacturer.id, 'all')"
+                                >
                                     <!-- TODO: Issue #83. Apply count of existing items for each manufacturer. Build a pipe. -->
                                     {{ manufacturer.title }}
                                     <!-- <span class="count">({{ productsService.manufacturers.length }})</span>-->
