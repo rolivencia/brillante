@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from '@app/_models/product';
 import { ProductsService } from '@app/landing/products/products.service';
 import { Subscription } from 'rxjs';
@@ -19,13 +19,17 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         private productsService: ProductsService,
-        private route: ActivatedRoute,
-        private router: Router
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
         this.routeSubscription = this.route.paramMap.subscribe((values) => {
             if (this.route.snapshot.data['products']) {
+                // Assign values to mark active filters (category, manufacturer, page)
+                this.productsService.currentOffset = parseInt(values['params'].offset, 10);
+                this.productsService.currentCategory = values['params'].category;
+                this.productsService.currentManufacturer = values['params'].manufacturer;
+
                 this.products = this.route.snapshot.data['products'].products;
                 const count = Math.ceil(this.route.snapshot.data['products'].count / 12.0);
                 this.pages = Array.from({ length: count }, (_, i) => i + 1);

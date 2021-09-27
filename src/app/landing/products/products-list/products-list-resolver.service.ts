@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ProductsHttpService } from '@app/landing/products/products.http.service';
 import { Product } from '@app/_models/product';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',

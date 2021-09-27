@@ -31,7 +31,7 @@ const routes: Routes = [
                 },
             },
             {
-                path: 'products-list/:offset/:category/:manufacturer',
+                path: 'products-list/:offset/:manufacturer/:category',
                 component: ProductsListComponent,
                 resolve: {
                     products: ProductsListResolverService,
