@@ -209,7 +209,6 @@
                                 </a>
                             </li>
                             <li class="_active" *ngFor="let manufacturer of productsService.manufacturers">
-                                <!--                                <a href="#" (click)="productsService.generatePageRoute(1, manufacturer.id, 'all')">-->
                                 <a [routerLink]="productsService.generatePageRoute(1, manufacturer.id, 'all')">
                                     <!-- TODO: Issue #83. Apply count of existing items for each manufacturer. Build a pipe. -->
                                     {{ manufacturer.title }}

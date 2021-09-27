@@ -42,13 +42,12 @@
                                 <li class="disabled">
                                     <a href="#"><i class="fa fa-chevron-left"></i></a>
                                 </li>
-                                <!--                                <li>-->
-                                <!--                                    <a class="active">1</a>-->
-                                <!--                                </li>-->
                                 <li *ngFor="let page of pages">
-                                    <a href="#" (click)="productsService.generatePageRoute(page, null, null)">{{
-                                        page
-                                    }}</a>
+                                    <a
+                                        [ngClass]="{ active: page == productsService.currentOffset }"
+                                        [routerLink]="productsService.navigateToPageRoute(page)"
+                                        >{{ page }}</a
+                                    >
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-chevron-right"></i></a>

@@ -6,8 +6,36 @@ import { Router } from '@angular/router';
     providedIn: 'root',
 })
 export class ProductsService {
+    get currentOffset(): number {
+        return this._currentOffset;
+    }
+
+    set currentOffset(value: number) {
+        this._currentOffset = value;
+    }
+
+    get currentCategory(): string {
+        return this._currentCategory;
+    }
+
+    set currentCategory(value: string) {
+        this._currentCategory = value;
+    }
+
+    get currentManufacturer(): string {
+        return this._currentManufacturer;
+    }
+
+    set currentManufacturer(value: string) {
+        this._currentManufacturer = value;
+    }
     public manufacturers: Manufacturer[] = [];
     public categories: Category[] = [];
+
+    // Filters
+    private _currentOffset: number = 1;
+    private _currentCategory: string = 'all';
+    private _currentManufacturer: string = 'all';
 
     public listFilters: ListFilters = new ListFilters();
 
@@ -25,10 +53,13 @@ export class ProductsService {
         }
 
         return `/products/products-list/${this.listFilters.offset}/${this.listFilters.manufacturer}/${this.listFilters.category}`;
+    }
 
-        // this.router.navigate([
-        //     `/products/products-list/${this.listFilters.offset}/${this.listFilters.manufacturer}/${this.listFilters.category}`,
-        // ]);
+    navigateToPageRoute(page?: string | number): string {
+        if (page) {
+            this.listFilters.offset = page;
+        }
+        return `/products/products-list/${this.listFilters.offset}/${this._currentManufacturer}/${this._currentCategory}`;
     }
 }
 
