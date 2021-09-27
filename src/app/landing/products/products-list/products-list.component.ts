@@ -12,6 +12,7 @@ import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free
     styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
+    public count: number;
     public products: Product[] = [];
     public pages: number[] = [1];
 
@@ -29,6 +30,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.routeSubscription = this.route.paramMap.subscribe((values) => {
             if (this.route.snapshot.data['products']) {
+                // Product count, given the current category/manufacturer filters
+                this.count = parseInt(this.route.snapshot.data['products'].count, 10);
+
                 // Assign values to mark active filters (category, manufacturer, page)
                 this.productsService.currentOffset = parseInt(values['params'].offset, 10);
                 this.productsService.currentCategory = values['params'].category;
@@ -52,5 +56,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     priceGenerationParser(x: number | string) {
         return decimalsSeparator(replaceDotWithComma(x));
+    }
+
+    productOffsetCount() {
+        const min = 12 * (this.productsService.currentOffset - 1) + 1;
+        let max = 12 + (this.productsService.currentOffset - 1) * 12;
+        if (max > this.count && this.pages.length === this.productsService.currentOffset) {
+            max = this.count;
+        }
+
+        return `${min} - ${max}`;
     }
 }

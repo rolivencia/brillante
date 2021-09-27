@@ -33,7 +33,10 @@
                 <div class="row no-gutters">
                     <div class="col-12 col-md-6">
                         <!-- TODO: Issue #86 - Get pagination data from component/service and processed data -->
-                        <p class="category-pagination-sign">50 productos encontrados. Mostrando 1 - 18</p>
+                        <p class="category-pagination-sign">
+                            {{ count }} productos encontrados. Mostrando
+                            {{ productOffsetCount() }}
+                        </p>
                     </div>
                     <div class="col-12 col-md-6">
                         <nav>
