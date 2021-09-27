@@ -1,3 +1,15 @@
+.pagination {
+    a {
+        &.active {
+            font-weight: 900;
+            color: #003164;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
 .product {
     margin-bottom: 12px;
 
