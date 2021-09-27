@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
-        private productsService: ProductsService,
+        public productsService: ProductsService,
         private route: ActivatedRoute
     ) {}
 
