@@ -61,6 +61,26 @@ export class ProductsService {
         }
         return `/products/products-list/${this.listFilters.offset}/${this._currentManufacturer}/${this._currentCategory}`;
     }
+
+    navigateToPrevious() {
+        if (this.listFilters.offset > 1) {
+            this.router.navigate([
+                `/products/products-list/${(this._currentOffset as number) - 1}/${this._currentManufacturer}/${
+                    this._currentCategory
+                }`,
+            ]);
+        }
+    }
+
+    navigateToNext(max: number) {
+        if (this.listFilters.offset < max) {
+            this.router.navigate([
+                `/products/products-list/${(this._currentOffset as number) + 1}/${this._currentManufacturer}/${
+                    this._currentCategory
+                }`,
+            ]);
+        }
+    }
 }
 
 export function toProduct(productDTO): Product {
