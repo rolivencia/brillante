@@ -1,554 +1,271 @@
-<div class="modal fade" id="carrito-mensaje" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4>&nbsp;</h4>
-      </div>
-      <div class="modal-body">
-        <i class="fa fa-check icono-ok"></i>
-        <h2>Producto Agregado</h2>
-        <p>Se agrego un nuevo producto al carrito</p>
-      </div>
-      <div class="modal-footer">
-        <a href="/carrito" class="btn btn-success">Ver Carrito</a>
-        <a href="#" class="btn btn-default" data-dismiss="modal"
-        >Seguir Comprando</a
-        >
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="global-wrapper clearfix" id="global-wrapper">
-  <div
-    class="mfp-with-anim mfp-hide mfp-dialog clearfix"
-    id="nav-login-dialog"
-  >
-    <h3 class="widget-title">Ingreso de Usuario</h3>
-    <p>Bienvenido de nuevo!</p>
-    <hr />
-    <form name="usuario-login" id="usuario-login" action="" method="post">
-      <div class="alert alert-danger alert-dismissable mensaje-error">
-        <a
-          href="#"
-          class="close boton-cerrar"
-          data-cerrar="mensaje-error"
-          aria-label="close"
-        >&times;</a
-        >
-        <div class="texto"><strong>Ups!</strong> Datos incorrectos</div>
-      </div>
-      <div class="form-group">
-        <label>Correo</label>
-        <input
-          class="form-control"
-          type="text"
-          name="correo-ajax"
-          id="correo-ajax"
-        />
-      </div>
-      <div class="form-group">
-        <label>Clave</label>
-        <input
-          class="form-control"
-          type="password"
-          name="clave-ajax"
-          id="clave-ajax"
-        />
-      </div>
-      <input
-        class="btn btn-primary boton-login"
-        type="submit"
-        value="Ingresar"
-      />
-      <br />
-      <div class="ajax-login">
-        <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Ingresando...
-      </div>
-    </form>
+    <section class="w-100">
+        <img class="w-100" src="./assets/imagenes/tema/slides/reparaciones.jpg" alt="" />
+    </section>
 
-    <div class="gap gap-small"></div>
-    <ul class="list-inline botones-login">
-      <li>
-        <a href="#nav-account-dialog" class="popup-text boton-crear-usuario"
-        ><i class="fa fa-pencil-square-o"></i> Crear Cuenta</a
-        >
-      </li>
-      <li>
-        <a href="/olvido-clave" class="boton-olvido-clave"
-        >Olvidaste tu clave?</a
-        >
-      </li>
-    </ul>
-  </div>
+    <br />
 
-  <div
-    class="mfp-with-anim mfp-hide mfp-dialog clearfix"
-    id="nav-account-dialog"
-  >
-    <h3 class="widget-title">Crear una cuenta</h3>
-    <p>Creá una cuenta y comenzá a comprar en nuestra tienda!</p>
-    <hr />
-    <div
-      class="alert alert-danger alert-dismissable registro-mensaje-error"
-    >
-      <a
-        href="#"
-        class="close boton-cerrar"
-        data-cerrar="registro-mensaje-error"
-        aria-label="close"
-      >&times;</a
-      >
-      <div class="texto">
-        <strong>Ups!</strong> Todos los campos son obligatorios
-      </div>
-    </div>
-    <form
-      name="usuario-registro"
-      id="usuario-registro"
-      action=""
-      method="post"
-    >
-      <div class="form-group">
-        <label>Nombre</label>
-        <input
-          type="text"
-          name="reg-nombre"
-          id="reg-nombre"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <label>Apellido</label>
-        <input
-          type="text"
-          name="reg-apellido"
-          id="reg-apellido"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <label>DNI</label>
-        <input
-          type="text"
-          name="reg-dni"
-          id="reg-dni"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <label>Correo</label>
-        <input
-          type="text"
-          name="reg-correo"
-          id="reg-correo"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <label>Clave</label>
-        <input
-          type="password"
-          name="reg-clave"
-          id="reg-clave"
-          class="form-control"
-        />
-      </div>
-      <input
-        class="btn btn-primary boton-crear-cuenta"
-        type="submit"
-        value="Crear Cuenta"
-      />
-      <br />
-      <div class="ajax-login">
-        <i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Procesando
-        datos...
-      </div>
-    </form>
-    <div class="gap gap-small"></div>
-  </div>
-
-  <!--nav class="navbar navbar-inverse navbar-main-white navbar-main menu-navegacion">
+    <section class="featuredIcons">
         <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-nav-collapse"><span class="sr-only">Main Menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="main-nav-collapse">
-                <ul class="nav navbar-nav menu-principal">
-
-                    <li class="dropdown"><a href="/productos"><i class="fa fa-fire-extinguisher"></i> Productos<i class="drop-caret" data-toggle="dropdown"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-category">
-                                                                                            <li>
-                            <a href="/productos/accesorios"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Accesorios</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/audio"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Audio</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/auriculares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Auriculares</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/cables"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cables</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/cargadores"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cargadores</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/celulares"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Celulares</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/fundas"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Fundas</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/precios-regalados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>¡Precios regalados!</a>
-                            </li>
-                                                            <li>
-                            <a href="/productos/templados"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Templados</a>
-                            </li>
-                                                            <li>
-                            <a href="/carteleria"><i class="fa fa-check-circle dropdown-menu-category-icon"></i>Cartelería y Señalética</a>
-                            </li>
-                                                        </ul>
-                    </li>
-                    <li>
-                        <a href="/tienda" ><i class="fa fa-shopping-cart"></i> Tienda</a>
-                    </li>
-
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown contenedor-boton-usuario">
-                            <li><a href="/usuario" class="btn btn-sm btn-light d-none d-sm-block" >INGRESAR</a>
-                <li><a href="/registro" class="btn btn-sm btn-light d-none d-sm-block">REGISTRATE</a></li>
-                <li><a href="/usuario" id="UserMenu_OpenBtn" class="btn btn-default d-sm-none"><i class= "far fa-user"></i></a></li>
-                    </li>
-                    <li class="dropdown">
-                        <a href="/carrito" class="fa fa-shopping-cart"></a>
-                        <ul class="dropdown-menu dropdown-menu-shipping-cart">
-
-                        </ul>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav-->
-
-  <section class="heroImage">
-    <div class="owl-carousel owl-theme">
-      <div class="item">
-        <img src="assets/imagenes/tema/slides/reparaciones.jpg" alt="" />
-      </div>
-    </div>
-  </section>
-  <br />
-
-  <section class="featuredIcons">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_target.png" alt="" />
-          </div>
-          <h3>Perfección para tu empresa</h3>
-          <p>
-            En Brillante <b>creemos en la perfección de nuestro mundo</b> y
-            más aún en la perfección de nuestro trabajo, por eso,
-            <b>cuidamos al máximo cada detalle,</b> tratando de brindar el
-            mejor servicio para hacer crecer a nuestros clientes.
-          </p>
-        </div>
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_cogs.png" alt="" />
-          </div>
-          <h3>Visitas programadas, reparaciones aseguradas</h3>
-          <p>
-            Ofrecemos un <b>soporte integral para empresas</b> que consta de
-            <b>visitas programadas</b> donde analizamos, reparamos,
-            actualizamos y asesoramos para optimizar el rendimiento de tu
-            negocio.
-          </p>
-        </div>
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_clock.png" alt="" />
-          </div>
-          <h3>Un servicio preparado para tu crecimiento</h3>
-          <p>
-            Nuestro servicio se destaca por realizar
-            <b
-            >reparaciones en un rango de 20 a 40 minutos
-              aproximadamente,</b
-            >
-            en dispositivos Apple y en determinados modelos y marcas.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="featuredIcons_column">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_cel_cog.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Reparaciones en el día</h2>
-          <p>
-            Ofrecemos un servicio que se destaca por realizar arreglos en un
-            <b>rango de 20 a 40 minutos aproximadamente</b>, en dispositivos
-            Apple y en determinados modelos y marcas. <br />Realizamos tu
-            <b>presupuesto sin cargo</b> porque priorizamos despejar todas
-            tus dudas y que puedas elegir nuestro servicio sin problemas.
-            Consultanos ahora en nuestro formulario de contacto o en
-            cualquiera de nuestras redes.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_tools.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Repuestos de Alta Calidad</h2>
-          <p>
-            Utilizamos la <b>mejor calidad</b> en repuestos genéricos. No
-            utilizamos repuestos originales ya que ninguna marca lo fabrica,
-            pero priorizamos los mejores productos siguiendo con nuestra
-            filosofía para que todo salga perfecto.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_tools_cogs.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Reparaciones en Placa madre</h2>
-          <p>
-            Somos el
-            <b>único servicio en la ciudad de Santa Fe y la zona</b> que
-            realiza reparaciones en placa madre de Apple y de determinados
-            celulares de primeras marcas como Motorola, Samsung y demás.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_van.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Servicio Puerta a Puerta gratuito</h2>
-          <p>
-            Realizamos envíos dentro de la
-            <b>ciudad de Santa Fe y alrededores sin costo.</b> <br />También
-            contamos con el servicio de
-            <b>envío a todo el país,</b> gestionando con vos la entrega y el
-            pago del mismo, logrando que cada persona de nuestro país pueda
-            disfrutar de un servicio de primer nivel.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_laptop_cog.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Servicio de informática</h2>
-          <p>
-            No sólo nos abocamos en smartphones, sino que además realizamos
-            reparaciones en laptops y máquinas de escritorio para que todos
-            tus dispositivos puedan gozar de una perfecta vida útil sin
-            tener que cambiarlos a cada momento.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_user_shield.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Asesoramiento</h2>
-          <p>
-            Estamos
-            <b
-            >disponibles ante cualquier consulta o imprevisto sobre el
-              software y hardware de tu empresa.</b
-            >
-            Poniendo como principal objetivo el correcto funcionamiento de
-            todos tus productos electrónicos para garantizar que tu empresa
-            avance sin ningún problema.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-4">
-          <div class="icn">
-            <img src="assets/imagenes/tema/paginas/icn_page.png" alt="" />
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
-          <h2>Ficha técnica</h2>
-          <p>
-            Una vez realizada la reparación
-            <b>entregamos al cliente una ficha técnica</b> que contiene sus
-            datos, datos del equipo, operación realizada, demora y garantía.
-            Eso nos garantiza a nosotros y a nuestros clientes mantener la
-            calidad de nuestro servicio, priorizando tu tranquilidad y
-            asegurando un servicio perfecto desde la consulta hasta la
-            entrega de tu móvil.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h3>El acuerdo perfecto</h3>
-          <p>
-            Te ofrecemos <b>formar un vínculo</b> que nos permita tener una
-            relación a largo plazo, brindándote un servicio exclusivo
-            <b>para que tu empresa pueda crecer de la mejor manera.</b>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="franja contactForm  bg-deg-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-sm-6 col-lg-5 col-xl-5 text-col">
-          <div class="text-block">
-            <h2>Contactanos</h2>
-            <p>
-              Déjanos tu consulta para que nuestros especialistas puedan
-              comunicarse a la brevedad.
-            </p>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-7 col-xl-7">
-          <form
-            name="consulta-contacto"
-            id="consulta-contacto"
-            data-prefijo=""
-            novalidate
-          >
-            <input type="hidden" name="registro" id="registro" value="0" />
             <div class="row">
-              <div class="col-12 col-lg-9">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nombre"
-                    id="nombre"
-                    name="nombre"
-                    required
-                    data-validation-required-message="Es obligatorio ingresar el nombre"
-                  />
-                  <p class="help-block text-danger"></p>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_target.png" alt="" />
+                    </div>
+                    <h3>Perfección para tu empresa</h3>
+                    <p>
+                        En Brillante <b>creemos en la perfección de nuestro mundo</b> y más aún en la perfección de
+                        nuestro trabajo, por eso, <b>cuidamos al máximo cada detalle,</b> tratando de brindar el mejor
+                        servicio para hacer crecer a nuestros clientes.
+                    </p>
                 </div>
-                <div class="form-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="correo"
-                    name="correo"
-                    placeholder="Email"
-                    required
-                    data-validation-required-message="Es obligatorio ingresar el correo"
-                    data-validation-email-message="El correo ingresado no es válido"
-                  />
-                  <p class="help-block text-danger"></p>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_cogs.png" alt="" />
+                    </div>
+                    <h3>Visitas programadas, reparaciones aseguradas</h3>
+                    <p>
+                        Ofrecemos un <b>soporte integral para empresas</b> que consta de
+                        <b>visitas programadas</b> donde analizamos, reparamos, actualizamos y asesoramos para optimizar
+                        el rendimiento de tu negocio.
+                    </p>
                 </div>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control "
-                    placeholder="Teléfono"
-                    id="telefono"
-                    name="telefono"
-                    required
-                    data-validation-required-message="Es oligatorio ingresar el teléfono"
-                  />
-                  <p class="help-block text-danger"></p>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_clock.png" alt="" />
+                    </div>
+                    <h3>Un servicio preparado para tu crecimiento</h3>
+                    <p>
+                        Nuestro servicio se destaca por realizar
+                        <b>reparaciones en un rango de 20 a 40 minutos aproximadamente,</b>
+                        en dispositivos Apple y en determinados modelos y marcas.
+                    </p>
                 </div>
-              </div>
-              <div class="col-12 col-lg-10">
-                <div class="form-group">
-                  <label for="mensaje">Mensaje</label>
-                  <textarea
-                    class="form-control"
-                    placeholder=""
-                    id="mensaje"
-                    name="mensaje"
-                    rows="3"
-                    required
-                    data-validation-required-message="Es obligatorio ingresar el mensaje"
-                  ></textarea>
-                  <p class="help-block text-danger"></p>
-                </div>
-                <button
-                  type="submit"
-                  id="send"
-                  class="btn btn-brillante1 btn-wider consulta-contacto-boton-enviar"
-                >
-                  Enviar
-                </button>
-                <br /><br />
-                <div
-                  class="consulta-contacto-enviando"
-                  style="display: none;"
-                >
-                  <i class="fa fa-spinner fa-spin"></i> Enviando mensaje
-                </div>
-                <div
-                  class="alert alert-success consulta-contacto-exito"
-                  style="display: none;"
-                >
-                  Mensaje enviado con éxito
-                </div>
-                <div
-                  class="alert alert-danger consulta-contacto-error"
-                  style="display: none;"
-                >
-                  El mensaje no pudo ser enviado, por favor, intentalo
-                  nuevamente
-                </div>
-              </div>
             </div>
-          </form>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
+    <section class="featuredIcons_column">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_cel_cog.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Reparaciones en el día</h2>
+                    <p>
+                        Ofrecemos un servicio que se destaca por realizar arreglos en un
+                        <b>rango de 20 a 40 minutos aproximadamente</b>, en dispositivos Apple y en determinados modelos
+                        y marcas. <br />Realizamos tu <b>presupuesto sin cargo</b> porque priorizamos despejar todas tus
+                        dudas y que puedas elegir nuestro servicio sin problemas. Consultanos ahora en nuestro
+                        formulario de contacto o en cualquiera de nuestras redes.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_tools.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Repuestos de Alta Calidad</h2>
+                    <p>
+                        Utilizamos la <b>mejor calidad</b> en repuestos genéricos. No utilizamos repuestos originales ya
+                        que ninguna marca lo fabrica, pero priorizamos los mejores productos siguiendo con nuestra
+                        filosofía para que todo salga perfecto.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_tools_cogs.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Reparaciones en Placa madre</h2>
+                    <p>
+                        Somos el
+                        <b>único servicio en la ciudad de Santa Fe y la zona</b> que realiza reparaciones en placa madre
+                        de Apple y de determinados celulares de primeras marcas como Motorola, Samsung y demás.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_van.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Servicio Puerta a Puerta gratuito</h2>
+                    <p>
+                        Realizamos envíos dentro de la
+                        <b>ciudad de Santa Fe y alrededores sin costo.</b> <br />También contamos con el servicio de
+                        <b>envío a todo el país,</b> gestionando con vos la entrega y el pago del mismo, logrando que
+                        cada persona de nuestro país pueda disfrutar de un servicio de primer nivel.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_laptop_cog.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Servicio de informática</h2>
+                    <p>
+                        No sólo nos abocamos en smartphones, sino que además realizamos reparaciones en laptops y
+                        máquinas de escritorio para que todos tus dispositivos puedan gozar de una perfecta vida útil
+                        sin tener que cambiarlos a cada momento.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_user_shield.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Asesoramiento</h2>
+                    <p>
+                        Estamos
+                        <b
+                            >disponibles ante cualquier consulta o imprevisto sobre el software y hardware de tu
+                            empresa.</b
+                        >
+                        Poniendo como principal objetivo el correcto funcionamiento de todos tus productos electrónicos
+                        para garantizar que tu empresa avance sin ningún problema.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="icn">
+                        <img src="assets/imagenes/tema/paginas/icn_page.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-8">
+                    <h2>Ficha técnica</h2>
+                    <p>
+                        Una vez realizada la reparación
+                        <b>entregamos al cliente una ficha técnica</b> que contiene sus datos, datos del equipo,
+                        operación realizada, demora y garantía. Eso nos garantiza a nosotros y a nuestros clientes
+                        mantener la calidad de nuestro servicio, priorizando tu tranquilidad y asegurando un servicio
+                        perfecto desde la consulta hasta la entrega de tu móvil.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>El acuerdo perfecto</h3>
+                    <p>
+                        Te ofrecemos <b>formar un vínculo</b> que nos permita tener una relación a largo plazo,
+                        brindándote un servicio exclusivo
+                        <b>para que tu empresa pueda crecer de la mejor manera.</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="franja contactForm bg-deg-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-5 col-xl-5 text-col">
+                    <div class="text-block">
+                        <h2>Contactanos</h2>
+                        <p>Déjanos tu consulta para que nuestros especialistas puedan comunicarse a la brevedad.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-7 col-xl-7">
+                    <form name="consulta-contacto" id="consulta-contacto" data-prefijo="" novalidate>
+                        <input type="hidden" name="registro" id="registro" value="0" />
+                        <div class="row">
+                            <div class="col-12 col-lg-9">
+                                <div class="form-group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Nombre"
+                                        id="nombre"
+                                        name="nombre"
+                                        required
+                                        data-validation-required-message="Es obligatorio ingresar el nombre"
+                                    />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="correo"
+                                        name="correo"
+                                        placeholder="Email"
+                                        required
+                                        data-validation-required-message="Es obligatorio ingresar el correo"
+                                        data-validation-email-message="El correo ingresado no es válido"
+                                    />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Teléfono"
+                                        id="telefono"
+                                        name="telefono"
+                                        required
+                                        data-validation-required-message="Es oligatorio ingresar el teléfono"
+                                    />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-10">
+                                <div class="form-group">
+                                    <label for="mensaje">Mensaje</label>
+                                    <textarea
+                                        class="form-control"
+                                        placeholder=""
+                                        id="mensaje"
+                                        name="mensaje"
+                                        rows="3"
+                                        required
+                                        data-validation-required-message="Es obligatorio ingresar el mensaje"
+                                    ></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <button
+                                    type="submit"
+                                    id="send"
+                                    class="btn btn-brillante1 btn-wider consulta-contacto-boton-enviar"
+                                >
+                                    Enviar
+                                </button>
+                                <br /><br />
+                                <div class="consulta-contacto-enviando" style="display: none">
+                                    <i class="fa fa-spinner fa-spin"></i> Enviando mensaje
+                                </div>
+                                <div class="alert alert-success consulta-contacto-exito" style="display: none">
+                                    Mensaje enviado con éxito
+                                </div>
+                                <div class="alert alert-danger consulta-contacto-error" style="display: none">
+                                    El mensaje no pudo ser enviado, por favor, intentalo nuevamente
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

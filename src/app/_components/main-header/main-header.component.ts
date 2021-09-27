@@ -3,6 +3,7 @@ import { Role, User } from '@app/_models';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services';
 import { EUser } from '@app/_enums/user.enum';
+import { faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export class NavigationLink {
     label: string;
@@ -20,9 +21,11 @@ export class NavigationLink {
 export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
+    public cartIcon: IconDefinition = faShoppingCart;
+
     private _adminLinks: NavigationLink[] = [];
 
-    //FIXME: Centralizar navegación
+    //FIXME: Centralizar navegación - Generar service para el header
     private _allAdminLinks: NavigationLink[] = [
         {
             label: 'Dashboard',
@@ -71,7 +74,7 @@ export class MainHeaderComponent implements OnInit {
     private _userLinks: NavigationLink[] = [
         { label: 'Inicio', route: '/home', enabled: true, visible: false },
         { label: 'Productos', route: '/products', enabled: true, visible: true },
-        { label: 'Celulares', route: '/smartphones', enabled: false, visible: true },
+        { label: 'Celulares', route: '/smartphones', enabled: false, visible: false },
         { label: 'Reparaciones', route: '/repairs', enabled: true, visible: true },
         {
             label: 'Servicio a empresas',
