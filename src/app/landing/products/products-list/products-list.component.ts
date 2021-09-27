@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@app/_models/product';
 import { ProductsService } from '@app/landing/products/products.service';
 import { Subscription } from 'rxjs';
+import { decimalsSeparator, replaceDotWithComma } from '@app/_functions/numeric-utils';
 
 @Component({
     selector: 'app-products-list',
@@ -39,5 +40,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     addToCart(id: number) {
         console.log('IMPLEMENT ADDTOCART METHOD');
+    }
+
+    priceGenerationParser(x: number | string) {
+        return decimalsSeparator(replaceDotWithComma(x));
     }
 }
