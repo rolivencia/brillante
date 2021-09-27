@@ -14,6 +14,7 @@ import { ProgressLoaderModule } from '@app/_components/progress-loader/progress-
 import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
 import { LoginModule } from '@app/login/login.module';
 import { RegisterModule } from '@app/register/register.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { RegisterModule } from '@app/register/register.module';
         routing,
         ToastrModule.forRoot(),
         ProgressLoaderModule,
+        FontAwesomeModule,
     ],
     declarations: [AppComponent, FooterComponent, MainHeaderComponent, DashboardComponent],
     providers: [

@@ -4,6 +4,7 @@ import { Product } from '@app/_models/product';
 import { ProductsService } from '@app/landing/products/products.service';
 import { Subscription } from 'rxjs';
 import { decimalsSeparator, replaceDotWithComma } from '@app/_functions/numeric-utils';
+import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-products-list',
@@ -15,6 +16,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     public pages: number[] = [1];
 
     private routeSubscription: Subscription;
+
+    public faChevronLeft: IconDefinition = faChevronLeft;
+    public faChevronRight: IconDefinition = faChevronRight;
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,

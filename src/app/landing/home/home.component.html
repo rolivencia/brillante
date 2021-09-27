@@ -1,101 +1,10 @@
-<div class="modal fade" id="carrito-mensaje" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4>&nbsp;</h4>
-            </div>
-            <div class="modal-body">
-                <i class="fa fa-check icono-ok"></i>
-                <h2>Producto Agregado</h2>
-                <p>Se agrego un nuevo producto al carrito</p>
-            </div>
-            <div class="modal-footer">
-                <a href="carrito" class="btn btn-success">Ver Carrito</a>
-                <a href="#" class="btn btn-default" data-dismiss="modal">Seguir Comprando</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="global-wrapper" class="global-wrapper clearfix container">
-    <div class="mfp-with-anim mfp-hide mfp-dialog clearfix" id="nav-login-dialog">
-        <h3 class="widget-title">Ingreso de Usuario</h3>
-        <p>Bienvenido de nuevo!</p>
-        <hr />
-        <form name="usuario-login" id="usuario-login" action="" method="post">
-            <div class="alert alert-danger alert-dismissable mensaje-error">
-                <a href="#" class="close boton-cerrar" data-cerrar="mensaje-error" aria-label="close">&times;</a>
-                <div class="texto"><strong>Ups!</strong> Datos incorrectos</div>
-            </div>
-            <div class="form-group">
-                <label>Correo</label>
-                <input class="form-control" type="text" name="correo-ajax" id="correo-ajax" />
-            </div>
-            <div class="form-group">
-                <label>Clave</label>
-                <input class="form-control" type="password" name="clave-ajax" id="clave-ajax" />
-            </div>
-            <input class="btn btn-primary boton-login" type="submit" value="Ingresar" />
-            <br />
-            <div class="ajax-login"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Ingresando...</div>
-        </form>
-
-        <div class="gap gap-small"></div>
-        <ul class="list-inline botones-login">
-            <li>
-                <a href="#nav-account-dialog" class="popup-text boton-crear-usuario"><i class="fa fa-pencil-square-o"></i> Crear Cuenta</a>
-            </li>
-            <li>
-                <a href="olvido-clave" class="boton-olvido-clave">Olvidaste tu clave?</a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="mfp-with-anim mfp-hide mfp-dialog clearfix" id="nav-account-dialog">
-        <h3 class="widget-title">Crear una cuenta</h3>
-        <p>Creá una cuenta y comenzá a comprar en nuestra tienda!</p>
-        <hr />
-        <div class="alert alert-danger alert-dismissable registro-mensaje-error">
-            <a href="#" class="close boton-cerrar" data-cerrar="registro-mensaje-error" aria-label="close">&times;</a>
-            <div class="texto"><strong>Ups!</strong> Todos los campos son obligatorios</div>
-        </div>
-        <form name="usuario-registro" id="usuario-registro" action="" method="post">
-            <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" name="reg-nombre" id="reg-nombre" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Apellido</label>
-                <input type="text" name="reg-apellido" id="reg-apellido" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>DNI</label>
-                <input type="text" name="reg-dni" id="reg-dni" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Correo</label>
-                <input type="text" name="reg-correo" id="reg-correo" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Clave</label>
-                <input type="password" name="reg-clave" id="reg-clave" class="form-control" />
-            </div>
-            <input class="btn btn-primary boton-crear-cuenta" type="submit" value="Crear Cuenta" />
-            <br />
-            <div class="ajax-login"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Procesando datos...</div>
-        </form>
-        <div class="gap gap-small"></div>
-    </div>
-
     <section class="heroImage">
         <owl-carousel-o [options]="heroImage">
-            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/contacto.jpg" alt=""/></ng-template>
-            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/home2.jpg" alt=""/></ng-template>
-            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/home1.png" alt=""/></ng-template>
-            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/reparaciones.jpg" alt=""/></ng-template>
+            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/contacto.jpg" alt="" /></ng-template>
+            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/home2.jpg" alt="" /></ng-template>
+            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/home1.png" alt="" /></ng-template>
+            <ng-template carouselSlide><img src="/assets/imagenes/tema/slides/reparaciones.jpg" alt="" /></ng-template>
         </owl-carousel-o>
     </section>
 
@@ -126,7 +35,7 @@
             </div>
         </div>
     </section>
-    <section class="franja  bg-deg-1">
+    <section class="franja bg-deg-1">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6 text-col">
@@ -134,8 +43,8 @@
                         <h6>REPARACIONES</h6>
                         <h2>Perfección <br />en cada detalle</h2>
                         <p class="m-0">
-                            En Brillante buscamos <b>ese pensamiento diferente</b>, ese que nos hace exigirnos constantemente para
-                            superarnos día a día, más allá del costo o los obstáculos. Porque
+                            En Brillante buscamos <b>ese pensamiento diferente</b>, ese que nos hace exigirnos
+                            constantemente para superarnos día a día, más allá del costo o los obstáculos. Porque
                             <b>cuidamos al máximo cada detalle</b>,tratando de brindar el mejor servicio.
                         </p>
                     </div>
@@ -161,7 +70,10 @@
                     <ng-template carouselSlide
                         ><div class="product_component" data-idProducto="153">
                             <div class="carrito-agregar-ajax" id="ajax-153"></div>
-                            <img src="/assets/imagenes-s/productos/productos-imagen-186.png" alt="Madera iPhone 6s / 6 plus" />
+                            <img
+                                src="/assets/imagenes-s/productos/productos-imagen-186.png"
+                                alt="Madera iPhone 6s / 6 plus"
+                            />
                             <div class="badge badge-secondary">Madera iPhone 6s / 6 plus</div>
                             <div class="hovercard">
                                 <h6>Madera iPhone 6s / 6 plus</h6>
@@ -217,7 +129,9 @@
                                 <h6>Samsung S9 +</h6>
                                 <!--small>o 12 cuotas de $65.00</small-->
                                 <div class="btns">
-                                    <a href="86-samsung-s9-" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+                                    <a href="86-samsung-s9-" class="btn btn-light"
+                                        ><span>VER MÁS</span> <i class="fal fa-eye"></i
+                                    ></a>
                                 </div>
                             </div></div
                     ></ng-template>
@@ -232,9 +146,15 @@
                                 <p>$1650</p>
                                 <!--small>o 12 cuotas de $65.00</small-->
                                 <div class="btns">
-                                    <a href="21-funde-one-case-6" class="btn btn-light"><span>VER MÁS</span> <i class="fal fa-eye"></i></a>
+                                    <a href="21-funde-one-case-6" class="btn btn-light"
+                                        ><span>VER MÁS</span> <i class="fal fa-eye"></i
+                                    ></a>
 
-                                    <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-21" data-idProducto="21">
+                                    <button
+                                        class="btn btn-light boton-carrito-agregar"
+                                        id="boton-carrito-agregar-21"
+                                        data-idProducto="21"
+                                    >
                                         <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
                                     </button>
                                 </div>
@@ -268,7 +188,10 @@
                     <ng-template carouselSlide
                         ><div class="product_component" data-idProducto="169">
                             <div class="carrito-agregar-ajax" id="ajax-169"></div>
-                            <img src="/assets/imagenes-s/productos/productos-imagen-202.png" alt="SiliconeCover Samsung S9+" />
+                            <img
+                                src="/assets/imagenes-s/productos/productos-imagen-202.png"
+                                alt="SiliconeCover Samsung S9+"
+                            />
                             <div class="badge badge-secondary">SiliconeCover Samsung S9+</div>
                             <div class="hovercard">
                                 <h6>SiliconeCover Samsung S9+</h6>
@@ -293,7 +216,10 @@
                     <ng-template carouselSlide
                         ><div class="product_component" data-idProducto="35">
                             <div class="carrito-agregar-ajax" id="ajax-35"></div>
-                            <img src="/assets/imagenes-s/productos/productos-imagen-44.png" alt="Funda Reveal iPhone 6" />
+                            <img
+                                src="/assets/imagenes-s/productos/productos-imagen-44.png"
+                                alt="Funda Reveal iPhone 6"
+                            />
                             <div class="badge badge-secondary">Funda Reveal iPhone 6</div>
                             <div class="hovercard">
                                 <h6>Funda Reveal iPhone 6</h6>
@@ -305,7 +231,11 @@
                                         ><span>VER MÁS</span> <i class="fal fa-eye"></i
                                     ></a>
 
-                                    <button class="btn btn-light boton-carrito-agregar" id="boton-carrito-agregar-35" data-idProducto="35">
+                                    <button
+                                        class="btn btn-light boton-carrito-agregar"
+                                        id="boton-carrito-agregar-35"
+                                        data-idProducto="35"
+                                    >
                                         <span>AGREGAR</span> <i class="far fa-cart-plus"></i>
                                     </button>
                                 </div>
@@ -320,20 +250,20 @@
         <div class="container">
             <div class="row">
                 <div
-                    class="col-12 col-md-6 img-col d-flex align-items-center justify-content-center "
-                    style="background-image: url(/assets/imagenes/tema/demo/mobiles1.png);"
+                    class="col-12 col-md-6 img-col d-flex align-items-center justify-content-center"
+                    style="background-image: url(/assets/imagenes/tema/demo/mobiles1.png)"
                 >
                     <img src="/assets/imagenes/tema/demo/mobiles1.png" alt="" class="mw-100" />
                 </div>
-                <div class="col-12  col-md-6 text-col d-flex flex-column justify-content-center">
+                <div class="col-12 col-md-6 text-col d-flex flex-column justify-content-center">
                     <div class="text-block">
                         <h6>CELULARES</h6>
                         <h2>iPhone Xs. Bienvenido a las grandes pantallas.</h2>
                         <p class="m-0">
-                            El iPhone Xs se presentó con dos tamaños de pantalla Super Retina, incluida la pantalla más grande en un iPhone
-                            hasta ahora. Face ID aún más rápido. El chip más inteligente y potente en un smartphone. Y un sistema de cámara
-                            dual revolucionario con Control de Profundidad. El iPhone XS tiene todo lo que te gusta del iPhone, llevado al
-                            extremo.
+                            El iPhone Xs se presentó con dos tamaños de pantalla Super Retina, incluida la pantalla más
+                            grande en un iPhone hasta ahora. Face ID aún más rápido. El chip más inteligente y potente
+                            en un smartphone. Y un sistema de cámara dual revolucionario con Control de Profundidad. El
+                            iPhone XS tiene todo lo que te gusta del iPhone, llevado al extremo.
                             <br /><b>¡Consultanos por el tuyo acá!</b>
                         </p>
                     </div>
@@ -345,17 +275,18 @@
         </div>
     </section>
 
-    <section class="franja  bg-deg-1">
+    <section class="franja bg-deg-1">
         <div class="container">
             <div class="row">
-                <div class="col-12  col-md-6 text-col d-flex flex-column justify-content-center">
+                <div class="col-12 col-md-6 text-col d-flex flex-column justify-content-center">
                     <div class="text-block">
                         <h6>SERVICIOS</h6>
                         <h2>Servicios <br />a empresas</h2>
                         <p class="m-0">
-                            Ofrecemos un <b>servicio integral para empresas</b> que consta de <b>visitas programadas</b> donde analizamos
-                            todos los equipos informáticos, reparamos todos los productos necesarios, actualizamos programas y damos
-                            asesoramiento sobre nuevos productos y dispositivos para optimizar el rendimiento de tu negocio.
+                            Ofrecemos un <b>servicio integral para empresas</b> que consta de
+                            <b>visitas programadas</b> donde analizamos todos los equipos informáticos, reparamos todos
+                            los productos necesarios, actualizamos programas y damos asesoramiento sobre nuevos
+                            productos y dispositivos para optimizar el rendimiento de tu negocio.
                         </p>
                     </div>
                     <div>
@@ -369,20 +300,21 @@
         </div>
     </section>
 
-    <section class="franja  bg-deg-3">
+    <section class="franja bg-deg-3">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6 d-flex align-items-center justify-content-center img-col">
                     <img src="/assets/imagenes/tema/demo/laptop2.png" alt="" class="mw-100" />
                 </div>
-                <div class="col-12  col-md-6 text-col d-flex flex-column justify-content-center">
+                <div class="col-12 col-md-6 text-col d-flex flex-column justify-content-center">
                     <div class="text-block">
                         <h6>NOVEDADES</h6>
                         <h2>Tareas y ClassKit</h2>
                         <p class="m-0">
                             Las armas de
-                            <b>Apple</b> para revolucionar el nuevo curso académico 2018. Una de las novedades a las que más tiempo dedicó
-                            Apple en su último evento de educación el pasado mes de marzo, fue una nueva pieza fundamental.
+                            <b>Apple</b> para revolucionar el nuevo curso académico 2018. Una de las novedades a las que
+                            más tiempo dedicó Apple en su último evento de educación el pasado mes de marzo, fue una
+                            nueva pieza fundamental.
                         </p>
                     </div>
                     <div>
@@ -393,15 +325,13 @@
         </div>
     </section>
 
-    <section class="franja contactForm  bg-deg-4">
+    <section class="franja contactForm bg-deg-4">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-6 col-lg-5 col-xl-5 text-col">
                     <div class="text-block">
                         <h2>Contactanos</h2>
-                        <p>
-                            Déjanos tu consulta para que nuestros especialistas puedan comunicarse a la brevedad.
-                        </p>
+                        <p>Déjanos tu consulta para que nuestros especialistas puedan comunicarse a la brevedad.</p>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-7 col-xl-7">
@@ -461,17 +391,21 @@
                                     ></textarea>
                                     <p class="help-block text-danger"></p>
                                 </div>
-                                <button type="submit" id="send" class="btn btn-brillante1 btn-wider consulta-contacto-boton-enviar">
+                                <button
+                                    type="submit"
+                                    id="send"
+                                    class="btn btn-brillante1 btn-wider consulta-contacto-boton-enviar"
+                                >
                                     Enviar
                                 </button>
                                 <br /><br />
-                                <div class="consulta-contacto-enviando" style="display: none;">
+                                <div class="consulta-contacto-enviando" style="display: none">
                                     <i class="fa fa-spinner fa-spin"></i> Enviando mensaje
                                 </div>
-                                <div class="alert alert-success consulta-contacto-exito" style="display: none;">
+                                <div class="alert alert-success consulta-contacto-exito" style="display: none">
                                     Mensaje enviado con éxito
                                 </div>
-                                <div class="alert alert-danger consulta-contacto-error" style="display: none;">
+                                <div class="alert alert-danger consulta-contacto-error" style="display: none">
                                     El mensaje no pudo ser enviado, por favor, intentalo nuevamente
                                 </div>
                             </div>
