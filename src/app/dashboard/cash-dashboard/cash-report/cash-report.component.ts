@@ -26,7 +26,8 @@ export class CashReportComponent implements OnInit, OnDestroy {
     @ViewChild('cashGrid', { static: false }) cashGrid: WjFlexGrid;
 
     columns: any[] = [
-        { header: 'ID', binding: 'id', width: 60 },
+        { header: 'ID', binding: 'id', width: 50 },
+        { header: 'Sucursal', binding: 'officeBranch.name', width: 80 },
         { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
         { header: 'Subconcepto', binding: 'concept.description', width: '*' },
         { header: 'Nota', binding: 'note', width: 150 },
@@ -34,8 +35,8 @@ export class CashReportComponent implements OnInit, OnDestroy {
         { header: 'Ingreso', binding: 'income', width: 80 },
         { header: 'Egreso', binding: 'expense', width: 80 },
         { header: 'Saldo', binding: 'amount', width: 80 },
-        { header: 'Creador', binding: 'audit.createdBy.userName', width: 80 },
-        { header: 'Fecha y Hora', binding: 'date', width: 120 },
+        { header: 'Creador', binding: 'audit.createdBy.userName', width: 70 },
+        { header: 'Fecha y Hora', binding: 'date', width: 110 },
     ];
 
     constructor(

@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 const repair = require('server/repair/repair.model');
+const officeBranch = require('server/office-branch/office-branch.model');
 
 const user = require('server/users/user.model');
 const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
@@ -75,6 +76,15 @@ CashTransaction.init(
                 key: 'payment_method_id',
             },
             field: 'payment_method_id',
+        },
+        idBranch: {
+            type: Sequelize.SMALLINT,
+            defaultValue: 1, //FIXME: #192 - Remove defaultValue. The officeBranch value must always be passed.
+            references: {
+                model: 'sh_administration_office_branch',
+                key: 'id',
+            },
+            field: 'id_office_branch',
         },
     },
     {
@@ -165,8 +175,14 @@ RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repa
 
 CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'transaction_id' });
 repair.Repair.hasOne(RepairCashTransaction, { as: 'repairCashTransaction', foreignKey: 'repair_id' });
+officeBranch.OfficeBranch.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id_office_branch' });
 
 CashTransaction.belongsTo(transaction.CashTransactionConcept, { as: 'concept', foreignKey: 'transaction_concept_id' });
+CashTransaction.belongsTo(officeBranch.OfficeBranch, {
+    as: 'officeBranch',
+    foreignKey: 'id_office_branch',
+});
+
 transaction.CashTransactionConcept.hasMany(CashTransaction, {
     as: 'transaction',
     foreignKey: 'transaction_concept_id',

@@ -91,7 +91,11 @@
                         (initialized)="cashDashboardService.initializeGrid(cashGrid)"
                     >
                         <wj-flex-grid-filter
-                            [filterColumns]="['paymentMethod.description']"
+                            [filterColumns]="[
+                                'paymentMethod.description',
+                                'officeBranch.name',
+                                'audit.createdBy.userName'
+                            ]"
                             [showSortButtons]="false"
                         ></wj-flex-grid-filter>
                         <wj-flex-grid-column
