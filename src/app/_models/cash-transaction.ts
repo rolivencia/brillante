@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import { Audit } from '@app/_models/audit';
 import { Moment } from 'moment';
+import { OfficeBranch } from '@app/_models/office-branch';
 
 export class CashTransaction {
     public id: number;
@@ -12,6 +13,7 @@ export class CashTransaction {
     public operation?: Operation;
     public paymentMethod: PaymentMethod;
     public payments?: (number & PaymentMethod)[]; // TODO: Create the "Payment" class
+    public officeBranch: OfficeBranch;
 
     constructor(
         id?: number,
@@ -22,7 +24,8 @@ export class CashTransaction {
         audit?: Audit,
         operation?: Operation,
         paymentMethod?: PaymentMethod,
-        payments?: (number & PaymentMethod)[]
+        payments?: (number & PaymentMethod)[],
+        officeBranch?: OfficeBranch
     ) {
         this.id = id;
         this.concept = concept ? concept : new TransactionConcept();
@@ -32,6 +35,7 @@ export class CashTransaction {
         this.operation = operation ? operation : new Operation();
         this.paymentMethod = paymentMethod ? paymentMethod : new PaymentMethod();
         this.payments = payments ? payments : [];
+        this.officeBranch = officeBranch ? officeBranch : new OfficeBranch();
     }
 }
 

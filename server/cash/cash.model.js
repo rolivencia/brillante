@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 const repair = require('server/repair/repair.model');
-const administrationBranch = require('server/administration-branch/administration-branch.model');
+const officeBranch = require('server/office-branch/office-branch.model');
 
 const user = require('server/users/user.model');
 const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
@@ -81,10 +81,10 @@ CashTransaction.init(
             type: Sequelize.SMALLINT,
             allowNull: false,
             references: {
-                model: 'sh_administration_branch',
+                model: 'sh_administration_office_branch',
                 key: 'id',
             },
-            field: 'id_branch',
+            field: 'id_office_branch',
         },
     },
     {
@@ -175,12 +175,12 @@ RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repa
 
 CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'transaction_id' });
 repair.Repair.hasOne(RepairCashTransaction, { as: 'repairCashTransaction', foreignKey: 'repair_id' });
-administrationBranch.AdministrationBranch.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id_branch' });
+officeBranch.OfficeBranch.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id_office_branch' });
 
 CashTransaction.belongsTo(transaction.CashTransactionConcept, { as: 'concept', foreignKey: 'transaction_concept_id' });
-CashTransaction.belongsTo(administrationBranch.AdministrationBranch, {
-    as: 'administrationBranch',
-    foreignKey: 'id_branch',
+CashTransaction.belongsTo(officeBranch.OfficeBranch, {
+    as: 'officeBranch',
+    foreignKey: 'id_office_branch',
 });
 
 transaction.CashTransactionConcept.hasMany(CashTransaction, {

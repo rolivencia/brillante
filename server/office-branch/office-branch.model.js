@@ -2,9 +2,9 @@ const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
-class AdministrationBranch extends Sequelize.Model {}
+class OfficeBranch extends Sequelize.Model {}
 
-AdministrationBranch.init(
+OfficeBranch.init(
     {
         id: {
             type: Sequelize.INTEGER,
@@ -26,8 +26,8 @@ AdministrationBranch.init(
     {
         timestamps: false,
         sequelize: sequelizeConnector,
-        modelName: 'sh_administration_branch',
+        modelName: 'sh_administration_office_branch',
     }
 );
 
-module.exports = { AdministrationBranch };
+module.exports = { OfficeBranch };
