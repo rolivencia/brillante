@@ -13,7 +13,7 @@ export class CashTransaction {
     public operation?: Operation;
     public paymentMethod: PaymentMethod;
     public payments?: (number & PaymentMethod)[]; // TODO: Create the "Payment" class
-    public officeBranch: OfficeBranch;
+    public officeBranch?: OfficeBranch;
 
     constructor(
         id?: number,

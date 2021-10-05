@@ -79,7 +79,7 @@ CashTransaction.init(
         },
         idBranch: {
             type: Sequelize.SMALLINT,
-            allowNull: false,
+            defaultValue: 1, //FIXME: #192 - Remove defaultValue. The officeBranch value must always be passed.
             references: {
                 model: 'sh_administration_office_branch',
                 key: 'id',
