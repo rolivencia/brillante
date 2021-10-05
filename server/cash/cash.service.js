@@ -1,6 +1,7 @@
 const cash = require('server/cash/cash.model');
 const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
 const user = require('server/users/user.model');
+const administrationBranch = require('server/administration-branch/administration-branch.model');
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -195,6 +196,12 @@ function cashGetDefinition() {
             model: cash.PaymentMethod,
             required: true,
             attributes: ['id', 'description'],
+        },
+        {
+            as: 'administrationBranch',
+            model: administrationBranch.AdministrationBranch,
+            required: true,
+            attributes: ['id', 'name', 'address'],
         },
         {
             as: 'user',
