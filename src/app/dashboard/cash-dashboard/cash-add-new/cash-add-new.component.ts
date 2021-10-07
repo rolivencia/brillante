@@ -59,8 +59,7 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     public async create() {
         const result = await this.cashFormHandlerService.create();
         if (result) {
-            this.cashDashboardService.date = moment();
-            this.cashDashboardService.load(this.cashDashboardService.date);
+            await this.cashDashboardService.refreshGrid();
             this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
         }
     }

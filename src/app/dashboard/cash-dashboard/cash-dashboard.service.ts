@@ -13,6 +13,8 @@ import { AuthenticationService } from '@app/_services';
 import { EUSerRoles } from '@app/_enums/user.enum';
 import { Role } from '@app/_models';
 import { decimalsSeparator } from '@app/_functions/numeric-utils';
+import { OfficeBranch } from '@app/_models/office-branch';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 @Injectable({
     providedIn: 'root',
@@ -56,6 +58,7 @@ export class CashDashboardService {
         public authenticationService: AuthenticationService,
         public cashService: CashService,
         private cashFormHandler: CashFormHandlerService,
+        private officeBranchService: OfficeBranchService,
         private progressLoaderService: ProgressLoaderService
     ) {}
 
@@ -93,11 +96,16 @@ export class CashDashboardService {
         // TODO: Replace for new NodeJS API
         const result = await this.cashService.openCashRegister(this.authenticationService.currentUserValue).toPromise();
         if (result && result.id) {
-            this.load(moment());
+            this.loadData(moment());
         }
     }
 
-    async load(from: Moment, to?: Moment, filterConcepts: any[] = []) {
+    // FIXME: Restructure this to get rid of coupling. Think of two methods: one for single date, other for starting and ending
+    async refreshGrid() {
+        await this.loadData(moment(), moment(), [], this.officeBranchService.current.value);
+    }
+
+    async loadData(from: Moment, to?: Moment, filterConcepts: any[] = [], officeBranch: OfficeBranch = null) {
         // TODO: Return transactions to display them where desired
         this.loading.next(true);
         this.progressLoaderService.showWithOverlay();
@@ -105,7 +113,7 @@ export class CashDashboardService {
         const dateFrom = moment(from);
         const dateTo = to ? moment(to) : moment(from);
 
-        const transactions = await this.cashService.getAll(dateFrom, dateTo).toPromise();
+        const transactions = await this.cashService.getAll(dateFrom, dateTo, officeBranch).toPromise();
         this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
 
         if (filterConcepts.length) {

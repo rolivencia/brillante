@@ -1,9 +1,9 @@
 ﻿import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService, AuthenticationService, UserService } from '@app/_services';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { User } from '@app/_models';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 @Component({
     selector: 'app-main-dashboard',
@@ -11,46 +11,25 @@ import { User } from '@app/_models';
     styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-    currentUser: User;
-    currentUserSubscription: Subscription;
-    users: User[] = [];
+    public currentUser: User;
+    public currentUserSubscription: Subscription;
 
     constructor(
         private alertService: AlertService,
         private authenticationService: AuthenticationService,
+        public officeBranchService: OfficeBranchService,
         private route: ActivatedRoute,
-        private router: Router,
-        private userService: UserService
+        private router: Router
     ) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe((user) => {
             this.currentUser = user;
         });
     }
 
-    ngOnInit() {
-        this.loadAllUsers();
-    }
+    ngOnInit() {}
 
     ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
-    }
-
-    deleteUser(id: number) {
-        this.userService
-            .delete(id)
-            .pipe(first())
-            .subscribe(() => {
-                this.loadAllUsers();
-            });
-    }
-
-    private loadAllUsers() {
-        this.userService
-            .getAll()
-            .pipe(first())
-            .subscribe((users) => {
-                this.users = users;
-            });
     }
 
     goTo(route: string) {

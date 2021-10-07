@@ -18,8 +18,13 @@
         <ng-container *ngIf="currentUser">
             <button type="button" class="btn btn-outline-secondary rounded-0">
                 <span
-                    >Usuario actual: <strong>{{ welcomeName }}</strong></span
-                >
+                    >Usuario actual:
+                    <strong>{{ welcomeName }}</strong>
+                    | Sucursal asignada:
+                    <strong>{{
+                        officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
+                    }}</strong>
+                </span>
             </button>
         </ng-container>
 

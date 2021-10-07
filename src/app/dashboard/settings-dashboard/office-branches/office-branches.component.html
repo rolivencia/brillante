@@ -1,0 +1,31 @@
+<div class="card">
+    <div class="card-header"><h5>Configuración: Sucursales</h5></div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <section>
+                    <h6>Sucursal asignada:</h6>
+                    <label>{{
+                        officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
+                    }}</label>
+                </section>
+            </div>
+            <div class="col-12 col-md-6">
+                <section>
+                    <h6>Elegir sucursal actual:</h6>
+                    <wj-combo-box
+                        class="form-control form-control-sm p-0"
+                        [(ngModel)]="selectedBranch"
+                        [isEditable]="false"
+                        [itemsSource]="officeBranches"
+                        [displayMemberPath]="'name'"
+                        [selectedIndex]="selectedBranch.id"
+                        [selectedItem]="selectedBranch"
+                    >
+                    </wj-combo-box>
+                    <button class="mt-2 btn btn-primary" (click)="assign(selectedBranch)">Asignar Sucursal</button>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

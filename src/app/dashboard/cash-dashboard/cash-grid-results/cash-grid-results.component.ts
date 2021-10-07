@@ -15,6 +15,7 @@ import { CashTransaction } from '@app/_models/cash-transaction';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '@app/_services';
 import { EUser } from '@app/_enums/user.enum';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -52,7 +53,8 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     constructor(
         public authenticationService: AuthenticationService,
         public cashDashboardService: CashDashboardService,
-        private changeDetectorRef: ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef,
+        private officeBranchService: OfficeBranchService
     ) {}
 
     ngOnInit(): void {
@@ -99,7 +101,12 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
 
     public refreshGrid(date: DateObject) {
         this.formatDate(date);
-        this.cashDashboardService.load(this.cashDashboardService.date);
+        this.cashDashboardService.loadData(
+            this.cashDashboardService.date,
+            this.cashDashboardService.date,
+            [],
+            this.officeBranchService.current.value
+        );
         this.cashDashboardService.selectedTransaction = null;
     }
 

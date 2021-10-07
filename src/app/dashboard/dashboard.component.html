@@ -32,23 +32,19 @@
 
     <div class="card text-white bg-info mb-3" (click)="goTo('settings-dashboard')">
         <div class="card-body">
-            <h5 class="card-title">⚙️ Configuración</h5>
+            <h5 class="card-title">⚙️Configuración</h5>
             <p class="card-text">Ingresar al menú de Configuración</p>
-        </div>
-        <div class="card-footer bg-danger">
-            <small class="text-white">Módulo a implementar</small>
         </div>
     </div>
 </div>
 
 <hr />
 
-<h3>Usuarios registrados:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{ user.userName }} ({{ user.firstName }} {{ user.lastName }}) - [<label
-            *ngFor="let role of user.roles; index as i"
-            >{{ role.description }} <ng-container *ngIf="i !== user.roles.length - 1">,</ng-container></label
-        >]
-    </li>
-</ul>
+<ng-container *ngIf="!officeBranchService.current.value">
+    <div class="alert alert-danger">
+        <h6 class="m-0 px-0">
+            Para poder hacer uso de las características del sistema, previamente un administrador o encargado de negocio
+            debe asignar una sucursal en la sección "Gestión de Sucursales" de la ⚙ Configuración.
+        </h6>
+    </div>
+</ng-container>

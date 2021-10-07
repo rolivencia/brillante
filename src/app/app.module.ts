@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+﻿import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 // used to create fake backend
@@ -15,6 +15,7 @@ import { ProgressLoaderService } from '@app/_components/progress-loader/progress
 import { LoginModule } from '@app/login/login.module';
 import { RegisterModule } from '@app/register/register.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 @NgModule({
     imports: [
@@ -30,8 +31,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ],
     declarations: [AppComponent, FooterComponent, MainHeaderComponent, DashboardComponent],
     providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (officeBranchService: OfficeBranchService) => () => officeBranchService.load(),
+            deps: [OfficeBranchService],
+            multi: true,
+        },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        OfficeBranchService,
         ProgressLoaderService,
     ],
     bootstrap: [AppComponent],

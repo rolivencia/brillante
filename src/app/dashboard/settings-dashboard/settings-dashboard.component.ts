@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-settings-dashboard',
@@ -6,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./settings-dashboard.component.scss'],
 })
 export class SettingsDashboardComponent implements OnInit {
-    constructor() {}
+    constructor(private router: Router) {}
 
     ngOnInit(): void {}
+
+    public goToOfficeBranches() {
+        this.router.navigate(['settings-dashboard/office-branches']).then((result) => console.log(result));
+    }
+
+    public goToUserManagement() {
+        this.router.navigate(['settings-dashboard/user-management']).then((result) => console.log(result));
+    }
 }
