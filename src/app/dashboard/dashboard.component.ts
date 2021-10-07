@@ -3,6 +3,7 @@ import { AlertService, AuthenticationService, UserService } from '@app/_services
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '@app/_models';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 @Component({
     selector: 'app-main-dashboard',
@@ -16,9 +17,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     constructor(
         private alertService: AlertService,
         private authenticationService: AuthenticationService,
+        public officeBranchService: OfficeBranchService,
         private route: ActivatedRoute,
-        private router: Router,
-        private userService: UserService
+        private router: Router
     ) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe((user) => {
             this.currentUser = user;

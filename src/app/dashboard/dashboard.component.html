@@ -39,3 +39,12 @@
 </div>
 
 <hr />
+
+<ng-container *ngIf="!officeBranchService.current.value">
+    <div class="alert alert-danger text-center">
+        <h6 class="m-0 p-0">
+            Para poder hacer uso de las características del sistema, previamente un administrador o encargado de negocio
+            debe asignar una sucursal.
+        </h6>
+    </div>
+</ng-container>
