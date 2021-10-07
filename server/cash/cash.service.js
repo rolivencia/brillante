@@ -64,7 +64,8 @@ async function getAll({ startDate, endDate, idBranch }) {
     });
 }
 
-async function openCashRegister({ user }) {
+//FIXME: Update to support office branch
+async function openCashRegister({ user, branch }) {
     return cash.CashTransaction.create({
         amount: 0,
         note: 'Apertura de Caja',
@@ -72,10 +73,12 @@ async function openCashRegister({ user }) {
         transactionConceptId: 49,
         createdBy: user.id,
         paymentMethodId: 1,
+        idBranch: branch.id,
     });
 }
 
-async function closeCashRegister({ user }) {
+//FIXME: Update to support office branch
+async function closeCashRegister({ user, branch }) {
     return cash.CashTransaction.create({
         amount: 0,
         note: 'Apertura de Caja',
@@ -83,6 +86,7 @@ async function closeCashRegister({ user }) {
         transactionConceptId: 163,
         createdBy: user.id,
         paymentMethodId: 1,
+        idBranch: branch.id,
     });
 }
 
@@ -104,7 +108,7 @@ async function create(cashTransactions) {
                         transactionConceptId: cashTransaction.concept.id,
                         createdBy: cashTransaction.user.id, //TODO: Issue #21 - Assign transactions to creator user
                         paymentMethodId: cashTransaction.payments[0].method.id,
-                        idBranch: cashTransaction.idBranch,
+                        idBranch: cashTransactions.branch.id,
                     });
                     returnedData.push(tranaux);
                 }

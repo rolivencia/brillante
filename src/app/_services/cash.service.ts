@@ -9,6 +9,7 @@ import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
 import { CashTransaction, PaymentMethod, TransactionConcept } from '@app/_models/cash-transaction';
 import { OfficeBranch } from '@app/_models/office-branch';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -16,7 +17,11 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root',
 })
 export class CashService {
-    constructor(private authenticationService: AuthenticationService, private http: HttpClient) {}
+    constructor(
+        private authenticationService: AuthenticationService,
+        private http: HttpClient,
+        private officeBranchService: OfficeBranchService
+    ) {}
 
     public getAll(dateFrom: Moment, dateTo: Moment, branch?: OfficeBranch): Observable<any> {
         let params = new HttpParams()
@@ -49,19 +54,28 @@ export class CashService {
     }
 
     public create(transaction: CashTransaction, user: User): Observable<CashTransaction> {
+        const currentBranch = this.officeBranchService.current.value;
         return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/create`, {
             ...transaction,
             user,
+            branch: currentBranch,
         });
     }
 
     public openCashRegister(user: User) {
-        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, { user: user });
+        const currentBranch = this.officeBranchService.current.value;
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/open`, {
+            user: user,
+            branch: currentBranch,
+        });
     }
 
     // TODO: Finish implementation (add CronJob + Manual)
     public closeCashRegister() {
-        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/close`, {});
+        const currentBranch = this.officeBranchService.current.value;
+        return this.http.post<CashTransaction>(`${environment.apiUrl}/cash/close`, {
+            branch: currentBranch,
+        });
     }
 
     public update(transaction): Observable<[number]> {
