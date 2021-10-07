@@ -46,7 +46,7 @@
                     seleccionar transacciones de la grilla.
                 </div>
                 <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
-                    No hay transacciones registradas para esta fecha.
+                    No hay transacciones registradas en la sucursal asignada para esta fecha.
                     <ng-container *ngIf="cashDashboardService.isToday()"
                         >Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones para el día de
                         hoy y visualizarlas.

@@ -73,7 +73,7 @@ export class CashReportComponent implements OnInit, OnDestroy {
     refreshGrid(fromNgb: DateObject, toNgb: DateObject) {
         const from = formatDate(fromNgb);
         const to = formatDate(toNgb);
-        this.cashDashboardService.load(from, to, [49, 163]);
+        this.cashDashboardService.loadData(from, to, [49, 163]);
         this.cashDashboardService.selectedTransaction = null;
     }
 

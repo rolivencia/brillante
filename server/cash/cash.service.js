@@ -41,16 +41,18 @@ async function getById(id) {
     });
 }
 
-async function getAll({ startDate, endDate }) {
+async function getAll({ startDate, endDate, idBranch }) {
+    const whereCondition = { date: { [Op.between]: [startDate, endDate] }, enabled: 1, deleted: 0 };
+
+    if (idBranch) {
+        whereCondition['idBranch'] = parseInt(idBranch, 10);
+    }
+
     const transactionsDAO = await cash.CashTransaction.findAll({
         //TODO: Reference user table with 'createdBy' attribute
         attributes: ['id', 'amount', 'date', 'note', 'createdBy', 'deleted', 'enabled'],
         include: cashGetDefinition(),
-        where: {
-            date: { [Op.between]: [startDate, endDate] },
-            enabled: 1,
-            deleted: 0,
-        },
+        where: whereCondition,
     });
 
     return new Promise((resolve, reject) => {
@@ -102,6 +104,7 @@ async function create(cashTransactions) {
                         transactionConceptId: cashTransaction.concept.id,
                         createdBy: cashTransaction.user.id, //TODO: Issue #21 - Assign transactions to creator user
                         paymentMethodId: cashTransaction.payments[0].method.id,
+                        idBranch: cashTransaction.idBranch,
                     });
                     returnedData.push(tranaux);
                 }

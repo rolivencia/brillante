@@ -8,6 +8,7 @@ import { User } from '@app/_models';
 import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
 import { CashTransaction, PaymentMethod, TransactionConcept } from '@app/_models/cash-transaction';
+import { OfficeBranch } from '@app/_models/office-branch';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -17,10 +18,15 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
 export class CashService {
     constructor(private authenticationService: AuthenticationService, private http: HttpClient) {}
 
-    public getAll(dateFrom: Moment, dateTo: Moment): Observable<any> {
-        const params = new HttpParams()
+    public getAll(dateFrom: Moment, dateTo: Moment, branch?: OfficeBranch): Observable<any> {
+        let params = new HttpParams()
             .set('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
             .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
+
+        if (branch) {
+            params = params.append('idBranch', `${branch.id}`);
+        }
+
         return this.http
             .get<CashTransaction[]>(`${environment.apiUrl}/cash`, { headers: headers, params: params })
             .pipe(
