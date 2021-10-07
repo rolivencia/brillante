@@ -70,6 +70,13 @@ export class MainHeaderComponent implements OnInit {
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
         },
+        {
+            label: 'Configuración',
+            route: '/settings-dashboard',
+            enabled: true,
+            visible: true,
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
+        },
     ];
 
     private _userLinks: NavigationLink[] = [
