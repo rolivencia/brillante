@@ -2,14 +2,10 @@
 import { DashboardComponent } from './dashboard';
 import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
+import { OfficeBranchGuard } from '@app/_guards/office-branch.guard';
+import { AppSettingsGuard } from '@app/_guards/app-settings.guard';
 
-const appRoutes: Routes = [
-    // otherwise redirect to home
-    {
-        path: '',
-        loadChildren: () => import('./landing/home/home.module').then((m) => m.HomeModule),
-    },
-
+const customerRoutes: Routes = [
     {
         path: 'products',
         loadChildren: () => import('./landing/products/products.module').then((m) => m.ProductsModule),
@@ -29,6 +25,15 @@ const appRoutes: Routes = [
         path: 'repairs',
         loadChildren: () => import('./landing/repairs/repairs.module').then((m) => m.RepairsModule),
     },
+];
+const appRoutes: Routes = [
+    // otherwise redirect to home
+    {
+        path: '',
+        loadChildren: () => import('./landing/home/home.module').then((m) => m.HomeModule),
+    },
+
+    ...customerRoutes,
 
     {
         path: 'dashboard',
@@ -39,31 +44,31 @@ const appRoutes: Routes = [
         path: 'repair-dashboard',
         loadChildren: () =>
             import('./dashboard/repair-dashboard/repair-dashboard.module').then((m) => m.RepairDashboardModule),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OfficeBranchGuard],
     },
     {
         path: 'client-dashboard',
         loadChildren: () =>
             import('./dashboard/client-dashboard/client-dashboard.module').then((m) => m.ClientDashboardModule),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OfficeBranchGuard],
     },
     {
         path: 'cash-dashboard',
         loadChildren: () =>
             import('./dashboard/cash-dashboard/cash-dashboard.module').then((m) => m.CashDashboardModule),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OfficeBranchGuard],
     },
     {
         path: 'products-list-dashboard',
         loadChildren: () =>
             import('./dashboard/products-dashboard/products-dashboard.module').then((m) => m.ProductsDashboardModule),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, OfficeBranchGuard],
     },
     {
         path: 'settings-dashboard',
         loadChildren: () =>
             import('./dashboard/settings-dashboard/settings-dashboard.module').then((m) => m.SettingsDashboardModule),
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, AppSettingsGuard],
     },
 
     { path: 'login', component: LoginComponent },
