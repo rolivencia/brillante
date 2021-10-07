@@ -11,6 +11,10 @@ const routes: Routes = [
         path: 'office-branches',
         loadChildren: () => import('./office-branches/office-branches.module').then((m) => m.OfficeBranchesModule),
     },
+    {
+        path: 'user-management',
+        loadChildren: () => import('./user-management/user-management.module').then((m) => m.UserManagementModule),
+    },
 ];
 
 @NgModule({

@@ -14,4 +14,8 @@ export class SettingsDashboardComponent implements OnInit {
     public goToOfficeBranches() {
         this.router.navigate(['settings-dashboard/office-branches']).then((result) => console.log(result));
     }
+
+    public goToUserManagement() {
+        this.router.navigate(['settings-dashboard/user-management']).then((result) => console.log(result));
+    }
 }

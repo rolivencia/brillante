@@ -1,7 +1,6 @@
 ﻿import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService, AuthenticationService, UserService } from '@app/_services';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { User } from '@app/_models';
 
@@ -11,9 +10,8 @@ import { User } from '@app/_models';
     styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-    currentUser: User;
-    currentUserSubscription: Subscription;
-    users: User[] = [];
+    public currentUser: User;
+    public currentUserSubscription: Subscription;
 
     constructor(
         private alertService: AlertService,
@@ -27,30 +25,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit() {
-        this.loadAllUsers();
-    }
+    ngOnInit() {}
 
     ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
-    }
-
-    deleteUser(id: number) {
-        this.userService
-            .delete(id)
-            .pipe(first())
-            .subscribe(() => {
-                this.loadAllUsers();
-            });
-    }
-
-    private loadAllUsers() {
-        this.userService
-            .getAll()
-            .pipe(first())
-            .subscribe((users) => {
-                this.users = users;
-            });
     }
 
     goTo(route: string) {
