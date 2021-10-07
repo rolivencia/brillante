@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services';
 import { EUser } from '@app/_enums/user.enum';
 import { faBars, faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { OfficeBranchService } from '@app/_services/office-branch.service';
 
 export class NavigationLink {
     label: string;
@@ -94,7 +95,11 @@ export class MainHeaderComponent implements OnInit {
         { label: 'Contacto', route: 'contact', enabled: true, visible: true },
     ];
 
-    constructor(private router: Router, private authenticationService: AuthenticationService) {
+    constructor(
+        private router: Router,
+        private authenticationService: AuthenticationService,
+        public officeBranchService: OfficeBranchService
+    ) {
         this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
 

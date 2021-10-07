@@ -50,5 +50,6 @@ export class OfficeBranchService {
      */
     public fetch(): Observable<OfficeBranch[]> {
         return this.http.get<OfficeBranch[]>(`${environment.apiUrl}/office-branch/getAll`);
+        // return of([{ id: 1, name: '25 de Mayo', address: '25 de Mayo' }]);
     }
 }
