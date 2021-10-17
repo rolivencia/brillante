@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import * as wjcGridXlsx from '@grapecity/wijmo.grid.xlsx';
 import { CashDashboardService, formatDate } from '@app/dashboard/cash-dashboard/cash-dashboard.service';
-import { CashReportService } from '@app/dashboard/cash-dashboard/cash-report/cash-report.service';
+import { CashReportService } from '@app/dashboard/reports-dashboard/cash-report/cash-report.service';
 import { CellType } from '@grapecity/wijmo.grid';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateObject } from '@app/_models/date-object';
