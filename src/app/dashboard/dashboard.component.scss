@@ -1,5 +1,14 @@
-.card-deck {
-  .card:not(.disabled) {
-    cursor: pointer;
-  }
+.card {
+    @media (max-width: 768px) {
+        width: 320px;
+    }
+    @media (min-width: 769px) {
+        width: 350px;
+    }
+    &:not(last-child) {
+        margin-right: 16px;
+    }
+    &:not(.disabled) {
+        cursor: pointer;
+    }
 }

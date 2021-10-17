@@ -1,25 +1,22 @@
-﻿<div class="card-deck">
+﻿<div class="d-flex flex-wrap justify-content-center">
     <div class="card text-white bg-primary mb-3" (click)="goToRepair()">
         <div class="card-body">
             <h5 class="card-title">🔧 Gestión de Reparaciones</h5>
             <p class="card-text">Ingresar al menú de gestión de reparaciones</p>
         </div>
     </div>
-
     <div class="card text-white bg-dark mb-3" (click)="goTo('client-dashboard')">
         <div class="card-body">
             <h5 class="card-title">✋🏻 Gestión de Clientes</h5>
             <p class="card-text">Ingresar al menú de gestión de clientes</p>
         </div>
     </div>
-
     <div class="card text-white bg-success mb-3" (click)="goToCash()">
         <div class="card-body">
             <h5 class="card-title">💵 Gestión de Caja</h5>
             <p class="card-text">Ingresar al menú de gestión de caja</p>
         </div>
     </div>
-
     <div class="card text-white bg-info mb-3" (click)="goTo('products-list-dashboard')">
         <div class="card-body">
             <h5 class="card-title">📱 Gestión de Stock</h5>
@@ -29,15 +26,20 @@
             <small class="text-white">Módulo a implementar</small>
         </div>
     </div>
-
     <div class="card text-white bg-info mb-3" (click)="goTo('settings-dashboard')">
         <div class="card-body">
             <h5 class="card-title">⚙️Configuración</h5>
             <p class="card-text">Ingresar al menú de Configuración</p>
         </div>
     </div>
-</div>
 
+    <div class="card bg-secondary mb-3" (click)="goTo('reports-dashboard')">
+        <div class="card-body">
+            <h5 class="card-title">📈 Reportes</h5>
+            <p class="card-text">Ingresar al menú de Reportes</p>
+        </div>
+    </div>
+</div>
 <hr />
 
 <ng-container *ngIf="!officeBranchService.current.value">
