@@ -29,7 +29,7 @@ import { OfficeBranchService } from '@app/_services/office-branch.service';
         ProgressLoaderModule,
         FontAwesomeModule,
     ],
-    declarations: [AppComponent, FooterComponent, MainHeaderComponent, DashboardComponent],
+    declarations: [AppComponent, MainHeaderComponent, DashboardComponent],
     providers: [
         {
             provide: APP_INITIALIZER,

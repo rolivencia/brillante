@@ -6,36 +6,11 @@ import { OfficeBranchGuard } from '@app/_guards/office-branch.guard';
 import { AppSettingsGuard } from '@app/_guards/app-settings.guard';
 import { ReportsGuard } from '@app/dashboard/reports-dashboard/reports.guard';
 
-const customerRoutes: Routes = [
-    {
-        path: 'products',
-        loadChildren: () => import('./customer-view/products/products.module').then((m) => m.ProductsModule),
-    },
-
-    {
-        path: 'enterprise',
-        loadChildren: () => import('./customer-view/enterprise/enterprise.module').then((m) => m.EnterpriseModule),
-    },
-
-    {
-        path: 'contact',
-        loadChildren: () => import('./customer-view/contact/contact.module').then((m) => m.ContactModule),
-    },
-
-    {
-        path: 'repairs',
-        loadChildren: () => import('./customer-view/repairs/repairs.module').then((m) => m.RepairsModule),
-    },
-];
 const appRoutes: Routes = [
-    // otherwise redirect to home
     {
         path: '',
-        loadChildren: () => import('./customer-view/home/home.module').then((m) => m.HomeModule),
+        loadChildren: () => import('./customer-view/customer-view.module').then((m) => m.CustomerViewModule),
     },
-
-    ...customerRoutes,
-
     {
         path: 'dashboard',
         component: DashboardComponent,
@@ -80,7 +55,7 @@ const appRoutes: Routes = [
 
     { path: 'login', component: LoginComponent },
 
-    { path: '**', redirectTo: '' },
+    { path: '**', redirectTo: 'home' },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
