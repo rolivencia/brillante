@@ -4,6 +4,7 @@ import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 import { OfficeBranchGuard } from '@app/_guards/office-branch.guard';
 import { AppSettingsGuard } from '@app/_guards/app-settings.guard';
+import { ReportsGuard } from '@app/dashboard/reports-dashboard/reports.guard';
 
 const customerRoutes: Routes = [
     {
@@ -69,6 +70,12 @@ const appRoutes: Routes = [
         loadChildren: () =>
             import('./dashboard/settings-dashboard/settings-dashboard.module').then((m) => m.SettingsDashboardModule),
         canActivate: [AuthGuard, AppSettingsGuard],
+    },
+    {
+        path: 'reports-dashboard',
+        loadChildren: () =>
+            import('./dashboard/reports-dashboard/reports-dashboard.module').then((m) => m.ReportsDashboardModule),
+        canActivate: [AuthGuard, ReportsGuard],
     },
 
     { path: 'login', component: LoginComponent },

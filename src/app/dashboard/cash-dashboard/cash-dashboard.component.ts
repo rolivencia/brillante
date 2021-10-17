@@ -15,7 +15,6 @@ import { Role } from '@app/_models';
 export class CashDashboardComponent implements OnInit {
     editMode: boolean;
     displayManagementHeader: boolean = false;
-    displayReportsButton: boolean = false;
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -40,7 +39,6 @@ export class CashDashboardComponent implements OnInit {
 
         this.authenticationService.currentUser.subscribe((user) => {
             this.displayManagementHeader = hasRoles(user.roles, [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK]);
-            this.displayReportsButton = hasRoles(user.roles, [EUser.ADMIN, EUser.OWNER]);
         });
     }
 

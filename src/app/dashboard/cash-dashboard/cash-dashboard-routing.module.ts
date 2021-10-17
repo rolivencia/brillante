@@ -42,15 +42,6 @@ const routes: Routes = [
                         outlet: 'right',
                     },
                     {
-                        path: 'report',
-                        loadChildren: () => import('./cash-report/cash-report.module').then((m) => m.CashReportModule),
-                        resolve: {
-                            concepts: CashDashboardResolverService,
-                        },
-                        canActivate: [CashRolesGuard],
-                        outlet: 'top',
-                    },
-                    {
                         path: 'categories',
                         loadChildren: () =>
                             import('./cash-transaction-concepts/cash-transaction-concepts.module').then(
