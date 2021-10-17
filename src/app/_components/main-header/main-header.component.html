@@ -1,4 +1,4 @@
-<section id="main-header" class="container">
+<section id="main-header" class="container-fluid">
     <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
         <div class="brand-container">
             <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
@@ -7,6 +7,21 @@
             <a class="navbar-brand" href="">
                 <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
             </a>
+        </div>
+
+        <div id="nav-container" class="flex-grow-1">
+            <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-left">
+                <ng-container *ngFor="let route of userLinks">
+                    <li class="nav-item" *ngIf="route.visible">
+                        <a
+                            class="nav-link"
+                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                            [routerLink]="route.route"
+                            >{{ route.label }}</a
+                        >
+                    </li>
+                </ng-container>
+            </ul>
         </div>
 
         <ng-container *ngIf="currentUser">
@@ -62,20 +77,6 @@
 
                 <li>
                     <a [routerLink]="'products/cart'" class="btn btn-default"><fa-icon [icon]="cartIcon"></fa-icon></a>
-                </li>
-            </ng-container>
-        </ul>
-    </nav>
-    <nav class="navbar-light nav-main" id="navigation-menu">
-        <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-between">
-            <ng-container *ngFor="let route of userLinks">
-                <li class="nav-item" *ngIf="route.visible">
-                    <a
-                        class="nav-link"
-                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                        [routerLink]="route.route"
-                        >{{ route.label }}</a
-                    >
                 </li>
             </ng-container>
         </ul>
