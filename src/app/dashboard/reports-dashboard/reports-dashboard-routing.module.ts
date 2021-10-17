@@ -10,7 +10,7 @@ const routes: Routes = [
         component: ReportsDashboardComponent,
     },
     {
-        path: 'report',
+        path: 'cash-report',
         loadChildren: () =>
             import('../reports-dashboard/cash-report/cash-report.module').then((m) => m.CashReportModule),
         resolve: {

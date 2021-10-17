@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-reports-dashboard',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./reports-dashboard.component.scss'],
 })
 export class ReportsDashboardComponent implements OnInit {
-    constructor() {}
+    constructor(private router: Router) {}
 
     ngOnInit(): void {}
+
+    public goToCashReports() {
+        this.router.navigate(['reports-dashboard/cash-report']).then((result) => console.log(result));
+    }
 }
