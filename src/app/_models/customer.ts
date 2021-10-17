@@ -1,6 +1,6 @@
-import { User } from '@app/_models/user';
+import { User } from '@models/user';
 import { Moment } from 'moment';
-import { DateObject } from '@app/_models/date-object';
+import { DateObject } from '@models/date-object';
 
 export class Customer {
     public id?: number;

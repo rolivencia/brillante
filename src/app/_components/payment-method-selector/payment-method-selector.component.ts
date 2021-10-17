@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { PaymentMethodsService } from '@app/_services/payment-methods.service';
-import { PaymentMethod } from '@app/_models/cash-transaction';
+import { PaymentMethodsService } from '@services/payment-methods.service';
+import { PaymentMethod } from '@models/cash-transaction';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as wjInput from '@grapecity/wijmo.angular2.input';
 

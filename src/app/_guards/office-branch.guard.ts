@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { OfficeBranchService } from '@app/_services/office-branch.service';
+import { OfficeBranchService } from '@services/office-branch.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 

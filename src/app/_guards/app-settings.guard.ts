@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthenticationService, hasRoles } from '@app/_services';
-import { EUser } from '@app/_enums/user.enum';
+import { EUser } from '@enums/user.enum';
 import { switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService, hasRoles } from '@services/authentication.service';
 
 @Injectable({
     providedIn: 'root',

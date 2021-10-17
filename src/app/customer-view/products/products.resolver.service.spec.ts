@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ProductsResolverService } from '@app/customer-view/products/products.resolver.service';
+import { ProductsResolverService } from '@customer-view/products/products.resolver.service';
 
 describe('Products.ResolverService', () => {
     let service: ProductsResolverService;

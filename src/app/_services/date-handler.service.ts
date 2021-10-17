@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DateObject } from '@app/_models/date-object';
+import { DateObject } from '@models/date-object';
 import { Moment } from 'moment';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class DateHandlerService {
     constructor() {}
@@ -12,7 +12,7 @@ export class DateHandlerService {
         return {
             year: momentDate.get('year'),
             month: momentDate.get('month') + 1,
-            day: momentDate.get('date')
+            day: momentDate.get('date'),
         };
     }
 }

@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
-import { Customer } from '@app/_models/customer';
-import { Audit } from '@app/_models/audit';
+import { Customer } from '@models/customer';
+import { Audit } from '@models/audit';
 
 export class Repair {
     public id: number;

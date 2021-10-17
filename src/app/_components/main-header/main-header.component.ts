@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@app/_models';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@app/_services';
-import { EUser } from '@app/_enums/user.enum';
 import { faBars, faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { OfficeBranchService } from '@app/_services/office-branch.service';
+import { OfficeBranchService } from '@services/office-branch.service';
+import { User } from '@models/user';
+import { EUser } from '@enums/user.enum';
+import { AuthenticationService } from '@services/authentication.service';
 
 export class NavigationLink {
     label: string;

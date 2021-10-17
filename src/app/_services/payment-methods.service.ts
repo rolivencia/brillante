@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PaymentMethod } from '@app/_models/cash-transaction';
+import { PaymentMethod } from '@models/cash-transaction';
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';

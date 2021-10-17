@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RepairFormHandlerService } from '@app/dashboard/repair-dashboard/repair-form-handler.service';
-import { RepairService } from '@app/_services/repair.service';
+import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
+import { RepairService } from '@services/repair.service';
 import { ControlContainer, FormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
 

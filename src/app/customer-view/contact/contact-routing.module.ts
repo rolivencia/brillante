@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContactComponent } from '@app/customer-view/contact/contact.component';
+import { ContactComponent } from '@customer-view/contact/contact.component';
 
 const routes: Routes = [{ path: '', component: ContactComponent, pathMatch: 'full' }];
 

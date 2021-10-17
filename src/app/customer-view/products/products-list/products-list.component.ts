@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '@app/_models/product';
-import { ProductsService } from '@app/customer-view/products/products.service';
+import { Product } from '@models/product';
+import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
-import { decimalsSeparator, replaceDotWithComma } from '@app/_functions/numeric-utils';
 import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { decimalsSeparator, replaceDotWithComma } from '@functions/numeric-utils';
 
 @Component({
     selector: 'app-products-list',

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
-import { toProduct } from '@app/customer-view/products/products.service';
+import { toProduct } from '@customer-view/products/products.service';
 import { HttpClient } from '@angular/common/http';
-import { Category, Manufacturer, Product } from '@app/_models/product';
+import { Category, Manufacturer, Product } from '@models/product';
 
 @Injectable({
     providedIn: 'root',

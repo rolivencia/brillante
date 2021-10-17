@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { ProductsHttpService } from '@app/customer-view/products/products.http.service';
-import { Product } from '@app/_models/product';
+import { ProductsHttpService } from '@customer-view/products/products.http.service';
+import { Product } from '@models/product';
 import { Observable } from 'rxjs';
 
 @Injectable({
