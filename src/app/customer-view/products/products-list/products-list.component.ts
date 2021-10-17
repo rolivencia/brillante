@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '@app/_models/product';
-import { ProductsService } from '@app/landing/products/products.service';
+import { ProductsService } from '@app/customer-view/products/products.service';
 import { Subscription } from 'rxjs';
 import { decimalsSeparator, replaceDotWithComma } from '@app/_functions/numeric-utils';
 import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';

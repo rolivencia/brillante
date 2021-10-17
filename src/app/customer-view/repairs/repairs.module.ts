@@ -4,12 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RepairsRoutingModule } from './repairs-routing.module';
 import { RepairsComponent } from './repairs.component';
 
-
 @NgModule({
-  declarations: [RepairsComponent],
-  imports: [
-    CommonModule,
-    RepairsRoutingModule
-  ]
+    declarations: [RepairsComponent],
+    imports: [CommonModule, RepairsRoutingModule],
 })
-export class RepairsModule { }
+export class RepairsModule {}

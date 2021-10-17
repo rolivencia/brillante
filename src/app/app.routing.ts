@@ -9,29 +9,29 @@ import { ReportsGuard } from '@app/dashboard/reports-dashboard/reports.guard';
 const customerRoutes: Routes = [
     {
         path: 'products',
-        loadChildren: () => import('./landing/products/products.module').then((m) => m.ProductsModule),
+        loadChildren: () => import('./customer-view/products/products.module').then((m) => m.ProductsModule),
     },
 
     {
         path: 'enterprise',
-        loadChildren: () => import('./landing/enterprise/enterprise.module').then((m) => m.EnterpriseModule),
+        loadChildren: () => import('./customer-view/enterprise/enterprise.module').then((m) => m.EnterpriseModule),
     },
 
     {
         path: 'contact',
-        loadChildren: () => import('./landing/contact/contact.module').then((m) => m.ContactModule),
+        loadChildren: () => import('./customer-view/contact/contact.module').then((m) => m.ContactModule),
     },
 
     {
         path: 'repairs',
-        loadChildren: () => import('./landing/repairs/repairs.module').then((m) => m.RepairsModule),
+        loadChildren: () => import('./customer-view/repairs/repairs.module').then((m) => m.RepairsModule),
     },
 ];
 const appRoutes: Routes = [
     // otherwise redirect to home
     {
         path: '',
-        loadChildren: () => import('./landing/home/home.module').then((m) => m.HomeModule),
+        loadChildren: () => import('./customer-view/home/home.module').then((m) => m.HomeModule),
     },
 
     ...customerRoutes,

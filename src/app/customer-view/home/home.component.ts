@@ -4,7 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
     heroImage: OwlOptions = {
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
         items: 1,
         nav: false,
         autoplay: true,
-        autoWidth: true
+        autoWidth: true,
     };
 
     productsCarousel: OwlOptions = {
@@ -26,21 +26,21 @@ export class HomeComponent implements OnInit {
             0: {
                 items: 1,
                 nav: false,
-                stagePadding: 40
+                stagePadding: 40,
             },
             400: {
                 nav: false,
                 items: 1,
-                margin: 10
+                margin: 10,
             },
             768: {
                 nav: true,
-                items: 3
+                items: 3,
             },
             1000: {
-                items: 3
-            }
-        }
+                items: 3,
+            },
+        },
     };
 
     constructor() {}

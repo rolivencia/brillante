@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { ProductsHttpService } from '@app/landing/products/products.http.service';
+import { ProductsHttpService } from '@app/customer-view/products/products.http.service';
 import { Product } from '@app/_models/product';
 import { Observable } from 'rxjs';
 
