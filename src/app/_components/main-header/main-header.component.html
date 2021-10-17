@@ -9,7 +9,8 @@
             </a>
         </div>
 
-        <div id="nav-container" class="flex-grow-1">
+        <!-- TODO: #200 - Add responsive solution for nav visualization -->
+        <div id="nav-container" class="flex-grow-1 d-none d-md-block">
             <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-left">
                 <ng-container *ngFor="let route of userLinks">
                     <li class="nav-item" *ngIf="route.visible">
