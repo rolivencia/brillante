@@ -3,13 +3,13 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '@app/_services/authentication.service';
-import { User } from '@app/_models';
+import { AuthenticationService } from '@services/authentication.service';
 import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
-import { CashTransaction, PaymentMethod, TransactionConcept } from '@app/_models/cash-transaction';
-import { OfficeBranch } from '@app/_models/office-branch';
-import { OfficeBranchService } from '@app/_services/office-branch.service';
+import { CashTransaction, PaymentMethod, TransactionConcept } from '@models/cash-transaction';
+import { OfficeBranch } from '@models/office-branch';
+import { OfficeBranchService } from '@services/office-branch.service';
+import { User } from '@models/user';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 

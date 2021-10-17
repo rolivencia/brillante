@@ -1,4 +1,3 @@
-import { DeviceType, Repair, RepairStatus, User } from '@app/_models';
 import { environment } from '@environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -6,6 +5,8 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { map } from 'rxjs/operators';
+import { DeviceType, Repair, RepairStatus } from '@models/repair';
+import { User } from '@models/user';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 

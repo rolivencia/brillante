@@ -1,7 +1,7 @@
 import * as moment from 'moment';
-import { Audit } from '@app/_models/audit';
+import { Audit } from '@models/audit';
 import { Moment } from 'moment';
-import { OfficeBranch } from '@app/_models/office-branch';
+import { OfficeBranch } from '@models/office-branch';
 
 export class CashTransaction {
     public id: number;

@@ -5,17 +5,16 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { DashboardComponent } from './dashboard';
+import { DashboardComponent } from '@management-view/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainHeaderComponent } from '@app/_components/main-header/main-header.component';
-import { FooterComponent } from './_components/footer/footer.component';
+import { MainHeaderComponent } from '@components/main-header/main-header.component';
 import { ToastrModule } from 'ngx-toastr';
-import { ProgressLoaderModule } from '@app/_components/progress-loader/progress-loader.module';
-import { ProgressLoaderService } from '@app/_components/progress-loader/progress-loader.service';
-import { LoginModule } from '@app/login/login.module';
-import { RegisterModule } from '@app/register/register.module';
+import { ProgressLoaderModule } from '@components/progress-loader/progress-loader.module';
+import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { OfficeBranchService } from '@app/_services/office-branch.service';
+import { LoginModule } from './login/login.module';
+import { RegisterModule } from './register/register.module';
+import { OfficeBranchService } from '@services/office-branch.service';
 
 @NgModule({
     imports: [
@@ -29,7 +28,7 @@ import { OfficeBranchService } from '@app/_services/office-branch.service';
         ProgressLoaderModule,
         FontAwesomeModule,
     ],
-    declarations: [AppComponent, FooterComponent, MainHeaderComponent, DashboardComponent],
+    declarations: [AppComponent, MainHeaderComponent, DashboardComponent],
     providers: [
         {
             provide: APP_INITIALIZER,

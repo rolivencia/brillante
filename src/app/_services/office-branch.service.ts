@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OfficeBranch } from '@app/_models/office-branch';
+import { OfficeBranch } from '@models/office-branch';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';

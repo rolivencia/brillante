@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { User } from '@app/_models/user';
+import { User } from '@models/user';
 
 export class Audit {
     public deleted: boolean;
