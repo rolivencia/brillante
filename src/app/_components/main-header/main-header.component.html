@@ -9,12 +9,6 @@
             </a>
         </div>
 
-        <a
-            *ngIf="!currentUser"
-            class="whatsapp"
-            href="https://api.whatsapp.com/send?phone=543425360966&text=%C2%A1Hola!%20me%20contacto%20con%20ustedes%20para%20hacerles%20una%20consulta%20sobre%20sus%20servicios.%20Desde%20ya%20muchas%20gracias"
-            ><i class="fab fa-whatsapp" target="_blank"></i><span><b>¡Clickea</b> y comunicate!</span></a
-        >
         <ng-container *ngIf="currentUser">
             <button type="button" class="btn btn-outline-secondary rounded-0">
                 <span
