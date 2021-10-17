@@ -50,7 +50,6 @@ const routes: Routes = [
                         resolve: {
                             concepts: CashDashboardResolverService,
                         },
-                        canActivate: [CashRolesGuard],
                         outlet: 'top',
                     },
                 ],
