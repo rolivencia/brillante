@@ -458,18 +458,7 @@ body {
     background-color: rgba(0, 0, 0, 0);
     width: 100%;
 }
-.MainFooter {
-    color: #999999;
-    background: #ececec;
-    padding: 30px 0 10px;
-}
-.MainFooter .nav a {
-    color: #999999;
-}
-.MainFooter address {
-    margin-bottom: 0;
-    margin-top: 20px;
-}
+
 .copy {
     background: #ececec;
     color: #a6a6a6;
