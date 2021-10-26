@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { faBars, faShoppingCart, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faShoppingCart, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { User } from '@models/user';
 import { EUser } from '@enums/user.enum';
 import { AuthenticationService } from '@services/authentication.service';
+import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
+import { MainHeaderService } from '@components/main-header/main-header.service';
 
 export class NavigationLink {
-    label: string;
+    id: string;
+    text: string;
     route: string | Object;
     enabled: boolean;
     visible: boolean;
@@ -20,85 +23,29 @@ export class NavigationLink {
     styleUrls: ['./main-header.component.scss'],
 })
 export class MainHeaderComponent implements OnInit {
+    @ViewChild('sidebar') sidebar: SidebarComponent;
+
+    get welcomeName() {
+        return `${this.currentUser.avatar} ${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    }
+
+    get userLinks() {
+        return this.currentUser ? this._adminLinks : this.mainHeaderService.userLinks;
+    }
+
     currentUser: User;
 
     public barsIcon: IconDefinition = faBars;
     public cartIcon: IconDefinition = faShoppingCart;
+    public userIcon: IconDefinition = faUser;
 
     private _adminLinks: NavigationLink[] = [];
-
-    //FIXME: Centralizar navegación - Generar service para el header
-    private _allAdminLinks: NavigationLink[] = [
-        {
-            label: 'Dashboard',
-            route: '/dashboard',
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
-        },
-        {
-            label: 'Clientes',
-            route: '/client-dashboard',
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
-        },
-        {
-            label: 'Reparaciones',
-            route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
-        },
-        {
-            label: 'Caja',
-            route: ['/cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
-        },
-        {
-            label: 'Productos',
-            route: '/products',
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
-        },
-        {
-            label: 'Stock',
-            route: '/products-list-dashboard',
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
-        },
-        {
-            label: 'Configuración',
-            route: '/settings-dashboard',
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
-        },
-    ];
-
-    private _userLinks: NavigationLink[] = [
-        { label: 'Inicio', route: '/home', enabled: true, visible: false },
-        { label: 'Productos', route: '/products', enabled: true, visible: true },
-        { label: 'Celulares', route: '/smartphones', enabled: false, visible: false },
-        { label: 'Reparaciones', route: '/repairs', enabled: true, visible: true },
-        {
-            label: 'Servicio a empresas',
-            route: 'enterprise',
-            enabled: true,
-            visible: true,
-        },
-        { label: 'Novedades', route: 'news', enabled: false, visible: true },
-        { label: 'Contacto', route: 'contact', enabled: true, visible: true },
-    ];
 
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
-        public officeBranchService: OfficeBranchService
+        public officeBranchService: OfficeBranchService,
+        public mainHeaderService: MainHeaderService
     ) {
         this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
     }
@@ -107,7 +54,7 @@ export class MainHeaderComponent implements OnInit {
         this.authenticationService.currentUserSubject.subscribe((user) => {
             if (user) {
                 const currentUserRoles = user.roles.map((UserRole) => UserRole.id);
-                this._adminLinks = this._allAdminLinks.filter((Link) =>
+                this._adminLinks = this.mainHeaderService.allAdminLinks.filter((Link) =>
                     Link.roles.some((role) => currentUserRoles.includes(role))
                 );
             }
@@ -119,11 +66,11 @@ export class MainHeaderComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
-    get welcomeName() {
-        return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    public onCreated(args: any) {
+        this.sidebar.element.style.visibility = '';
     }
 
-    get userLinks() {
-        return this.currentUser ? this._adminLinks : this._userLinks;
+    public toggleSidebar() {
+        this.sidebar.show();
     }
 }

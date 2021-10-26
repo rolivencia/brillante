@@ -1,16 +1,34 @@
+<!--<ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated($event)" style="visibility: hidden">-->
+<!--    <div class="title">Sidebar content</div>-->
+<!--    <ejs-listview id="navigation" [dataSource]="userLinks"></ejs-listview>-->
+<!--</ejs-sidebar>-->
 <section id="main-header" class="container-fluid">
     <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
         <div class="brand-container">
-            <button class="d-sm-none" type="button" id="MainMenu_OpenBtn">
-                <fa-icon [icon]="barsIcon"></fa-icon>
-            </button>
+            <div id="nav-container-dropdown" class="dropdown d-block d-xl-none">
+                <button
+                    id="burger-menu"
+                    class="dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    <fa-icon [icon]="barsIcon"></fa-icon>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <ng-container *ngFor="let route of userLinks">
+                        <a class="dropdown-item" *ngIf="route.visible" [routerLink]="route.route">{{ route.text }}</a>
+                    </ng-container>
+                </div>
+            </div>
             <a class="navbar-brand" href="">
                 <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
             </a>
         </div>
 
         <!-- TODO: #200 - Add responsive solution for nav visualization -->
-        <div id="nav-container" class="flex-grow-1 d-none d-md-block">
+        <div id="nav-container" class="flex-grow-1 d-none d-xl-block">
             <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-left">
                 <ng-container *ngFor="let route of userLinks">
                     <li class="nav-item" *ngIf="route.visible">
@@ -18,7 +36,7 @@
                             class="nav-link"
                             [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
                             [routerLink]="route.route"
-                            >{{ route.label }}</a
+                            >{{ route.text }}</a
                         >
                     </li>
                 </ng-container>
@@ -27,10 +45,9 @@
 
         <ng-container *ngIf="currentUser">
             <button type="button" class="btn btn-outline-secondary rounded-0 mr-4">
-                <span
-                    >Usuario actual:
+                <span>
                     <strong>{{ welcomeName }}</strong>
-                    | Sucursal asignada:
+                    | Sucursal:
                     <strong>{{
                         officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
                     }}</strong>
@@ -41,20 +58,7 @@
         <ul class="nav justify-content-end align-items-center nav-sup">
             <ng-container *ngIf="!currentUser">
                 <li>
-                    <a
-                        routerLink="/login"
-                        data-effect="mfp-move-from-top"
-                        class="btn btn-sm btn-light d-none d-sm-block popup-text"
-                        >INGRESAR</a
-                    >
-                </li>
-                <li>
-                    <a
-                        href="#nav-account-dialog"
-                        data-effect="mfp-move-from-top"
-                        class="btn btn-sm btn-light d-none d-sm-block popup-text"
-                        >REGISTRATE</a
-                    >
+                    <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
                 </li>
             </ng-container>
             <ng-container *ngIf="currentUser">
@@ -77,7 +81,10 @@
                 </li>
 
                 <li>
-                    <a [routerLink]="'products/cart'" class="btn btn-default"><fa-icon [icon]="cartIcon"></fa-icon></a>
+                    <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
+                    <a [routerLink]="'products/cart'" class="btn btn-default ml-2"
+                        ><fa-icon [icon]="cartIcon"></fa-icon
+                    ></a>
                 </li>
             </ng-container>
         </ul>

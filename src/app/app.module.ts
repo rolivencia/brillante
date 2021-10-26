@@ -15,6 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { OfficeBranchService } from '@services/office-branch.service';
+import { MainHeaderModule } from '@components/main-header/main-header.module';
 
 @NgModule({
     imports: [
@@ -27,8 +28,9 @@ import { OfficeBranchService } from '@services/office-branch.service';
         ToastrModule.forRoot(),
         ProgressLoaderModule,
         FontAwesomeModule,
+        MainHeaderModule,
     ],
-    declarations: [AppComponent, MainHeaderComponent, DashboardComponent],
+    declarations: [AppComponent, DashboardComponent],
     providers: [
         {
             provide: APP_INITIALIZER,
