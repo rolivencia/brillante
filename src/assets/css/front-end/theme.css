@@ -98,28 +98,7 @@ body {
         display: none;
     }
 }
-#MainMenu_OpenBtn {
-    color: #7b42df;
-    line-height: 1;
-    font-size: 22px;
-    margin: 0 0 0 -15px;
-    padding: 3px 13px 0;
-    background: transparent;
-    border: none;
-}
-#MainMenu_OpenBtn:hover {
-    color: #00ffff;
-}
-@media (min-width: 350px) {
-    #MainMenu_OpenBtn {
-        padding: 2px 13px;
-    }
-}
-@media (min-width: 768px) {
-    #MainMenu_OpenBtn {
-        display: none;
-    }
-}
+
 #MainMenu_CloseBtn {
     color: #00fbff;
     font-size: 30px;
