@@ -11,6 +11,7 @@ class CashTransaction extends Sequelize.Model {}
 class RepairCashTransaction extends Sequelize.Model {}
 class TransactionType extends Sequelize.Model {}
 class PaymentMethod extends Sequelize.Model {}
+class PaymentMethodInstallments extends Sequelize.Model {}
 
 CashTransaction.init(
     {
@@ -162,11 +163,47 @@ PaymentMethod.init(
             allowNull: false,
             field: 'description',
         },
+        allowsInstallments: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+            field: 'allows_installments',
+        },
     },
     {
         timestamps: false,
         sequelize: sequelizeConnector,
         modelName: 'sh_tab_payment_methods',
+    }
+);
+
+PaymentMethodInstallments.init(
+    {
+        id: {
+            type: Sequelize.SMALLINT,
+            auto: false,
+            primaryKey: true,
+            field: 'id',
+        },
+        idPaymentMethod: {
+            type: Sequelize.SMALLINT,
+            allowNull: false,
+            field: 'id_payment_method',
+        },
+        installments: {
+            type: Sequelize.SMALLINT,
+            allowNull: false,
+            field: 'installments',
+        },
+        interestRate: {
+            type: Sequelize.DECIMAL,
+            allowNull: false,
+            field: 'interest_rate',
+        },
+    },
+    {
+        timestamps: false,
+        sequelize: sequelizeConnector,
+        modelName: 'sh_tab_payment_method_installments',
     }
 );
 
@@ -200,4 +237,7 @@ TransactionType.hasMany(transaction.CashTransactionConcept, { as: 'transaction',
 CashTransaction.belongsTo(PaymentMethod, { as: 'paymentMethod', foreignKey: 'payment_method_id' });
 PaymentMethod.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
 
-module.exports = { CashTransaction, RepairCashTransaction, TransactionType, PaymentMethod };
+PaymentMethodInstallments.belongsTo(PaymentMethod, { as: 'paymentMethod', foreignKey: 'id' });
+PaymentMethod.hasMany(PaymentMethodInstallments, { as: 'installments', foreignKey: 'id_payment_method' });
+
+module.exports = { CashTransaction, RepairCashTransaction, TransactionType, PaymentMethod, PaymentMethodInstallments };

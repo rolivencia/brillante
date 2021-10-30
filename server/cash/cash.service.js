@@ -21,7 +21,14 @@ module.exports = {
 };
 
 async function getPaymentMethods() {
-    return cash.PaymentMethod.findAll();
+    return cash.PaymentMethod.findAll({
+        include: {
+            as: 'installments',
+            model: cash.PaymentMethodInstallments,
+            required: false,
+            attributes: ['installments', 'interestRate'],
+        },
+    });
 }
 
 async function getById(id) {
@@ -64,7 +71,6 @@ async function getAll({ startDate, endDate, idBranch }) {
     });
 }
 
-//FIXME: Update to support office branch
 async function openCashRegister({ user, branch }) {
     return cash.CashTransaction.create({
         amount: 0,
@@ -77,7 +83,6 @@ async function openCashRegister({ user, branch }) {
     });
 }
 
-//FIXME: Update to support office branch
 async function closeCashRegister({ user, branch }) {
     return cash.CashTransaction.create({
         amount: 0,

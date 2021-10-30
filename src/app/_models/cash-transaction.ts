@@ -96,9 +96,18 @@ export class TransactionConcept {
 export class PaymentMethod {
     public id: number;
     public description: string;
+    public allowsInstallments: boolean;
+    public installments: Installment[];
 
-    constructor(id?: number, description?: string) {
+    constructor(id?: number, description?: string, allowsInstallments?: boolean, installments?: Installment[]) {
         this.id = id;
         this.description = description;
+        this.allowsInstallments = allowsInstallments ?? false;
+        this.installments = installments ?? [];
     }
+}
+
+export class Installment {
+    installments: number;
+    interestRate: number;
 }
