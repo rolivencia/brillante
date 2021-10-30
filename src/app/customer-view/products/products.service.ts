@@ -41,7 +41,7 @@ export class ProductsService {
 
     constructor(private router: Router) {}
 
-    generatePageRoute(page?: string | number, manufacturer?: string, category?: string) {
+    public generatePageRoute(page?: string | number, manufacturer?: string, category?: string) {
         if (page) {
             this.listFilters.offset = page;
         }
@@ -55,14 +55,14 @@ export class ProductsService {
         return `/products/products-list/${this.listFilters.offset}/${this.listFilters.manufacturer}/${this.listFilters.category}`;
     }
 
-    navigateToPageRoute(page?: string | number): string {
+    public navigateToPageRoute(page?: string | number): string {
         if (page) {
             this.listFilters.offset = page;
         }
         return `/products/products-list/${this.listFilters.offset}/${this._currentManufacturer}/${this._currentCategory}`;
     }
 
-    navigateToPrevious() {
+    public navigateToPrevious() {
         if (this.listFilters.offset > 1) {
             this.router.navigate([
                 `/products/products-list/${(this._currentOffset as number) - 1}/${this._currentManufacturer}/${
@@ -72,7 +72,7 @@ export class ProductsService {
         }
     }
 
-    navigateToNext(max: number) {
+    public navigateToNext(max: number) {
         if (this.listFilters.offset < max) {
             this.router.navigate([
                 `/products/products-list/${(this._currentOffset as number) + 1}/${this._currentManufacturer}/${
