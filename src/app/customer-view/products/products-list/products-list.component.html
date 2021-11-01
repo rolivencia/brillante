@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="paymentMethods.length > 0">
     <div *ngFor="let product of products" class="col-6 col-md-3 card border-0">
         <div class="product">
             <div class="thumbnail-container">
@@ -15,9 +15,7 @@
                     <p class="price">${{ priceGenerationParser(product.price) }}</p>
                     <p class="installments">
                         12 cuotas de
-                        <span class="installment-price"
-                            >${{ priceGenerationParser((product.price / 12).toFixed(2)) }}</span
-                        >
+                        <span class="installment-price">${{ priceGenerationParser(product.price, 12) }}</span>
                     </p>
                     <!--                    <a class="add-to-cart">AGREGAR AL CARRITO</a>-->
                 </div>
