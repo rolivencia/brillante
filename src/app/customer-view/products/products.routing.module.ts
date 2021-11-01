@@ -7,6 +7,7 @@ import { ProductsListResolverService } from './products-list/products-list-resol
 import { ProductsResolverService } from './products.resolver.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CartResolverService } from './cart/cart.resolver.service';
+import { PaymentMethodsResolverService } from '../../_services/payment-methods.resolver.service';
 
 const routes: Routes = [
     {
@@ -28,6 +29,7 @@ const routes: Routes = [
                 component: ProductDetailComponent,
                 resolve: {
                     product: ProductDetailResolverService,
+                    paymentMethods: PaymentMethodsResolverService,
                 },
             },
             {
@@ -35,6 +37,7 @@ const routes: Routes = [
                 component: ProductsListComponent,
                 resolve: {
                     products: ProductsListResolverService,
+                    paymentMethods: PaymentMethodsResolverService,
                 },
             },
             { path: '**', redirectTo: 'products-list/1/all/all' },

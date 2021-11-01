@@ -5,6 +5,7 @@ import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
 import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { decimalsSeparator, replaceDotWithComma } from '@functions/numeric-utils';
+import { PaymentMethod } from '@models/cash-transaction';
 
 @Component({
     selector: 'app-products-list',
@@ -20,6 +21,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     public faChevronLeft: IconDefinition = faChevronLeft;
     public faChevronRight: IconDefinition = faChevronRight;
+
+    public paymentMethods: PaymentMethod[] = [];
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
@@ -43,6 +46,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
                 this.pages = Array.from({ length: count }, (_, i) => i + 1);
                 this.changeDetectorRef.detectChanges();
             }
+
+            this.paymentMethods = this.route.snapshot.data['paymentMethods'];
         });
     }
 
@@ -54,8 +59,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         console.log('IMPLEMENT ADDTOCART METHOD');
     }
 
-    priceGenerationParser(x: number | string) {
-        return decimalsSeparator(replaceDotWithComma(x));
+    priceGenerationParser(price: number, installments: number = 1) {
+        //TODO: Try to define the credit reference based on an enum or other way
+        const creditReference: PaymentMethod = this.paymentMethods
+            .filter((paymentMethod) => paymentMethod.description === 'LaPos Crédito')
+            .pop();
+        const interestRate = creditReference.installments.filter((x) => x.installments === installments).pop()
+            .interestRate;
+        const installmentPrice = ((price / installments) * (1 + interestRate)).toFixed(2);
+        return decimalsSeparator(replaceDotWithComma(installmentPrice));
     }
 
     productOffsetCount() {
