@@ -28,11 +28,6 @@ export default {
             description: 'Determina si el producto actual se muestra o no en el sistema.',
         },
         {
-            name: 'logo',
-            title: 'Imagen Principal, para mostrar en grilla. Tamaño obligatorio: 800px * 800px',
-            type: 'image',
-        },
-        {
             name: 'images',
             type: 'array',
             title: 'Galería de imágenes',
@@ -116,7 +111,7 @@ export default {
         select: {
             title: 'title',
             subtitle: 'manufacturer.title',
-            media: 'logo',
+            media: 'images.0.asset',
         },
     },
 };
