@@ -1,5 +1,5 @@
 export default {
-    name: 'highlightedProduct',
+    name: 'featuredProduct',
     title: 'Productos Destacados',
     type: 'document',
     fields: [
