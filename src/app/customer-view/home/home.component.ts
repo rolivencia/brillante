@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
+import { ActivatedRoute, Route } from '@angular/router';
+import { Product } from '@models/product';
 
 @Component({
     selector: 'app-home',
@@ -43,7 +45,12 @@ export class HomeComponent implements OnInit {
         },
     };
 
-    constructor() {}
+    public featuredProducts: Product[] = [];
+    constructor(private route: ActivatedRoute) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        if (this.route.snapshot.data['featuredProducts']) {
+            this.featuredProducts = this.route.snapshot.data['featuredProducts'];
+        }
+    }
 }
