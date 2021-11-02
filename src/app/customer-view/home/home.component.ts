@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Product } from '@models/product';
+import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
 
 @Component({
     selector: 'app-home',
@@ -16,33 +16,6 @@ export class HomeComponent implements OnInit {
         nav: false,
         autoplay: true,
         autoWidth: true,
-    };
-
-    productsCarousel: OwlOptions = {
-        loop: true,
-        margin: 0,
-        nav: false,
-        dots: true,
-        autoplay: true,
-        responsive: {
-            0: {
-                items: 1,
-                nav: false,
-                stagePadding: 40,
-            },
-            400: {
-                nav: false,
-                items: 1,
-                margin: 10,
-            },
-            768: {
-                nav: true,
-                items: 3,
-            },
-            1000: {
-                items: 3,
-            },
-        },
     };
 
     public featuredProducts: Product[] = [];
