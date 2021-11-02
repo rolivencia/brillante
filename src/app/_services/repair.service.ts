@@ -7,6 +7,7 @@ import { Moment } from 'moment';
 import { map } from 'rxjs/operators';
 import { DeviceType, Repair, RepairStatus } from '@models/repair';
 import { User } from '@models/user';
+import { OfficeBranchService } from '@services/office-branch.service';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
@@ -14,8 +15,6 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root',
 })
 export class RepairService {
-    private endpoint = `/reparacion.php`;
-
     //FIXME: Cargar desde base de datos
     public deviceTypes: DeviceType[] = [
         {
@@ -38,7 +37,7 @@ export class RepairService {
 
     public repairStatuses: RepairStatus[] = [];
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private officeBranchService: OfficeBranchService) {}
 
     public getById(id: number): Observable<Repair> {
         return this.http
@@ -105,11 +104,13 @@ export class RepairService {
     }
 
     public updateTrackingInfo(repair: Repair, user: User, { generateTransaction, paymentMethod }) {
+        const currentBranch = this.officeBranchService.current.value;
         return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, {
             repairToUpdate: repair,
             user: user,
             generateTransaction,
             paymentMethod,
+            officeBranch: currentBranch,
         });
     }
 
