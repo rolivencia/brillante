@@ -86,13 +86,13 @@ async function updateDeviceInfo({ id, device, issue, ...discarded }) {
             model: device.model,
             imei: device.deviceId,
             issue: issue,
-            equipmentTurnedOn: device.turnedOn
+            equipmentTurnedOn: device.turnedOn,
         },
         { where: { id: id } }
     );
 }
 
-async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, paymentMethod }) {
+async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, paymentMethod, officeBranch }) {
     const { id, status, note, paymentInAdvance, cost, price, warrantyTerm, ...discarded } = repairToUpdate;
 
     const t = await sequelizeConnector.transaction();
@@ -151,6 +151,7 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
                         transactionConceptId: 158, // TODO: Define enums for server-side APIs (Transaction Concepts)
                         createdBy: user.id,
                         paymentMethodId: paymentMethod.id,
+                        idBranch: officeBranch.id,
                     },
                     { transaction: t }
                 );
