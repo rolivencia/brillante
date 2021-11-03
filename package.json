@@ -55,7 +55,7 @@
         "lodash": "^4.17.20",
         "moment": "^2.24.0",
         "mysql2": "^1.7.0",
-        "ngx-owl-carousel-o": "^3.0.0",
+        "ngx-owl-carousel-o": "^6.0.0",
         "ngx-toastr": "^12.0.1",
         "nodemon": "^1.19.4",
         "npm": "^6.14.4",
