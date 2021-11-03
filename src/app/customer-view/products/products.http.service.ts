@@ -22,7 +22,10 @@ export class ProductsHttpService {
         return this.http.get<Product[]>(
             `${environment.apiUrl}/products/getAll?offset=${offset}&manufacturer=${manufacturer}&category=${category}`
         );
-        // .pipe(map((productsDTO) => productsDTO.map((productDTO) => toProduct(productDTO))));
+    }
+
+    public getFeatured(): Observable<Product[]> {
+        return this.http.get<Product[]>(`${environment.apiUrl}/products/getFeatured`);
     }
 
     public getManufacturers(): Observable<Manufacturer[]> {

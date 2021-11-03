@@ -1,0 +1,76 @@
+.product {
+    margin-bottom: 12px;
+
+    .thumbnail-container {
+        position: relative;
+        background-color: white;
+
+        &:after {
+            content: '';
+            display: block;
+            padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
+        }
+
+        .thumbnail {
+            border: 1px solid #e5e5e5;
+            filter: unset;
+            position: absolute; /* Take your picture out of the flow */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0; /* Make the picture taking the size of it's parent */
+            width: 100%; /* This if for the object-fit */
+            height: 100%; /* This if for the object-fit */
+            object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
+            object-position: center;
+        }
+    }
+    .product-info {
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Arial, Helvetica, 'Helvetica Neue', Verdana,
+            sans-serif;
+        .name-container {
+            position: relative;
+            z-index: 2;
+            .name {
+                padding-top: 12px;
+                font-size: 12px;
+                line-height: 1.4;
+                overflow-wrap: break-word;
+                display: block;
+
+                background-color: white;
+            }
+        }
+
+        .price-container {
+            z-index: 1;
+            height: 32px;
+            color: #003164;
+            background-color: white;
+            //position: absolute;
+
+            //&:hover {
+            //    transform: translateY(-40px);
+            //    transition: all 0.25s linear;
+            //}
+
+            .price {
+                font-size: 1rem;
+                font-weight: 700;
+                margin-bottom: 2px;
+                line-height: 16px;
+            }
+            .installments {
+                font-size: 0.8rem;
+                line-height: 16px;
+                margin-bottom: 0.25rem;
+                .installment-price {
+                    font-size: 0.9rem;
+                    font-weight: bold;
+                }
+            }
+            .add-to-cart {
+            }
+        }
+    }
+}

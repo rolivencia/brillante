@@ -1,4 +1,3 @@
-const _ = require('lodash/array');
 const sanityConnector = require('../_helpers/sanity-connector');
 const imageUrlBuilder = require('@sanity/image-url');
 
@@ -13,8 +12,22 @@ module.exports = {
     getById,
     getCategories,
     getManufacturers,
+    getFeatured,
 };
 
+async function getFeatured() {
+    const query = `*[_type == 'featuredProduct']{_id, product->}`;
+    const featuredProducts = await sanityConnector.client.fetch(query, {});
+    const mappedProducts = featuredProducts.map((featuredProduct) => ({
+        id: featuredProduct.product._id,
+        name: featuredProduct.product.title,
+        price: featuredProduct.product.retailPrice,
+        imageUrls: featuredProduct.product.images.map((image) => urlFor(image).url()),
+        categories: [],
+        manufacturer: featuredProduct.product.manufacturer,
+    }));
+    return mappedProducts;
+}
 async function get({ offset, manufacturer, category }) {
     //TODO: Add offset-based selection for query
     const queryOffset = `[${12 * (offset - 1)}...${12 + (offset - 1) * 12}]`;

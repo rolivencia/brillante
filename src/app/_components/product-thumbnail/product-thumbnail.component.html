@@ -1,0 +1,21 @@
+<div class="product">
+    <div class="thumbnail-container">
+        <img class="thumbnail" [src]="product.imageUrls[0]" [alt]="product.name" height="auto" width="100%" />
+    </div>
+    <!--          TODO: See Issue #82. Put to work the "add to cart" feature-->
+    <div class="product-info">
+        <!-- TODO: See Issue #81 for creation of navigation to product details -->
+        <div class="name-container">
+            <a class="name">{{ product.name }}</a>
+        </div>
+        <!-- TODO: See Issue #80 for creation of a price pipe -->
+        <div class="price-container">
+            <p class="price" *ngIf="$fullPrice | async as fullPrice">${{ fullPrice }}</p>
+            <p class="installments" *ngIf="$installmentsPrice | async as installmentsPrice">
+                12 cuotas de
+                <span class="installment-price">${{ installmentsPrice }}</span>
+            </p>
+            <!--                    <a class="add-to-cart">AGREGAR AL CARRITO</a>-->
+        </div>
+    </div>
+</div>

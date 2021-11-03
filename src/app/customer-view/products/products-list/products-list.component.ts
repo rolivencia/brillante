@@ -4,8 +4,8 @@ import { Product } from '@models/product';
 import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
 import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { decimalsSeparator, replaceDotWithComma } from '@functions/numeric-utils';
 import { PaymentMethod } from '@models/cash-transaction';
+import { PaymentMethodsService } from '@services/payment-methods.service';
 
 @Component({
     selector: 'app-products-list',
@@ -26,6 +26,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
+        private paymentMethodsService: PaymentMethodsService,
         public productsService: ProductsService,
         private route: ActivatedRoute
     ) {}
@@ -47,7 +48,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
                 this.changeDetectorRef.detectChanges();
             }
 
-            this.paymentMethods = this.route.snapshot.data['paymentMethods'];
+            this.paymentMethods = this.paymentMethodsService.paymentMethods;
         });
     }
 
@@ -57,17 +58,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     addToCart(id: number) {
         console.log('IMPLEMENT ADDTOCART METHOD');
-    }
-
-    priceGenerationParser(price: number, installments: number = 1) {
-        //TODO: Try to define the credit reference based on an enum or other way
-        const creditReference: PaymentMethod = this.paymentMethods
-            .filter((paymentMethod) => paymentMethod.description === 'LaPos Crédito')
-            .pop();
-        const interestRate = creditReference.installments.filter((x) => x.installments === installments).pop()
-            .interestRate;
-        const installmentPrice = ((price / installments) * (1 + interestRate)).toFixed(2);
-        return decimalsSeparator(replaceDotWithComma(installmentPrice));
     }
 
     productOffsetCount() {

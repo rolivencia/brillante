@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { DashboardComponent } from '@management-view/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainHeaderComponent } from '@components/main-header/main-header.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ProgressLoaderModule } from '@components/progress-loader/progress-loader.module';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
@@ -16,6 +15,7 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { MainHeaderModule } from '@components/main-header/main-header.module';
+import { PaymentMethodsService } from '@services/payment-methods.service';
 
 @NgModule({
     imports: [
@@ -36,6 +36,12 @@ import { MainHeaderModule } from '@components/main-header/main-header.module';
             provide: APP_INITIALIZER,
             useFactory: (officeBranchService: OfficeBranchService) => () => officeBranchService.load(),
             deps: [OfficeBranchService],
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (paymentMethodsService: PaymentMethodsService) => () => paymentMethodsService.load(),
+            deps: [PaymentMethodsService],
             multi: true,
         },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

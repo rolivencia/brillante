@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Product } from '@models/product';
 import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
+import { Observable } from 'rxjs';
+import { ProductsHttpService } from '@customer-view/products/products.http.service';
 
 @Component({
     selector: 'app-home',
@@ -16,34 +20,10 @@ export class HomeComponent implements OnInit {
         autoWidth: true,
     };
 
-    productsCarousel: OwlOptions = {
-        loop: true,
-        margin: 0,
-        nav: false,
-        dots: true,
-        autoplay: true,
-        responsive: {
-            0: {
-                items: 1,
-                nav: false,
-                stagePadding: 40,
-            },
-            400: {
-                nav: false,
-                items: 1,
-                margin: 10,
-            },
-            768: {
-                nav: true,
-                items: 3,
-            },
-            1000: {
-                items: 3,
-            },
-        },
-    };
+    public featuredProducts$: Observable<Product[]>;
+    constructor(private route: ActivatedRoute, private productsHttpService: ProductsHttpService) {}
 
-    constructor() {}
-
-    ngOnInit() {}
+    ngOnInit() {
+        this.featuredProducts$ = this.productsHttpService.getFeatured();
+    }
 }
