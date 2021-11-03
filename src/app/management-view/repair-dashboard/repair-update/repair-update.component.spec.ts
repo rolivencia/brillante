@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RepairUpdateComponent } from './repair-update.component';
 
@@ -6,11 +6,13 @@ describe('RepairUpdateComponent', () => {
     let component: RepairUpdateComponent;
     let fixture: ComponentFixture<RepairUpdateComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [RepairUpdateComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [RepairUpdateComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(RepairUpdateComponent);
