@@ -1,7 +1,7 @@
-export function decimalsSeparator(x) {
+export function decimalsSeparator(x): string {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-export function replaceDotWithComma(x) {
+export function replaceDotWithComma(x): string {
     return x.toString().replace('.', ',');
 }

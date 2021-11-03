@@ -10,10 +10,10 @@
         </div>
         <!-- TODO: See Issue #80 for creation of a price pipe -->
         <div class="price-container">
-            <p class="price">${{ priceGenerationParser(product.price) }}</p>
-            <p class="installments">
+            <p class="price" *ngIf="$fullPrice | async as fullPrice">${{ fullPrice }}</p>
+            <p class="installments" *ngIf="$installmentsPrice | async as installmentsPrice">
                 12 cuotas de
-                <span class="installment-price">${{ priceGenerationParser(product.price, 12) }}</span>
+                <span class="installment-price">${{ installmentsPrice }}</span>
             </p>
             <!--                    <a class="add-to-cart">AGREGAR AL CARRITO</a>-->
         </div>

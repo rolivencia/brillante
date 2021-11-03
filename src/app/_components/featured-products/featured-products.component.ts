@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
+import { Product } from '@models/product';
 
 @Component({
     selector: 'app-featured-products',
@@ -7,7 +8,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o/lib/models/owl-options.model';
     styleUrls: ['./featured-products.component.scss'],
 })
 export class FeaturedProductsComponent implements OnInit {
-    productsCarousel: OwlOptions = {
+    @Input() products: Product[] = [];
+    public productsCarousel: OwlOptions = {
         loop: true,
         margin: 0,
         nav: false,

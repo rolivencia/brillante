@@ -5,6 +5,7 @@ import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
 import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { PaymentMethod } from '@models/cash-transaction';
+import { PaymentMethodsService } from '@services/payment-methods.service';
 
 @Component({
     selector: 'app-products-list',
@@ -25,6 +26,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
+        private paymentMethodsService: PaymentMethodsService,
         public productsService: ProductsService,
         private route: ActivatedRoute
     ) {}
@@ -46,7 +48,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
                 this.changeDetectorRef.detectChanges();
             }
 
-            this.paymentMethods = this.route.snapshot.data['paymentMethods'];
+            this.paymentMethods = this.paymentMethodsService.paymentMethods;
         });
     }
 

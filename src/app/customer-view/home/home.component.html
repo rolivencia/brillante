@@ -65,8 +65,8 @@
                 <h2>Productos <b>destacados</b></h2>
             </div>
 
-            <section class="heroImage">
-                <app-featured-products></app-featured-products>
+            <section class="heroImage" *ngIf="featuredProducts$ | async as featuredProducts">
+                <app-featured-products [products]="featuredProducts"></app-featured-products>
             </section>
         </div>
     </section>
