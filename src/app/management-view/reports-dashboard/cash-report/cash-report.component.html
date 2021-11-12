@@ -117,8 +117,9 @@
                             >
                                 <ng-container *ngIf="cell.item.concept.transactionType.id === 1">
                                     <div class="d-flex justify-content-between">
-                                        <div>$</div>
-                                        <div>{{ cashDashboardService.decimalSeparatorParser(cell.item.income) }}</div>
+                                        <div>
+                                            {{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.item.income) }}
+                                        </div>
                                     </div>
                                 </ng-container>
                             </ng-template>
@@ -130,8 +131,7 @@
                                 let-cell="cell"
                             >
                                 <div class="alert alert-success mb-0 p-1 border-0 d-flex justify-content-between">
-                                    <div>$</div>
-                                    <div>{{ cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
+                                    <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
                                 </div>
                             </ng-template>
 
@@ -143,8 +143,9 @@
                             >
                                 <ng-container *ngIf="cell.item.concept.transactionType.id === 0">
                                     <div class="d-flex justify-content-between">
-                                        <div>$</div>
-                                        <div>{{ cashDashboardService.decimalSeparatorParser(cell.item.expense) }}</div>
+                                        <div>
+                                            {{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.item.expense) }}
+                                        </div>
                                     </div>
                                 </ng-container>
                             </ng-template>
@@ -156,8 +157,7 @@
                                 let-cell="cell"
                             >
                                 <div class="alert alert-danger mb-0 p-1 border-0 d-flex justify-content-between">
-                                    <div>$</div>
-                                    <div>{{ cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
+                                    <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
                                 </div>
                             </ng-template>
 
@@ -168,8 +168,9 @@
                                 let-cell="cell"
                             >
                                 <div class="d-flex justify-content-between">
-                                    <div>$</div>
-                                    <div>{{ cashDashboardService.decimalSeparatorParser(cell.item.amount) }}</div>
+                                    <div>
+                                        {{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.item.amount) }}
+                                    </div>
                                 </div>
                             </ng-template>
 
@@ -180,8 +181,7 @@
                                 let-cell="cell"
                             >
                                 <div class="alert alert-info mb-0 p-1 border-0 d-flex justify-content-between">
-                                    <div>$</div>
-                                    <div>{{ cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
+                                    <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
                                 </div>
                             </ng-template>
 

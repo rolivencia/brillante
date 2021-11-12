@@ -10,7 +10,7 @@
         </div>
         <!-- TODO: See Issue #80 for creation of a price pipe -->
         <div class="price-container">
-            <p class="price" *ngIf="$fullPrice | async as fullPrice">${{ fullPrice }}</p>
+            <p class="price" *ngIf="$fullPrice | async as fullPrice">$ {{ fullPrice }}</p>
             <p class="installments" *ngIf="$installmentsPrice | async as installmentsPrice">
                 12 cuotas de
                 <span class="installment-price">${{ installmentsPrice }}</span>
