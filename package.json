@@ -33,7 +33,7 @@
         "@fortawesome/free-brands-svg-icons": "^5.15.4",
         "@fortawesome/free-solid-svg-icons": "^5.13.0",
         "@grapecity/wijmo.angular2.all": "5.20193.646",
-        "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+        "@ng-bootstrap/ng-bootstrap": "^10.0.0",
         "@sanity/client": "^2.19.0",
         "@sanity/image-url": "^1.0.1",
         "@syncfusion/ej2-angular-lists": "^19.3.45",
