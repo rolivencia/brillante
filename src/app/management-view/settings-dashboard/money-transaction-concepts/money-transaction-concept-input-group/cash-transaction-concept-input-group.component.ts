@@ -1,15 +1,6 @@
-import { CashTransactionConceptsService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
+import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { CollectionView } from '@grapecity/wijmo';
-import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@models/cash-transaction';
 
@@ -69,15 +60,15 @@ export class CashTransactionConceptInputGroupComponent implements OnInit, OnDest
         { header: 'Status', binding: 'enabled', width: '*' },
     ];
 
-    constructor(public cashTransactionConceptsService: CashTransactionConceptsService) {}
+    constructor(public moneyTransactionConceptsService: MoneyTransactionConceptsService) {}
 
     ngOnInit(): void {
-        this.addModeSubscription = this.cashTransactionConceptsService.addMode.subscribe((result) => {
+        this.addModeSubscription = this.moneyTransactionConceptsService.addMode.subscribe((result) => {
             this.addMode = result.value;
             this.selectedConcept = result.concept;
         });
 
-        this.editModeSubscription = this.cashTransactionConceptsService.editMode.subscribe((result) => {
+        this.editModeSubscription = this.moneyTransactionConceptsService.editMode.subscribe((result) => {
             this.editMode = result.value;
             this.selectedConcept = result.concept;
         });

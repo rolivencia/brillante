@@ -1,9 +1,8 @@
-import { CashTransactionConceptsFormHandlerService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts-form-handler.service';
-import { CashTransactionConceptsService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { MoneyTransactionConceptsFormHandlerService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts-form-handler.service';
+import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
+import { MoneyTransactionConceptsHttpService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.http.service';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TransactionConcept } from '@models/cash-transaction';
-import { CashTransactionConceptsHttpService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,9 +21,9 @@ export class CashTransactionConceptAddComponent implements OnInit {
     addMode: boolean = false;
 
     constructor(
-        public cashTransactionConceptsFormHandlerService: CashTransactionConceptsFormHandlerService,
-        public cashTransactionConceptsService: CashTransactionConceptsService,
-        private cashTransactionConceptsHttpService: CashTransactionConceptsHttpService,
+        public moneyTransactionConceptsFormHandlerService: MoneyTransactionConceptsFormHandlerService,
+        public cashTransactionConceptsService: MoneyTransactionConceptsService,
+        private cashTransactionConceptsHttpService: MoneyTransactionConceptsHttpService,
         private toastrService: ToastrService
     ) {}
 

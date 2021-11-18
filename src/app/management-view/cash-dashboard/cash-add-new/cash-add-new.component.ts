@@ -4,7 +4,7 @@ import { CashFormHandlerService } from '@management-view/cash-dashboard/cash-for
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { formatDate } from '@angular/common';
-import { CashTransactionConceptsService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
+import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
@@ -19,7 +19,7 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     public currentUser: User;
 
     constructor(
-        public cashCategoriesService: CashTransactionConceptsService,
+        public cashCategoriesService: MoneyTransactionConceptsService,
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
         private router: Router,
@@ -45,7 +45,7 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngAfterViewInit() {
-        interval(1000).subscribe((result) => {
+        interval(1000).subscribe(() => {
             // Current Date Time variable must be updated when displaying the component. Do not modify this.
             this.currentDateTime = formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US', '-0300');
         });

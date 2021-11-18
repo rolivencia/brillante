@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { CashTransactionConceptsComponent } from './cash-transaction-concepts.component';
+import { MoneyTransactionConceptsComponent } from './money-transaction-concepts.component';
 
 describe('CashCategoriesComponent', () => {
-    let component: CashTransactionConceptsComponent;
-    let fixture: ComponentFixture<CashTransactionConceptsComponent>;
+    let component: MoneyTransactionConceptsComponent;
+    let fixture: ComponentFixture<MoneyTransactionConceptsComponent>;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                declarations: [CashTransactionConceptsComponent],
+                declarations: [MoneyTransactionConceptsComponent],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CashTransactionConceptsComponent);
+        fixture = TestBed.createComponent(MoneyTransactionConceptsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

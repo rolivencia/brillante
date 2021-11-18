@@ -4,7 +4,7 @@
             ><b>{{ label }}:</b></label
         >
         <div class="input-group input-group-sm">
-            <input class="form-control" [(ngModel)]="concept.description" (di />
+            <input class="form-control" [(ngModel)]="concept.description" />
         </div>
     </div>
     <div class="px-2 flex-grow-1">
@@ -24,7 +24,7 @@
                 class="form-control form-control-sm p-0"
                 [(ngModel)]="concept.transactionType"
                 [isEditable]="false"
-                [itemsSource]="cashTransactionConceptsService.transactionTypes"
+                [itemsSource]="moneyTransactionConceptsService.transactionTypes"
                 [selectedIndex]="concept.transactionType.id"
                 [selectedItem]="concept.transactionType"
                 [displayMemberPath]="'description'"

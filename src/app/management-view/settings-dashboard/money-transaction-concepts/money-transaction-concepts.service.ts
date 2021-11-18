@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { TransactionConcept, TransactionType } from '@models/cash-transaction';
-import { Behavior } from 'popper.js';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -9,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
     providedIn: 'root',
 })
-export class CashTransactionConceptsService {
+export class MoneyTransactionConceptsService {
     //region Getters & Setters
     get saved(): boolean {
         return this._saved;

@@ -8,8 +8,8 @@
                 <app-cash-transaction-concept-input-group
                     [canEditType]="false"
                     [label]="'Concepto'"
-                    [itemsSource]="cashTransactionConceptsService.modifiableTransactionConcepts"
-                    [concept]="cashTransactionConceptsService.transactionParentConcept"
+                    [itemsSource]="moneyTransactionConceptsService.modifiableTransactionConcepts"
+                    [concept]="moneyTransactionConceptsService.transactionParentConcept"
                     (selectedConceptChanged)="changeParentConcept($event)"
                     (conceptCreated)="onCreateParentConcept($event)"
                     (conceptEdited)="onUpdateParentConcept($event)"
@@ -19,9 +19,9 @@
                 <app-cash-transaction-concept-input-group
                     [canEditType]="false"
                     [label]="'Subconcepto'"
-                    [itemsSource]="cashTransactionConceptsService.transactionParentConcept.children"
-                    [concept]="cashTransactionConceptsService.transactionConcept"
-                    [parent]="cashTransactionConceptsService.transactionParentConcept"
+                    [itemsSource]="moneyTransactionConceptsService.transactionParentConcept.children"
+                    [concept]="moneyTransactionConceptsService.transactionConcept"
+                    [parent]="moneyTransactionConceptsService.transactionParentConcept"
                     [showSiblingsGrid]="true"
                     (selectedConceptChanged)="changeSelectedConcept($event)"
                     (conceptCreated)="onCreateConcept($event)"

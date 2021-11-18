@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CashDashboardService } from '@management-view/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@management-view/cash-dashboard/cash-form-handler.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CashTransactionConceptsService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
+import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     constructor(
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
-        private cashCategoriesService: CashTransactionConceptsService,
+        private moneyTransactionConceptsService: MoneyTransactionConceptsService,
         public paymentMethodsService: PaymentMethodsService,
         private route: ActivatedRoute,
         private router: Router
@@ -31,7 +31,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
             this.cashFormHandlerService.cashTransaction = cashTransaction;
 
             // Assign parent transaction concept for usage in the update form
-            this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts.filter(
+            this.cashFormHandlerService.transactionParentConcept = this.moneyTransactionConceptsService.selectableTransactionConcepts.filter(
                 (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
             )[0];
             // Assign payment method

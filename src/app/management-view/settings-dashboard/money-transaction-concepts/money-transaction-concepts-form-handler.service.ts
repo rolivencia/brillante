@@ -8,7 +8,7 @@ import { Audit } from '@models/audit';
 @Injectable({
     providedIn: 'root',
 })
-export class CashTransactionConceptsFormHandlerService implements FormHandler<FormGroup, TransactionConcept> {
+export class MoneyTransactionConceptsFormHandlerService implements FormHandler<FormGroup, TransactionConcept> {
     get transactionConcept(): TransactionConcept {
         return this._transactionConcept;
     }
@@ -40,7 +40,7 @@ export class CashTransactionConceptsFormHandlerService implements FormHandler<Fo
     private _formGroup: FormGroup;
     private _submitted: boolean = false;
 
-    constructor(private formBuilder: FormBuilder, private toastrService: ToastrService) {}
+    constructor(private formBuilder: FormBuilder) {}
 
     public load(transactionConcept: TransactionConcept = this.transactionConcept): FormGroup {
         return this.formBuilder.group({
