@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CashTransactionConceptsHttpService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
+import { CashTransactionConceptsHttpService } from '@management-view/settings-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
 
 describe('CashConcepts.HttpService', () => {
     let service: CashTransactionConceptsHttpService;

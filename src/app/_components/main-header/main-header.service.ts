@@ -68,7 +68,7 @@ export class MainHeaderService {
             route: '/settings-dashboard',
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
+            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
         },
     ];
 

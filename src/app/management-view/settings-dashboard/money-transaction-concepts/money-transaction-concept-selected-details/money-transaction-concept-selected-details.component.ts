@@ -1,16 +1,16 @@
 import { CollectionView } from '@grapecity/wijmo';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { TransactionConcept } from '@models/cash-transaction';
-import { CashTransactionConceptsService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
-import { CashTransactionConceptsHttpService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
+import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
+import { MoneyTransactionConceptsHttpService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-transaction-concept-details',
-    templateUrl: './cash-transaction-concept-selected-details.component.html',
-    styleUrls: ['./cash-transaction-concept-selected-details.component.scss'],
+    templateUrl: './money-transaction-concept-selected-details.component.html',
+    styleUrls: ['./money-transaction-concept-selected-details.component.scss'],
 })
-export class CashTransactionConceptSelectedDetailsComponent implements OnInit, OnChanges {
+export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit, OnChanges {
     @Input() concept: TransactionConcept;
     @Input() addMode: boolean = false;
     @Input() editMode: boolean = false;
@@ -24,8 +24,8 @@ export class CashTransactionConceptSelectedDetailsComponent implements OnInit, O
     public conceptsCollection: CollectionView<TransactionConcept>;
 
     constructor(
-        private cashTransactionConceptsHttpService: CashTransactionConceptsHttpService,
-        private cashTransactionConceptsService: CashTransactionConceptsService,
+        private moneyTransactionConceptsHttpService: MoneyTransactionConceptsHttpService,
+        private moneyTransactionConceptsService: MoneyTransactionConceptsService,
         private toastrService: ToastrService
     ) {}
 
@@ -39,16 +39,16 @@ export class CashTransactionConceptSelectedDetailsComponent implements OnInit, O
         const concept = new TransactionConcept();
         concept.parent = this.concept
             ? this.concept.parent
-            : this.cashTransactionConceptsService.transactionParentConcept;
+            : this.moneyTransactionConceptsService.transactionParentConcept;
 
-        this.cashTransactionConceptsService.addMode.next({
+        this.moneyTransactionConceptsService.addMode.next({
             value: true,
             concept: concept,
         });
     }
 
     enableEditMode() {
-        this.cashTransactionConceptsService.editMode.next({
+        this.moneyTransactionConceptsService.editMode.next({
             value: true,
             concept: this.concept,
         });
@@ -56,8 +56,8 @@ export class CashTransactionConceptSelectedDetailsComponent implements OnInit, O
 
     async toggleStatus() {
         const result = this.concept.enabled
-            ? await this.cashTransactionConceptsHttpService.disable(this.concept).toPromise()
-            : await this.cashTransactionConceptsHttpService.enable(this.concept).toPromise();
+            ? await this.moneyTransactionConceptsHttpService.disable(this.concept).toPromise()
+            : await this.moneyTransactionConceptsHttpService.enable(this.concept).toPromise();
 
         if (result.pop()) {
             this.concept.enabled = !this.concept.enabled; // Toggle status to opposite if update was done in DB

@@ -18,4 +18,8 @@ export class SettingsDashboardComponent implements OnInit {
     public goToUserManagement() {
         this.router.navigate(['settings-dashboard/user-management']).then((result) => console.log(result));
     }
+
+    public goToConceptsManagement() {
+        this.router.navigate(['settings-dashboard/concepts']).then((result) => console.log(result));
+    }
 }

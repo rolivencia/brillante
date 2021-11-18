@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { CashTransactionConceptSelectedDetailsComponent } from './cash-transaction-concept-selected-details.component';
+import { MoneyTransactionConceptSelectedDetailsComponent } from './money-transaction-concept-selected-details.component';
 
 describe('CashTransactionConceptInfoComponent', () => {
-    let component: CashTransactionConceptSelectedDetailsComponent;
-    let fixture: ComponentFixture<CashTransactionConceptSelectedDetailsComponent>;
+    let component: MoneyTransactionConceptSelectedDetailsComponent;
+    let fixture: ComponentFixture<MoneyTransactionConceptSelectedDetailsComponent>;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                declarations: [CashTransactionConceptSelectedDetailsComponent],
+                declarations: [MoneyTransactionConceptSelectedDetailsComponent],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CashTransactionConceptSelectedDetailsComponent);
+        fixture = TestBed.createComponent(MoneyTransactionConceptSelectedDetailsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

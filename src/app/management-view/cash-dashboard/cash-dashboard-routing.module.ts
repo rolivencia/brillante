@@ -2,7 +2,7 @@ import { CashDashboardComponent } from '@management-view/cash-dashboard/cash-das
 import { CashDashboardResolverService } from './cash-dashboard.resolver.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CashRolesGuard } from '../../_services/cash-roles-guard.service';
+import { CashRolesGuard } from '@services/cash-roles-guard.service';
 
 const routes: Routes = [
     {
@@ -40,17 +40,6 @@ const routes: Routes = [
                         path: 'update',
                         loadChildren: () => import('./cash-update/cash-update.module').then((m) => m.CashUpdateModule),
                         outlet: 'right',
-                    },
-                    {
-                        path: 'categories',
-                        loadChildren: () =>
-                            import('./cash-transaction-concepts/cash-transaction-concepts.module').then(
-                                (m) => m.CashTransactionConceptsModule
-                            ),
-                        resolve: {
-                            concepts: CashDashboardResolverService,
-                        },
-                        outlet: 'top',
                     },
                 ],
             },

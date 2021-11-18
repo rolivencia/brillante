@@ -7,7 +7,7 @@ import { environment } from '@environments/environment';
 @Injectable({
     providedIn: 'root',
 })
-export class CashTransactionConceptsHttpService {
+export class MoneyTransactionConceptsHttpService {
     constructor(private http: HttpClient) {}
 
     public create(concept: TransactionConcept): Observable<TransactionConcept> {

@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TransactionConcept } from '@models/cash-transaction';
 import { Subscription } from 'rxjs';
-import { CashTransactionConceptsService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.service';
-import { CashTransactionConceptsHttpService } from '@management-view/cash-dashboard/cash-transaction-concepts/cash-transaction-concepts.http.service';
+import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
+import { MoneyTransactionConceptsHttpService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-transaction-concept-update',
-    templateUrl: './cash-transaction-concept-update.component.html',
-    styleUrls: ['./cash-transaction-concept-update.component.scss'],
+    templateUrl: './money-transaction-concept-update.component.html',
+    styleUrls: ['./money-transaction-concept-update.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy {
+export class MoneyTransactionConceptUpdateComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;
     @Input() label: string = '';
     @Input() canEditType: boolean = true;
@@ -24,13 +24,13 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
     public editModeSubscription: Subscription;
 
     constructor(
-        private cashConceptsHttpService: CashTransactionConceptsHttpService,
-        public cashTransactionConceptsService: CashTransactionConceptsService,
+        private moneyTransactionConceptsHttpService: MoneyTransactionConceptsHttpService,
+        public moneyTransactionConceptsService: MoneyTransactionConceptsService,
         private toastrService: ToastrService
     ) {}
 
     ngOnInit(): void {
-        this.editModeSubscription = this.cashTransactionConceptsService.editMode.subscribe((result) => {
+        this.editModeSubscription = this.moneyTransactionConceptsService.editMode.subscribe((result) => {
             this.editMode = result.value;
             this.editedConcept = result.concept;
         });
@@ -45,7 +45,7 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
     }
 
     goBack() {
-        this.cashTransactionConceptsService.editMode.next({
+        this.moneyTransactionConceptsService.editMode.next({
             value: false,
             concept: this.concept,
         });
@@ -55,7 +55,7 @@ export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy 
         // TODO: Issue #77 - Make it work using the form handler service
         // const result = await this.cashTransactionConceptsFormHandlerService.create();
 
-        const result = await this.cashConceptsHttpService.update(this.concept).toPromise();
+        const result = await this.moneyTransactionConceptsHttpService.update(this.concept).toPromise();
         if (result.pop()) {
             this.toastrService.info(`Concepto ID: ${this.concept.id} actualizado correctamente.`);
             this.updated.emit(this.concept);
