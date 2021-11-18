@@ -4,7 +4,6 @@ import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 
 import { ReportsGuard } from '@management-view/reports-dashboard/reports.guard';
-import { AppSettingsGuard } from '@guards/app-settings.guard';
 import { OfficeBranchGuard } from '@guards/office-branch.guard';
 
 const appRoutes: Routes = [
@@ -49,7 +48,7 @@ const appRoutes: Routes = [
             import('@management-view/settings-dashboard/settings-dashboard.module').then(
                 (m) => m.SettingsDashboardModule
             ),
-        canActivate: [AuthGuard, AppSettingsGuard],
+        canActivate: [AuthGuard],
     },
     {
         path: 'reports-dashboard',
