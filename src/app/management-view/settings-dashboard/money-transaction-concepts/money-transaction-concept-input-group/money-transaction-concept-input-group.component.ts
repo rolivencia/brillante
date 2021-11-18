@@ -6,10 +6,10 @@ import { TransactionConcept } from '@models/cash-transaction';
 
 @Component({
     selector: 'app-cash-transaction-concept-input-group',
-    templateUrl: './cash-transaction-concept-input-group.component.html',
-    styleUrls: ['./cash-transaction-concept-input-group.component.scss'],
+    templateUrl: './money-transaction-concept-input-group.component.html',
+    styleUrls: ['./money-transaction-concept-input-group.component.scss'],
 })
-export class CashTransactionConceptInputGroupComponent implements OnInit, OnDestroy, OnChanges {
+export class MoneyTransactionConceptInputGroupComponent implements OnInit, OnDestroy, OnChanges {
     @Input() concept: TransactionConcept;
     @Input() parent: TransactionConcept = null;
 

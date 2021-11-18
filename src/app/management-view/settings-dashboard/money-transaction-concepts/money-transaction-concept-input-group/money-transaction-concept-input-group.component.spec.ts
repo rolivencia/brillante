@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { CashTransactionConceptInputGroupComponent } from './cash-transaction-concept-input-group.component';
+import { MoneyTransactionConceptInputGroupComponent } from './money-transaction-concept-input-group.component';
 
 describe('CashTransactionConceptInputGroupComponent', () => {
-    let component: CashTransactionConceptInputGroupComponent;
-    let fixture: ComponentFixture<CashTransactionConceptInputGroupComponent>;
+    let component: MoneyTransactionConceptInputGroupComponent;
+    let fixture: ComponentFixture<MoneyTransactionConceptInputGroupComponent>;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                declarations: [CashTransactionConceptInputGroupComponent],
+                declarations: [MoneyTransactionConceptInputGroupComponent],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CashTransactionConceptInputGroupComponent);
+        fixture = TestBed.createComponent(MoneyTransactionConceptInputGroupComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

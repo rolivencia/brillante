@@ -7,11 +7,11 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-transaction-concept-update',
-    templateUrl: './cash-transaction-concept-update.component.html',
-    styleUrls: ['./cash-transaction-concept-update.component.scss'],
+    templateUrl: './money-transaction-concept-update.component.html',
+    styleUrls: ['./money-transaction-concept-update.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CashTransactionConceptUpdateComponent implements OnInit, OnDestroy {
+export class MoneyTransactionConceptUpdateComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;
     @Input() label: string = '';
     @Input() canEditType: boolean = true;

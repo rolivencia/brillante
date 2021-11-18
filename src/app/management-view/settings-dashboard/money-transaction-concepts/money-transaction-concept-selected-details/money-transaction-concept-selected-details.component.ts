@@ -7,10 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cash-transaction-concept-details',
-    templateUrl: './cash-transaction-concept-selected-details.component.html',
-    styleUrls: ['./cash-transaction-concept-selected-details.component.scss'],
+    templateUrl: './money-transaction-concept-selected-details.component.html',
+    styleUrls: ['./money-transaction-concept-selected-details.component.scss'],
 })
-export class CashTransactionConceptSelectedDetailsComponent implements OnInit, OnChanges {
+export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit, OnChanges {
     @Input() concept: TransactionConcept;
     @Input() addMode: boolean = false;
     @Input() editMode: boolean = false;
