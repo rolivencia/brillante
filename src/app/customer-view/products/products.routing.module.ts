@@ -7,7 +7,7 @@ import { ProductsListResolverService } from './products-list/products-list-resol
 import { ProductsResolverService } from './products.resolver.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CartResolverService } from './cart/cart.resolver.service';
-import { PaymentMethodsResolverService } from '../../_services/payment-methods.resolver.service';
+import { PaymentMethodsResolverService } from '@services/payment-methods.resolver.service';
 
 const routes: Routes = [
     {

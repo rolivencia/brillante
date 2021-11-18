@@ -1,2 +1,3 @@
-<p>product-detail works!</p>
+<h1>{{ product.name }}</h1>
+<ng-container *ngFor="let image of product.imageUrls"><img [src]="image" /></ng-container>
 <p>Product ID: {{ product.id }}</p>
