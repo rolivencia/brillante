@@ -1,0 +1,25 @@
+@import 'src/assets/scss/bootstrap-theming';
+
+.thumbnail-gallery {
+    .thumbnail {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.current-image {
+    img {
+        @include media-breakpoint-up(xl) {
+            width: 480px;
+        }
+    }
+}
+
+.description,
+.specifications {
+    .header {
+        display: inline;
+        border-top: 4px $primary solid;
+    }
+}

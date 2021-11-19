@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '@models/product';
+import { faCreditCard, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-product-detail',
@@ -8,6 +9,7 @@ import { Product } from '@models/product';
     styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
+    public faCreditCard: IconDefinition = faCreditCard;
     public product: Product;
 
     constructor(private route: ActivatedRoute) {}

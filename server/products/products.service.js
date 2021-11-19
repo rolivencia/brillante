@@ -82,7 +82,7 @@ async function getById(id) {
                       price: product.retailPrice,
                       imageUrls: product.images.map((image) => urlFor(image).url()),
                       categories: [],
-                      description: product.body,
+                      description: product.body.en.pop().children.pop().text.split('\n'),
                       manufacturer: {
                           id: product.manufacturer._id,
                           title: product.manufacturer.title,
