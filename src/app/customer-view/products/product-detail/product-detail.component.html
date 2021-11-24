@@ -3,16 +3,16 @@
         <div class="col-xl-7">
             <div class="d-flex">
                 <div class="thumbnail-gallery flex-column">
-                    <ng-container *ngFor="let image of product.imageUrls">
-                        <div class="thumbnail card mb-2">
+                    <ng-container *ngFor="let imageUrl of product.imageUrls">
+                        <div class="thumbnail card mb-2" (click)="setImage(imageUrl)">
                             <div class="card-body p-1">
-                                <img class="d-flex" [height]="80" [width]="80" [src]="image" />
+                                <img class="d-flex" [height]="80" [width]="80" [src]="imageUrl" />
                             </div>
                         </div>
                     </ng-container>
                 </div>
                 <div class="current-image">
-                    <img [src]="product.imageUrls[0]" />
+                    <img [src]="highlightedImageUrl" />
                 </div>
             </div>
             <section class="specifications my-5 text-center">

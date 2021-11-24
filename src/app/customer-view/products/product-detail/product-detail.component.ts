@@ -14,11 +14,17 @@ export class ProductDetailComponent implements OnInit {
     public faExclamationTriangle: IconDefinition = faExclamationTriangle;
     public product: Product;
 
+    public highlightedImageUrl: string = '';
+
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         if (this.route.snapshot.data['product']) {
             this.product = this.route.snapshot.data['product'];
+            this.highlightedImageUrl = this.product.imageUrls[0];
         }
+    }
+    setImage(imageUrl: string) {
+        this.highlightedImageUrl = imageUrl;
     }
 }
