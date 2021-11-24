@@ -33,7 +33,7 @@
                             [ngModelOptions]="{ standalone: true }"
                             [isEditable]="false"
                             [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="cashCategoriesService.selectableTransactionConcepts"
+                            [itemsSource]="moneyTransactionConceptsService.selectableTransactionConcepts"
                             [selectedItem]="cashFormHandlerService.transactionParentConcept"
                             [displayMemberPath]="'description'"
                         >
