@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '@models/product';
 import { PaymentMethod } from '@models/cash-transaction';
 import { PaymentMethodsService } from '@services/payment-methods.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-product-thumbnail',
@@ -12,8 +13,8 @@ export class ProductThumbnailComponent implements OnInit {
     @Input() product: Product;
     @Input() paymentMethods: PaymentMethod[] = [];
 
-    public $fullPrice;
-    public $installmentsPrice;
+    public $fullPrice: Observable<string>;
+    public $installmentsPrice: Observable<string>;
 
     constructor(public paymentMethodsService: PaymentMethodsService) {}
 

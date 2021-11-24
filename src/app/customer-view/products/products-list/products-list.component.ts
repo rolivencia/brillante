@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/product';
 import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
@@ -28,7 +28,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         private changeDetectorRef: ChangeDetectorRef,
         private paymentMethodsService: PaymentMethodsService,
         public productsService: ProductsService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -68,5 +69,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         }
 
         return `${min} - ${max}`;
+    }
+
+    public goToProductDetail(product: Product) {
+        this.router.navigate([`/products/product-detail/${product.id}`]);
     }
 }

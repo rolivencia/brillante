@@ -1,6 +1,10 @@
 .product {
     margin-bottom: 12px;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     .thumbnail-container {
         position: relative;
         background-color: white;

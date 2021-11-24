@@ -1,5 +1,5 @@
 <div class="row" *ngIf="paymentMethods.length > 0">
-    <div *ngFor="let product of products" class="col-6 col-md-3 card border-0">
+    <div *ngFor="let product of products" class="col-6 col-md-3 card border-0" (click)="goToProductDetail(product)">
         <app-product-thumbnail [product]="product" [paymentMethods]="paymentMethods"></app-product-thumbnail>
     </div>
 </div>
