@@ -45,7 +45,9 @@
                     <h3>$ {{ product.price }}</h3>
                     <p>
                         <fa-icon [icon]="faCreditCard" [size]="'1x'"></fa-icon
-                        ><label class="ml-2">En 12x $ {{ product.price }}</label>
+                        ><label *ngIf="$installmentsPrice | async as installmentsPrice" class="ml-2"
+                            >En 12x $ {{ installmentsPrice }}</label
+                        >
                     </p>
                     <p><strong>¡Stock disponible!</strong></p>
                     <div class="form-inline mb-3">
