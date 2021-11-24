@@ -11,7 +11,7 @@
 .current-image {
     img {
         @include media-breakpoint-up(xl) {
-            width: 480px;
+            width: 100%;
         }
     }
 }
