@@ -3,12 +3,11 @@ import { Router } from '@angular/router';
 import { faBars, faShoppingCart, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { User } from '@models/user';
-import { EUser } from '@enums/user.enum';
 import { AuthenticationService } from '@services/authentication.service';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
 import { MainHeaderService } from '@components/main-header/main-header.service';
 
-export class NavigationLink {
+export interface NavigationLink {
     id: string;
     text: string;
     route: string | Object;
@@ -25,12 +24,16 @@ export class NavigationLink {
 export class MainHeaderComponent implements OnInit {
     @ViewChild('sidebar') sidebar: SidebarComponent;
 
-    get welcomeName() {
+    get welcomeName(): string {
         return `${this.currentUser.avatar} ${this.currentUser.firstName} ${this.currentUser.lastName}`;
     }
 
-    get userLinks() {
-        return this.currentUser ? this._adminLinks : this.mainHeaderService.userLinks;
+    get userLinks(): NavigationLink[] {
+        return this.mainHeaderService.userLinks;
+    }
+
+    get adminLinks(): NavigationLink[] {
+        return this._adminLinks;
     }
 
     currentUser: User;
@@ -63,6 +66,7 @@ export class MainHeaderComponent implements OnInit {
 
     logout() {
         this.authenticationService.logout();
+        this._adminLinks = [];
         this.router.navigate(['/']);
     }
 

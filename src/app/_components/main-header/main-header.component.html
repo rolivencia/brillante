@@ -27,33 +27,9 @@
             </a>
         </div>
 
-        <!-- TODO: #200 - Add responsive solution for nav visualization -->
-        <div id="nav-container" class="flex-grow-1 d-none d-xl-block">
-            <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-left">
-                <ng-container *ngFor="let route of userLinks">
-                    <li class="nav-item" *ngIf="route.visible">
-                        <a
-                            class="nav-link"
-                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                            [routerLink]="route.route"
-                            >{{ route.text }}</a
-                        >
-                    </li>
-                </ng-container>
-            </ul>
-        </div>
+        <ng-container [ngTemplateOutlet]="navTemplate"></ng-container>
 
-        <ng-container *ngIf="currentUser">
-            <button type="button" class="btn btn-outline-secondary rounded-0 mr-4">
-                <span>
-                    <strong>{{ welcomeName }}</strong>
-                    | Sucursal:
-                    <strong>{{
-                        officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
-                    }}</strong>
-                </span>
-            </button>
-        </ng-container>
+        <ng-container *ngIf="currentUser" [ngTemplateOutlet]="userInfo"> </ng-container>
 
         <ul class="nav justify-content-end align-items-center nav-sup">
             <ng-container *ngIf="!currentUser">
@@ -90,3 +66,42 @@
         </ul>
     </nav>
 </section>
+
+<ng-template #navTemplate>
+    <!-- TODO: #200 - Add responsive solution for nav visualization -->
+    <div id="nav-container" class="flex-grow-1 d-none d-xl-block">
+        <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-left">
+            <ng-container *ngIf="currentUser">
+                <li class="nav-item" ngbDropdown>
+                    <div id="dropdownBasic1" ngbDropdownToggle class="nav-link">Gestión Interna</div>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <a ngbDropdownItem *ngFor="let route of adminLinks" [routerLink]="route.route">{{
+                            route.text
+                        }}</a>
+                    </div>
+                </li>
+            </ng-container>
+            <ng-container *ngFor="let route of userLinks">
+                <li class="nav-item" *ngIf="route.visible">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                        [routerLink]="route.route"
+                        >{{ route.text }}</a
+                    >
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</ng-template>
+<ng-template #userInfo>
+    <button type="button" class="btn btn-outline-secondary rounded-0 mr-4">
+        <span>
+            <strong>{{ welcomeName }}</strong>
+            | Sucursal:
+            <strong>{{
+                officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
+            }}</strong>
+        </span>
+    </button>
+</ng-template>

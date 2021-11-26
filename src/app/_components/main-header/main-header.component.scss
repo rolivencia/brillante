@@ -1,3 +1,5 @@
+@import 'src/assets/scss/bootstrap-theming';
+
 #navigation-menu {
     .nav-item {
         font-family: 'Barlow', sans-serif;
@@ -17,7 +19,7 @@
     width: 100%;
     z-index: 1040;
     background: #fff;
-    a {
+    .nav-link {
         color: #6c6c6c;
     }
     .brand-navbar {
@@ -29,7 +31,6 @@
             align-items: center;
             a.navbar-brand {
                 padding: 0;
-                width: 115px;
                 width: 85px;
                 margin: 0;
                 img {
@@ -99,7 +100,7 @@
 }
 
 #burger-menu {
-    color: #7b42df;
+    color: $primary;
     line-height: 1;
     font-size: 22px;
     margin: 0 0 0 -15px;

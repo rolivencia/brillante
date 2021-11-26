@@ -47,16 +47,9 @@ export class MainHeaderService {
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
         },
-        {
-            id: '5',
-            text: 'Productos',
-            route: '/products',
-            enabled: true,
-            visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
-        },
         // {
-        //     label: 'Stock',
+        //     id: '5',
+        //     text: 'Stock',
         //     route: '/products-list-dashboard',
         //     enabled: true,
         //     visible: true,

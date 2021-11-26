@@ -17,7 +17,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     constructor(
         public cashDashboardService: CashDashboardService,
         public cashFormHandlerService: CashFormHandlerService,
-        private moneyTransactionConceptsService: MoneyTransactionConceptsService,
+        public moneyTransactionConceptsService: MoneyTransactionConceptsService,
         public paymentMethodsService: PaymentMethodsService,
         private route: ActivatedRoute,
         private router: Router
