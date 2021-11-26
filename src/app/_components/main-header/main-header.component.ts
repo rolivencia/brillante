@@ -44,6 +44,8 @@ export class MainHeaderComponent implements OnInit {
 
     private _adminLinks: NavigationLink[] = [];
 
+    public fields: Object = { text: 'Name' };
+
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
@@ -75,6 +77,6 @@ export class MainHeaderComponent implements OnInit {
     }
 
     public toggleSidebar() {
-        this.sidebar.show();
+        this.sidebar.toggle();
     }
 }

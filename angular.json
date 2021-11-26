@@ -25,9 +25,9 @@
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
                             "node_modules/bootstrap/scss/bootstrap.scss",
-                            "node_modules/@syncfusion/ej2-base/styles/bootstrap4.css",
-                            "node_modules/@syncfusion/ej2-angular-lists/styles/bootstrap4.css",
-                            "node_modules/@syncfusion/ej2-angular-navigations/styles/bootstrap4.css",
+                            "node_modules/@syncfusion/ej2-base/styles/material.css",
+                            "node_modules/@syncfusion/ej2-angular-lists/styles/material.css",
+                            "node_modules/@syncfusion/ej2-angular-navigations/styles/material.css",
                             "node_modules/@grapecity/wijmo.styles/wijmo.scss",
                             "src/styles.scss"
                         ],
