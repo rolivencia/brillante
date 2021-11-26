@@ -48,7 +48,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .then((result) => console.log(result));
     }
 
-    notImplemented(route: string) {
+    openSanityStudio() {
+        window.open('https://brillante-store.sanity.studio/', '_blank');
+    }
+
+    notImplemented() {
         this.alertService.error('Módulo no implementado.', true);
     }
 }
