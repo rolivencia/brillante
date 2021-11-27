@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { faBars, faShoppingCart, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faShoppingCart, faTimes, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
-import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
+import { FieldSettingsModel, SidebarComponent } from '@syncfusion/ej2-angular-navigations';
 import { MainHeaderService } from '@components/main-header/main-header.service';
 
 export interface NavigationLink {
@@ -14,6 +14,7 @@ export interface NavigationLink {
     enabled: boolean;
     visible: boolean;
     roles?: number[];
+    icon?: IconDefinition;
 }
 
 @Component({
@@ -39,12 +40,13 @@ export class MainHeaderComponent implements OnInit {
     currentUser: User;
 
     public barsIcon: IconDefinition = faBars;
+    public closeIcon: IconDefinition = faTimes;
     public cartIcon: IconDefinition = faShoppingCart;
     public userIcon: IconDefinition = faUser;
 
     private _adminLinks: NavigationLink[] = [];
 
-    public fields: Object = { text: 'Name' };
+    public fields: FieldSettingsModel = { text: 'Name' };
 
     constructor(
         private router: Router,
@@ -69,14 +71,19 @@ export class MainHeaderComponent implements OnInit {
     logout() {
         this.authenticationService.logout();
         this._adminLinks = [];
+        this.sidebar.hide();
         this.router.navigate(['/']);
     }
 
-    public onCreated(args: any) {
+    public onCreated() {
         this.sidebar.element.style.visibility = '';
     }
 
     public toggleSidebar() {
         this.sidebar.toggle();
+    }
+
+    public hideSidebar() {
+        this.sidebar.hide();
     }
 }

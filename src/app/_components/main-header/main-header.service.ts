@@ -1,6 +1,19 @@
 import { Injectable } from '@angular/core';
 import { EUser } from '@enums/user.enum';
 import { NavigationLink } from '@components/main-header/main-header.component';
+import {
+    faBuilding,
+    faCashRegister,
+    faCogs,
+    faColumns,
+    faHome,
+    faMobile,
+    faNewspaper,
+    faQuestion,
+    faShoppingBag,
+    faToolbox,
+    faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
     providedIn: 'root',
@@ -22,6 +35,7 @@ export class MainHeaderService {
             enabled: true,
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
+            icon: faColumns,
         },
         {
             id: '2',
@@ -30,6 +44,7 @@ export class MainHeaderService {
             enabled: true,
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
+            icon: faUsers,
         },
         {
             id: '3',
@@ -38,6 +53,7 @@ export class MainHeaderService {
             enabled: true,
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
+            icon: faToolbox,
         },
         {
             id: '4',
@@ -46,6 +62,7 @@ export class MainHeaderService {
             enabled: true,
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
+            icon: faCashRegister,
         },
         // {
         //     id: '5',
@@ -62,23 +79,25 @@ export class MainHeaderService {
             enabled: true,
             visible: true,
             roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
+            icon: faCogs,
         },
     ];
 
     private _userLinks: NavigationLink[] = [
-        { id: '100', text: 'Inicio', route: '/home', enabled: true, visible: false },
-        { id: '101', text: 'Productos', route: '/products', enabled: true, visible: true },
-        { id: '102', text: 'Celulares', route: '/smartphones', enabled: false, visible: false },
-        { id: '103', text: 'Reparaciones', route: '/repairs', enabled: true, visible: true },
+        { id: '100', text: 'Inicio', route: '/', enabled: true, visible: true, icon: faHome },
+        { id: '101', text: 'Productos', route: '/products', enabled: true, visible: true, icon: faShoppingBag },
+        { id: '102', text: 'Celulares', route: '/smartphones', enabled: false, visible: false, icon: faMobile },
+        { id: '103', text: 'Reparaciones', route: '/repairs', enabled: true, visible: true, icon: faToolbox },
         {
             id: '104',
             text: 'Servicio a empresas',
             route: 'enterprise',
             enabled: true,
             visible: true,
+            icon: faBuilding,
         },
-        { id: '105', text: 'Novedades', route: 'news', enabled: false, visible: true },
-        { id: '106', text: 'Contacto', route: 'contact', enabled: true, visible: true },
+        { id: '105', text: 'Novedades', route: 'news', enabled: false, visible: false, icon: faNewspaper },
+        { id: '106', text: 'Contacto', route: 'contact', enabled: true, visible: true, icon: faQuestion },
     ];
 
     constructor() {}

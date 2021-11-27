@@ -1,31 +1,65 @@
 <section id="main-header" class="container-fluid">
-    <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated($event)" style="visibility: hidden">
-        <h6 class="title">Gestión Interna</h6>
-        <ejs-listview id="internal-management" [dataSource]="adminLinks" cssClass="e-list-template" [fields]="fields">
-            <ng-template #template let-dataSource="">
-                <div class="e-list-wrapper">
-                    <a
-                        class="nav-link"
-                        [ngClass]="{ disabled: !dataSource.enabled, active: dataSource.enabled }"
-                        [routerLink]="dataSource.route"
-                        >{{ dataSource.text }}</a
+    <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated()" style="visibility: hidden" [width]="'100%'">
+        <section id="sidebar-content" class="m-3">
+            <div *ngIf="currentUser" id="user-info" class="mb-3 d-flex justify-content-between d-md-none">
+                <div>
+                    <div>
+                        <strong>{{ welcomeName }}</strong>
+                    </div>
+                    <div>
+                        Sucursal:
+                        <strong>
+                            {{
+                                officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
+                            }}</strong
+                        >
+                    </div>
+                </div>
+                <div>
+                    <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
+                        >CERRAR SESIÓN</a
                     >
                 </div>
-            </ng-template>
-        </ejs-listview>
-        <h6 class="title">Módulos Públicos</h6>
-        <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
-            <ng-template #template let-dataSource="">
-                <div class="e-list-wrapper">
-                    <a
-                        class="nav-link"
-                        [ngClass]="{ disabled: !dataSource.enabled, active: dataSource.enabled }"
-                        [routerLink]="dataSource.route"
-                        >{{ dataSource.text }}</a
-                    >
-                </div>
-            </ng-template>
-        </ejs-listview>
+            </div>
+
+            <ng-container *ngIf="currentUser"
+                ><h6 class="title">Gestión Interna</h6>
+                <ejs-listview
+                    id="internal-management"
+                    [dataSource]="adminLinks"
+                    cssClass="e-list-template"
+                    [fields]="fields"
+                >
+                    <ng-template #template let-route="">
+                        <div class="e-list-wrapper">
+                            <a
+                                class="nav-link"
+                                [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                                [routerLink]="route.route"
+                                (click)="hideSidebar()"
+                            >
+                                <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                                {{ route.text }}</a
+                            >
+                        </div>
+                    </ng-template>
+                </ejs-listview>
+                <h6 class="title">Módulos Públicos</h6></ng-container
+            >
+            <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
+                <ng-template #template let-route="">
+                    <div class="e-list-wrapper" *ngIf="route.visible">
+                        <a
+                            class="nav-link"
+                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                            [routerLink]="route.route"
+                            (click)="hideSidebar()"
+                            ><fa-icon class="mr-3" [icon]="route.icon"></fa-icon>{{ route.text }}</a
+                        >
+                    </div>
+                </ng-template>
+            </ejs-listview>
+        </section>
     </ejs-sidebar>
     <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
         <div class="brand-container">
@@ -39,7 +73,8 @@
                     aria-expanded="false"
                     (click)="toggleSidebar()"
                 >
-                    <fa-icon [icon]="barsIcon"></fa-icon>
+                    <fa-icon *ngIf="!sidebar.isOpen" [icon]="barsIcon"></fa-icon>
+                    <fa-icon *ngIf="sidebar.isOpen" [icon]="closeIcon"></fa-icon>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <ng-container *ngFor="let route of userLinks">
@@ -120,7 +155,7 @@
     </div>
 </ng-template>
 <ng-template #userInfo>
-    <button type="button" class="btn btn-outline-secondary rounded-0 mr-4">
+    <button type="button" class="btn btn-outline-secondary rounded-0 mr-4 d-none d-lg-block">
         <span>
             <strong>{{ welcomeName }}</strong>
             | Sucursal:
