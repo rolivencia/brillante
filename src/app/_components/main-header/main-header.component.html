@@ -1,6 +1,20 @@
 <section id="main-header" class="container-fluid">
     <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated($event)" style="visibility: hidden">
-        <ejs-listview id="navigation" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
+        <h6 class="title">Gestión Interna</h6>
+        <ejs-listview id="internal-management" [dataSource]="adminLinks" cssClass="e-list-template" [fields]="fields">
+            <ng-template #template let-dataSource="">
+                <div class="e-list-wrapper">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{ disabled: !dataSource.enabled, active: dataSource.enabled }"
+                        [routerLink]="dataSource.route"
+                        >{{ dataSource.text }}</a
+                    >
+                </div>
+            </ng-template>
+        </ejs-listview>
+        <h6 class="title">Módulos Públicos</h6>
+        <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
             <ng-template #template let-dataSource="">
                 <div class="e-list-wrapper">
                     <a
