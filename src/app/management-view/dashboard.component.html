@@ -17,13 +17,11 @@
             <p class="card-text">Ingresar al menú de gestión de caja</p>
         </div>
     </div>
-    <div class="card text-white bg-info mb-3" (click)="goTo('products-list-dashboard')">
+
+    <div class="card text-white bg-secondary mb-3" (click)="goTo('reports-dashboard')">
         <div class="card-body">
-            <h5 class="card-title">📱 Gestión de Stock</h5>
-            <p class="card-text">Ingresar al menú de gestión de stock</p>
-        </div>
-        <div class="card-footer bg-danger">
-            <small class="text-white">Módulo a implementar</small>
+            <h5 class="card-title">📈 Reportes</h5>
+            <p class="card-text">Ingresar al menú de Reportes</p>
         </div>
     </div>
     <div class="card bg-warning mb-3" (click)="goTo('settings-dashboard')">
@@ -32,11 +30,28 @@
             <p class="card-text">Ingresar al menú de Configuración</p>
         </div>
     </div>
-
-    <div class="card text-white bg-secondary mb-3" (click)="goTo('reports-dashboard')">
+    <div class="card text-white bg-info mb-3" (click)="openSanityStudio()">
         <div class="card-body">
-            <h5 class="card-title">📈 Reportes</h5>
-            <p class="card-text">Ingresar al menú de Reportes</p>
+            <h5 class="card-title">🛍️ Sanity Studio</h5>
+            <p class="card-text">Acceso a Sanity Studio: Gestor de contenido para la web de Brillante Store</p>
+        </div>
+    </div>
+    <div class="card text-white bg-info mb-3" (click)="goTo('products-list-dashboard')">
+        <div class="card-body">
+            <h5 class="card-title">📱 Punto de Venta</h5>
+            <p class="card-text">Ingresar al módulo de punto de venta</p>
+        </div>
+        <div class="card-footer bg-danger">
+            <small class="text-white">Módulo a implementar</small>
+        </div>
+    </div>
+    <div class="card text-white bg-info mb-3" (click)="goTo('products-list-dashboard')">
+        <div class="card-body">
+            <h5 class="card-title">📱 Gestión de Stock</h5>
+            <p class="card-text">Ingresar al módulo de gestión de stock</p>
+        </div>
+        <div class="card-footer bg-danger">
+            <small class="text-white">Módulo a implementar</small>
         </div>
     </div>
 </div>
