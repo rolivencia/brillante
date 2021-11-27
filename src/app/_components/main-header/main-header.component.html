@@ -1,5 +1,5 @@
 <section id="main-header" class="container-fluid">
-    <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated()" style="visibility: hidden" [width]="'100%'">
+    <ejs-sidebar id="default-sidebar" class="d-xl-none" #sidebar (created)="onCreated()" [width]="'100%'">
         <section id="sidebar-content" class="m-3">
             <div *ngIf="currentUser" id="user-info" class="mb-3 d-flex justify-content-between d-md-none">
                 <div>
