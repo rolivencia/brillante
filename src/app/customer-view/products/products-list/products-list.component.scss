@@ -1,11 +1,61 @@
+@import 'src/assets/scss/bootstrap-theming';
+
+#search-input {
+    span {
+        position: absolute;
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        z-index: 4;
+        color: $secondary;
+    }
+
+    input {
+        padding-left: 32px;
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+}
+
 .pagination {
     a {
         &.active {
             font-weight: 900;
-            color: #003164;
+            color: $primary;
         }
         &:hover {
             cursor: pointer;
         }
+    }
+}
+
+.product-grid-pagination {
+    p {
+        padding: 10px;
+    }
+    nav {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 7px;
+    }
+
+    .pagination li {
+        &:first-child,
+        &:last-child {
+            font-size: 12px;
+            line-height: 2.2;
+        }
+        a {
+            padding: 10px;
+            font-weight: 500;
+        }
+    }
+}
+
+h1 {
+    @include media-breakpoint-down(md) {
+        padding: 12px;
+        font-size: 32px;
     }
 }

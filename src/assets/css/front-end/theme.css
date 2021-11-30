@@ -644,38 +644,7 @@ a.footerAlmaLogo:hover {
     transform: scale(1);
     opacity: 1;
 }
-.product_grid nav {
-    margin-top: 30px;
-}
-.product_grid nav ul {
-    margin: 0;
-    padding: 0;
-}
-.product_grid nav ul li {
-    list-style: none;
-}
-.product_grid nav ul li a {
-    color: #999;
-    font-weight: 400;
-}
-.product_grid_pagination p {
-    padding: 10px;
-}
-.product_grid_pagination nav {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    padding: 7px;
-}
-.product_grid_pagination .pagination li:first-child,
-.product_grid_pagination .pagination li:last-child {
-    font-size: 12px;
-    line-height: 2.2;
-}
-.product_grid_pagination .pagination li a {
-    padding: 10px;
-    font-weight: 500;
-}
+
 .franja {
     padding: 90px 0;
 }
