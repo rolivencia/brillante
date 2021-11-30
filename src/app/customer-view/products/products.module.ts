@@ -7,11 +7,12 @@ import { ProductsRoutingModule } from './products.routing.module';
 import { ProductsService } from './products.service';
 import { ProductsComponent } from './products.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ProductThumbnailModule } from '../../_components/product-thumbnail/product-thumbnail.module';
+import { ProductThumbnailModule } from '@components/product-thumbnail/product-thumbnail.module';
+import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 
 @NgModule({
     declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent],
-    imports: [CommonModule, ProductsRoutingModule, FontAwesomeModule, ProductThumbnailModule],
+    imports: [CommonModule, ProductsRoutingModule, FontAwesomeModule, ProductThumbnailModule, SidebarModule],
     providers: [ProductsService, ProductsHttpService],
 })
 export class ProductsModule {}
