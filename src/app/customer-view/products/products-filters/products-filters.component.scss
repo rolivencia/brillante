@@ -1,7 +1,25 @@
 @import 'src/assets/scss/bootstrap-theming';
 
-.category-filters-list > li a {
-    font-size: 14px;
+.category-filters-list > li {
+    @include media-breakpoint-down(md) {
+        border-top: 1px $secondary solid;
+        padding: 12px 12px 12px 20px;
+    }
+    a {
+        @include media-breakpoint-up(md) {
+            font-size: 14px;
+        }
+        @include media-breakpoint-down(md) {
+            font-size: 20px;
+        }
+    }
+}
+
+h6 {
+    @include media-breakpoint-down(md) {
+        font-size: 32px;
+        padding: 12px;
+    }
 }
 
 .category-filters {

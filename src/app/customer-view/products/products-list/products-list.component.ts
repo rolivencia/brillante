@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/product';
 import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
-import { faChevronLeft, faChevronRight, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { PaymentMethod } from '@models/cash-transaction';
 import { PaymentMethodsService } from '@services/payment-methods.service';
+import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
 
 @Component({
     selector: 'app-products-list',
@@ -13,12 +14,15 @@ import { PaymentMethodsService } from '@services/payment-methods.service';
     styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
+    @ViewChild('sidebar') sidebar: SidebarComponent;
+
     public count: number;
     public products: Product[] = [];
     public pages: number[] = [1];
 
     private routeSubscription: Subscription;
 
+    public faTimes: IconDefinition = faTimes;
     public faChevronLeft: IconDefinition = faChevronLeft;
     public faChevronRight: IconDefinition = faChevronRight;
 
@@ -57,11 +61,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.routeSubscription.unsubscribe();
     }
 
-    addToCart(id: number) {
+    public addToCart(id: number) {
         console.log('IMPLEMENT ADDTOCART METHOD');
     }
 
-    productOffsetCount() {
+    public productOffsetCount() {
         const min = 12 * (this.productsService.currentOffset - 1) + 1;
         let max = 12 + (this.productsService.currentOffset - 1) * 12;
         if (max > this.count && this.pages.length === this.productsService.currentOffset) {
@@ -73,5 +77,13 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     public goToProductDetail(product: Product) {
         this.router.navigate([`/products/product-detail/${product.id}`]);
+    }
+
+    public onCreated() {
+        this.sidebar.element.style.visibility = '';
+    }
+
+    public toggleSidebar() {
+        this.sidebar.toggle();
     }
 }

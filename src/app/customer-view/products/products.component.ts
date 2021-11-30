@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '@customer-view/products/products.service';
 import { ActivatedRoute } from '@angular/router';
-import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
-import { faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-products',
@@ -10,10 +8,6 @@ import { faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
     styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-    @ViewChild('sidebar') sidebar: SidebarComponent;
-
-    public faTimes: IconDefinition = faTimes;
-
     constructor(private route: ActivatedRoute, public productsService: ProductsService) {}
 
     ngOnInit(): void {
@@ -21,13 +15,5 @@ export class ProductsComponent implements OnInit {
             this.productsService.categories = this.route.snapshot.data['filters'].categories;
             this.productsService.manufacturers = this.route.snapshot.data['filters'].manufacturers;
         }
-    }
-
-    public onCreated() {
-        this.sidebar.element.style.visibility = '';
-    }
-
-    public toggleSidebar() {
-        this.sidebar.toggle();
     }
 }

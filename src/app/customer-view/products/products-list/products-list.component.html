@@ -1,3 +1,26 @@
+<ejs-sidebar
+    id="default-sidebar"
+    class="d-lg-none"
+    #sidebar
+    (created)="onCreated()"
+    [width]="'100%'"
+    [position]="'Right'"
+>
+    <div class="d-flex justify-content-between align-content-center pt-1 pl-1 pr-1">
+        <h1>Filtrar por</h1>
+        <div class="pt-3 pr-3">
+            <fa-icon [icon]="faTimes" [size]="'3x'" (click)="toggleSidebar()"></fa-icon>
+        </div>
+    </div>
+
+    <app-products-filters></app-products-filters>
+</ejs-sidebar>
+
+<div class="d-flex d-lg-none mb-3">
+    <input class="w-50 input-group input-group-sm mr-2" />
+    <button class="w-50 btn btn-outline-primary ml-2" (click)="toggleSidebar()">Filtros</button>
+</div>
+
 <div class="row" *ngIf="paymentMethods.length > 0">
     <div *ngFor="let product of products" class="col-6 col-md-3 card border-0" (click)="goToProductDetail(product)">
         <app-product-thumbnail [product]="product" [paymentMethods]="paymentMethods"></app-product-thumbnail>

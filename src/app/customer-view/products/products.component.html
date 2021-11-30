@@ -22,13 +22,7 @@
 </div>
 
 <div class="global-wrapper clearfix" id="global-wrapper">
-    <ejs-sidebar id="default-sidebar" class="d-lg-none" #sidebar (created)="onCreated()" [width]="'100%'">
-        <div class="d-flex justify-content-end pr-3 pt-3">
-            <fa-icon [icon]="faTimes" [size]="'2x'" (click)="toggleSidebar()"></fa-icon>
-        </div>
-        <app-products-filters></app-products-filters>
-    </ejs-sidebar>
-    <section class="w-100">
+    <section id="products-list-hero" class="w-100 d-none d-lg-block">
         <img class="w-100" src="./assets/imagenes/tema/slides/productos.jpg" alt="" />
     </section>
 
@@ -36,7 +30,6 @@
 
     <section class="product-grid container-fluid">
         <div class="row">
-            <button class="d-block d-lg-none btn btn-outline-primary" (click)="toggleSidebar()">Filtros</button>
             <div class="d-none d-lg-block col-12 col-md-2">
                 <app-products-filters></app-products-filters>
             </div>

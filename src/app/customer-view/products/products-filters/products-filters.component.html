@@ -1,9 +1,7 @@
 <aside class="category-filters">
     <nav class="category-filters-section">
+        <h6>Categorías</h6>
         <ul class="category-filters-list">
-            <li>
-                <h6>Categorías</h6>
-            </li>
             <li class="_active">
                 <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
                 <a [routerLink]="productsService.generatePageRoute(1, 'all', 'all')"
@@ -21,12 +19,12 @@
                 </a>
             </li>
         </ul>
+
         <br />
         <br />
+
+        <h6>Marcas</h6>
         <ul class="category-filters-list">
-            <li>
-                <h6>Marcas</h6>
-            </li>
             <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
             <li class="_active">
                 <a [routerLink]="productsService.generatePageRoute(1, 'all', null)"

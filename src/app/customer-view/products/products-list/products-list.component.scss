@@ -1,8 +1,10 @@
+@import 'src/assets/scss/bootstrap-theming';
+
 .pagination {
     a {
         &.active {
             font-weight: 900;
-            color: #003164;
+            color: $primary;
         }
         &:hover {
             cursor: pointer;
@@ -31,5 +33,11 @@
             padding: 10px;
             font-weight: 500;
         }
+    }
+}
+
+h1 {
+    @include media-breakpoint-down(md) {
+        padding: 12px;
     }
 }
