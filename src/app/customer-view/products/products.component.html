@@ -26,7 +26,7 @@
         <div class="d-flex justify-content-end pr-3 pt-3">
             <fa-icon [icon]="faTimes" [size]="'2x'" (click)="toggleSidebar()"></fa-icon>
         </div>
-        <ng-container [ngTemplateOutlet]="filters"></ng-container>
+        <app-products-filters></app-products-filters>
     </ejs-sidebar>
     <section class="w-100">
         <img class="w-100" src="./assets/imagenes/tema/slides/productos.jpg" alt="" />
@@ -38,7 +38,7 @@
         <div class="row">
             <button class="d-block d-lg-none btn btn-outline-primary" (click)="toggleSidebar()">Filtros</button>
             <div class="d-none d-lg-block col-12 col-md-2">
-                <ng-container [ngTemplateOutlet]="filters"></ng-container>
+                <app-products-filters></app-products-filters>
             </div>
             <div class="col-12 col-md-10">
                 <router-outlet></router-outlet>
@@ -47,55 +47,3 @@
     </section>
     <br />
 </div>
-
-<ng-template #filters>
-    <aside class="category-filters">
-        <nav class="category-filters-section">
-            <ul class="category-filters-list">
-                <li>
-                    <h6>Categorías</h6>
-                </li>
-                <li class="_active">
-                    <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
-                    <a [routerLink]="productsService.generatePageRoute(1, 'all', 'all')"
-                        ><strong>Todas</strong>
-                        <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
-                    </a>
-                </li>
-                <li class="_active" *ngFor="let category of productsService.categories">
-                    <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
-                    <a
-                        [ngClass]="{ active: productsService.currentCategory === category.id }"
-                        [routerLink]="productsService.generatePageRoute(1, 'all', category.id)"
-                        >{{ category.title }}
-                        <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
-                    </a>
-                </li>
-            </ul>
-            <br />
-            <br />
-            <ul class="category-filters-list">
-                <li>
-                    <h6>Marcas</h6>
-                </li>
-                <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
-                <li class="_active">
-                    <a [routerLink]="productsService.generatePageRoute(1, 'all', null)"
-                        ><strong>Todas</strong>
-                        <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
-                    </a>
-                </li>
-                <li class="_active" *ngFor="let manufacturer of productsService.manufacturers">
-                    <a
-                        [ngClass]="{ active: productsService.currentManufacturer === manufacturer.id }"
-                        [routerLink]="productsService.generatePageRoute(1, manufacturer.id, 'all')"
-                    >
-                        <!-- TODO: Issue #83. Apply count of existing items for each manufacturer. Build a pipe. -->
-                        {{ manufacturer.title }}
-                        <!-- <span class="count">({{ productsService.manufacturers.length }})</span>-->
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-</ng-template>

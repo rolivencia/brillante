@@ -9,9 +9,10 @@ import { ProductsComponent } from './products.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProductThumbnailModule } from '@components/product-thumbnail/product-thumbnail.module';
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
+import { ProductsFiltersComponent } from './products-filters/products-filters.component';
 
 @NgModule({
-    declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent],
+    declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ProductsFiltersComponent],
     imports: [CommonModule, ProductsRoutingModule, FontAwesomeModule, ProductThumbnailModule, SidebarModule],
     providers: [ProductsService, ProductsHttpService],
 })
