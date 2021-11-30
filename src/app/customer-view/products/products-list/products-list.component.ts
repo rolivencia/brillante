@@ -3,7 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/product';
 import { ProductsService } from '@customer-view/products/products.service';
 import { Subscription } from 'rxjs';
-import { faChevronLeft, faChevronRight, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import {
+    faChevronLeft,
+    faChevronRight,
+    faSearch,
+    faSlidersH,
+    faTimes,
+    IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 import { PaymentMethod } from '@models/cash-transaction';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
@@ -25,6 +32,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     public faTimes: IconDefinition = faTimes;
     public faChevronLeft: IconDefinition = faChevronLeft;
     public faChevronRight: IconDefinition = faChevronRight;
+    public faSlider: IconDefinition = faSlidersH;
+    public faSearch: IconDefinition = faSearch;
 
     public paymentMethods: PaymentMethod[] = [];
 

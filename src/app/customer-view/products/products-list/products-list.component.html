@@ -17,14 +17,16 @@
 </ejs-sidebar>
 
 <div class="d-md-flex d-lg-none mb-3">
-    <div class="w-100 mr-md-2 mb-2 mb-md-0 input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="search">🔎</span>
-        </div>
+    <div id="search-input" class="w-100 mr-md-2 mb-2 mb-md-0 input-group mb-3">
+        <span class="h-100 d-flex"
+            ><i><fa-icon [icon]="faSearch" [size]="'1x'"></fa-icon></i
+        ></span>
         <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="search" />
     </div>
 
-    <button class="w-100 btn btn-outline-primary ml-md-2" (click)="toggleSidebar()">Filtros</button>
+    <button class="w-100 btn btn-outline-primary ml-md-2" (click)="toggleSidebar()">
+        <fa-icon [icon]="faSlider" class="mr-2"></fa-icon>Filtros
+    </button>
 </div>
 
 <div class="row" *ngIf="paymentMethods.length > 0">
