@@ -4,7 +4,7 @@
         <ul class="category-filters-list">
             <li class="_active">
                 <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
-                <a [routerLink]="productsService.generatePageRoute(1, 'all', 'all')"
+                <a [routerLink]="productsService.generatePageRoute(1, 'all', 'all')" (click)="onFilterSelected()"
                     ><strong>Todas</strong>
                     <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
                 </a>
@@ -12,6 +12,7 @@
             <li class="_active" *ngFor="let category of productsService.categories">
                 <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
                 <a
+                    (click)="onFilterSelected()"
                     [ngClass]="{ active: productsService.currentCategory === category.id }"
                     [routerLink]="productsService.generatePageRoute(1, 'all', category.id)"
                     >{{ category.title }}
@@ -27,13 +28,14 @@
         <ul class="category-filters-list">
             <!-- TODO: Issue #82. Apply count of existing items for each category. Build a pipe. -->
             <li class="_active">
-                <a [routerLink]="productsService.generatePageRoute(1, 'all', null)"
+                <a [routerLink]="productsService.generatePageRoute(1, 'all', null)" (click)="onFilterSelected()"
                     ><strong>Todas</strong>
                     <!--                                    <span class="count">({{ productsService.categories.length }})</span>-->
                 </a>
             </li>
             <li class="_active" *ngFor="let manufacturer of productsService.manufacturers">
                 <a
+                    (click)="onFilterSelected()"
                     [ngClass]="{ active: productsService.currentManufacturer === manufacturer.id }"
                     [routerLink]="productsService.generatePageRoute(1, manufacturer.id, 'all')"
                 >

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProductsService } from '@customer-view/products/products.service';
 
 @Component({
@@ -7,7 +7,12 @@ import { ProductsService } from '@customer-view/products/products.service';
     styleUrls: ['./products-filters.component.scss'],
 })
 export class ProductsFiltersComponent implements OnInit {
+    @Output() pickedFilter: EventEmitter<string> = new EventEmitter<string>();
     constructor(public productsService: ProductsService) {}
 
     ngOnInit(): void {}
+
+    public onFilterSelected(selectedFilter?: string) {
+        this.pickedFilter.emit(selectedFilter);
+    }
 }
