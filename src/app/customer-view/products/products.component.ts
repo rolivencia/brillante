@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductsService } from '@customer-view/products/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
+import { faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-products',
@@ -10,6 +11,9 @@ import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
 })
 export class ProductsComponent implements OnInit {
     @ViewChild('sidebar') sidebar: SidebarComponent;
+
+    public faTimes: IconDefinition = faTimes;
+
     constructor(private route: ActivatedRoute, public productsService: ProductsService) {}
 
     ngOnInit(): void {
