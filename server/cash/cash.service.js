@@ -111,7 +111,7 @@ async function create(cashTransactions) {
                         note: cashTransaction.note,
                         transactionTypeId: cashTransaction.concept.transactionType.id,
                         transactionConceptId: cashTransaction.concept.id,
-                        createdBy: cashTransaction.user.id, //TODO: Issue #21 - Assign transactions to creator user
+                        createdBy: cashTransaction.user.id,
                         paymentMethodId: cashTransaction.payments[0].method.id,
                         idBranch: cashTransactions.branch.id,
                     });
