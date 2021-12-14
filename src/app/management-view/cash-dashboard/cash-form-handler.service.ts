@@ -158,7 +158,9 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         this.cashTransaction = this.assign();
         this.patch();
 
-        const [result] = await this.cashService.update(this.cashTransaction).toPromise();
+        const [result] = await this.cashService
+            .update(this.cashTransaction, this.authenticationService.currentUserValue)
+            .toPromise();
 
         return new Promise((resolve, reject) => {
             if (!result) {

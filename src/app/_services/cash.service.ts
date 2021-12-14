@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from '@services/authentication.service';
 import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
-import { CashTransaction, PaymentMethod, TransactionConcept } from '@models/cash-transaction';
+import { CashTransaction } from '@models/cash-transaction';
 import { OfficeBranch } from '@models/office-branch';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { User } from '@models/user';
@@ -78,8 +78,8 @@ export class CashService {
         });
     }
 
-    public update(transaction): Observable<[number]> {
-        return this.http.put<[number]>(`${environment.apiUrl}/cash/update`, { ...transaction });
+    public update(transaction: CashTransaction, user: User): Observable<[number]> {
+        return this.http.put<[number]>(`${environment.apiUrl}/cash/update`, { transaction: transaction, user: user });
     }
 }
 
