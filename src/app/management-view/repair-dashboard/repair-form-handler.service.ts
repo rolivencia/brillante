@@ -6,8 +6,9 @@ import { PaymentMethod } from '@models/cash-transaction';
 import { RepairService } from '@services/repair.service';
 import { ToastrService } from 'ngx-toastr';
 import { toMoment } from '@models/date-object';
-import { Repair } from '@models/repair';
+import { Repair, RepairStatus } from '@models/repair';
 import { AuthenticationService } from '@services/authentication.service';
+import { PaymentMethodsService } from '@services/payment-methods.service';
 
 @Injectable({
     providedIn: 'root',
@@ -34,6 +35,11 @@ export class RepairFormHandlerService {
     set saved(value: boolean) {
         this._saved = value;
     }
+
+    get paymentMethodGroup(): FormGroup {
+        return this.formGroup.controls.payment as FormGroup;
+    }
+
     get customerControl() {
         return this.formGroup.controls.customer['controls'];
     }
@@ -101,6 +107,7 @@ export class RepairFormHandlerService {
         private authenticationService: AuthenticationService,
         private customerService: CustomerService,
         private formBuilder: FormBuilder,
+        private paymentMethodsService: PaymentMethodsService,
         private repairService: RepairService,
         private toastrService: ToastrService
     ) {}
@@ -127,7 +134,7 @@ export class RepairFormHandlerService {
                     model: [repair.device.model, Validators.required],
                     deviceId: [repair.device.deviceId],
                 }),
-                status: [repair.status, Validators.required],
+                status: [repair.status.id, Validators.required],
                 note: [repair.note],
                 issue: [repair.issue, [Validators.required]],
                 paymentInAdvance: [repair.paymentInAdvance, Validators.required],
@@ -135,6 +142,11 @@ export class RepairFormHandlerService {
                 cost: [repair.cost, Validators.required],
                 warrantyTerm: [repair.warrantyTerm, [Validators.required, Validators.min(0), Validators.max(24)]],
             }),
+            payment: this.formBuilder.group({
+                paymentMethod: [1],
+                amount: [repair.price, Validators.required],
+            }),
+            // payment: this.formBuilder.array([])
         });
     }
 
@@ -182,7 +194,7 @@ export class RepairFormHandlerService {
                 paymentInAdvance: repair.paymentInAdvance,
                 cost: repair.cost,
                 price: repair.price,
-                status: repair.status,
+                status: repair.status.id,
                 note: repair.note,
                 warrantyTerm: repair.warrantyTerm,
             },
@@ -217,11 +229,11 @@ export class RepairFormHandlerService {
                 model: deviceForm.model.value,
                 deviceId: deviceForm.deviceId.value,
             },
-            status: repairForm.status.value,
+            status: this.repairService.repairStatuses.find((x: RepairStatus) => x.id === repairForm.status.value),
             note: repairForm.note.value,
             issue: repairForm.issue.value,
             paymentInAdvance: repairForm.paymentInAdvance.value,
-            price: repairForm.price.value,
+            price: this.paymentMethodGroup.controls.amount.value,
             cost: repairForm.cost.value,
             warrantyTerm: repairForm.warrantyTerm.value,
 
@@ -312,11 +324,13 @@ export class RepairFormHandlerService {
             }
         }
 
-        const generateTransaction = this.canRegisterPayment() ? this.registerPayment : false;
+        const generateTransaction = this.canRegisterPayment();
         const [trackingUpdateResult] = await this.repairService
             .updateTrackingInfo(this.repair, this.authenticationService.currentUserValue, {
                 generateTransaction: generateTransaction,
-                paymentMethod: this.paymentMethod,
+                paymentMethod: this.paymentMethodsService.paymentMethods.find(
+                    (x) => x.id === this.paymentMethodGroup.controls.paymentMethod.value
+                ),
             })
             .toPromise();
 
@@ -334,7 +348,10 @@ export class RepairFormHandlerService {
 
     public canRegisterPayment(): boolean {
         // TODO: Mark depending also on the old status
-        const newStatus = this.repairControl['status']['value'];
+        const newStatus = this.repairService.repairStatuses.find(
+            (x: RepairStatus) => x.id === this.repairControl['status']['value']
+        );
+
         return newStatus.id === 5;
     }
 }

@@ -15,7 +15,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root',
 })
 export class RepairService {
-    //FIXME: Cargar desde base de datos
+    //FIXME: #243 - Retrieve device types from database
     public deviceTypes: DeviceType[] = [
         {
             id: 0,
@@ -116,6 +116,10 @@ export class RepairService {
 
     public getStatusData(): Observable<RepairStatus[]> {
         return this.http.get<RepairStatus[]>(`${environment.apiUrl}/repair/getStatusData`);
+    }
+
+    public async load() {
+        this.repairStatuses = await this.getStatusData().toPromise();
     }
 }
 

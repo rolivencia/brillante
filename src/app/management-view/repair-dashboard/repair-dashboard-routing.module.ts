@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepairDashboardComponent } from '@management-view/repair-dashboard/repair-dashboard.component';
-import { RepairDashboardResolverService } from './repair-dashboard.resolver.service';
 
 const routes: Routes = [
     {
         path: '',
         component: RepairDashboardComponent,
-        resolve: {
-            concepts: RepairDashboardResolverService,
-        },
         children: [
             {
                 path: 'manage',

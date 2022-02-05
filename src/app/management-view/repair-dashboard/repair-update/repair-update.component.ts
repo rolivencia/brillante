@@ -1,11 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@services/repair.service';
 import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard/repair-voucher-generator.service';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Repair } from '@models/repair';
+import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
     selector: 'app-repair-update',
@@ -17,6 +18,8 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
     public statusHistory = new CollectionView([]);
 
     public editDevice: boolean = false;
+
+    public repairStatusFields: FieldSettingsModel = { text: 'description', value: 'id' };
 
     columns: { header: string; binding: string; width: string | number }[] = [
         { header: 'Estado', binding: 'status.status', width: '*' },

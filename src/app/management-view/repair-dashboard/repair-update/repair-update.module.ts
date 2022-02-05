@@ -6,7 +6,11 @@ import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard
 import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
 import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaymentMethodSelectorModule } from '../../../_components/payment-method-selector/payment-method-selector.module';
+import { PaymentMethodSelectorModule } from '@components/payment-method-selector/payment-method-selector.module';
+import { TabModule } from '@syncfusion/ej2-angular-navigations';
+import { PaymentInputModule } from '@components/payment-input/payment-input.module';
+import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
     declarations: [RepairUpdateComponent],
@@ -18,6 +22,10 @@ import { PaymentMethodSelectorModule } from '../../../_components/payment-method
         ReactiveFormsModule,
         WjGridModule,
         PaymentMethodSelectorModule,
+        TabModule,
+        PaymentInputModule,
+        NumericTextBoxModule,
+        DropDownListModule,
     ],
     providers: [RepairVoucherGeneratorService],
 })
