@@ -526,7 +526,7 @@ function toRepairDTO(repairDAO) {
     };
 }
 
-//FIXME: Cargar desde base de datos
+//FIXME: #243 - Retrieve device types from database
 function mapDeviceType(id) {
     const deviceTypes = [
         {
