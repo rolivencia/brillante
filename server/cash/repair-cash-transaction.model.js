@@ -30,6 +30,7 @@ RepairCashTransaction.init(
         },
     },
     {
+        timestamps: false,
         sequelize: sequelizeConnector,
         modelName: 'sh_fix_transaction',
     }
@@ -39,7 +40,7 @@ RepairCashTransaction.belongsTo(CashTransaction, { as: 'transaction', foreignKey
 RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repair_id' });
 
 CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'transaction_id' });
-repair.Repair.hasOne(RepairCashTransaction, { as: 'repairCashTransaction', foreignKey: 'repair_id' });
+repair.Repair.hasOne(RepairCashTransaction, { as: 'moneyTransactions', foreignKey: 'repair_id' });
 
 // repair.Repair.belongsToMany(CashTransaction, {
 //     through: RepairCashTransaction,

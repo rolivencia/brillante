@@ -8,6 +8,7 @@ const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
 const Sequelize = require('sequelize');
+const { RepairCashTransaction } = require('../cash/repair-cash-transaction.model');
 const Op = Sequelize.Op;
 
 module.exports = {
@@ -393,12 +394,13 @@ async function getById(id) {
                 ],
             },
             // TODO: Add moneyTransactions
-            // {
-            //     as: 'moneyTransactions',
-            //     model: RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
-            //     include: [{ as: 'transaction', model: cash.CashTransaction }],
-            //     required: true,
-            // },
+            {
+                as: 'moneyTransactions',
+                model: RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
+                attributes: ['idRepair'],
+                include: [{ as: 'transaction', model: cash.CashTransaction }],
+                required: true,
+            },
         ],
         where: {
             id: id,
