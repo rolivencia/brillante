@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { CashTransaction } = require('./cash.model');
-const repair = require('../repair/repair.model');
 const connector = require('server/_helpers/mysql-connector');
+const { Repair } = require('../repair/repair.model');
 const sequelizeConnector = connector.sequelizeConnector();
 
 class RepairCashTransaction extends Sequelize.Model {}
@@ -35,22 +35,5 @@ RepairCashTransaction.init(
         modelName: 'sh_fix_transaction',
     }
 );
-
-RepairCashTransaction.belongsTo(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
-RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repair_id' });
-
-CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'transaction_id' });
-repair.Repair.hasOne(RepairCashTransaction, { as: 'moneyTransactions', foreignKey: 'repair_id' });
-
-// repair.Repair.belongsToMany(CashTransaction, {
-//     through: RepairCashTransaction,
-//     foreignKey: 'repair_id',
-// });
-//
-// CashTransaction.belongsTo(repair.Repair, {
-//     through: RepairCashTransaction,
-//     foreignKey: 'transaction_id',
-//     // as: 'moneyTransactions'
-// });
 
 module.exports = { RepairCashTransaction };

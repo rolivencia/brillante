@@ -5,6 +5,8 @@ const officeBranch = require('server/office-branch/office-branch.model');
 
 const user = require('server/users/user.model');
 const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
+const { Repair } = require('../repair/repair.model');
+const { RepairCashTransaction } = require('./repair-cash-transaction.model');
 
 class CashTransaction extends Sequelize.Model {}
 class TransactionType extends Sequelize.Model {}
@@ -198,5 +200,17 @@ PaymentMethod.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id' });
 
 PaymentMethodInstallments.belongsTo(PaymentMethod, { as: 'paymentMethod', foreignKey: 'id' });
 PaymentMethod.hasMany(PaymentMethodInstallments, { as: 'installments', foreignKey: 'id_payment_method' });
+
+CashTransaction.belongsToMany(Repair, {
+    through: RepairCashTransaction,
+    foreignKey: 'transaction_id',
+    as: 'repair',
+});
+
+Repair.belongsToMany(CashTransaction, {
+    through: RepairCashTransaction,
+    foreignKey: 'repair_id',
+    as: 'moneyTransactions',
+});
 
 module.exports = { CashTransaction, TransactionType, PaymentMethod, PaymentMethodInstallments };

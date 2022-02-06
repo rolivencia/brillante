@@ -69,9 +69,7 @@
                             >{{ cashDashboardService.selectedTransaction.operation.description }}
                         </p>
                         <!-- TODO: Cambiar asociación para que sea genérica y no sólo responda a idRepair -->
-                        <p class="mb-0">
-                            <b>ID: </b>{{ cashDashboardService.selectedTransaction.operation['idRepair'] }}
-                        </p>
+                        <p class="mb-0"><b>ID: </b>{{ cashDashboardService.selectedTransaction.operation.id }}</p>
                     </div>
                 </div>
             </ng-container>

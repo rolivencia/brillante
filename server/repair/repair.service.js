@@ -8,6 +8,8 @@ const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
 
 const Sequelize = require('sequelize');
+const { CashTransaction } = require('../cash/cash.model');
+const { cashGetDefinition } = require('../cash/cash.functions');
 const { RepairCashTransaction } = require('../cash/repair-cash-transaction.model');
 const Op = Sequelize.Op;
 
@@ -157,7 +159,7 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
                     { transaction: t }
                 );
 
-                operationTransactionDAO = await cash.RepairCashTransaction.create(
+                operationTransactionDAO = await RepairCashTransaction.create(
                     {
                         idRepair: id,
                         idCashTransaction: cashTransactionDAO.dataValues.id,
@@ -169,6 +171,7 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
             await t.commit();
             resolve([1]);
         } catch (e) {
+            console.error(e);
             await t.rollback();
             reject([0]);
         }
@@ -393,13 +396,13 @@ async function getById(id) {
                     'deleted',
                 ],
             },
-            // TODO: Add moneyTransactions
             {
                 as: 'moneyTransactions',
-                model: RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
-                attributes: ['idRepair'],
-                include: [{ as: 'transaction', model: cash.CashTransaction }],
-                required: true,
+                model: CashTransaction,
+                attributes: ['id', 'amount', 'date', 'note', 'createdBy', 'deleted', 'enabled'],
+                include: cashGetDefinition(false),
+                required: false,
+                through: { attributes: [] },
             },
         ],
         where: {

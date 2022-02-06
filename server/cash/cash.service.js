@@ -1,13 +1,9 @@
 const cash = require('server/cash/cash.model');
-const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
-const user = require('server/users/user.model');
-const officeBranch = require('server/office-branch/office-branch.model');
-
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 const connector = require('server/_helpers/mysql-connector');
-const { RepairCashTransaction } = require('./repair-cash-transaction.model');
+const { cashGetDefinition } = require('./cash.functions');
 const sequelizeConnector = connector.sequelizeConnector();
 
 module.exports = {
@@ -148,12 +144,11 @@ async function remove(id) {
 }
 
 function toTransactionDTO({ createdBy, deleted, enabled, user, operation, amount, paymentMethod, ...transactionDAO }) {
-    return {
+    let moneyTransactionDTO = {
         ...transactionDAO,
         amount: amount,
         paymentMethod: paymentMethod.dataValues,
         payments: [{ amount: amount, method: paymentMethod.dataValues }],
-        operation: operation ? operation.dataValues : operation,
         concept: {
             ...transactionDAO.concept.dataValues,
             children: [],
@@ -166,6 +161,14 @@ function toTransactionDTO({ createdBy, deleted, enabled, user, operation, amount
             enabled: !!enabled,
         },
     };
+
+    // If related to a repair, we take the first element of the array returned by the query
+    if (transactionDAO.repair && transactionDAO.repair.length > 0) {
+        moneyTransactionDTO.operation = transactionDAO.repair.pop();
+        delete moneyTransactionDTO.repair;
+    }
+
+    return moneyTransactionDTO;
 }
 
 function dissectPayments(cashTransaction) {
@@ -180,63 +183,4 @@ function dissectPayments(cashTransaction) {
     }
 
     return transactionWithPayments;
-}
-
-function cashGetDefinition() {
-    return [
-        {
-            as: 'concept',
-            model: transaction.CashTransactionConcept,
-            required: true,
-            attributes: ['id', 'description', 'userAssignable'],
-            include: [
-                {
-                    as: 'parent',
-                    model: transaction.CashTransactionConcept,
-                    required: false,
-                    attributes: ['id', 'description', 'userAssignable'],
-                },
-                {
-                    as: 'transactionType',
-                    model: cash.TransactionType,
-                    required: true,
-                    attributes: ['id', 'description'],
-                },
-            ],
-        },
-        {
-            as: 'paymentMethod',
-            model: cash.PaymentMethod,
-            required: true,
-            attributes: ['id', 'description'],
-        },
-        {
-            as: 'officeBranch',
-            model: officeBranch.OfficeBranch,
-            required: true,
-            attributes: ['id', 'name', 'address'],
-        },
-        {
-            as: 'user',
-            model: user.User,
-            required: true,
-            attributes: [
-                'id',
-                'firstName',
-                'lastName',
-                'userName',
-                'avatar',
-                'createdAt',
-                'updatedAt',
-                'enabled',
-                'deleted',
-            ],
-        },
-        {
-            as: 'operation',
-            model: RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
-            required: false,
-            attributes: ['idRepair', [Sequelize.fn('CONCAT', '', 'Reparación'), 'description']],
-        },
-    ];
 }

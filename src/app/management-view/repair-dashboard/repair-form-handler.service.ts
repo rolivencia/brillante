@@ -148,8 +148,8 @@ export class RepairFormHandlerService {
             }),
             payment: this.formBuilder.group({
                 // TODO: Replace when information can be retrieved from database
-                // paymentMethod: [hasPaymentMethodSelected ? repair.moneyTransactions[0].paymentMethod.id : 1],
-                paymentMethod: [1],
+                id: [repair.moneyTransactions[0].id],
+                paymentMethod: [hasPaymentMethodSelected ? repair.moneyTransactions[0].paymentMethod.id : 1],
                 amount: [repair.price, Validators.required],
             }),
             // payment: this.formBuilder.array([])
@@ -359,6 +359,8 @@ export class RepairFormHandlerService {
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
-        return newStatus.id === 5;
+        const hasRegisteredPayments = this.repair.moneyTransactions.length > 0;
+
+        return newStatus.id === 5 && !hasRegisteredPayments;
     }
 }
