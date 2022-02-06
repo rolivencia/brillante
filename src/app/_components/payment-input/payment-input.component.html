@@ -1,5 +1,5 @@
 <div class="row" [formGroup]="form">
-    <div class="col-2">
+    <div class="col-2" *ngIf="form.controls.id.value">
         <ejs-numerictextbox
             format="###"
             floatLabelType="Auto"
