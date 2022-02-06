@@ -1,6 +1,6 @@
 import { Customer } from '@models/customer';
 import { CustomerService } from '@services/customer.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { PaymentMethod } from '@models/cash-transaction';
 import { RepairService } from '@services/repair.service';
@@ -38,6 +38,10 @@ export class RepairFormHandlerService {
 
     get paymentMethodGroup(): FormGroup {
         return this.formGroup.controls.payment as FormGroup;
+    }
+
+    get paymentsGroup(): FormArray {
+        return this.formGroup.controls.payments as FormArray;
     }
 
     get customerControl() {
@@ -147,12 +151,12 @@ export class RepairFormHandlerService {
                 warrantyTerm: [repair.warrantyTerm, [Validators.required, Validators.min(0), Validators.max(24)]],
             }),
             payment: this.formBuilder.group({
-                // TODO: Replace when information can be retrieved from database
-                id: [repair.moneyTransactions[0].id],
+                // TODO: Replace for FormArray implementation
+                id: [repair.moneyTransactions.length > 0 ? repair.moneyTransactions[0].id : null],
                 paymentMethod: [hasPaymentMethodSelected ? repair.moneyTransactions[0].paymentMethod.id : 1],
                 amount: [repair.price, Validators.required],
             }),
-            // payment: this.formBuilder.array([])
+            payments: this.formBuilder.array([]),
         });
     }
 
