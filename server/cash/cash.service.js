@@ -7,6 +7,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 const connector = require('server/_helpers/mysql-connector');
+const { RepairCashTransaction } = require('./repair-cash-transaction.model');
 const sequelizeConnector = connector.sequelizeConnector();
 
 module.exports = {
@@ -233,9 +234,9 @@ function cashGetDefinition() {
         },
         {
             as: 'operation',
-            model: cash.RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
+            model: RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
             required: false,
-            attributes: ['id', 'idRepair', [Sequelize.fn('CONCAT', '', 'Reparación'), 'description']],
+            attributes: ['idRepair', [Sequelize.fn('CONCAT', '', 'Reparación'), 'description']],
         },
     ];
 }

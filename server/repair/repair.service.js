@@ -392,6 +392,13 @@ async function getById(id) {
                     'deleted',
                 ],
             },
+            // TODO: Add moneyTransactions
+            // {
+            //     as: 'moneyTransactions',
+            //     model: RepairCashTransaction, //TODO: Adapt to other cases of transactions. How to do it?
+            //     include: [{ as: 'transaction', model: cash.CashTransaction }],
+            //     required: true,
+            // },
         ],
         where: {
             id: id,

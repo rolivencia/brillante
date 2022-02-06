@@ -113,6 +113,10 @@ export class RepairFormHandlerService {
     ) {}
 
     public load(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
+        // Determines if the current repair has attached money transactions, which means that one or more payment methods are selected for the repair
+        const hasPaymentMethodSelected: boolean =
+            this.repair.moneyTransactions && this.repair.moneyTransactions.length > 0;
+
         return this.formBuilder.group({
             customer: this.formBuilder.group({
                 id: [customer.id],
@@ -143,6 +147,8 @@ export class RepairFormHandlerService {
                 warrantyTerm: [repair.warrantyTerm, [Validators.required, Validators.min(0), Validators.max(24)]],
             }),
             payment: this.formBuilder.group({
+                // TODO: Replace when information can be retrieved from database
+                // paymentMethod: [hasPaymentMethodSelected ? repair.moneyTransactions[0].paymentMethod.id : 1],
                 paymentMethod: [1],
                 amount: [repair.price, Validators.required],
             }),
@@ -220,6 +226,7 @@ export class RepairFormHandlerService {
 
     public assignRepairForm(repairForm = this.repairControl, deviceForm = this.deviceControl) {
         this.repair = {
+            ...this.repair,
             id: repairForm.id.value,
             customer: this.customer,
             device: {
