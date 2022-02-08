@@ -342,6 +342,25 @@
                                                             "
                                                         ></app-payment-input>
                                                     </ng-container>
+                                                    <div
+                                                        class="text-danger"
+                                                        *ngIf="
+                                                            repairFormHandlerService.submitted &&
+                                                            repairFormHandlerService.paymentsGroup.errors
+                                                                ?.paymentsNotEqualToPrice
+                                                        "
+                                                    >
+                                                        El monto de los pagos ingresados debe equivaler al precio para
+                                                        registrar las transacciones en caja
+                                                    </div>
+                                                    <div
+                                                        class="text-danger"
+                                                        *ngIf="ignoredPaymentRegistrationNotification"
+                                                    >
+                                                        La información de pagos previamente ingresada será descartada
+                                                        por haber cambiado el estado de reparación. Para proceder con el
+                                                        guardado, asigne el estado como "Pagado y Entregado".
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

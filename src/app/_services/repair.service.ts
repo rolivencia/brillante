@@ -103,13 +103,12 @@ export class RepairService {
         return this.http.put<any>(`${environment.apiUrl}/repair/updateDeviceInfo`, { ...repair });
     }
 
-    public updateTrackingInfo(repair: Repair, user: User, { generateTransaction, paymentMethod }) {
+    public updateTrackingInfo(repair: Repair, user: User, { generateTransaction }) {
         const currentBranch = this.officeBranchService.current.value;
         return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, {
             repairToUpdate: repair,
             user: user,
             generateTransaction,
-            paymentMethod,
             officeBranch: currentBranch,
         });
     }

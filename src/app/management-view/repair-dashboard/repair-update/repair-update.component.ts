@@ -28,6 +28,7 @@ export class RepairUpdateComponent implements OnInit {
     public useSecondaryPaymentMethod: boolean = false;
     public hasRegisteredPayments: boolean = false;
     public hasFinishedStatus: boolean = false;
+    public ignoredPaymentRegistrationNotification: boolean = false;
 
     columns: { header: string; binding: string; width: string | number }[] = [
         { header: 'Estado', binding: 'status.status', width: '*' },
@@ -54,12 +55,22 @@ export class RepairUpdateComponent implements OnInit {
             this.repairFormHandlerService.customer = { ...this.repair.customer };
             this.repairFormHandlerService.repair = { ...this.repair };
             this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
+            this.repairFormHandlerService.buildPaymentsFormGroup(
+                this.repairFormHandlerService.repair,
+                this.repairFormHandlerService.formGroup
+            );
 
             // Payment section of form initial status:
             this.hasRegisteredPayments = this.repair.moneyTransactions.filter((m) => m.amount !== 0).length > 0;
             this.hasFinishedStatus = this.repair.status.id === ERepairStatus.FINISHED_AND_PAID;
             this.getHistory();
             this.initControls();
+
+            // Subscribe to...
+            this.repairFormHandlerService.repairGroup.statusChanges.subscribe((x) => {
+                console.log(x);
+                this.repairFormHandlerService.paymentsGroup.updateValueAndValidity();
+            });
         }
     }
 
@@ -109,6 +120,8 @@ export class RepairUpdateComponent implements OnInit {
 
     public onStatusChange(event: ChangeEventArgs) {
         this.hasFinishedStatus = event.value === ERepairStatus.FINISHED_AND_PAID;
+        this.ignoredPaymentRegistrationNotification =
+            event.value !== ERepairStatus.FINISHED_AND_PAID && this.repairFormHandlerService.paymentsGroup.touched;
     }
 
     public toggleSecondaryPaymentMethod(event: ChangeEventArgsButton) {
@@ -124,5 +137,10 @@ export class RepairUpdateComponent implements OnInit {
             const paymentsLength = this.repairFormHandlerService.paymentsGroup.length;
             this.repairFormHandlerService.paymentsGroup.removeAt(paymentsLength - 1);
         }
+    }
+
+    public ignoredPaymentsNotification(): boolean {
+        console.log(this.repairFormHandlerService.repairControl.values);
+        return true;
     }
 }
