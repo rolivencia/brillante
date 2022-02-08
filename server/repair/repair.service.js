@@ -95,20 +95,25 @@ async function updateDeviceInfo({ id, device, issue, ...discarded }) {
     );
 }
 
-async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, paymentMethod, officeBranch }) {
-    const { id, status, note, paymentInAdvance, cost, price, warrantyTerm, ...discarded } = repairToUpdate;
+async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, officeBranch }) {
+    const {
+        id,
+        status,
+        note,
+        paymentInAdvance,
+        cost,
+        price,
+        warrantyTerm,
+        moneyTransactions,
+        ...discarded
+    } = repairToUpdate;
 
     const t = await sequelizeConnector.transaction();
 
-    let repairDAO;
-    let previousRepairHistoryDAO;
-    let newRepairHistoryDAO;
-    let cashTransactionDAO; //TODO: Write Sequelize query
-    let operationTransactionDAO; //TODO: Write Sequelize query
-
     return new Promise(async (resolve, reject) => {
         try {
-            repairDAO = await repair.Repair.update(
+            // Updates data relative to repair register
+            await repair.Repair.update(
                 {
                     note: note,
                     idStatus: status.id,
@@ -122,7 +127,8 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
                 { where: { id: id }, transaction: t }
             );
 
-            previousRepairHistoryDAO = await repair.RepairStatusHistory.update(
+            // Updates current/previous status history of the repair
+            await repair.RepairStatusHistory.update(
                 {
                     updatedBy: user.id,
                     updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -130,7 +136,8 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
                 { where: { idRepair: id, updatedAt: { [Op.eq]: null } }, transaction: t }
             );
 
-            newRepairHistoryDAO = await repair.RepairStatusHistory.create(
+            // Creates a new register for the repair status history
+            await repair.RepairStatusHistory.create(
                 {
                     idRepair: id,
                     idStatus: status.id,
@@ -144,28 +151,33 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, p
                 { transaction: t }
             );
 
+            // If status is "Finished and payed", and a transaction is generated, adds related money transactions
             if (generateTransaction && status.id === 5) {
                 //TODO: Define enums for server-side APIs (Status)
-                cashTransactionDAO = await cash.CashTransaction.create(
-                    {
-                        amount: price,
-                        note: 'Ingresos por Reparación ID ' + id,
-                        transactionTypeId: 1,
-                        transactionConceptId: 158, // TODO: Define enums for server-side APIs (Transaction Concepts)
-                        createdBy: user.id,
-                        paymentMethodId: paymentMethod.id,
-                        idBranch: officeBranch.id,
-                    },
-                    { transaction: t }
-                );
 
-                operationTransactionDAO = await RepairCashTransaction.create(
-                    {
-                        idRepair: id,
-                        idCashTransaction: cashTransactionDAO.dataValues.id,
-                    },
-                    { transaction: t }
-                );
+                for (const payment of moneyTransactions) {
+                    let cashTransactionDAO = await cash.CashTransaction.create(
+                        {
+                            amount: payment.amount,
+                            note: 'Ingresos por Reparación ID ' + id,
+                            transactionTypeId: 1,
+                            transactionConceptId: 158, // TODO: Define enums for server-side APIs (Transaction Concepts)
+                            createdBy: user.id,
+                            paymentMethodId: payment.paymentMethod.id,
+                            idBranch: officeBranch.id,
+                        },
+                        { transaction: t }
+                    );
+
+                    // Saves the relation between the operation (a repair) and the money transaction
+                    await RepairCashTransaction.create(
+                        {
+                            idRepair: id,
+                            idCashTransaction: cashTransactionDAO.dataValues.id,
+                        },
+                        { transaction: t }
+                    );
+                }
             }
 
             await t.commit();

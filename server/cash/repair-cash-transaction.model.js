@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
-const { CashTransaction } = require('./cash.model');
 const connector = require('server/_helpers/mysql-connector');
-const { Repair } = require('../repair/repair.model');
 const sequelizeConnector = connector.sequelizeConnector();
 
 class RepairCashTransaction extends Sequelize.Model {}

@@ -1,25 +1,33 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@services/repair.service';
 import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard/repair-voucher-generator.service';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Repair } from '@models/repair';
-import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { ChangeEventArgs as ChangeEventArgsButton } from '@syncfusion/ej2-angular-buttons';
+import { FormBuilder } from '@angular/forms';
+import { ERepairStatus } from '@enums/repair-status.enum';
+import { EPaymentMethod } from '@enums/payment-methods.enum';
 
 @Component({
     selector: 'app-repair-update',
     templateUrl: './repair-update.component.html',
     styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss'],
 })
-export class RepairUpdateComponent implements OnInit, OnDestroy {
+export class RepairUpdateComponent implements OnInit {
     public repair: Repair;
     public statusHistory = new CollectionView([]);
 
     public editDevice: boolean = false;
 
     public repairStatusFields: FieldSettingsModel = { text: 'description', value: 'id' };
+
+    public useSecondaryPaymentMethod: boolean = false;
+    public hasRegisteredPayments: boolean = false;
+    public hasFinishedStatus: boolean = false;
 
     columns: { header: string; binding: string; width: string | number }[] = [
         { header: 'Estado', binding: 'status.status', width: '*' },
@@ -34,6 +42,7 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
         public location: Location,
         public repairFormHandlerService: RepairFormHandlerService,
         public repairService: RepairService,
+        private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private repairVoucherGeneratorService: RepairVoucherGeneratorService
     ) {}
@@ -45,17 +54,33 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
             this.repairFormHandlerService.customer = { ...this.repair.customer };
             this.repairFormHandlerService.repair = { ...this.repair };
             this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
+
+            // Payment section of form initial status:
+            this.hasRegisteredPayments = this.repair.moneyTransactions.filter((m) => m.amount !== 0).length > 0;
+            this.hasFinishedStatus = this.repair.status.id === ERepairStatus.FINISHED_AND_PAID;
             this.getHistory();
+            this.initControls();
         }
     }
 
-    ngOnDestroy(): void {
-        this.repairFormHandlerService.registerPayment = false;
+    private initControls() {
+        const paymentsLength = this.repairFormHandlerService.paymentsGroup.length;
+        if (paymentsLength > 1) {
+            this.useSecondaryPaymentMethod = true;
+        }
     }
 
     private canGenerateReport(): boolean {
         const repair = this.repairFormHandlerService.repair;
-        return [4, 5, 8].includes(repair.status.id) && repair.note && !!repair.price;
+        return (
+            [
+                ERepairStatus.REQUIRES_CUSTOMER_INTERVENTION,
+                ERepairStatus.FINISHED_AND_PAID,
+                ERepairStatus.IN_BOARD_REPAIR,
+            ].includes(repair.status.id) &&
+            repair.note &&
+            !!repair.price
+        );
     }
 
     public async getHistory() {
@@ -80,5 +105,24 @@ export class RepairUpdateComponent implements OnInit, OnDestroy {
     public async update(editDevice) {
         await this.repairFormHandlerService.update(editDevice);
         await this.getHistory();
+    }
+
+    public onStatusChange(event: ChangeEventArgs) {
+        this.hasFinishedStatus = event.value === ERepairStatus.FINISHED_AND_PAID;
+    }
+
+    public toggleSecondaryPaymentMethod(event: ChangeEventArgsButton) {
+        this.useSecondaryPaymentMethod = event.checked;
+        if (event.checked) {
+            const form = this.formBuilder.group({
+                id: [null],
+                paymentMethod: [EPaymentMethod.CASH],
+                amount: [0],
+            });
+            this.repairFormHandlerService.paymentsGroup.push(form);
+        } else {
+            const paymentsLength = this.repairFormHandlerService.paymentsGroup.length;
+            this.repairFormHandlerService.paymentsGroup.removeAt(paymentsLength - 1);
+        }
     }
 }

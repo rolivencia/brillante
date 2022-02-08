@@ -11,6 +11,7 @@ import { TabModule } from '@syncfusion/ej2-angular-navigations';
 import { PaymentInputModule } from '@components/payment-input/payment-input.module';
 import { NumericTextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 
 @NgModule({
     declarations: [RepairUpdateComponent],
@@ -26,6 +27,7 @@ import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
         PaymentInputModule,
         NumericTextBoxModule,
         DropDownListModule,
+        CheckBoxModule,
     ],
     providers: [RepairVoucherGeneratorService],
 })

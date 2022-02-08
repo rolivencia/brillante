@@ -190,7 +190,7 @@
                                         <div>🛠 Datos de la Reparación</div>
                                     </ng-template>
                                     <ng-template #content>
-                                        <div class="row h-100">
+                                        <div class="row h-100 pt-3">
                                             <div class="col-4 d-flex align-content-between flex-wrap">
                                                 <div id="issue-description" class="px-2">
                                                     <p><strong>Descripción del Problema: </strong></p>
@@ -251,6 +251,7 @@
                                                             [fields]="repairStatusFields"
                                                             [dataSource]="repairService.repairStatuses"
                                                             [placeholder]="'Estado'"
+                                                            (change)="onStatusChange($event)"
                                                         >
                                                         </ejs-dropdownlist>
                                                     </div>
@@ -262,8 +263,28 @@
                                                                 floatLabelType="Auto"
                                                                 min="0"
                                                                 formControlName="cost"
-                                                                [enabled]="!repairFormHandlerService.saved"
+                                                                [enabled]="
+                                                                    !repairFormHandlerService.saved &&
+                                                                    !hasRegisteredPayments
+                                                                "
                                                                 [placeholder]="'Costo'"
+                                                                [showSpinButton]="false"
+                                                            ></ejs-numerictextbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="px-2">
+                                                        <div class="input-group input-group-sm">
+                                                            <ejs-numerictextbox
+                                                                id="price"
+                                                                format="c2"
+                                                                floatLabelType="Auto"
+                                                                min="0"
+                                                                formControlName="price"
+                                                                [enabled]="
+                                                                    !repairFormHandlerService.saved &&
+                                                                    !hasRegisteredPayments
+                                                                "
+                                                                [placeholder]="'Precio'"
                                                                 [showSpinButton]="false"
                                                             ></ejs-numerictextbox>
                                                         </div>
@@ -290,58 +311,37 @@
                                                 </div>
 
                                                 <div class="w-100">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="form-check mb-3">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="checkbox"
-                                                                id="register-repair-payment"
-                                                                [disabled]="
-                                                                    !repairFormHandlerService.canRegisterPayment()
-                                                                "
-                                                                [readOnly]="repairFormHandlerService.saved"
-                                                                [(ngModel)]="repairFormHandlerService.registerPayment"
-                                                                [ngModelOptions]="{ standalone: true }"
-                                                            />
-                                                            <label
-                                                                class="ml-4 form-check-label"
-                                                                for="register-repair-payment"
-                                                            >
-                                                                Anotar pago de reparación en caja
-                                                            </label>
-                                                        </div>
-                                                        <!-- TODO: Wire the secondary payment method to add/remove paymentMethods from the formArray-->
-                                                        <!--                                                        <div class="form-check mb-3">-->
-                                                        <!--                                                            <input-->
-                                                        <!--                                                                class="form-check-input"-->
-                                                        <!--                                                                type="checkbox"-->
-                                                        <!--                                                                id="add-secondary-payment-method"-->
-                                                        <!--                                                                [disabled]="-->
-                                                        <!--                                                                    !repairFormHandlerService.canRegisterPayment()-->
-                                                        <!--                                                                "-->
-                                                        <!--                                                                [readOnly]="repairFormHandlerService.saved"-->
-                                                        <!--                                                            />-->
-                                                        <!--                                                            <label-->
-                                                        <!--                                                                class="ml-4 form-check-label"-->
-                                                        <!--                                                                for="register-repair-payment"-->
-                                                        <!--                                                            >-->
-                                                        <!--                                                                Agregar método de pago secundario-->
-                                                        <!--                                                            </label>-->
-                                                        <!--                                                        </div>-->
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <ejs-checkbox
+                                                            id="add-secondary-payment-method"
+                                                            label="Agregar segundo método de pago"
+                                                            (change)="toggleSecondaryPaymentMethod($event)"
+                                                            [checked]="useSecondaryPaymentMethod"
+                                                            [disabled]="
+                                                                !hasFinishedStatus ||
+                                                                hasRegisteredPayments ||
+                                                                repairFormHandlerService.saved
+                                                            "
+                                                        ></ejs-checkbox>
                                                     </div>
-                                                    <app-payment-input
-                                                        [methodLabel]="'Método de Pago'"
-                                                        [amountLabel]="'Monto'"
-                                                        [form]="repairFormHandlerService.paymentMethodGroup"
-                                                        [disabled]="
-                                                            !repairFormHandlerService.canRegisterPayment() ||
-                                                            repairFormHandlerService.saved
+                                                    <ng-container
+                                                        *ngFor="
+                                                            let paymentGroup of repairFormHandlerService.paymentsGroup
+                                                                .controls;
+                                                            let i = index
                                                         "
-                                                    ></app-payment-input>
-                                                    <!--                                                    <app-payment-input-->
-                                                    <!--                                                        [methodLabel]="'Método de Pago 2'"-->
-                                                    <!--                                                        [amountLabel]="'Monto 2'"-->
-                                                    <!--                                                    ></app-payment-input>-->
+                                                    >
+                                                        <app-payment-input
+                                                            [methodLabel]="'Método de Pago ' + (i + 1)"
+                                                            [amountLabel]="'Monto ' + (i + 1)"
+                                                            [form]="paymentGroup"
+                                                            [disabled]="
+                                                                !hasFinishedStatus ||
+                                                                hasRegisteredPayments ||
+                                                                repairFormHandlerService.saved
+                                                            "
+                                                        ></app-payment-input>
+                                                    </ng-container>
                                                 </div>
                                             </div>
                                         </div>

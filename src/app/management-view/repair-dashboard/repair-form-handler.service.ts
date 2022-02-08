@@ -9,6 +9,7 @@ import { toMoment } from '@models/date-object';
 import { Repair, RepairStatus } from '@models/repair';
 import { AuthenticationService } from '@services/authentication.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
+import { ERepairStatus } from '@enums/repair-status.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -21,13 +22,7 @@ export class RepairFormHandlerService {
     set paymentMethod(value: PaymentMethod) {
         this._paymentMethod = value;
     }
-    get registerPayment(): boolean {
-        return this._registerPayment;
-    }
 
-    set registerPayment(value: boolean) {
-        this._registerPayment = value;
-    }
     get saved(): boolean {
         return this._saved;
     }
@@ -42,6 +37,10 @@ export class RepairFormHandlerService {
 
     get paymentsGroup(): FormArray {
         return this.formGroup.controls.payments as FormArray;
+    }
+
+    get paymentsControl(): FormArray {
+        return this.formGroup.controls.payments['controls'];
     }
 
     get customerControl() {
@@ -99,7 +98,6 @@ export class RepairFormHandlerService {
     private _customerExists: boolean = false;
     private _submitted: boolean = false;
     private _saved: boolean = false;
-    private _registerPayment: boolean = false;
     private _paymentMethod: PaymentMethod = new PaymentMethod();
 
     private _customer: Customer = new Customer();
@@ -116,12 +114,17 @@ export class RepairFormHandlerService {
         private toastrService: ToastrService
     ) {}
 
+    /**
+     * Loads the whole formGroup to hold data of repair, customer and payments
+     * @param customer
+     * @param repair
+     */
     public load(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
         // Determines if the current repair has attached money transactions, which means that one or more payment methods are selected for the repair
         const hasPaymentMethodSelected: boolean =
             this.repair.moneyTransactions && this.repair.moneyTransactions.length > 0;
 
-        return this.formBuilder.group({
+        const formGroup = this.formBuilder.group({
             customer: this.formBuilder.group({
                 id: [customer.id],
                 dni: [customer.dni, [Validators.required, Validators.minLength(7)]],
@@ -158,6 +161,40 @@ export class RepairFormHandlerService {
             }),
             payments: this.formBuilder.array([]),
         });
+
+        // Add money transactions to the payments FormArray when form is initially loaded
+        this.buildPaymentsFormGroup(repair, formGroup);
+
+        return formGroup;
+    }
+
+    /**
+     * Builds the FormArray to hold the date relevant to payments. If no payments are present
+     * for a given repair, loads the default data: no id, cash paymentMethod, and amount of $0
+     * @param repair
+     * @param formGroup
+     * @private
+     */
+    private buildPaymentsFormGroup(repair: Repair, formGroup: FormGroup) {
+        const paymentsFormArray = formGroup.controls['payments'] as FormArray;
+        if (repair.moneyTransactions.length > 0) {
+            // Add money transactions to the payments FormArray when form is initially loaded
+            for (const transaction of repair.moneyTransactions) {
+                const paymentGroup = this.formBuilder.group({
+                    id: [transaction.id],
+                    paymentMethod: [transaction.paymentMethod.id],
+                    amount: [transaction.amount],
+                });
+                paymentsFormArray.push(paymentGroup);
+            }
+        } else {
+            const paymentGroup = this.formBuilder.group({
+                id: [],
+                paymentMethod: [1],
+                amount: [0],
+            });
+            paymentsFormArray.push(paymentGroup);
+        }
     }
 
     /**
@@ -228,7 +265,11 @@ export class RepairFormHandlerService {
         }
     }
 
-    public assignRepairForm(repairForm = this.repairControl, deviceForm = this.deviceControl) {
+    public assignRepairForm(
+        repairForm = this.repairControl,
+        deviceForm = this.deviceControl,
+        paymentsGroup = this.paymentsGroup
+    ) {
         this.repair = {
             ...this.repair,
             id: repairForm.id.value,
@@ -254,6 +295,10 @@ export class RepairFormHandlerService {
             lastUpdate: this.repair.lastUpdate,
             audit: this.repair.audit,
             history: this.repair.history,
+            moneyTransactions: paymentsGroup.value.map((p) => ({
+                ...p,
+                paymentMethod: this.paymentMethodsService.paymentMethods.find((m) => p.paymentMethod === m.id),
+            })),
         };
     }
 
@@ -327,6 +372,7 @@ export class RepairFormHandlerService {
         this.patchCustomer();
         this.patchRepair();
 
+        // If description of the repair is updated or device information is updated
         if (editDescription || this.formGroup.controls['repair']['controls']['issue'].dirty) {
             const updateDeviceInfo = await this.repairService.updateDeviceInfo(this.repair).toPromise();
             if (!updateDeviceInfo) {
@@ -335,6 +381,7 @@ export class RepairFormHandlerService {
             }
         }
 
+        // Register payment(s)
         const generateTransaction = this.canRegisterPayment();
         const [trackingUpdateResult] = await this.repairService
             .updateTrackingInfo(this.repair, this.authenticationService.currentUserValue, {
@@ -363,8 +410,6 @@ export class RepairFormHandlerService {
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
-        const hasRegisteredPayments = this.repair.moneyTransactions.length > 0;
-
-        return newStatus.id === 5 && !hasRegisteredPayments;
+        return newStatus.id === ERepairStatus.FINISHED_AND_PAID;
     }
 }
