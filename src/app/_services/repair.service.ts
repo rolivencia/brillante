@@ -15,7 +15,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root',
 })
 export class RepairService {
-    //FIXME: Cargar desde base de datos
+    //FIXME: #243 - Retrieve device types from database
     public deviceTypes: DeviceType[] = [
         {
             id: 0,
@@ -103,19 +103,22 @@ export class RepairService {
         return this.http.put<any>(`${environment.apiUrl}/repair/updateDeviceInfo`, { ...repair });
     }
 
-    public updateTrackingInfo(repair: Repair, user: User, { generateTransaction, paymentMethod }) {
+    public updateTrackingInfo(repair: Repair, user: User, { generateTransaction }) {
         const currentBranch = this.officeBranchService.current.value;
         return this.http.put<any>(`${environment.apiUrl}/repair/updateTrackingInfo`, {
             repairToUpdate: repair,
             user: user,
             generateTransaction,
-            paymentMethod,
             officeBranch: currentBranch,
         });
     }
 
     public getStatusData(): Observable<RepairStatus[]> {
         return this.http.get<RepairStatus[]>(`${environment.apiUrl}/repair/getStatusData`);
+    }
+
+    public async load() {
+        this.repairStatuses = await this.getStatusData().toPromise();
     }
 }
 

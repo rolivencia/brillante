@@ -1,0 +1,35 @@
+<div class="row" [formGroup]="form">
+    <div class="col-2" *ngIf="form.controls.id.value">
+        <ejs-numerictextbox
+            format="###"
+            floatLabelType="Auto"
+            min="0"
+            formControlName="id"
+            [placeholder]="'ID Transacción de Caja'"
+            [showSpinButton]="false"
+            [enabled]="false"
+        ></ejs-numerictextbox>
+    </div>
+    <div class="col">
+        <ejs-dropdownlist
+            floatLabelType="Auto"
+            formControlName="paymentMethod"
+            [fields]="fields"
+            [dataSource]="data"
+            [placeholder]="methodLabel"
+            [enabled]="!disabled"
+        >
+        </ejs-dropdownlist>
+    </div>
+    <div class="col">
+        <ejs-numerictextbox
+            format="c2"
+            floatLabelType="Auto"
+            min="0"
+            formControlName="amount"
+            [placeholder]="amountLabel"
+            [showSpinButton]="false"
+            [enabled]="!disabled"
+        ></ejs-numerictextbox>
+    </div>
+</div>

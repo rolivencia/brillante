@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 import { Customer } from '@models/customer';
 import { Audit } from '@models/audit';
+import { CashTransaction } from '@models/cash-transaction';
 
 export class Repair {
     public id: number;
@@ -18,6 +19,7 @@ export class Repair {
     public cost: number;
     public warrantyTerm: number;
     public history: RepairStatusHistory[] | any[]; // TODO: Implement RepairStatusHistory class
+    public moneyTransactions: CashTransaction[];
 
     //FIXME: En carga, traer la lista y ahí asignar vía filter.
     constructor() {
@@ -37,6 +39,9 @@ export class Repair {
         this.checkIn = null;
         this.lastUpdate = null;
         this.checkOut = null;
+
+        // Related money transactions
+        this.moneyTransactions = [];
     }
 }
 

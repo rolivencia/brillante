@@ -1,14 +1,14 @@
 const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
-const repair = require('server/repair/repair.model');
 const officeBranch = require('server/office-branch/office-branch.model');
 
 const user = require('server/users/user.model');
 const transaction = require('server/cash/transaction-concepts/transaction-concepts.model');
+const { Repair } = require('../repair/repair.model');
+const { RepairCashTransaction } = require('./repair-cash-transaction.model');
 
 class CashTransaction extends Sequelize.Model {}
-class RepairCashTransaction extends Sequelize.Model {}
 class TransactionType extends Sequelize.Model {}
 class PaymentMethod extends Sequelize.Model {}
 class PaymentMethodInstallments extends Sequelize.Model {}
@@ -19,7 +19,7 @@ CashTransaction.init(
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-            field: 'transaction_id',
+            field: 'id',
         },
         amount: {
             type: Sequelize.DECIMAL,
@@ -92,40 +92,6 @@ CashTransaction.init(
         timestamps: false,
         sequelize: sequelizeConnector,
         modelName: 'sh_cash_transaction',
-    }
-);
-
-RepairCashTransaction.init(
-    {
-        id: {
-            type: Sequelize.BIGINT,
-            autoIncrement: true,
-            primaryKey: true,
-            field: 'repair_transaction_id',
-        },
-        idRepair: {
-            type: Sequelize.BIGINT,
-            allowNull: false,
-            field: 'repair_id',
-            references: {
-                model: 'sh_fix_repair',
-                key: 'repair_id',
-            },
-        },
-        idCashTransaction: {
-            type: Sequelize.BIGINT,
-            allowNull: false,
-            field: 'transaction_id',
-            references: {
-                model: 'sh_cash_transaction',
-                key: 'transaction_id',
-            },
-        },
-    },
-    {
-        timestamps: false,
-        sequelize: sequelizeConnector,
-        modelName: 'sh_fix_transaction',
     }
 );
 
@@ -207,11 +173,6 @@ PaymentMethodInstallments.init(
     }
 );
 
-RepairCashTransaction.belongsTo(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
-RepairCashTransaction.belongsTo(repair.Repair, { as: 'repair', foreignKey: 'repair_id' });
-
-CashTransaction.hasOne(RepairCashTransaction, { as: 'operation', foreignKey: 'transaction_id' });
-repair.Repair.hasOne(RepairCashTransaction, { as: 'repairCashTransaction', foreignKey: 'repair_id' });
 officeBranch.OfficeBranch.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id_office_branch' });
 
 CashTransaction.belongsTo(transaction.CashTransactionConcept, { as: 'concept', foreignKey: 'transaction_concept_id' });
@@ -226,7 +187,7 @@ transaction.CashTransactionConcept.hasMany(CashTransaction, {
 });
 
 CashTransaction.belongsTo(user.User, { as: 'user', foreignKey: 'created_user_id' });
-user.User.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
+user.User.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id' });
 
 transaction.CashTransactionConcept.belongsTo(TransactionType, {
     as: 'transactionType',
@@ -235,9 +196,21 @@ transaction.CashTransactionConcept.belongsTo(TransactionType, {
 TransactionType.hasMany(transaction.CashTransactionConcept, { as: 'transaction', foreignKey: 'transaction_type_id' });
 
 CashTransaction.belongsTo(PaymentMethod, { as: 'paymentMethod', foreignKey: 'payment_method_id' });
-PaymentMethod.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'transaction_id' });
+PaymentMethod.hasMany(CashTransaction, { as: 'transaction', foreignKey: 'id' });
 
 PaymentMethodInstallments.belongsTo(PaymentMethod, { as: 'paymentMethod', foreignKey: 'id' });
 PaymentMethod.hasMany(PaymentMethodInstallments, { as: 'installments', foreignKey: 'id_payment_method' });
 
-module.exports = { CashTransaction, RepairCashTransaction, TransactionType, PaymentMethod, PaymentMethodInstallments };
+CashTransaction.belongsToMany(Repair, {
+    through: RepairCashTransaction,
+    foreignKey: 'transaction_id',
+    as: 'repair',
+});
+
+Repair.belongsToMany(CashTransaction, {
+    through: RepairCashTransaction,
+    foreignKey: 'repair_id',
+    as: 'moneyTransactions',
+});
+
+module.exports = { CashTransaction, TransactionType, PaymentMethod, PaymentMethodInstallments };

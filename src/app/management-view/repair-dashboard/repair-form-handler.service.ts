@@ -1,13 +1,15 @@
 import { Customer } from '@models/customer';
 import { CustomerService } from '@services/customer.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { PaymentMethod } from '@models/cash-transaction';
 import { RepairService } from '@services/repair.service';
 import { ToastrService } from 'ngx-toastr';
 import { toMoment } from '@models/date-object';
-import { Repair } from '@models/repair';
+import { Repair, RepairStatus } from '@models/repair';
 import { AuthenticationService } from '@services/authentication.service';
+import { PaymentMethodsService } from '@services/payment-methods.service';
+import { ERepairStatus } from '@enums/repair-status.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -20,13 +22,7 @@ export class RepairFormHandlerService {
     set paymentMethod(value: PaymentMethod) {
         this._paymentMethod = value;
     }
-    get registerPayment(): boolean {
-        return this._registerPayment;
-    }
 
-    set registerPayment(value: boolean) {
-        this._registerPayment = value;
-    }
     get saved(): boolean {
         return this._saved;
     }
@@ -34,6 +30,15 @@ export class RepairFormHandlerService {
     set saved(value: boolean) {
         this._saved = value;
     }
+
+    get paymentMethodGroup(): FormGroup {
+        return this.formGroup.controls.payment as FormGroup;
+    }
+
+    get paymentsGroup(): FormArray {
+        return this.formGroup.controls.payments as FormArray;
+    }
+
     get customerControl() {
         return this.formGroup.controls.customer['controls'];
     }
@@ -78,6 +83,10 @@ export class RepairFormHandlerService {
         this._repair = value;
     }
 
+    get repairGroup(): FormGroup {
+        return this.formGroup.controls.repair as FormGroup;
+    }
+
     get formGroup(): FormGroup {
         return this._formGroup;
     }
@@ -89,7 +98,6 @@ export class RepairFormHandlerService {
     private _customerExists: boolean = false;
     private _submitted: boolean = false;
     private _saved: boolean = false;
-    private _registerPayment: boolean = false;
     private _paymentMethod: PaymentMethod = new PaymentMethod();
 
     private _customer: Customer = new Customer();
@@ -101,11 +109,21 @@ export class RepairFormHandlerService {
         private authenticationService: AuthenticationService,
         private customerService: CustomerService,
         private formBuilder: FormBuilder,
+        private paymentMethodsService: PaymentMethodsService,
         private repairService: RepairService,
         private toastrService: ToastrService
     ) {}
 
+    /**
+     * Loads the whole formGroup to hold data of repair, customer and payments
+     * @param customer
+     * @param repair
+     */
     public load(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
+        // Determines if the current repair has attached money transactions, which means that one or more payment methods are selected for the repair
+        const hasPaymentMethodSelected: boolean =
+            this.repair.moneyTransactions && this.repair.moneyTransactions.length > 0;
+
         return this.formBuilder.group({
             customer: this.formBuilder.group({
                 id: [customer.id],
@@ -127,7 +145,7 @@ export class RepairFormHandlerService {
                     model: [repair.device.model, Validators.required],
                     deviceId: [repair.device.deviceId],
                 }),
-                status: [repair.status, Validators.required],
+                status: [repair.status.id, Validators.required],
                 note: [repair.note],
                 issue: [repair.issue, [Validators.required]],
                 paymentInAdvance: [repair.paymentInAdvance, Validators.required],
@@ -136,6 +154,53 @@ export class RepairFormHandlerService {
                 warrantyTerm: [repair.warrantyTerm, [Validators.required, Validators.min(0), Validators.max(24)]],
             }),
         });
+    }
+
+    private mustEqualPrice(): ValidatorFn {
+        return (currentControl: AbstractControl): { [key: string]: any } => {
+            const repairValue = this.repairGroup.value;
+            if (currentControl.value.length === 0 || repairValue.status !== ERepairStatus.FINISHED_AND_PAID) {
+                return null;
+            }
+            if (currentControl.value.length > 0 && repairValue.status === ERepairStatus.FINISHED_AND_PAID) {
+                const reducer = (previousValue, currentValue) => previousValue + currentValue;
+                const sum = currentControl.value.map((p) => p.amount).reduce(reducer);
+                const price = parseFloat(repairValue.price);
+
+                return { paymentsNotEqualToPrice: sum !== price };
+            }
+        };
+    }
+
+    /**
+     * Builds the FormArray to hold the date relevant to payments. If no payments are present
+     * for a given repair, loads the default data: no id, cash paymentMethod, and amount of $0
+     * @param repair
+     * @param formGroup
+     * @private
+     */
+    public buildPaymentsFormGroup(repair: Repair, formGroup: FormGroup) {
+        formGroup.addControl('payments', this.formBuilder.array([]));
+        const paymentsFormArray: FormArray = formGroup.controls['payments'] as FormArray;
+        if (repair.moneyTransactions.length > 0) {
+            // Add money transactions to the payments FormArray when form is initially loaded
+            for (const transaction of repair.moneyTransactions) {
+                const paymentGroup = this.formBuilder.group({
+                    id: [transaction.id],
+                    paymentMethod: [transaction.paymentMethod.id],
+                    amount: [transaction.amount],
+                });
+                paymentsFormArray.push(paymentGroup);
+            }
+        } else {
+            const paymentGroup = this.formBuilder.group({
+                id: [],
+                paymentMethod: [1],
+                amount: [0],
+            });
+            paymentsFormArray.push(paymentGroup);
+        }
+        paymentsFormArray.addValidators([this.mustEqualPrice()]);
     }
 
     /**
@@ -182,7 +247,7 @@ export class RepairFormHandlerService {
                 paymentInAdvance: repair.paymentInAdvance,
                 cost: repair.cost,
                 price: repair.price,
-                status: repair.status,
+                status: repair.status.id,
                 note: repair.note,
                 warrantyTerm: repair.warrantyTerm,
             },
@@ -206,8 +271,13 @@ export class RepairFormHandlerService {
         }
     }
 
-    public assignRepairForm(repairForm = this.repairControl, deviceForm = this.deviceControl) {
+    public assignRepairForm(
+        repairForm = this.repairControl,
+        deviceForm = this.deviceControl,
+        paymentsGroup = this.paymentsGroup
+    ) {
         this.repair = {
+            ...this.repair,
             id: repairForm.id.value,
             customer: this.customer,
             device: {
@@ -217,7 +287,7 @@ export class RepairFormHandlerService {
                 model: deviceForm.model.value,
                 deviceId: deviceForm.deviceId.value,
             },
-            status: repairForm.status.value,
+            status: this.repairService.repairStatuses.find((x: RepairStatus) => x.id === repairForm.status.value),
             note: repairForm.note.value,
             issue: repairForm.issue.value,
             paymentInAdvance: repairForm.paymentInAdvance.value,
@@ -231,6 +301,10 @@ export class RepairFormHandlerService {
             lastUpdate: this.repair.lastUpdate,
             audit: this.repair.audit,
             history: this.repair.history,
+            moneyTransactions: paymentsGroup.value.map((p) => ({
+                ...p,
+                paymentMethod: this.paymentMethodsService.paymentMethods.find((m) => p.paymentMethod === m.id),
+            })),
         };
     }
 
@@ -289,7 +363,7 @@ export class RepairFormHandlerService {
         this.submitted = true;
 
         if (this.formGroup.invalid) {
-            this.toastrService.info('Falta llenar campos para modificar esta reparación.');
+            this.toastrService.info('Debe realizar cambios para poder modificar esta reparación.');
             return;
         }
 
@@ -304,6 +378,7 @@ export class RepairFormHandlerService {
         this.patchCustomer();
         this.patchRepair();
 
+        // If description of the repair is updated or device information is updated
         if (editDescription || this.formGroup.controls['repair']['controls']['issue'].dirty) {
             const updateDeviceInfo = await this.repairService.updateDeviceInfo(this.repair).toPromise();
             if (!updateDeviceInfo) {
@@ -312,11 +387,11 @@ export class RepairFormHandlerService {
             }
         }
 
-        const generateTransaction = this.canRegisterPayment() ? this.registerPayment : false;
+        // Register payment(s)
+        const generateTransaction = this.canRegisterPayment();
         const [trackingUpdateResult] = await this.repairService
             .updateTrackingInfo(this.repair, this.authenticationService.currentUserValue, {
                 generateTransaction: generateTransaction,
-                paymentMethod: this.paymentMethod,
             })
             .toPromise();
 
@@ -334,7 +409,10 @@ export class RepairFormHandlerService {
 
     public canRegisterPayment(): boolean {
         // TODO: Mark depending also on the old status
-        const newStatus = this.repairControl['status']['value'];
-        return newStatus.id === 5;
+        const newStatus = this.repairService.repairStatuses.find(
+            (x: RepairStatus) => x.id === this.repairControl['status']['value']
+        );
+
+        return newStatus.id === ERepairStatus.FINISHED_AND_PAID;
     }
 }
