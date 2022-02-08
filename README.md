@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` to run the client locally. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `nodemon server.js` to run the Node server locally. It will start at port 4000 (insecure) and 443 (https).
 
 ## Code scaffolding
 
