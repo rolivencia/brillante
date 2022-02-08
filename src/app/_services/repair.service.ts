@@ -33,6 +33,14 @@ export class RepairService {
             id: 3,
             description: 'Escritorio',
         },
+        {
+            id: 4,
+            description: 'Smartwatch',
+        },
+        {
+            id: 5,
+            description: 'Parlantes',
+        },
     ];
 
     public repairStatuses: RepairStatus[] = [];
