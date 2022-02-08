@@ -167,7 +167,7 @@ export class RepairFormHandlerService {
                 const sum = currentControl.value.map((p) => p.amount).reduce(reducer);
                 const price = parseFloat(repairValue.price);
 
-                return { paymentsNotEqualToPrice: sum !== price };
+                return sum === price ? null : { paymentsNotEqualToPrice: true };
             }
         };
     }
@@ -301,10 +301,13 @@ export class RepairFormHandlerService {
             lastUpdate: this.repair.lastUpdate,
             audit: this.repair.audit,
             history: this.repair.history,
-            moneyTransactions: paymentsGroup.value.map((p) => ({
-                ...p,
-                paymentMethod: this.paymentMethodsService.paymentMethods.find((m) => p.paymentMethod === m.id),
-            })),
+            // TODO: Improve this assignment
+            moneyTransactions: paymentsGroup
+                ? paymentsGroup.value.map((p) => ({
+                      ...p,
+                      paymentMethod: this.paymentMethodsService.paymentMethods.find((m) => p.paymentMethod === m.id),
+                  }))
+                : [],
         };
     }
 
