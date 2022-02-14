@@ -100,8 +100,10 @@ export class CashDashboardService {
     }
 
     // FIXME: Restructure this to get rid of coupling. Think of two methods: one for single date, other for starting and ending
-    async refreshGrid() {
-        await this.loadData(moment(), moment(), [], this.officeBranchService.current.value);
+    async refreshGrid(date?: DateObject) {
+        this.date = date ? formatDate(date) : moment();
+        await this.loadData(this.date, this.date, [], this.officeBranchService.current.value);
+        this.selectedTransaction = null;
     }
 
     async loadData(from: Moment, to?: Moment, filterConcepts: any[] = [], officeBranch: OfficeBranch = null) {
@@ -140,6 +142,7 @@ export class CashDashboardService {
         flex.columnFooters.rows.push(new GroupRow());
         flex.bottomLeftCells.setCellData(0, 0, '$');
     }
+
     // TODO: Refactor import
     decimalSeparatorParser(x) {
         return decimalsSeparator(x);
@@ -157,7 +160,6 @@ export function mapTransactionType(transaction: CashTransaction) {
     };
 }
 
-//FIXME: Move this method to a service
 export function formatDate(date: DateObject) {
     const dateString = `${date.year}-${date.month}-${date.day}`;
     return moment(dateString);

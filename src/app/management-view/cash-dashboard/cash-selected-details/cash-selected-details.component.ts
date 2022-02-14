@@ -40,7 +40,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
         this.cashService.remove(toDeleteId).subscribe((result) => {
             this.toastrService.info(`Transacción de ID ${toDeleteId} eliminada correctamente.`);
             this.cashDashboardService.selectedTransaction = null;
-            this.cashDashboardService.loadData(this.cashDashboardService.date);
+            this.cashDashboardService.refreshGrid(this.cashDashboardService.ngbDateFrom);
         });
     }
 
