@@ -29,6 +29,7 @@ export class RepairUpdateComponent implements OnInit {
     public hasRegisteredPayments: boolean = false;
     public hasFinishedStatus: boolean = false;
     public ignoredPaymentRegistrationNotification: boolean = false;
+    public showPaymentFields: boolean = true;
 
     columns: { header: string; binding: string; width: string | number }[] = [
         { header: 'Estado', binding: 'status.status', width: '*' },
@@ -51,6 +52,7 @@ export class RepairUpdateComponent implements OnInit {
     ngOnInit() {
         if (this.route.snapshot.data['repair']) {
             this.repair = this.route.snapshot.data['repair'];
+
             this.repairFormHandlerService.saved = false;
             this.repairFormHandlerService.customer = { ...this.repair.customer };
             this.repairFormHandlerService.repair = { ...this.repair };
@@ -63,15 +65,28 @@ export class RepairUpdateComponent implements OnInit {
             // Payment section of form initial status:
             this.hasRegisteredPayments = this.repair.moneyTransactions.filter((m) => m.amount !== 0).length > 0;
             this.hasFinishedStatus = this.repair.status.id === ERepairStatus.FINISHED_AND_PAID;
-            this.getHistory();
-            this.initControls();
+            this.showPaymentFields = this.updatePaymentFieldsVisibility(this.repair);
 
             // Subscribe to...
             this.repairFormHandlerService.repairGroup.statusChanges.subscribe((x) => {
-                console.log(x);
                 this.repairFormHandlerService.paymentsGroup.updateValueAndValidity();
             });
+
+            this.repairFormHandlerService.repairGroup.valueChanges.subscribe((repairValue) => {
+                this.repairFormHandlerService.assignRepairForm();
+                this.showPaymentFields = this.updatePaymentFieldsVisibility(this.repairFormHandlerService.repair);
+            });
+
+            this.getHistory();
+            this.initControls();
         }
+    }
+
+    private updatePaymentFieldsVisibility(repair: Repair): boolean {
+        return (
+            this.hasRegisteredPayments ||
+            (!!repair.price && repair.price !== 0 && repair.status.id === ERepairStatus.FINISHED_AND_PAID)
+        );
     }
 
     private initControls() {

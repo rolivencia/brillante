@@ -120,10 +120,6 @@ export class RepairFormHandlerService {
      * @param repair
      */
     public load(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
-        // Determines if the current repair has attached money transactions, which means that one or more payment methods are selected for the repair
-        const hasPaymentMethodSelected: boolean =
-            this.repair.moneyTransactions && this.repair.moneyTransactions.length > 0;
-
         return this.formBuilder.group({
             customer: this.formBuilder.group({
                 id: [customer.id],
@@ -416,6 +412,6 @@ export class RepairFormHandlerService {
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
-        return newStatus.id === ERepairStatus.FINISHED_AND_PAID;
+        return newStatus.id === ERepairStatus.FINISHED_AND_PAID && this.repairControl['price']['value'] !== 0;
     }
 }
