@@ -190,7 +190,7 @@ export class RepairVoucherGeneratorService {
             doc.save('Comprobante_Reparacion_' + repair.id + '.pdf');
         } else {
             this.toastrService.info(
-                'Faltan datos necesarios para poder crear el comprobante. Chequee el haber guardado previamente el estado actual de la reparación. Revise que la reparación tenga estado "Listo para Entregar", "Pagado y Entregado" o "Saldo Pendiente", que las notas de la reparación no sean vacías y que además el precio de la reparación sea distinto de cero.'
+                'Faltan datos necesarios para poder crear el comprobante. Chequee el haber guardado previamente el estado actual de la reparación. Revise que la reparación tenga estado "Listo para Entregar" o "Finalizada y Abonada", que las notas de la reparación no sean vacías y que además el precio de la reparación sea distinto de cero.'
             );
         }
     }
