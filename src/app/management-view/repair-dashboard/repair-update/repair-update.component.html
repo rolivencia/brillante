@@ -222,7 +222,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="col-8 d-flex align-content-between flex-wrap">
+                                            <div class="col-8 d-flex flex-wrap">
                                                 <div class="w-100 d-flex">
                                                     <div class="px-2 w-100">
                                                         <p><strong>Notas sobre la Reparación: </strong></p>
@@ -310,7 +310,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="w-100">
+                                                <div class="w-100" *ngIf="showPaymentFields">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <ejs-checkbox
                                                             id="add-secondary-payment-method"
