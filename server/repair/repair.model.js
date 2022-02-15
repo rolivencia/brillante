@@ -15,7 +15,7 @@ Repair.init(
             type: Sequelize.BIGINT,
             autoIncrement: true,
             primaryKey: true,
-            field: 'repair_id',
+            field: 'id',
         },
         idClient: {
             type: Sequelize.BIGINT,

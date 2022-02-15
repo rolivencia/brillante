@@ -75,7 +75,7 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     ngAfterViewInit() {
-        this.refreshGrid(this.cashDashboardService.ngbDateFrom);
+        this.cashDashboardService.refreshGrid(this.cashDashboardService.ngbDateFrom);
         this.minDate = this.cashDashboardService.ngbMinDateByRole();
     }
 
@@ -88,26 +88,9 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     //FIXME: Move this method to a service
-    public formatDate(date: DateObject) {
-        const dateString = `${date.year}-${date.month}-${date.day}`;
-        this.cashDashboardService.date = moment(dateString);
-    }
-
-    //FIXME: Move this method to a service
     public setTodayDate() {
         this.cashDashboardService.setTodayDate();
-        this.refreshGrid(this.cashDashboardService.ngbDateFrom);
-    }
-
-    public refreshGrid(date: DateObject) {
-        this.formatDate(date);
-        this.cashDashboardService.loadData(
-            this.cashDashboardService.date,
-            this.cashDashboardService.date,
-            [],
-            this.officeBranchService.current.value
-        );
-        this.cashDashboardService.selectedTransaction = null;
+        this.cashDashboardService.refreshGrid(this.cashDashboardService.ngbDateFrom);
     }
 
     public getRegisterDetails(currentItem: CashTransaction) {

@@ -40,7 +40,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
         this.cashService.remove(toDeleteId).subscribe((result) => {
             this.toastrService.info(`Transacción de ID ${toDeleteId} eliminada correctamente.`);
             this.cashDashboardService.selectedTransaction = null;
-            this.cashDashboardService.loadData(this.cashDashboardService.date);
+            this.cashDashboardService.refreshGrid(this.cashDashboardService.ngbDateFrom);
         });
     }
 
@@ -52,7 +52,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
             case 'Reparación':
                 this.router.navigate([
                     'repair-dashboard/manage',
-                    { outlets: { top: 'update/' + operation['idRepair'], left: null, right: null } },
+                    { outlets: { top: 'update/' + operation['id'], left: null, right: null } },
                 ]);
                 break;
             default:

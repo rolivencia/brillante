@@ -16,6 +16,7 @@ import { RegisterModule } from './register/register.module';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { MainHeaderModule } from '@components/main-header/main-header.module';
 import { PaymentMethodsService } from '@services/payment-methods.service';
+import { RepairService } from '@services/repair.service';
 
 @NgModule({
     imports: [
@@ -42,6 +43,13 @@ import { PaymentMethodsService } from '@services/payment-methods.service';
             provide: APP_INITIALIZER,
             useFactory: (paymentMethodsService: PaymentMethodsService) => () => paymentMethodsService.load(),
             deps: [PaymentMethodsService],
+            multi: true,
+        },
+
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (repairService: RepairService) => () => repairService.load(),
+            deps: [RepairService],
             multi: true,
         },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
