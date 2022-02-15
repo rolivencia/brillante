@@ -5,6 +5,7 @@ import { faCartPlus, faCreditCard, faExclamationTriangle, IconDefinition } from 
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { Observable } from 'rxjs';
 import { CartService } from '@services/cart.service';
+import { AuthenticationService } from '@services/authentication.service';
 
 @Component({
     selector: 'app-product-detail',
@@ -23,7 +24,10 @@ export class ProductDetailComponent implements OnInit {
     public $fullPrice: Observable<string>;
     public $installmentsPrice: Observable<string>;
 
+    public showCart: boolean = true; // TODO: Remove this when cart module is ready
+
     constructor(
+        private authenticationService: AuthenticationService,
         private cartService: CartService,
         private paymentMethodsService: PaymentMethodsService,
         private route: ActivatedRoute,
@@ -37,6 +41,9 @@ export class ProductDetailComponent implements OnInit {
             this.$fullPrice = this.paymentMethodsService.getPriceWithAppliedFee(this.product.price);
             this.$installmentsPrice = this.paymentMethodsService.getPriceWithAppliedFee(this.product.price, 12);
         }
+        this.authenticationService.currentUserSubject.subscribe((value) => {
+            this.showCart = !!value;
+        });
     }
 
     addToCart() {

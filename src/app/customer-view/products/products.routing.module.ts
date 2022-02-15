@@ -8,6 +8,7 @@ import { ProductsResolverService } from './products.resolver.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CartResolverService } from './cart/cart.resolver.service';
 import { PaymentMethodsResolverService } from '@services/payment-methods.resolver.service';
+import { AuthGuard } from '@guards/auth.guard';
 
 const routes: Routes = [
     {
@@ -23,6 +24,7 @@ const routes: Routes = [
                 resolve: {
                     cart: CartResolverService,
                 },
+                canActivate: [AuthGuard], // TODO: Remove this guard when cart is implemented
             },
             {
                 path: 'product-detail/:id',

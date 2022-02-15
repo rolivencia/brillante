@@ -4,6 +4,7 @@ import { Moment } from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { AuthenticationService } from '@services/authentication.service';
 
 @Injectable({
     providedIn: 'root',

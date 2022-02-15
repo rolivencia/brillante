@@ -47,6 +47,7 @@ export class MainHeaderComponent implements OnInit {
     private _adminLinks: NavigationLink[] = [];
 
     public fields: FieldSettingsModel = { text: 'Name' };
+    public showCart: boolean = true; //TODO: Remove this when cart module is ready
 
     constructor(
         private router: Router,
@@ -65,6 +66,7 @@ export class MainHeaderComponent implements OnInit {
                     Link.roles.some((role) => currentUserRoles.includes(role))
                 );
             }
+            this.showCart = !!user;
         });
     }
 
