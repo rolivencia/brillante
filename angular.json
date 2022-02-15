@@ -23,22 +23,10 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": [
-                            "node_modules/bootstrap/scss/bootstrap.scss",
-                            "node_modules/@syncfusion/ej2-base/styles/material.css",
-                            "node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css",
-                            "node_modules/@syncfusion/ej2-angular-inputs/styles/material.css",
-                            "node_modules/@syncfusion/ej2-angular-lists/styles/material.css",
-                            "node_modules/@syncfusion/ej2-angular-navigations/styles/material.css",
-                            "node_modules/@syncfusion/ej2-buttons/styles/material.css",
-                            "node_modules/@syncfusion/ej2-dropdowns/styles/material.css",
-                            "node_modules/@syncfusion/ej2-inputs/styles/material.css",
-                            "node_modules/@syncfusion/ej2-popups/styles/material.css",
-                            "node_modules/@syncfusion/ej2-lists/styles/material.css",
-                            "node_modules/@syncfusion/ej2-splitbuttons/styles/material.css",
-                            "node_modules/@grapecity/wijmo.styles/wijmo.scss",
-                            "src/styles.scss"
-                        ],
+                        "styles": ["node_modules/@grapecity/wijmo.styles/wijmo.scss", "src/styles.scss"],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["node_modules/@syncfusion"]
+                        },
                         "scripts": [],
                         "vendorChunk": true,
                         "extractLicenses": false,
