@@ -118,7 +118,7 @@
 
                 <li>
                     <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
-                    <a [routerLink]="'products/cart'" class="btn btn-default ml-2"
+                    <a *ngIf="showCart" [routerLink]="'products/cart'" class="btn btn-default ml-2"
                         ><fa-icon [icon]="cartIcon"></fa-icon
                     ></a>
                 </li>

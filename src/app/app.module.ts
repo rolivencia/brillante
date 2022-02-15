@@ -17,6 +17,7 @@ import { OfficeBranchService } from '@services/office-branch.service';
 import { MainHeaderModule } from '@components/main-header/main-header.module';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { RepairService } from '@services/repair.service';
+import { CartService } from '@services/cart.service';
 
 @NgModule({
     imports: [
@@ -33,6 +34,12 @@ import { RepairService } from '@services/repair.service';
     ],
     declarations: [AppComponent, DashboardComponent],
     providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (cartService: CartService) => () => cartService.loadFromStorage(),
+            deps: [CartService],
+            multi: true,
+        },
         {
             provide: APP_INITIALIZER,
             useFactory: (officeBranchService: OfficeBranchService) => () => officeBranchService.load(),
@@ -54,6 +61,7 @@ import { RepairService } from '@services/repair.service';
         },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        CartService,
         OfficeBranchService,
         ProgressLoaderService,
     ],

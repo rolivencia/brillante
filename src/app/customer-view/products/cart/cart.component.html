@@ -1,1 +1,24 @@
-<p>cart works!</p>
+<div *ngIf="cart$ | async as cart">
+    <div *ngIf="cart.length === 0">Tu carrito está vacío</div>
+    <ng-container *ngFor="let orderDetail of cart">
+        <div class="row">
+            <div class="col"><img [src]="orderDetail.product.imageUrls[0]" /></div>
+            <div class="col">{{ orderDetail.product.name }}</div>
+            <div class="col">
+                <ejs-numerictextbox
+                    [value]="orderDetail.quantity"
+                    format="n0"
+                    min="1"
+                    max="5"
+                    (change)="onChangeQuantity($event, orderDetail)"
+                ></ejs-numerictextbox>
+                <button class="btn btn-outline-danger" (click)="onDelete(orderDetail.product)">🗑️</button>
+            </div>
+            <div class="col">$ {{ (orderDetail.product.price * orderDetail.quantity).toFixed(2) }}</div>
+        </div>
+    </ng-container>
+
+    <div *ngIf="cart.length > 0">
+        <div class="w-100 d-flex justify-content-end">$ {{ this.price }}</div>
+    </div>
+</div>
