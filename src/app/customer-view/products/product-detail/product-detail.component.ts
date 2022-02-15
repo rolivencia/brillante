@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/product';
 import { faCartPlus, faCreditCard, faExclamationTriangle, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { Observable } from 'rxjs';
+import { CartService } from '@services/cart.service';
 
 @Component({
     selector: 'app-product-detail',
@@ -15,13 +16,19 @@ export class ProductDetailComponent implements OnInit {
     public faCreditCard: IconDefinition = faCreditCard;
     public faExclamationTriangle: IconDefinition = faExclamationTriangle;
     public product: Product;
+    public quantity: number = 1;
 
     public highlightedImageUrl: string = '';
 
     public $fullPrice: Observable<string>;
     public $installmentsPrice: Observable<string>;
 
-    constructor(private paymentMethodsService: PaymentMethodsService, private route: ActivatedRoute) {}
+    constructor(
+        private cartService: CartService,
+        private paymentMethodsService: PaymentMethodsService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         if (this.route.snapshot.data['product']) {
@@ -30,6 +37,11 @@ export class ProductDetailComponent implements OnInit {
             this.$fullPrice = this.paymentMethodsService.getPriceWithAppliedFee(this.product.price);
             this.$installmentsPrice = this.paymentMethodsService.getPriceWithAppliedFee(this.product.price, 12);
         }
+    }
+
+    addToCart() {
+        this.cartService.add(this.product, this.quantity);
+        this.router.navigate(['products/cart']);
     }
 
     setImage(imageUrl: string) {

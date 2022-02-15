@@ -52,16 +52,20 @@
                     <p><strong>¡Stock disponible!</strong></p>
                     <div class="form-inline mb-3">
                         <label class="my-1 mr-2" for="amount">Cantidad</label>
-                        <select id="amount" class="custom-select my-1 ml-4 flex-grow-1 text-right">
-                            <option value="1" selected>1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                        <select
+                            id="amount"
+                            class="custom-select my-1 ml-4 flex-grow-1 text-right"
+                            [(ngModel)]="quantity"
+                        >
+                            <option [ngValue]="1" selected>1</option>
+                            <option [ngValue]="2">2</option>
+                            <option [ngValue]="3">3</option>
+                            <option [ngValue]="4">4</option>
+                            <option [ngValue]="5">5</option>
                         </select>
                     </div>
                     <button class="btn btn-primary btn-block">Comprar ahora</button>
-                    <button class="btn btn-outline-primary btn-block">
+                    <button class="btn btn-outline-primary btn-block" (click)="addToCart()">
                         Agregar al carrito
                         <fa-icon [icon]="faCart" [size]="'1x'"></fa-icon>
                     </button>
