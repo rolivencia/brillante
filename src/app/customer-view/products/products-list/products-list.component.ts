@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/product';
 import { ProductsService } from '@customer-view/products/products.service';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import {
     faChevronLeft,
     faChevronRight,
@@ -14,6 +14,7 @@ import {
 import { PaymentMethod } from '@models/cash-transaction';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
+import { SearchInputComponent } from '@components/search-input/search-input.component';
 
 @Component({
     selector: 'app-products-list',
@@ -21,10 +22,12 @@ import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
     styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
+    @ViewChild('searchInput') searchInput: SearchInputComponent;
     @ViewChild('sidebar') sidebar: SidebarComponent;
 
     public count: number;
     public products: Product[] = [];
+    public displayProducts: Product[] = [];
     public pages: number[] = [1];
 
     private routeSubscription: Subscription;
@@ -46,32 +49,32 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.routeSubscription = this.route.paramMap.subscribe((values) => {
-            if (this.route.snapshot.data['products']) {
-                // Product count, given the current category/manufacturer filters
-                this.count = parseInt(this.route.snapshot.data['products'].count, 10);
+        this.routeSubscription = combineLatest([this.route.paramMap, this.route.queryParamMap]).subscribe(
+            ([values, queryParams]) => {
+                if (this.route.snapshot.data['products']) {
+                    // Product count, given the current category/manufacturer filters
+                    this.count = parseInt(this.route.snapshot.data['products'].count, 10);
 
-                // Assign values to mark active filters (category, manufacturer, page)
-                this.productsService.currentOffset = parseInt(values['params'].offset, 10);
-                this.productsService.currentCategory = values['params'].category;
-                this.productsService.currentManufacturer = values['params'].manufacturer;
+                    // Assign values to mark active filters (category, manufacturer, page)
+                    this.productsService.currentOffset = parseInt(values['params'].offset, 10);
+                    this.productsService.currentCategory = values['params'].category;
+                    this.productsService.currentManufacturer = values['params'].manufacturer;
+                    this.productsService.currentQueryParams = queryParams;
 
-                this.products = this.route.snapshot.data['products'].products;
-                const count = Math.ceil(this.route.snapshot.data['products'].count / 12.0);
-                this.pages = Array.from({ length: count }, (_, i) => i + 1);
-                this.changeDetectorRef.detectChanges();
+                    this.products = this.route.snapshot.data['products'].products;
+
+                    const count = Math.ceil(this.route.snapshot.data['products'].count / 12.0);
+                    this.pages = Array.from({ length: count }, (_, i) => i + 1);
+                    this.changeDetectorRef.detectChanges();
+                }
+
+                this.paymentMethods = this.paymentMethodsService.paymentMethods;
             }
-
-            this.paymentMethods = this.paymentMethodsService.paymentMethods;
-        });
+        );
     }
 
     ngOnDestroy() {
         this.routeSubscription.unsubscribe();
-    }
-
-    public addToCart(id: number) {
-        console.log('IMPLEMENT ADDTOCART METHOD');
     }
 
     public productOffsetCount() {
@@ -93,6 +96,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     }
 
     public toggleSidebar() {
+        this.searchInput.clear();
         this.sidebar.toggle();
+    }
+
+    public onSearchSubmitted(text: string) {
+        this.router.navigate([`/products`], { queryParams: { search: text } });
     }
 }

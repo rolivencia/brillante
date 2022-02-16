@@ -14,6 +14,7 @@ export class ProductsListResolverService implements Resolve<Product[]> {
         const offset = route.params['offset'];
         const manufacturer = route.params['manufacturer'];
         const category = route.params['category'];
-        return this.productsHttpService.get({ offset, manufacturer, category });
+        const searchText = route.queryParams.search;
+        return this.productsHttpService.get({ offset, manufacturer, category, searchText });
     }
 }

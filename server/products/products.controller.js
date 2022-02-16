@@ -12,7 +12,12 @@ router.get('/getManufacturers', getManufacturers);
 
 function get(req, res, next) {
     return productsService
-        .get({ offset: req.query['offset'], manufacturer: req.query['manufacturer'], category: req.query['category'] })
+        .get({
+            offset: req.query['offset'],
+            manufacturer: req.query['manufacturer'],
+            category: req.query['category'],
+            searchText: req.query['searchText'],
+        })
         .then((products) => res.json(products))
         .catch((err) => next(err));
 }

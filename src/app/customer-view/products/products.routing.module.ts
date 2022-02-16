@@ -37,6 +37,7 @@ const routes: Routes = [
             {
                 path: 'products-list/:offset/:manufacturer/:category',
                 component: ProductsListComponent,
+                runGuardsAndResolvers: 'paramsOrQueryParamsChange',
                 resolve: {
                     products: ProductsListResolverService,
                     paymentMethods: PaymentMethodsResolverService,

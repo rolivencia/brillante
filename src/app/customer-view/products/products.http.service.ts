@@ -18,10 +18,12 @@ export class ProductsHttpService {
             .pipe(map((productDTO) => toProduct(productDTO)));
     }
 
-    public get({ offset, manufacturer, category }): Observable<Product[]> {
-        return this.http.get<Product[]>(
-            `${environment.apiUrl}/products/getAll?offset=${offset}&manufacturer=${manufacturer}&category=${category}`
-        );
+    public get({ offset, manufacturer, category, searchText = '' }): Observable<Product[]> {
+        let baseUrl = `${environment.apiUrl}/products/getAll?offset=${offset}&manufacturer=${manufacturer}&category=${category}`;
+        if (searchText) {
+            baseUrl = baseUrl.concat(`&searchText=${searchText}`);
+        }
+        return this.http.get<Product[]>(baseUrl);
     }
 
     public getFeatured(): Observable<Product[]> {
@@ -30,7 +32,6 @@ export class ProductsHttpService {
 
     public getManufacturers(): Observable<Manufacturer[]> {
         return this.http.get<Manufacturer[]>(`${environment.apiUrl}/products/getManufacturers`);
-        // .pipe(map((productsDTO) => productsDTO.map((productDTO) => toProduct(productDTO))));
     }
 
     public getCategories(): Observable<Category[]> {

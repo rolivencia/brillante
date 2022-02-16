@@ -17,14 +17,9 @@
 </ejs-sidebar>
 
 <div class="d-md-flex d-lg-none mb-3">
-    <div id="search-input" class="w-100 mr-md-2 mb-2 mb-md-0 input-group mb-3">
-        <span class="h-100 d-flex"
-            ><i><fa-icon [icon]="faSearch" [size]="'1x'"></fa-icon></i
-        ></span>
-        <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="search" />
-    </div>
+    <app-search-input #searchInput (search)="onSearchSubmitted($event)"></app-search-input>
 
-    <button class="w-100 btn btn-outline-primary ml-md-2" (click)="toggleSidebar()">
+    <button class="w-100 btn btn-outline-primary ml-md-2 mt-4" (click)="toggleSidebar()">
         <fa-icon [icon]="faSlider" class="mr-2"></fa-icon>Filtros
     </button>
 </div>
@@ -60,6 +55,7 @@
                                     <a
                                         [ngClass]="{ active: page == productsService.currentOffset }"
                                         [routerLink]="productsService.navigateToPageRoute(page)"
+                                        [queryParams]="productsService.currentQueryParams['params']"
                                         >{{ page }}</a
                                     >
                                 </li>

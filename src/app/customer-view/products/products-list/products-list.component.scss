@@ -19,9 +19,11 @@
 
 .pagination {
     a {
+        color: $secondary;
         &.active {
             font-weight: 900;
             color: $primary;
+            text-decoration: underline;
         }
         &:hover {
             cursor: pointer;

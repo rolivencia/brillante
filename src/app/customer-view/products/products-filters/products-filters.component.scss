@@ -33,17 +33,16 @@ h6 {
                 a {
                     color: $secondary;
                     font-weight: 400;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    &.active {
+                        font-weight: 700;
+                        color: $primary;
+                        text-decoration: underline;
+                    }
                 }
             }
-        }
-    }
-    a {
-        &.active {
-            font-weight: 700;
-            color: $primary;
-        }
-        &:hover {
-            cursor: pointer;
         }
     }
 }

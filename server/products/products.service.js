@@ -28,21 +28,25 @@ async function getFeatured() {
     }));
     return mappedProducts;
 }
-async function get({ offset, manufacturer, category }) {
+async function get({ offset, manufacturer, category, searchText }) {
     //TODO: Add offset-based selection for query
     const queryOffset = `[${12 * (offset - 1)}...${12 + (offset - 1) * 12}]`;
     let queryManufacturer = '';
     let queryCategory = '';
+    let querySearchText = '';
 
-    if (manufacturer !== 'all') {
+    if (!!manufacturer && manufacturer !== 'all') {
         queryManufacturer = ` && references('${manufacturer}')`;
     }
-    if (category !== 'all') {
+    if (!!category && category !== 'all') {
         queryCategory = ` && references('${category}')`;
     }
+    if (!!searchText && searchText !== '') {
+        querySearchText = ` && title match '*${searchText.toLowerCase()}*'`;
+    }
 
-    const query = `*[_type == 'product'${queryManufacturer}${queryCategory}]${queryOffset}{_id, title, retailPrice, images, manufacturer->}`;
-    const countQuery = `count(*[_type == 'product'${queryManufacturer}${queryCategory}])`;
+    const query = `*[_type == 'product'${queryManufacturer}${queryCategory}${querySearchText}]${queryOffset}{_id, title, retailPrice, images, manufacturer->}`;
+    const countQuery = `count(*[_type == 'product'${queryManufacturer}${queryCategory}${querySearchText}])`;
     const count = await sanityConnector.client.fetch(countQuery, {});
     const products = await sanityConnector.client.fetch(query, {});
     // return products;
