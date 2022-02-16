@@ -1,0 +1,17 @@
+<div class="e-input-group">
+    <input
+        id="products-search"
+        class="e-input"
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="text"
+        (focus)="focusIn($event)"
+        (blur)="focusOut($event)"
+    />
+    <span
+        class="e-input-group-icon e-icons e-search"
+        (mouseup)="onMouseUp($event)"
+        (mousedown)="onMouseDown($event)"
+        (click)="onSubmitSearch(text)"
+    ></span>
+</div>

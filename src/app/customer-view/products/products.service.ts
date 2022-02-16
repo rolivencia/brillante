@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Category, Manufacturer, Product } from '@models/product';
-import { Router } from '@angular/router';
+import { ParamMap, Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProductsService {
+    get currentQueryParams(): ParamMap {
+        return this._currentQueryParams;
+    }
+
+    set currentQueryParams(value: ParamMap) {
+        this._currentQueryParams = value;
+    }
     get currentOffset(): number {
         return this._currentOffset;
     }
@@ -36,6 +43,7 @@ export class ProductsService {
     private _currentOffset: number = 1;
     private _currentCategory: string = 'all';
     private _currentManufacturer: string = 'all';
+    private _currentQueryParams: ParamMap = null;
 
     public listFilters: ListFilters = new ListFilters();
 
@@ -64,21 +72,27 @@ export class ProductsService {
 
     public navigateToPrevious() {
         if (this.listFilters.offset > 1) {
-            this.router.navigate([
-                `/products/products-list/${(this._currentOffset as number) - 1}/${this._currentManufacturer}/${
-                    this._currentCategory
-                }`,
-            ]);
+            this.router.navigate(
+                [
+                    `/products/products-list/${(this._currentOffset as number) - 1}/${this._currentManufacturer}/${
+                        this._currentCategory
+                    }`,
+                ],
+                { queryParams: this._currentQueryParams['params'] }
+            );
         }
     }
 
     public navigateToNext(max: number) {
         if (this.listFilters.offset < max) {
-            this.router.navigate([
-                `/products/products-list/${(this._currentOffset as number) + 1}/${this._currentManufacturer}/${
-                    this._currentCategory
-                }`,
-            ]);
+            this.router.navigate(
+                [
+                    `/products/products-list/${(this._currentOffset as number) + 1}/${this._currentManufacturer}/${
+                        this._currentCategory
+                    }`,
+                ],
+                { queryParams: this._currentQueryParams['params'] }
+            );
         }
     }
 }

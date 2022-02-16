@@ -31,7 +31,7 @@
     <section class="product-grid container-fluid p-0">
         <div class="row">
             <div class="d-none d-lg-block col-12 col-lg-2">
-                <app-products-filters></app-products-filters>
+                <app-products-filters (searchText)="onSearchTextChange($event)"></app-products-filters>
             </div>
             <div class="col-12 col-lg-10">
                 <router-outlet></router-outlet>

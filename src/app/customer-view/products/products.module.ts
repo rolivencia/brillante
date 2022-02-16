@@ -11,6 +11,8 @@ import { ProductThumbnailModule } from '@components/product-thumbnail/product-th
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 import { ProductsFiltersComponent } from './products-filters/products-filters.component';
 import { FormsModule } from '@angular/forms';
+import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { SearchInputModule } from '@components/search-input/search-input.module';
 
 @NgModule({
     declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ProductsFiltersComponent],
@@ -21,6 +23,8 @@ import { FormsModule } from '@angular/forms';
         ProductThumbnailModule,
         SidebarModule,
         FormsModule,
+        TextBoxModule,
+        SearchInputModule,
     ],
     providers: [ProductsService, ProductsHttpService],
 })
