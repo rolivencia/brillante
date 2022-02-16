@@ -33,8 +33,14 @@ export class SearchInputComponent implements OnInit {
         }, 500);
     }
 
-    public onSubmitSearch(searchText: string) {
-        this.search.emit(searchText);
+    public onSubmitSearch(text: string) {
+        this.search.emit(text);
+    }
+
+    public onKeyPress(event: KeyboardEvent, text: string) {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            this.search.emit(text);
+        }
     }
 
     public clear() {
