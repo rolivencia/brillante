@@ -4,7 +4,6 @@ import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 
 import { OfficeBranchGuard } from '@guards/office-branch.guard';
-import { ReportsGuard } from '@management-view/reports-dashboard/_guards/reports.guard';
 
 const appRoutes: Routes = [
     {
