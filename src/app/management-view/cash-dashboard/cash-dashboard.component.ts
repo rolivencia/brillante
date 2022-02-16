@@ -3,7 +3,7 @@ import { CashFormHandlerService } from '@management-view/cash-dashboard/cash-for
 import { Component, OnInit } from '@angular/core';
 import { DateHandlerService } from '@services/date-handler.service';
 import { Router } from '@angular/router';
-import { EUser } from '@enums/user.enum';
+import { EUserRole } from '@enums/user.enum';
 import { AuthenticationService, hasRoles } from '@services/authentication.service';
 
 @Component({
@@ -37,7 +37,12 @@ export class CashDashboardComponent implements OnInit {
         });
 
         this.authenticationService.currentUser.subscribe((user) => {
-            this.displayManagementHeader = hasRoles(user.roles, [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK]);
+            this.displayManagementHeader = hasRoles(user.roles, [
+                EUserRole.ADMIN,
+                EUserRole.OWNER,
+                EUserRole.COUNTER_CLERK,
+                EUserRole.ACCOUNTANT,
+            ]);
         });
     }
 

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AppSettingsGuard } from './app-settings.guard';
+import { ProductsDashboardGuard } from './products-dashboard.guard';
 
-describe('AppSettingsGuard', () => {
-    let guard: AppSettingsGuard;
+describe('ProductsDashboardGuard', () => {
+    let guard: ProductsDashboardGuard;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        guard = TestBed.inject(AppSettingsGuard);
+        guard = TestBed.inject(ProductsDashboardGuard);
     });
 
     it('should be created', () => {

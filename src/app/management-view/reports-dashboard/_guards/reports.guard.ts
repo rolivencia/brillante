@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } fro
 import { Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap, tap } from 'rxjs/operators';
-import { EUser } from '@enums/user.enum';
+import { EUserRole } from '@enums/user.enum';
 import { AuthenticationService, hasRoles } from '@services/authentication.service';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ReportsGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.authenticationService.currentUser.pipe(
-            switchMap((user) => of(hasRoles(user.roles, [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK]))),
+            switchMap((user) => of(hasRoles(user.roles, [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.ACCOUNTANT]))),
             tap((value) => {
                 if (value === false) {
                     this.toastrService.error('Acceso no autorizado. Se requieren permisos de administrador.');

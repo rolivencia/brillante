@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepairDashboardComponent } from '@management-view/repair-dashboard/repair-dashboard.component';
+import { RepairDashboardGuard } from '@management-view/repair-dashboard/repair-dashboard.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: RepairDashboardComponent,
+        canActivate: [RepairDashboardGuard],
         children: [
             {
                 path: 'manage',

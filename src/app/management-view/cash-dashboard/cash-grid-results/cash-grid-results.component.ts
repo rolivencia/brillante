@@ -13,7 +13,7 @@ import { DateObject } from '@models/date-object';
 import { FlexGrid } from '@grapecity/wijmo.grid';
 import { CashTransaction } from '@models/cash-transaction';
 import { Subscription } from 'rxjs';
-import { EUser } from '@enums/user.enum';
+import { EUserRole } from '@enums/user.enum';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { AuthenticationService } from '@services/authentication.service';
 
@@ -70,7 +70,8 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
             this.canUserNavigateDates =
                 user.roles
                     .map((role) => role.id)
-                    .filter((roleId) => [EUser.ADMIN, EUser.COUNTER_CLERK, EUser.OWNER].includes(roleId)).length > 0;
+                    .filter((roleId) => [EUserRole.ADMIN, EUserRole.COUNTER_CLERK, EUserRole.OWNER].includes(roleId))
+                    .length > 0;
         });
     }
 

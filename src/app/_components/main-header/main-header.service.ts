@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EUser } from '@enums/user.enum';
+import { EUserRole } from '@enums/user.enum';
 import { NavigationLink } from '@components/main-header/main-header.component';
 import {
     faBuilding,
@@ -30,11 +30,18 @@ export class MainHeaderService {
     private _allAdminLinks: NavigationLink[] = [
         {
             id: '1',
-            text: 'Dashboard',
+            text: 'Panel Principal',
             route: '/dashboard',
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
+            roles: [
+                EUserRole.ADMIN,
+                EUserRole.OWNER,
+                EUserRole.COUNTER_CLERK,
+                EUserRole.REPAIRMAN,
+                EUserRole.EMPLOYEE,
+                EUserRole.ACCOUNTANT,
+            ],
             icon: faColumns,
         },
         {
@@ -43,7 +50,7 @@ export class MainHeaderService {
             route: '/client-dashboard',
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK],
+            roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK],
             icon: faUsers,
         },
         {
@@ -52,7 +59,7 @@ export class MainHeaderService {
             route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.REPAIRMAN, EUser.EMPLOYEE],
+            roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK, EUserRole.REPAIRMAN, EUserRole.EMPLOYEE],
             icon: faToolbox,
         },
         {
@@ -61,7 +68,7 @@ export class MainHeaderService {
             route: ['/cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
+            roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK, EUserRole.EMPLOYEE],
             icon: faCashRegister,
         },
         // {
@@ -78,7 +85,16 @@ export class MainHeaderService {
             route: '/settings-dashboard',
             enabled: true,
             visible: true,
-            roles: [EUser.ADMIN, EUser.OWNER, EUser.COUNTER_CLERK, EUser.EMPLOYEE],
+            roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK, EUserRole.EMPLOYEE],
+            icon: faCogs,
+        },
+        {
+            id: '7',
+            text: 'Reportes',
+            route: '/reports-dashboard',
+            enabled: true,
+            visible: true,
+            roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.ACCOUNTANT],
             icon: faCogs,
         },
     ];
