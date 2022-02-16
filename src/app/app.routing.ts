@@ -3,7 +3,6 @@ import { DashboardComponent } from '@management-view/dashboard.component';
 import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 
-import { ReportsGuard } from '@management-view/reports-dashboard/reports.guard';
 import { OfficeBranchGuard } from '@guards/office-branch.guard';
 
 const appRoutes: Routes = [
@@ -54,7 +53,7 @@ const appRoutes: Routes = [
         path: 'reports-dashboard',
         loadChildren: () =>
             import('@management-view/reports-dashboard/reports-dashboard.module').then((m) => m.ReportsDashboardModule),
-        canActivate: [AuthGuard, ReportsGuard],
+        canActivate: [AuthGuard],
     },
 
     { path: 'login', component: LoginComponent },

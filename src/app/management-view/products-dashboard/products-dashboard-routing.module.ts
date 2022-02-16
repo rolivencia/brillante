@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ProductsDashboardComponent } from '@management-view/products-dashboard/products-dashboard.component';
+import { ProductsDashboardComponent } from './products-dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ProductsDashboardGuard } from './products-dashboard.guard';
 
-const routes: Routes = [{ path: '', component: ProductsDashboardComponent }];
+const routes: Routes = [{ path: '', component: ProductsDashboardComponent, canActivate: [ProductsDashboardGuard] }];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
