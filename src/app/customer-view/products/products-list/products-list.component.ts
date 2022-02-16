@@ -14,7 +14,7 @@ import {
 import { PaymentMethod } from '@models/cash-transaction';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
-import { ChangedEventArgs } from '@syncfusion/ej2-inputs';
+import { SearchInputComponent } from '@components/search-input/search-input.component';
 
 @Component({
     selector: 'app-products-list',
@@ -22,6 +22,7 @@ import { ChangedEventArgs } from '@syncfusion/ej2-inputs';
     styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
+    @ViewChild('searchInput') searchInput: SearchInputComponent;
     @ViewChild('sidebar') sidebar: SidebarComponent;
 
     public count: number;
@@ -76,10 +77,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.routeSubscription.unsubscribe();
     }
 
-    public addToCart(id: number) {
-        console.log('IMPLEMENT ADDTOCART METHOD');
-    }
-
     public productOffsetCount() {
         const min = 12 * (this.productsService.currentOffset - 1) + 1;
         let max = 12 + (this.productsService.currentOffset - 1) * 12;
@@ -99,10 +96,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     }
 
     public toggleSidebar() {
+        this.searchInput.clear();
         this.sidebar.toggle();
     }
 
-    public onSearchTextChange(event: ChangedEventArgs) {
-        this.router.navigate([`/products`], { queryParams: { search: event.value }, queryParamsHandling: 'merge' });
+    public onSearchSubmitted(text: string) {
+        this.router.navigate([`/products`], { queryParams: { search: text } });
     }
 }

@@ -1,26 +1,3 @@
-<!-- TODO: Issue #84 - Make the modal visible after adding an item to the cart -->
-<div class="modal fade" id="carrito-mensaje" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4>&nbsp;</h4>
-            </div>
-            <div class="modal-body">
-                <i class="fa fa-check icono-ok"></i>
-                <h2>Producto Agregado</h2>
-                <p>Se agrego un nuevo producto al carrito</p>
-            </div>
-            <div class="modal-footer">
-                <a href="/carrito" class="btn btn-success">Ver Carrito</a>
-                <a href="#" class="btn btn-default" data-dismiss="modal">Seguir Comprando</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="global-wrapper clearfix" id="global-wrapper">
     <section id="products-list-hero" class="w-100 d-none d-md-block">
         <img class="w-100" src="./assets/imagenes/tema/slides/productos.jpg" alt="" />
@@ -31,7 +8,7 @@
     <section class="product-grid container-fluid p-0">
         <div class="row">
             <div class="d-none d-lg-block col-12 col-lg-2">
-                <app-products-filters (searchText)="onSearchTextChange($event)"></app-products-filters>
+                <app-products-filters></app-products-filters>
             </div>
             <div class="col-12 col-lg-10">
                 <router-outlet></router-outlet>

@@ -17,9 +17,9 @@
 </ejs-sidebar>
 
 <div class="d-md-flex d-lg-none mb-3">
-    <app-search-input #searchBox (search)="onSearchTextChange($event)"></app-search-input>
+    <app-search-input #searchInput (search)="onSearchSubmitted($event)"></app-search-input>
 
-    <button class="w-100 btn btn-outline-primary ml-md-2" (click)="toggleSidebar()">
+    <button class="w-100 btn btn-outline-primary ml-md-2 mt-4" (click)="toggleSidebar()">
         <fa-icon [icon]="faSlider" class="mr-2"></fa-icon>Filtros
     </button>
 </div>
