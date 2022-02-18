@@ -1,14 +1,12 @@
 import * as moment from 'moment';
-import * as wjcGridXlsx from '@grapecity/wijmo.grid.xlsx';
 import { CashDashboardService, formatDate } from '@management-view/cash-dashboard/cash-dashboard.service';
 import { CashReportService } from '@management-view/reports-dashboard/cash-report/cash-report.service';
-import { CellType } from '@grapecity/wijmo.grid';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateObject } from '@models/date-object';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LayoutService } from '@services/layout.service';
-import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { DataUtil } from '@syncfusion/ej2-data';
 
 @Component({
@@ -28,7 +26,8 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
     public gridHeight: string;
     public sortOptions: object;
     public fields: object = { text: 'Sucursal', value: 'id' };
-    public dropData = ({} = DataUtil.distinct(this.cashDashboardService.gridData, 'officeBranch.name') as string[]);
+    public filterDropdownData = { officeBranch: [], paymentMethod: [], user: [] };
+    public toolbarOptions: ToolbarItems[];
 
     @ViewChild('gridContainer') gridContainer: ElementRef;
     @ViewChild('cashGrid', { static: false }) cashGrid: GridComponent;
@@ -42,6 +41,7 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        this.toolbarOptions = ['ExcelExport'];
         this.loadingSubscription = this.cashDashboardService.loading.subscribe((result) => {
             this.loading = result;
             this.changeDetectorRef.detectChanges();
@@ -57,9 +57,6 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
             day: moment().date(),
         };
         this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
-        this.sortOptions = {
-            columns: [{ field: 'date', direction: 'Descending' }],
-        };
 
         this.layoutService.useContainer.next(false);
     }
@@ -79,51 +76,41 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
         const to = formatDate(toNgb);
         await this.cashDashboardService.loadData(from, to, [49, 163]);
         this.cashDashboardService.selectedTransaction = null;
-        this.dropData = DataUtil.distinct(this.cashDashboardService.gridData, 'officeBranch.name') as string[];
+        this.filterDropdownData = {
+            officeBranch: [''].concat(
+                DataUtil.distinct(this.cashDashboardService.gridData, 'officeBranch.name') as string[]
+            ),
+            paymentMethod: [''].concat(
+                DataUtil.distinct(this.cashDashboardService.gridData, 'paymentMethod.description') as string[]
+            ),
+            user: [''].concat(
+                DataUtil.distinct(this.cashDashboardService.gridData, 'audit.createdBy.userName') as string[]
+            ),
+        };
+        this.sortOptions = {
+            columns: [{ field: 'id', direction: 'Ascending' }],
+        };
         this.calculateGridHeight();
     }
 
     //TODO: Migrate to SyncFusion version
-    exportToXls() {
+    public exportToXls() {
         const from = formatDate(this.cashDashboardService.ngbDateFrom).format('YYYY-MM-DD');
         const to = formatDate(this.cashDashboardService.ngbDateTo).format('YYYY-MM-DD');
-        wjcGridXlsx.FlexGridXlsxConverter.save(
-            this.cashGrid as any,
-            {
-                includeColumnHeaders: true,
-                includeCellStyles: false,
-                formatItem: (item) => {
-                    if (item.panel.cellType === CellType.ColumnHeader) {
-                        item.xlsxCell.style.fill = { color: '#e9ecef' }; //TODO: Generalize color - Select from service
-                    }
-                    if (item.panel.cellType === CellType.Cell && item.col === 7) {
-                        item.xlsxCell.value = moment(item.xlsxCell.value).format('YYYY/MM/DD HH:mm');
-                    }
-                    if (item.panel.cellType === CellType.ColumnFooter && !isNaN(item.xlsxCell.value)) {
-                        if (item.col === 6) {
-                            item.xlsxCell.style.fill = { color: '#d4edda' }; //TODO: Generalize color - Select from service
-                        }
-                        if (item.col === 5) {
-                            item.xlsxCell.style.fill = { color: '#f8d7da' }; //TODO: Generalize color - Select from service
-                        }
-                        if (item.col === 4) {
-                            item.xlsxCell.style.fill = { color: '#d1ecf1' }; //TODO: Generalize color - Select from service
-                        }
-                    }
-                },
-            },
-            `Reporte Brillante Store (${from} - ${to})`
-        );
+        this.cashGrid.excelExport({ fileName: `Reporte Monetario Brillante (${from} - ${to})` });
     }
 
-    back() {
+    public back() {
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }]);
     }
 
-    public onChange(args: any): void {
-        this.cashGrid.filterByColumn('officeBranch.name', 'equal', args.value);
+    public onChange(args: any, field: string): void {
+        if (args.value === '') {
+            this.cashGrid.clearFiltering([field]);
+        } else {
+            this.cashGrid.filterByColumn(field, 'equal', args.value);
+        }
     }
-
     private calculateGridHeight() {
         if (this.cashGrid) {
             const headerHeight = 42;

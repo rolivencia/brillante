@@ -1,3 +1,4 @@
+'
 <div class="card h-100">
     <div class="card-header">
         <div class="row">
@@ -79,9 +80,13 @@
             </div>
             <ejs-grid
                 #cashGrid
+                id="cashGrid"
+                [allowExcelExport]="true"
                 [allowFiltering]="true"
+                [allowSorting]="true"
                 [dataSource]="cashDashboardService.gridData"
                 [height]="gridHeight"
+                [sortSettings]="sortOptions"
             >
                 <e-columns>
                     <e-column
@@ -96,15 +101,15 @@
                         field="officeBranch.name"
                         headerText="Sucursal"
                         textAlign="Left"
-                        width="60"
+                        width="80"
                         [allowFiltering]="true"
                     >
                         <ng-template #filterTemplate let-data>
                             <ejs-dropdownlist
                                 [(ngModel)]="data.Name"
                                 [enabled]="true"
-                                (change)="onChange($event)"
-                                [dataSource]="dropData"
+                                (change)="onChange($event, 'officeBranch.name')"
+                                [dataSource]="filterDropdownData['officeBranch']"
                                 [fields]="fields"
                             ></ejs-dropdownlist>
                         </ng-template>
@@ -134,15 +139,15 @@
                         field="paymentMethod.description"
                         headerText="Método"
                         textAlign="Left"
-                        width="70"
+                        width="80"
                         [allowFiltering]="true"
                     >
                         <ng-template #filterTemplate let-data>
                             <ejs-dropdownlist
                                 [(ngModel)]="data.Name"
                                 [enabled]="true"
-                                (change)="onChange($event)"
-                                [dataSource]="dropData"
+                                (change)="onChange($event, 'paymentMethod.description')"
+                                [dataSource]="filterDropdownData['paymentMethod']"
                                 [fields]="fields"
                             ></ejs-dropdownlist>
                         </ng-template>
@@ -175,15 +180,15 @@
                         field="audit.createdBy.userName"
                         headerText="Creador"
                         textAlign="Left"
-                        width="50"
+                        width="70"
                         [allowFiltering]="true"
                     >
                         <ng-template #filterTemplate let-data>
                             <ejs-dropdownlist
                                 [(ngModel)]="data.Name"
                                 [enabled]="true"
-                                (change)="onChange($event)"
-                                [dataSource]="dropData"
+                                (change)="onChange($event, 'audit.createdBy.userName')"
+                                [dataSource]="filterDropdownData['user']"
                                 [fields]="fields"
                             ></ejs-dropdownlist>
                         </ng-template>
@@ -221,3 +226,4 @@
         </div>
     </div>
 </div>
+'

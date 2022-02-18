@@ -12,16 +12,7 @@ import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
     declarations: [CashReportComponent],
-    imports: [
-        CommonModule,
-        CashReportRoutingModule,
-        FormsModule,
-        GridModule,
-        NgbDatepickerModule,
-        WjGridFilterModule,
-        WjGridModule,
-        DropDownListModule,
-    ],
+    imports: [CommonModule, CashReportRoutingModule, FormsModule, GridModule, NgbDatepickerModule, DropDownListModule],
     providers: [CashReportService],
 })
 export class CashReportModule {}
