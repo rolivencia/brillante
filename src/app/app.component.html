@@ -17,6 +17,7 @@
             [enableGestures]="!isDesktop"
             #sidebar
             (created)="onCreated()"
+            (close)="onSidebarClose()"
             [isOpen]="isDesktop && isInternalUser"
             [type]="'Auto'"
             [width]="'240px'"
