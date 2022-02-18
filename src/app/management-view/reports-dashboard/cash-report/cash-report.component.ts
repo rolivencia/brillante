@@ -128,6 +128,7 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.cashGrid) {
             const headerHeight = 42;
             const filterRowHeight = 45;
+            const footerHeight = 27;
             const containerPadding = parseFloat(
                 window.getComputedStyle(this.gridContainer.nativeElement).padding.slice(0, -2)
             );
@@ -135,6 +136,7 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.gridContainer.nativeElement.offsetHeight -
                 headerHeight -
                 filterRowHeight -
+                footerHeight -
                 2 * containerPadding +
                 'px';
         }

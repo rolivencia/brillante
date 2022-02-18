@@ -151,7 +151,7 @@
                         field="income"
                         headerText="Ingreso"
                         textAlign="Left"
-                        width="50"
+                        width="80"
                         format="c2"
                         [allowFiltering]="false"
                     ></e-column>
@@ -159,7 +159,7 @@
                         field="expense"
                         headerText="Egreso"
                         textAlign="Left"
-                        width="50"
+                        width="80"
                         format="c2"
                         [allowFiltering]="false"
                     ></e-column>
@@ -167,7 +167,7 @@
                         field="amount"
                         headerText="Saldo"
                         textAlign="Left"
-                        width="50"
+                        width="80"
                         format="c2"
                         [allowFiltering]="false"
                     ></e-column>
@@ -196,6 +196,27 @@
                         [allowFiltering]="true"
                     ></e-column>
                 </e-columns>
+                <e-aggregates>
+                    <e-aggregate>
+                        <e-columns>
+                            <e-column field="income" type="sum" format="c2">
+                                <ng-template #footerTemplate let-data
+                                    ><div class="alert-success p-1">{{ data.sum }}</div></ng-template
+                                >
+                            </e-column>
+                            <e-column field="expense" type="sum" format="c2">
+                                <ng-template #footerTemplate let-data
+                                    ><div class="alert-danger p-1">{{ data.sum }}</div></ng-template
+                                >
+                            </e-column>
+                            <e-column field="amount" type="sum" format="c2">
+                                <ng-template #footerTemplate let-data
+                                    ><div class="alert-info p-1">{{ data.sum }}</div></ng-template
+                                >
+                            </e-column>
+                        </e-columns>
+                    </e-aggregate>
+                </e-aggregates>
             </ejs-grid>
         </div>
     </div>
