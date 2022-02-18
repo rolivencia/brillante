@@ -17,32 +17,49 @@
         ><h6 class="title">Gestión Interna</h6>
         <ejs-listview id="internal-management" [dataSource]="adminLinks" cssClass="e-list-template" [fields]="fields">
             <ng-template #template let-route="">
-                <div class="e-list-wrapper">
-                    <a
-                        class="nav-link"
-                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                        [routerLink]="route.route"
-                        (click)="hideSidebar()"
-                    >
-                        <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
-                        {{ route.text }}</a
-                    >
-                </div>
+                <ng-container *ngIf="route.visible">
+                    <div class="e-list-wrapper">
+                        <a
+                            *ngIf="route.type === 'Internal'"
+                            class="nav-link"
+                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                            [routerLink]="route.route"
+                            (click)="onHide()"
+                        >
+                            <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                            {{ route.text }}</a
+                        >
+                        <a
+                            *ngIf="route.type === 'External'"
+                            class="nav-link"
+                            target="_blank"
+                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                            [href]="route.route"
+                        >
+                            <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                            {{ route.text }}</a
+                        >
+                    </div>
+                </ng-container>
             </ng-template>
         </ejs-listview>
         <h6 class="title">Módulos Públicos</h6></ng-container
     >
     <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
         <ng-template #template let-route="">
-            <div class="e-list-wrapper" *ngIf="route.visible">
-                <a
-                    class="nav-link"
-                    [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                    [routerLink]="route.route"
-                    (click)="hideSidebar()"
-                    ><fa-icon class="mr-3" [icon]="route.icon"></fa-icon>{{ route.text }}</a
-                >
-            </div>
+            <ng-container *ngIf="route.visible">
+                <div class="e-list-wrapper">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                        [routerLink]="route.route"
+                        (click)="onHide()"
+                    >
+                        <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                        {{ route.text }}</a
+                    >
+                </div>
+            </ng-container>
         </ng-template>
     </ejs-listview>
     <ng-container *ngIf="currentUser$ | async as currentUser">

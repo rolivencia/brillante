@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
 import { NavigationService } from '@services/navigation.service';
@@ -14,6 +14,8 @@ import { Observable } from 'rxjs';
     styleUrls: ['./left-sidebar.component.scss'],
 })
 export class LeftSidebarComponent implements OnInit, AfterViewInit {
+    @Output() hide: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     get userLinks(): NavigationLink[] {
         return this.navigationService.userLinks;
     }
@@ -51,11 +53,13 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
     public logout() {
         this.authenticationService.logout();
         this._adminLinks = [];
-        // this.sidebar.hide();
+        this.onHide();
         this.router.navigate(['/']);
     }
 
-    public hideSidebar() {
-        // this.sidebar.hide();
+    public onHide() {
+        if (window.innerWidth < 768) {
+            this.hide.emit(true);
+        }
     }
 }

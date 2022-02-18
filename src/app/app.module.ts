@@ -1,11 +1,9 @@
 ﻿import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-// used to create fake backend
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { DashboardComponent } from '@management-view/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ProgressLoaderModule } from '@components/progress-loader/progress-loader.module';
@@ -37,7 +35,7 @@ import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
         LeftSidebarModule,
         SidebarModule,
     ],
-    declarations: [AppComponent, DashboardComponent],
+    declarations: [AppComponent],
     providers: [
         {
             provide: APP_INITIALIZER,

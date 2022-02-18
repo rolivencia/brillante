@@ -1,11 +1,11 @@
 ﻿<div id="header-container">
     <app-progress-loader [marginTop]="0" [zIndex]="2003"></app-progress-loader>
-    <app-main-header (toggleSidebar)="onToggleSidebar($event)" [sidebarOpen]="sidebarOpen"></app-main-header>
+    <app-main-header [sidebarOpen]="sidebarOpen" (toggleSidebar)="onToggleSidebar($event)"></app-main-header>
 </div>
 <div id="main-container" class="w-100">
     <div class="container">
-        <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated()" [type]="'Auto'" [width]="'100%'">
-            <app-left-sidebar></app-left-sidebar>
+        <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated()" [type]="'Auto'">
+            <app-left-sidebar (hide)="hideSidebar()"></app-left-sidebar>
         </ejs-sidebar>
         <div id="outlet-container" class="py-md-3 d-flex justify-content-center align-items-center">
             <div id="inner-container" class="d-block w-100">

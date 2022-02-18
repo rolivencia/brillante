@@ -15,7 +15,10 @@ export interface NavigationLink {
     visible: boolean;
     roles?: number[];
     icon?: IconDefinition;
+    type: NavigationLinkType;
 }
+
+export type NavigationLinkType = 'Internal' | 'External';
 
 @Component({
     selector: 'app-main-header',
@@ -70,7 +73,6 @@ export class MainHeaderComponent implements OnInit {
         this.authenticationService.logout();
         this._adminLinks = [];
         this.router.navigate(['/']);
-        this.toggleSidebar.emit(false);
     }
 
     public onToggleSidebar() {
