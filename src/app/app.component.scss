@@ -39,7 +39,6 @@ body {
 }
 
 #default-sidebar {
-    max-width: 240px;
     @include media-breakpoint-down(xs) {
         margin-top: 48px;
     }
