@@ -13,6 +13,8 @@
             id="default-sidebar"
             *ngIf="!isDesktop || isInternalUser"
             [ngClass]="{ 'add-header-margin': !isDesktop || !isInternalUser }"
+            [closeOnDocumentClick]="false"
+            [enableGestures]="!isDesktop"
             #sidebar
             (created)="onCreated()"
             [isOpen]="isDesktop && isInternalUser"
