@@ -1,13 +1,32 @@
 ﻿<div id="header-container">
     <app-progress-loader [marginTop]="0" [zIndex]="2003"></app-progress-loader>
-    <app-main-header [sidebarOpen]="sidebarOpen" (toggleSidebar)="onToggleSidebar($event)"></app-main-header>
+    <app-main-header
+        *ngIf="showFullMainHeader"
+        [sidebarOpen]="sidebarOpen"
+        (toggleSidebar)="onToggleSidebar($event)"
+    ></app-main-header>
 </div>
 <div id="main-container" class="w-100">
     <div class="container">
-        <ejs-sidebar id="default-sidebar" #sidebar (created)="onCreated()" [type]="'Auto'" [width]="'240px'">
-            <app-left-sidebar (hide)="hideSidebar()"></app-left-sidebar>
+        <ejs-sidebar
+            id="default-sidebar"
+            [ngClass]="{ 'add-header-margin': showFullMainHeader }"
+            #sidebar
+            (created)="onCreated()"
+            [isOpen]="!showFullMainHeader"
+            [type]="'Auto'"
+            [width]="'240px'"
+        >
+            <div class="p-3">
+                <app-brand-container *ngIf="!showFullMainHeader" [showToggler]="false"></app-brand-container>
+                <app-left-sidebar (hide)="hideSidebar()" (logout)="onLogout($event)"></app-left-sidebar>
+            </div>
         </ejs-sidebar>
-        <div id="outlet-container" class="py-md-3 d-flex justify-content-center align-items-center">
+        <div
+            id="outlet-container"
+            class="py-md-3 d-flex justify-content-center align-items-center"
+            [ngClass]="{ 'add-header-margin': showFullMainHeader }"
+        >
             <div id="inner-container" class="d-block w-100">
                 <router-outlet></router-outlet>
             </div>

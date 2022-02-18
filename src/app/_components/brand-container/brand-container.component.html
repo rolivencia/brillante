@@ -1,5 +1,5 @@
 <div class="brand-container">
-    <button id="burger-menu" type="button" (click)="onToggleSidebar()">
+    <button id="burger-menu" type="button" (click)="onToggleSidebar()" *ngIf="showToggler">
         <fa-icon *ngIf="!sidebarOpen" [icon]="barsIcon"></fa-icon>
         <fa-icon *ngIf="sidebarOpen" [icon]="closeIcon"></fa-icon>
     </button>

@@ -23,12 +23,15 @@ body {
 }
 
 #outlet-container {
-    @include media-breakpoint-down(xs) {
-        margin-top: 48px;
+    &.add-header-margin {
+        @include media-breakpoint-down(xs) {
+            margin-top: 48px;
+        }
+        @include media-breakpoint-up(sm) {
+            margin-top: 64px;
+        }
     }
-    @include media-breakpoint-up(sm) {
-        margin-top: 64px;
-    }
+
     flex-grow: 1;
 }
 
@@ -39,12 +42,15 @@ body {
 }
 
 #default-sidebar {
-    @include media-breakpoint-down(xs) {
-        margin-top: 48px;
+    &.add-header-margin {
+        @include media-breakpoint-down(xs) {
+            margin-top: 48px;
+        }
+        @include media-breakpoint-up(sm) {
+            margin-top: 64px;
+        }
     }
-    @include media-breakpoint-up(sm) {
-        margin-top: 64px;
-    }
+
     .e-list-wrapper {
         padding-left: 0;
     }

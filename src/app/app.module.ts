@@ -19,6 +19,7 @@ import { CartService } from '@services/cart.service';
 import { NavigationService } from '@services/navigation.service';
 import { LeftSidebarModule } from '@components/left-sidebar/left-sidebar.module';
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @NgModule({
     imports: [
@@ -65,6 +66,7 @@ import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CartService,
+        DeviceDetectorService,
         OfficeBranchService,
         NavigationService,
         ProgressLoaderService,

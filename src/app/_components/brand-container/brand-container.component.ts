@@ -8,6 +8,7 @@ import { faBars, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-ico
 })
 export class BrandContainerComponent implements OnInit {
     @Input() sidebarOpen: boolean = false;
+    @Input() showToggler: boolean = true;
     @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public barsIcon: IconDefinition = faBars;

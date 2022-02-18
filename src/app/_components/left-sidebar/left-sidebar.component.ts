@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 })
 export class LeftSidebarComponent implements OnInit, AfterViewInit {
     @Output() hide: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() logout: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     get userLinks(): NavigationLink[] {
         return this.navigationService.userLinks;
@@ -50,10 +51,11 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {}
 
-    public logout() {
+    public onLogout() {
         this.authenticationService.logout();
         this._adminLinks = [];
         this.onHide();
+        this.logout.emit();
         this.router.navigate(['/']);
     }
 
