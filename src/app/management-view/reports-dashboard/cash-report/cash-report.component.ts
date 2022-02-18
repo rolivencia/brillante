@@ -3,18 +3,20 @@ import * as wjcGridXlsx from '@grapecity/wijmo.grid.xlsx';
 import { CashDashboardService, formatDate } from '@management-view/cash-dashboard/cash-dashboard.service';
 import { CashReportService } from '@management-view/reports-dashboard/cash-report/cash-report.service';
 import { CellType } from '@grapecity/wijmo.grid';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateObject } from '@models/date-object';
 import { Router } from '@angular/router';
-import { WjFlexGrid } from '@grapecity/wijmo.angular2.grid';
 import { Subscription } from 'rxjs';
+import { LayoutService } from '@services/layout.service';
+import { GridComponent } from '@syncfusion/ej2-angular-grids';
+import { DataUtil } from '@syncfusion/ej2-data';
 
 @Component({
     selector: 'app-cash-report',
     templateUrl: './cash-report.component.html',
     styleUrls: ['./cash-report.component.scss'],
 })
-export class CashReportComponent implements OnInit, OnDestroy {
+export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
     loading: boolean = false;
     private loadingSubscription: Subscription;
 
@@ -23,26 +25,19 @@ export class CashReportComponent implements OnInit, OnDestroy {
     navigation = 'select';
     outsideDays = 'visible';
 
-    @ViewChild('cashGrid', { static: false }) cashGrid: WjFlexGrid;
+    public gridHeight: string;
+    public sortOptions: object;
+    public fields: object = { text: 'Sucursal', value: 'id' };
+    public dropData = ({} = DataUtil.distinct(this.cashDashboardService.gridData, 'officeBranch.name') as string[]);
 
-    columns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'Sucursal', binding: 'officeBranch.name', width: 80 },
-        { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
-        { header: 'Subconcepto', binding: 'concept.description', width: '*' },
-        { header: 'Nota', binding: 'note', width: 150 },
-        { header: 'Método', binding: 'paymentMethod.description', width: 90 },
-        { header: 'Ingreso', binding: 'income', width: 80 },
-        { header: 'Egreso', binding: 'expense', width: 80 },
-        { header: 'Saldo', binding: 'amount', width: 80 },
-        { header: 'Creador', binding: 'audit.createdBy.userName', width: 70 },
-        { header: 'Fecha y Hora', binding: 'date', width: 110 },
-    ];
+    @ViewChild('gridContainer') gridContainer: ElementRef;
+    @ViewChild('cashGrid', { static: false }) cashGrid: GridComponent;
 
     constructor(
         public cashDashboardService: CashDashboardService,
         public cashReportService: CashReportService, // Dot not remove. Will be used in the future.
         private changeDetectorRef: ChangeDetectorRef,
+        private layoutService: LayoutService,
         private router: Router
     ) {}
 
@@ -62,6 +57,11 @@ export class CashReportComponent implements OnInit, OnDestroy {
             day: moment().date(),
         };
         this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
+        this.sortOptions = {
+            columns: [{ field: 'date', direction: 'Descending' }],
+        };
+
+        this.layoutService.useContainer.next(false);
     }
 
     ngOnDestroy(): void {
@@ -70,18 +70,25 @@ export class CashReportComponent implements OnInit, OnDestroy {
         this.loading = false;
     }
 
-    refreshGrid(fromNgb: DateObject, toNgb: DateObject) {
-        const from = formatDate(fromNgb);
-        const to = formatDate(toNgb);
-        this.cashDashboardService.loadData(from, to, [49, 163]);
-        this.cashDashboardService.selectedTransaction = null;
+    ngAfterViewInit(): void {
+        // this.calculateGridHeight();
     }
 
+    async refreshGrid(fromNgb: DateObject, toNgb: DateObject) {
+        const from = formatDate(fromNgb);
+        const to = formatDate(toNgb);
+        await this.cashDashboardService.loadData(from, to, [49, 163]);
+        this.cashDashboardService.selectedTransaction = null;
+        this.dropData = DataUtil.distinct(this.cashDashboardService.gridData, 'officeBranch.name') as string[];
+        this.calculateGridHeight();
+    }
+
+    //TODO: Migrate to SyncFusion version
     exportToXls() {
         const from = formatDate(this.cashDashboardService.ngbDateFrom).format('YYYY-MM-DD');
         const to = formatDate(this.cashDashboardService.ngbDateTo).format('YYYY-MM-DD');
         wjcGridXlsx.FlexGridXlsxConverter.save(
-            this.cashGrid,
+            this.cashGrid as any,
             {
                 includeColumnHeaders: true,
                 includeCellStyles: false,
@@ -111,5 +118,25 @@ export class CashReportComponent implements OnInit, OnDestroy {
 
     back() {
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }]);
+    }
+
+    public onChange(args: any): void {
+        this.cashGrid.filterByColumn('officeBranch.name', 'equal', args.value);
+    }
+
+    private calculateGridHeight() {
+        if (this.cashGrid) {
+            const headerHeight = 42;
+            const filterRowHeight = 45;
+            const containerPadding = parseFloat(
+                window.getComputedStyle(this.gridContainer.nativeElement).padding.slice(0, -2)
+            );
+            this.gridHeight =
+                this.gridContainer.nativeElement.offsetHeight -
+                headerHeight -
+                filterRowHeight -
+                2 * containerPadding +
+                'px';
+        }
     }
 }

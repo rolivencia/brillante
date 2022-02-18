@@ -7,6 +7,8 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
 import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 
 @NgModule({
     declarations: [CashReportComponent],
@@ -14,9 +16,11 @@ import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
         CommonModule,
         CashReportRoutingModule,
         FormsModule,
+        GridModule,
         NgbDatepickerModule,
         WjGridFilterModule,
         WjGridModule,
+        DropDownListModule,
     ],
     providers: [CashReportService],
 })

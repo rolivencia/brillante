@@ -8,7 +8,7 @@
     ></app-main-header>
 </div>
 <div id="main-container" class="w-100">
-    <div class="container">
+    <div [ngClass]="{ container: isMainOutlerContainerized, 'container-fluid': !isMainOutlerContainerized }">
         <ejs-sidebar
             id="default-sidebar"
             *ngIf="!isDesktop || isInternalUser"
@@ -33,7 +33,7 @@
             class="py-3 d-flex justify-content-center align-items-center"
             [ngClass]="{ 'add-header-margin': (isDesktop && !isInternalUser) || !isDesktop }"
         >
-            <div id="inner-container" class="d-block w-100">
+            <div id="inner-container" class="d-block w-100 h-100">
                 <router-outlet></router-outlet>
             </div>
         </div>

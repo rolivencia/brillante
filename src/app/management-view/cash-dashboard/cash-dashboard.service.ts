@@ -51,6 +51,7 @@ export class CashDashboardService {
     public transactions: CashTransaction[] = [];
 
     public gridCollection: CollectionView = new CollectionView([]);
+    public data: any[] = [];
     public selectedTransaction: CashTransaction = null;
 
     constructor(
@@ -98,7 +99,7 @@ export class CashDashboardService {
             this.loadData(moment());
         }
     }
-
+    public gridData = [];
     // FIXME: Restructure this to get rid of coupling. Think of two methods: one for single date, other for starting and ending
     async refreshGrid(date?: DateObject) {
         this.date = date ? formatDate(date) : moment();
@@ -122,9 +123,12 @@ export class CashDashboardService {
                 (transaction) => !filterConcepts.includes(transaction.concept.id)
             );
         }
-
+        // Wijmo Version
         this.gridCollection = new CollectionView<any>(this.transactions);
         this.gridCollection.currentItem = null;
+
+        // SyncFusion version
+        this.gridData = this.transactions.map((t) => ({ ...t, date: t.date.format('YYYY-MM-DD HH:mm') }));
 
         const sortById = new SortDescription('date', true);
         this.gridCollection.sortDescriptions.clear();
