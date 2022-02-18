@@ -1,29 +1,6 @@
 <section id="main-header" class="container-fluid p-md-0">
     <nav class="navbar navbar-expand-lg justify-content-between align-content-center navbar-light brand-navbar">
-        <div class="brand-container">
-            <div id="nav-container-dropdown" class="dropdown d-block">
-                <button
-                    id="burger-menu"
-                    class="dropdown-toggle"
-                    type="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    (click)="onToggleSidebar()"
-                >
-                    <fa-icon *ngIf="!sidebarOpen" [icon]="barsIcon"></fa-icon>
-                    <fa-icon *ngIf="sidebarOpen" [icon]="closeIcon"></fa-icon>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <ng-container *ngFor="let route of userLinks">
-                        <a class="dropdown-item" *ngIf="route.visible" [routerLink]="route.route">{{ route.text }}</a>
-                    </ng-container>
-                </div>
-            </div>
-            <a class="navbar-brand" href="">
-                <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
-            </a>
-        </div>
+        <app-brand-container [sidebarOpen]="sidebarOpen" (toggleSidebar)="onToggleSidebar()"></app-brand-container>
 
         <ng-container [ngTemplateOutlet]="navTemplate"></ng-container>
 

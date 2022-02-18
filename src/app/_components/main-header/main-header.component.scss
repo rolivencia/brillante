@@ -11,9 +11,6 @@
 }
 
 #main-header {
-    fa-icon {
-        color: $primary;
-    }
     width: 100%;
     z-index: 1040;
     background: #fff;
@@ -24,19 +21,6 @@
         background: #fff;
         z-index: 2002;
         height: 100%;
-        .brand-container {
-            display: flex;
-            align-items: center;
-            a.navbar-brand {
-                padding: 0;
-                width: 85px;
-                margin: 0;
-                img {
-                    width: 100%;
-                    display: block;
-                }
-            }
-        }
     }
     a.whatsapp {
         color: #999;
@@ -95,21 +79,5 @@
 @media (min-width: 768px) {
     #main-header a.whatsapp span {
         display: inline;
-    }
-}
-
-#burger-menu {
-    line-height: 1;
-    font-size: 22px;
-    margin: 0 0 0 -15px;
-    padding: 3px 13px 0;
-    background: transparent;
-    border: none;
-
-    &.dropdown-toggle::after {
-        display: none;
-    }
-    @media (min-width: 350px) {
-        padding: 2px 13px;
     }
 }
