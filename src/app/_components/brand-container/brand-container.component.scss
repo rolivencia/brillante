@@ -1,0 +1,42 @@
+@import 'src/assets/scss/bootstrap-theming';
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    a.navbar-brand {
+        @include media-breakpoint-down(sm) {
+            width: 85px;
+        }
+
+        @include media-breakpoint-up(md) {
+            width: 125px;
+        }
+
+        padding: 0;
+        margin: 0;
+        img {
+            width: 100%;
+            display: block;
+        }
+    }
+}
+
+fa-icon {
+    color: $primary;
+}
+
+#burger-menu {
+    line-height: 1;
+    font-size: 22px;
+    margin: 0 0 0 -15px;
+    padding: 3px 13px 0;
+    background: transparent;
+    border: none;
+
+    &.dropdown-toggle::after {
+        display: none;
+    }
+    @media (min-width: 350px) {
+        padding: 2px 13px;
+    }
+}

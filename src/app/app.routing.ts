@@ -1,5 +1,4 @@
 ﻿import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from '@management-view/dashboard.component';
 import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 
@@ -9,11 +8,6 @@ const appRoutes: Routes = [
     {
         path: '',
         loadChildren: () => import('./customer-view/customer-view.module').then((m) => m.CustomerViewModule),
-    },
-    {
-        path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [AuthGuard],
     },
     {
         path: 'repair-dashboard',

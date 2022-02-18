@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
     NavigationCancel,
     NavigationEnd,
@@ -14,6 +14,8 @@ import { ProgressLoaderService } from '@components/progress-loader/progress-load
 import { Title } from '@angular/platform-browser';
 import { AuthenticationService } from '@services/authentication.service';
 import { EUserRole } from '@enums/user.enum';
+import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 wjcCore.setLicenseKey(
     '988775697861712#B05eulUMp9WMJh6T0VUS5BTQCF6RrcWWhRXSGp7Rp94RwVHUrkVM5UETUtSR6QkYZN7YvxWMXRlaOBXNqN5b9UkUhlHMR56YCBlN4N7ZykHbQJje6AVdrBlRZJld994NlRXVKZkTuhGSyF7LwUDe9gmWvJWcCtiTygVcxMVQF5mcYBDR6o7TJVmYQZGMnVUeMtkcQNEM0tESytkUWBje6VHRHdTRqh7YxRXazlles3CbmdkUxYmY6MVRUZlQjFGW0ZmYVBDOslTZ5Q4S9AnYK36TwR7d4kmMjJFc7UmThpHTHF4RWdzUXJiOiMlIsIiRzEjRzIjQiojIIJCL6gTN6QzN4kDO0IicfJye#4Xfd5nIzMEMCJiOiMkIsISZy36Qg2Wbql6ViojIOJyebpjIkJHUiwiI8AzN4QDMgETMyEDOxAjMiojI4J7QiwiIDxETgE6cl5EbhV7cpZlI0ISYONkIsIiMxcTM6gzN9YTN7cDO8kjI0ICZJJCL3JyM6hTMwIjI0IiclZnIsU6csFmZ0IiczRmI1pjIs9WQisnOiQkIsISP3EUTzglWslXd4YTWQtGdndjerEkZhdVW8dkY5B5UWx6Z4JEbW54bulnTxIFaWZkNHRnewJDeqZWWZdTU7d6aL36Q4tiWTFDTMhEOM3EWx3yRztGSIZVTtN5VxokNkB5Q6YHeEBHOltibl3EZ5RqQwR'
@@ -24,9 +26,16 @@ wjcCore.setLicenseKey(
     templateUrl: 'app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
+    @ViewChild('sidebar') sidebar: SidebarComponent;
+
+    public sidebarOpen: boolean = false;
+    public isDesktop: boolean = true;
+    public isInternalUser: boolean = false;
+
     constructor(
         private authenticationService: AuthenticationService,
+        private deviceDetectorService: DeviceDetectorService,
         public progressLoaderService: ProgressLoaderService,
         private router: Router,
         private titleService: Title
@@ -35,13 +44,22 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isDesktop = this.deviceDetectorService.isDesktop();
         this.authenticationService.currentUser.subscribe((user) => {
-            if (user && !user.roles.includes[EUserRole.CUSTOMER]) {
+            this.isInternalUser = user && !user.roles.includes[EUserRole.CUSTOMER];
+            if (this.isInternalUser) {
                 this.titleService.setTitle('Brillante Store - Shine (Sistema de Gestión)');
             } else {
                 this.titleService.setTitle('Brillante Store');
             }
         });
+    }
+
+    ngAfterViewInit() {
+        const sidebarStatus: boolean = JSON.parse(localStorage.getItem('sidebarOpen'));
+        if (sidebarStatus) {
+            this.onToggleSidebar(sidebarStatus);
+        }
     }
 
     /**
@@ -75,5 +93,24 @@ export class AppComponent implements OnInit {
 
     isLoggingIn(): boolean {
         return this.router.url === '/login';
+    }
+
+    public onToggleSidebar(event) {
+        this.sidebarOpen = event;
+        this.sidebarOpen ? this.sidebar.show() : this.sidebar.hide();
+        localStorage.setItem('sidebarOpen', this.sidebarOpen.toString());
+    }
+
+    public onCreated() {
+        this.sidebar.element.style.visibility = '';
+    }
+
+    public onLogout(event) {
+        this.isInternalUser = false;
+        this.sidebarOpen = false;
+    }
+
+    public hideSidebar() {
+        this.sidebar.hide();
     }
 }

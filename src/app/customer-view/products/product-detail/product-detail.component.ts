@@ -41,7 +41,7 @@ export class ProductDetailComponent implements OnInit {
             this.$fullPrice = this.paymentMethodsService.getPriceWithAppliedFee(this.product.price);
             this.$installmentsPrice = this.paymentMethodsService.getPriceWithAppliedFee(this.product.price, 12);
         }
-        this.authenticationService.currentUserSubject.subscribe((value) => {
+        this.authenticationService.currentUser.subscribe((value) => {
             this.showCart = !!value;
         });
     }

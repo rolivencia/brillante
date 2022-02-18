@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { faBars, faShoppingCart, faTimes, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
-import { FieldSettingsModel, SidebarComponent } from '@syncfusion/ej2-angular-navigations';
-import { MainHeaderService } from '@components/main-header/main-header.service';
+import { NavigationService } from '@services/navigation.service';
+import { Observable } from 'rxjs';
 
 export interface NavigationLink {
     id: string;
@@ -15,7 +15,10 @@ export interface NavigationLink {
     visible: boolean;
     roles?: number[];
     icon?: IconDefinition;
+    type: NavigationLinkType;
 }
+
+export type NavigationLinkType = 'Internal' | 'External';
 
 @Component({
     selector: 'app-main-header',
@@ -23,21 +26,19 @@ export interface NavigationLink {
     styleUrls: ['./main-header.component.scss'],
 })
 export class MainHeaderComponent implements OnInit {
-    @ViewChild('sidebar') sidebar: SidebarComponent;
-
-    get welcomeName(): string {
-        return `${this.currentUser.avatar} ${this.currentUser.firstName} ${this.currentUser.lastName}`;
-    }
+    @Input() showToggler: boolean = false;
+    @Input() sidebarOpen: boolean = false;
+    @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     get userLinks(): NavigationLink[] {
-        return this.mainHeaderService.userLinks;
+        return this.navigationService.userLinks;
     }
 
     get adminLinks(): NavigationLink[] {
         return this._adminLinks;
     }
 
-    currentUser: User;
+    public currentUser$: Observable<User>;
 
     public barsIcon: IconDefinition = faBars;
     public closeIcon: IconDefinition = faTimes;
@@ -46,23 +47,22 @@ export class MainHeaderComponent implements OnInit {
 
     private _adminLinks: NavigationLink[] = [];
 
-    public fields: FieldSettingsModel = { text: 'Name' };
     public showCart: boolean = true; //TODO: Remove this when cart module is ready
 
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
         public officeBranchService: OfficeBranchService,
-        public mainHeaderService: MainHeaderService
+        public navigationService: NavigationService
     ) {
-        this.authenticationService.currentUser.subscribe((x) => (this.currentUser = x));
+        this.currentUser$ = this.authenticationService.currentUser.asObservable();
     }
 
     ngOnInit() {
-        this.authenticationService.currentUserSubject.subscribe((user) => {
+        this.authenticationService.currentUser.subscribe((user) => {
             if (user) {
                 const currentUserRoles = user.roles.map((UserRole) => UserRole.id);
-                this._adminLinks = this.mainHeaderService.allAdminLinks.filter((Link) =>
+                this._adminLinks = this.navigationService.allAdminLinks.filter((Link) =>
                     Link.roles.some((role) => currentUserRoles.includes(role))
                 );
             }
@@ -73,19 +73,10 @@ export class MainHeaderComponent implements OnInit {
     logout() {
         this.authenticationService.logout();
         this._adminLinks = [];
-        this.sidebar.hide();
         this.router.navigate(['/']);
     }
 
-    public onCreated() {
-        this.sidebar.element.style.visibility = '';
-    }
-
-    public toggleSidebar() {
-        this.sidebar.toggle();
-    }
-
-    public hideSidebar() {
-        this.sidebar.hide();
+    public onToggleSidebar() {
+        this.toggleSidebar.emit(!this.sidebarOpen);
     }
 }

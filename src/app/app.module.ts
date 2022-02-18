@@ -1,11 +1,9 @@
 ﻿import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-// used to create fake backend
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { DashboardComponent } from '@management-view/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ProgressLoaderModule } from '@components/progress-loader/progress-loader.module';
@@ -18,6 +16,10 @@ import { MainHeaderModule } from '@components/main-header/main-header.module';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { RepairService } from '@services/repair.service';
 import { CartService } from '@services/cart.service';
+import { NavigationService } from '@services/navigation.service';
+import { LeftSidebarModule } from '@components/left-sidebar/left-sidebar.module';
+import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @NgModule({
     imports: [
@@ -31,8 +33,10 @@ import { CartService } from '@services/cart.service';
         ProgressLoaderModule,
         FontAwesomeModule,
         MainHeaderModule,
+        LeftSidebarModule,
+        SidebarModule,
     ],
-    declarations: [AppComponent, DashboardComponent],
+    declarations: [AppComponent],
     providers: [
         {
             provide: APP_INITIALIZER,
@@ -62,7 +66,9 @@ import { CartService } from '@services/cart.service';
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CartService,
+        DeviceDetectorService,
         OfficeBranchService,
+        NavigationService,
         ProgressLoaderService,
     ],
     bootstrap: [AppComponent],

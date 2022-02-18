@@ -1,128 +1,30 @@
-<section id="main-header" class="container-fluid">
-    <ejs-sidebar id="default-sidebar" class="d-xl-none" #sidebar (created)="onCreated()" [width]="'100%'">
-        <section id="sidebar-content" class="m-3">
-            <div *ngIf="currentUser" id="user-info" class="mb-3 d-flex justify-content-between d-md-none">
-                <div>
-                    <div>
-                        <strong>{{ welcomeName }}</strong>
-                    </div>
-                    <div>
-                        Sucursal:
-                        <strong>
-                            {{
-                                officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
-                            }}</strong
-                        >
-                    </div>
-                </div>
-                <div>
-                    <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
-                        >CERRAR SESIÓN</a
-                    >
-                </div>
-            </div>
-
-            <ng-container *ngIf="currentUser"
-                ><h6 class="title">Gestión Interna</h6>
-                <ejs-listview
-                    id="internal-management"
-                    [dataSource]="adminLinks"
-                    cssClass="e-list-template"
-                    [fields]="fields"
-                >
-                    <ng-template #template let-route="">
-                        <div class="e-list-wrapper">
-                            <a
-                                class="nav-link"
-                                [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                                [routerLink]="route.route"
-                                (click)="hideSidebar()"
-                            >
-                                <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
-                                {{ route.text }}</a
-                            >
-                        </div>
-                    </ng-template>
-                </ejs-listview>
-                <h6 class="title">Módulos Públicos</h6></ng-container
-            >
-            <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
-                <ng-template #template let-route="">
-                    <div class="e-list-wrapper" *ngIf="route.visible">
-                        <a
-                            class="nav-link"
-                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                            [routerLink]="route.route"
-                            (click)="hideSidebar()"
-                            ><fa-icon class="mr-3" [icon]="route.icon"></fa-icon>{{ route.text }}</a
-                        >
-                    </div>
-                </ng-template>
-            </ejs-listview>
-        </section>
-    </ejs-sidebar>
-    <nav class="navbar navbar-expand-lg justify-content-between navbar-light brand-navbar">
-        <div class="brand-container">
-            <div id="nav-container-dropdown" class="dropdown d-block d-xl-none">
-                <button
-                    id="burger-menu"
-                    class="dropdown-toggle"
-                    type="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    (click)="toggleSidebar()"
-                >
-                    <fa-icon *ngIf="!sidebar.isOpen" [icon]="barsIcon"></fa-icon>
-                    <fa-icon *ngIf="sidebar.isOpen" [icon]="closeIcon"></fa-icon>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <ng-container *ngFor="let route of userLinks">
-                        <a class="dropdown-item" *ngIf="route.visible" [routerLink]="route.route">{{ route.text }}</a>
-                    </ng-container>
-                </div>
-            </div>
-            <a class="navbar-brand" href="">
-                <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
-            </a>
-        </div>
+<section id="main-header" class="container-fluid p-md-0">
+    <nav
+        class="container navbar navbar-expand-lg justify-content-between align-content-center navbar-light brand-navbar"
+    >
+        <app-brand-container
+            [sidebarOpen]="sidebarOpen"
+            [showToggler]="showToggler"
+            (toggleSidebar)="onToggleSidebar()"
+        ></app-brand-container>
 
         <ng-container [ngTemplateOutlet]="navTemplate"></ng-container>
 
-        <ng-container *ngIf="currentUser" [ngTemplateOutlet]="userInfo"> </ng-container>
-
         <ul class="nav justify-content-end align-items-center nav-sup">
-            <ng-container *ngIf="!currentUser">
-                <li>
-                    <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
-                </li>
-            </ng-container>
-            <ng-container *ngIf="currentUser">
-                <li>
-                    <a
-                        (click)="logout()"
-                        data-effect="mfp-move-from-top"
-                        class="btn btn-sm btn-light d-none d-sm-block popup-text"
-                        >CERRAR SESIÓN</a
-                    >
+            <ng-container *ngIf="currentUser$ | async as currentUser">
+                <li *ngIf="currentUser">
+                    <a (click)="logout()" class="btn btn-sm btn-light d-none d-sm-block popup-text">CERRAR SESIÓN</a>
                 </li>
 
                 <li>
-                    <a
-                        href="#nav-login-dialog"
-                        data-effect="mfp-move-from-top"
-                        class="btn btn-default d-sm-none popup-text"
-                        ><i class="far fa-user"></i
-                    ></a>
-                </li>
-
-                <li>
-                    <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
                     <a *ngIf="showCart" [routerLink]="'products/cart'" class="btn btn-default ml-2"
                         ><fa-icon [icon]="cartIcon"></fa-icon
                     ></a>
                 </li>
             </ng-container>
+            <li class="pl-3">
+                <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
+            </li>
         </ul>
     </nav>
 </section>
@@ -131,18 +33,6 @@
     <!-- TODO: #200 - Add responsive solution for nav visualization -->
     <div id="nav-container" class="flex-grow-1 d-none d-xl-block">
         <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-around">
-            <ng-container *ngIf="currentUser">
-                <li class="nav-item" ngbDropdown>
-                    <div id="internal-management-dropdown" ngbDropdownToggle class="nav-link px-2 px-xxl-3">
-                        Gestión Interna
-                    </div>
-                    <div ngbDropdownMenu aria-labelledby="internal-management-dropdown">
-                        <a ngbDropdownItem *ngFor="let route of adminLinks" [routerLink]="route.route">{{
-                            route.text
-                        }}</a>
-                    </div>
-                </li>
-            </ng-container>
             <ng-container *ngFor="let route of userLinks">
                 <li class="nav-item" *ngIf="route.visible">
                     <a
@@ -155,15 +45,4 @@
             </ng-container>
         </ul>
     </div>
-</ng-template>
-<ng-template #userInfo>
-    <button type="button" class="btn btn-outline-secondary rounded-0 mr-4 d-none d-lg-block">
-        <span>
-            <strong>{{ welcomeName }}</strong>
-            | <span class="d-none d-xxl-inline">Sucursal: </span>
-            <strong>{{
-                officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
-            }}</strong>
-        </span>
-    </button>
 </ng-template>

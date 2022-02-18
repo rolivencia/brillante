@@ -11,27 +11,6 @@
 }
 
 #main-header {
-    z-index: 1040;
-    background: white;
-    fa-icon {
-        color: $primary;
-    }
-}
-
-#default-sidebar {
-    @include media-breakpoint-up(xs) {
-        margin-top: 48px;
-    }
-    @include media-breakpoint-up(lg) {
-        margin-top: 64px;
-    }
-    .e-list-wrapper {
-        padding-left: 0;
-    }
-    box-shadow: none;
-}
-
-#main-header {
     width: 100%;
     z-index: 1040;
     background: #fff;
@@ -40,21 +19,8 @@
     }
     .brand-navbar {
         background: #fff;
-        height: 50px;
         z-index: 2002;
-        .brand-container {
-            display: flex;
-            align-items: center;
-            a.navbar-brand {
-                padding: 0;
-                width: 85px;
-                margin: 0;
-                img {
-                    width: 100%;
-                    display: block;
-                }
-            }
-        }
+        height: 100%;
     }
     a.whatsapp {
         color: #999;
@@ -90,46 +56,28 @@
     }
 }
 
-@media (min-width: 576px) {
-    #main-header > .navbar {
-        padding: 25px 0 20px;
+@include media-breakpoint-down(xs) {
+    #main-header {
+        height: 48px;
+        > .navbar {
+            padding: 25px 0 20px;
+        }
+        .brand-navbar {
+            padding: 0.5rem;
+        }
     }
-}
-
-@media (min-width: 576px) {
-    #main-header .brand-navbar {
-        height: auto;
-        padding: 0.5rem;
-    }
-}
-
-@media (min-width: 575px) {
     #main-header .brand-navbar .brand-container a.navbar-brand {
-        width: 135px;
+        //width: 135px;
+    }
+}
+@include media-breakpoint-up(sm) {
+    #main-header {
+        height: 64px;
     }
 }
 
 @media (min-width: 768px) {
     #main-header a.whatsapp span {
         display: inline;
-    }
-}
-
-#burger-menu {
-    color: $primary;
-    line-height: 1;
-    font-size: 22px;
-    margin: 0 0 0 -15px;
-    padding: 3px 13px 0;
-    background: transparent;
-    border: none;
-    &:hover {
-        color: #00ffff;
-    }
-    &.dropdown-toggle::after {
-        display: none;
-    }
-    @media (min-width: 350px) {
-        padding: 2px 13px;
     }
 }
