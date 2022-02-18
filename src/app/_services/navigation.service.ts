@@ -18,7 +18,7 @@ import {
 @Injectable({
     providedIn: 'root',
 })
-export class MainHeaderService {
+export class NavigationService {
     get allAdminLinks(): NavigationLink[] {
         return this._allAdminLinks;
     }

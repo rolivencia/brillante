@@ -1,3 +1,5 @@
+@import 'src/assets/scss/bootstrap-theming';
+
 html,
 body {
     width: 100%;
@@ -17,10 +19,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    background-color: $background-color;
 }
 
 #outlet-container {
-    margin-top: 48px;
+    @include media-breakpoint-down(xs) {
+        margin-top: 48px;
+    }
+    @include media-breakpoint-up(sm) {
+        margin-top: 64px;
+    }
     flex-grow: 1;
 }
 
@@ -28,4 +36,18 @@ body {
 #outlet-container,
 #footer-container {
     flex-shrink: 0;
+}
+
+#default-sidebar {
+    max-width: 240px;
+    @include media-breakpoint-down(xs) {
+        margin-top: 48px;
+    }
+    @include media-breakpoint-up(sm) {
+        margin-top: 64px;
+    }
+    .e-list-wrapper {
+        padding-left: 0;
+    }
+    box-shadow: none;
 }

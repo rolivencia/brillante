@@ -1,0 +1,55 @@
+<section id="sidebar-content" class="m-2">
+    <div *ngIf="currentUser$ | async as currentUser" id="user-info" class="mb-3 d-flex justify-content-between">
+        <div>
+            <div>
+                <strong>{{ currentUser.welcomeName }}</strong>
+            </div>
+            <div>
+                Sucursal:
+                <strong>
+                    {{ officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna' }}</strong
+                >
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="currentUser$ | async as currentUser"
+        ><h6 class="title">Gestión Interna</h6>
+        <ejs-listview id="internal-management" [dataSource]="adminLinks" cssClass="e-list-template" [fields]="fields">
+            <ng-template #template let-route="">
+                <div class="e-list-wrapper">
+                    <a
+                        class="nav-link"
+                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                        [routerLink]="route.route"
+                        (click)="hideSidebar()"
+                    >
+                        <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                        {{ route.text }}</a
+                    >
+                </div>
+            </ng-template>
+        </ejs-listview>
+        <h6 class="title">Módulos Públicos</h6></ng-container
+    >
+    <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
+        <ng-template #template let-route="">
+            <div class="e-list-wrapper" *ngIf="route.visible">
+                <a
+                    class="nav-link"
+                    [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                    [routerLink]="route.route"
+                    (click)="hideSidebar()"
+                    ><fa-icon class="mr-3" [icon]="route.icon"></fa-icon>{{ route.text }}</a
+                >
+            </div>
+        </ng-template>
+    </ejs-listview>
+    <ng-container *ngIf="currentUser$ | async as currentUser">
+        <div *ngIf="currentUser">
+            <a (click)="logout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
+                >CERRAR SESIÓN</a
+            >
+        </div>
+    </ng-container>
+</section>

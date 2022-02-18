@@ -18,6 +18,9 @@ import { MainHeaderModule } from '@components/main-header/main-header.module';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { RepairService } from '@services/repair.service';
 import { CartService } from '@services/cart.service';
+import { NavigationService } from '@services/navigation.service';
+import { LeftSidebarModule } from '@components/left-sidebar/left-sidebar.module';
+import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 
 @NgModule({
     imports: [
@@ -31,6 +34,8 @@ import { CartService } from '@services/cart.service';
         ProgressLoaderModule,
         FontAwesomeModule,
         MainHeaderModule,
+        LeftSidebarModule,
+        SidebarModule,
     ],
     declarations: [AppComponent, DashboardComponent],
     providers: [
@@ -63,6 +68,7 @@ import { CartService } from '@services/cart.service';
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CartService,
         OfficeBranchService,
+        NavigationService,
         ProgressLoaderService,
     ],
     bootstrap: [AppComponent],
