@@ -105,6 +105,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.sidebar.element.style.visibility = '';
     }
 
+    public onSidebarClose() {
+        this.sidebarOpen = false;
+    }
+
     public onLogout(event) {
         this.isInternalUser = false;
         this.sidebarOpen = false;
