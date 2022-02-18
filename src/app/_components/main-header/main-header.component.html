@@ -1,6 +1,12 @@
 <section id="main-header" class="container-fluid p-md-0">
-    <nav class="navbar navbar-expand-lg justify-content-between align-content-center navbar-light brand-navbar">
-        <app-brand-container [sidebarOpen]="sidebarOpen" (toggleSidebar)="onToggleSidebar()"></app-brand-container>
+    <nav
+        class="container navbar navbar-expand-lg justify-content-between align-content-center navbar-light brand-navbar"
+    >
+        <app-brand-container
+            [sidebarOpen]="sidebarOpen"
+            [showToggler]="showToggler"
+            (toggleSidebar)="onToggleSidebar()"
+        ></app-brand-container>
 
         <ng-container [ngTemplateOutlet]="navTemplate"></ng-container>
 

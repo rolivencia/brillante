@@ -26,6 +26,7 @@ export type NavigationLinkType = 'Internal' | 'External';
     styleUrls: ['./main-header.component.scss'],
 })
 export class MainHeaderComponent implements OnInit {
+    @Input() showToggler: boolean = false;
     @Input() sidebarOpen: boolean = false;
     @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 

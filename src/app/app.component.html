@@ -1,7 +1,8 @@
 ﻿<div id="header-container">
     <app-progress-loader [marginTop]="0" [zIndex]="2003"></app-progress-loader>
     <app-main-header
-        *ngIf="showFullMainHeader"
+        *ngIf="(isDesktop && !isInternalUser) || !isDesktop"
+        [showToggler]="!isDesktop"
         [sidebarOpen]="sidebarOpen"
         (toggleSidebar)="onToggleSidebar($event)"
     ></app-main-header>
@@ -10,22 +11,24 @@
     <div class="container">
         <ejs-sidebar
             id="default-sidebar"
-            [ngClass]="{ 'add-header-margin': showFullMainHeader }"
+            *ngIf="!isDesktop || isInternalUser"
+            [ngClass]="{ 'add-header-margin': !isDesktop || !isInternalUser }"
             #sidebar
             (created)="onCreated()"
-            [isOpen]="!showFullMainHeader"
+            [isOpen]="isDesktop && isInternalUser"
             [type]="'Auto'"
             [width]="'240px'"
         >
             <div class="p-3">
-                <app-brand-container *ngIf="!showFullMainHeader" [showToggler]="false"></app-brand-container>
+                <!-- TODO: Dock the sidebar and show only icons -->
+                <app-brand-container *ngIf="isDesktop && isInternalUser" [showToggler]="false"></app-brand-container>
                 <app-left-sidebar (hide)="hideSidebar()" (logout)="onLogout($event)"></app-left-sidebar>
             </div>
         </ejs-sidebar>
         <div
             id="outlet-container"
-            class="py-md-3 d-flex justify-content-center align-items-center"
-            [ngClass]="{ 'add-header-margin': showFullMainHeader }"
+            class="py-3 d-flex justify-content-center align-items-center"
+            [ngClass]="{ 'add-header-margin': (isDesktop && !isInternalUser) || !isDesktop }"
         >
             <div id="inner-container" class="d-block w-100">
                 <router-outlet></router-outlet>

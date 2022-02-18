@@ -4,8 +4,15 @@
     display: flex;
     align-items: center;
     a.navbar-brand {
+        @include media-breakpoint-down(sm) {
+            width: 85px;
+        }
+
+        @include media-breakpoint-up(md) {
+            width: 125px;
+        }
+
         padding: 0;
-        width: 85px;
         margin: 0;
         img {
             width: 100%;

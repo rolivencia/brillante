@@ -30,7 +30,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('sidebar') sidebar: SidebarComponent;
 
     public sidebarOpen: boolean = false;
-    public showFullMainHeader: boolean = true;
+    public isDesktop: boolean = true;
+    public isInternalUser: boolean = false;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -43,9 +44,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.isDesktop = this.deviceDetectorService.isDesktop();
         this.authenticationService.currentUser.subscribe((user) => {
-            if (user && !user.roles.includes[EUserRole.CUSTOMER]) {
-                this.showFullMainHeader = !this.deviceDetectorService.isDesktop();
+            this.isInternalUser = user && !user.roles.includes[EUserRole.CUSTOMER];
+            if (this.isInternalUser) {
                 this.titleService.setTitle('Brillante Store - Shine (Sistema de Gestión)');
             } else {
                 this.titleService.setTitle('Brillante Store');
@@ -104,7 +106,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     public onLogout(event) {
-        this.showFullMainHeader = true;
+        this.isInternalUser = false;
+        this.sidebarOpen = false;
     }
 
     public hideSidebar() {
