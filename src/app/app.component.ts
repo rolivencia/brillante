@@ -16,6 +16,7 @@ import { AuthenticationService } from '@services/authentication.service';
 import { EUserRole } from '@enums/user.enum';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LayoutService } from '@services/layout.service';
 
 wjcCore.setLicenseKey(
     '988775697861712#B05eulUMp9WMJh6T0VUS5BTQCF6RrcWWhRXSGp7Rp94RwVHUrkVM5UETUtSR6QkYZN7YvxWMXRlaOBXNqN5b9UkUhlHMR56YCBlN4N7ZykHbQJje6AVdrBlRZJld994NlRXVKZkTuhGSyF7LwUDe9gmWvJWcCtiTygVcxMVQF5mcYBDR6o7TJVmYQZGMnVUeMtkcQNEM0tESytkUWBje6VHRHdTRqh7YxRXazlles3CbmdkUxYmY6MVRUZlQjFGW0ZmYVBDOslTZ5Q4S9AnYK36TwR7d4kmMjJFc7UmThpHTHF4RWdzUXJiOiMlIsIiRzEjRzIjQiojIIJCL6gTN6QzN4kDO0IicfJye#4Xfd5nIzMEMCJiOiMkIsISZy36Qg2Wbql6ViojIOJyebpjIkJHUiwiI8AzN4QDMgETMyEDOxAjMiojI4J7QiwiIDxETgE6cl5EbhV7cpZlI0ISYONkIsIiMxcTM6gzN9YTN7cDO8kjI0ICZJJCL3JyM6hTMwIjI0IiclZnIsU6csFmZ0IiczRmI1pjIs9WQisnOiQkIsISP3EUTzglWslXd4YTWQtGdndjerEkZhdVW8dkY5B5UWx6Z4JEbW54bulnTxIFaWZkNHRnewJDeqZWWZdTU7d6aL36Q4tiWTFDTMhEOM3EWx3yRztGSIZVTtN5VxokNkB5Q6YHeEBHOltibl3EZ5RqQwR'
@@ -32,10 +33,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     public sidebarOpen: boolean = false;
     public isDesktop: boolean = true;
     public isInternalUser: boolean = false;
+    public isMainOutlerContainerized: boolean = true;
 
     constructor(
         private authenticationService: AuthenticationService,
         private deviceDetectorService: DeviceDetectorService,
+        private layoutService: LayoutService,
         public progressLoaderService: ProgressLoaderService,
         private router: Router,
         private titleService: Title
@@ -45,6 +48,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.isDesktop = this.deviceDetectorService.isDesktop();
+        this.layoutService.useContainer.subscribe((value) => {
+            this.isMainOutlerContainerized = value;
+        });
         this.authenticationService.currentUser.subscribe((user) => {
             this.isInternalUser = user && !user.roles.includes[EUserRole.CUSTOMER];
             if (this.isInternalUser) {
@@ -81,6 +87,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                 case event instanceof NavigationCancel:
                 case event instanceof NavigationError:
                 case event instanceof ResolveEnd: {
+                    this.layoutService.useContainer.next(true);
                     progressLoaderService.hide();
                     break;
                 }

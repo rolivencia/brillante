@@ -20,6 +20,14 @@ import { NavigationService } from '@services/navigation.service';
 import { LeftSidebarModule } from '@components/left-sidebar/left-sidebar.module';
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LayoutService } from '@services/layout.service';
+import {
+    AggregateService,
+    ExcelExportService,
+    FilterService,
+    SortService,
+    ToolbarService,
+} from '@syncfusion/ej2-angular-grids';
 
 @NgModule({
     imports: [
@@ -67,9 +75,14 @@ import { DeviceDetectorService } from 'ngx-device-detector';
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CartService,
         DeviceDetectorService,
+        AggregateService,
+        ExcelExportService,
+        FilterService,
+        LayoutService,
         OfficeBranchService,
         NavigationService,
         ProgressLoaderService,
+        SortService,
     ],
     bootstrap: [AppComponent],
 })

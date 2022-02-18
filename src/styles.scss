@@ -12,6 +12,7 @@ $primary: #999;
 @import 'ej2-icons/styles/material.scss';
 @import 'ej2-angular-base/styles/material.scss';
 @import 'ej2-angular-dropdowns/styles/material.scss';
+@import 'ej2-angular-grids/styles/material.scss';
 @import 'ej2-angular-inputs/styles/material.scss';
 @import 'ej2-angular-lists/styles/material.scss';
 @import 'ej2-angular-navigations/styles/material.scss';
@@ -42,4 +43,28 @@ $primary: #999;
 
 .wj-flexgrid {
     font-size: 0.75rem;
+}
+
+.e-grid {
+    .e-headercelldiv {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .e-gridheader {
+        //border: 2px solid green;
+    }
+    .e-headercell {
+        //color: darkblue;
+        padding: 0.25rem;
+    }
+    .e-filterbarcell {
+        padding: 0.25rem;
+    }
+    .e-summarycell {
+        padding: 0;
+    }
+    .e-rowcell {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
 }
