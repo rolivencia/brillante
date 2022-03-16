@@ -11,6 +11,7 @@ const Sequelize = require('sequelize');
 const { CashTransaction } = require('../cash/cash.model');
 const { cashGetDefinition } = require('../cash/cash.functions');
 const { RepairCashTransaction } = require('../cash/repair-cash-transaction.model');
+const { ERepairStatus } = require('./repair-status-enum');
 const Op = Sequelize.Op;
 
 module.exports = {
@@ -152,9 +153,7 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, o
             );
 
             // If status is "Finished and payed", and a transaction is generated, adds related money transactions
-            if (generateTransaction && status.id === 5) {
-                //TODO: Define enums for server-side APIs (Status)
-
+            if (generateTransaction && status.id === ERepairStatus.FINISHED_AND_PAID) {
                 for (const payment of moneyTransactions) {
                     let cashTransactionDAO = await cash.CashTransaction.create(
                         {
@@ -256,7 +255,17 @@ async function getAll({ showFinished }) {
             },
         ],
         where: {
-            idStatus: { [Op.notIn]: showFinished ? [] : [5, 7] },
+            // ADD ENUMS FOR THIS WHERE
+            idStatus: {
+                [Op.notIn]: showFinished
+                    ? []
+                    : [
+                          ERepairStatus.FINISHED_AND_PAID,
+                          ERepairStatus.RETURNED_WITHOUT_REPAIR,
+                          ERepairStatus.BOUGHT,
+                          ERepairStatus.FINISHED_BY_WARRANTY,
+                      ],
+            },
             enabled: 1,
             deleted: 0,
         },
