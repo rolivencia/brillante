@@ -12,4 +12,5 @@ export enum ERepairStatus {
     FINISHED_DIAGNOSTICS = 10,
     IN_SAFE_DEPOSIT_BOX = 11,
     BOUGHT = 12,
+    FINISHED_BY_WARRANTY = 13,
 }
