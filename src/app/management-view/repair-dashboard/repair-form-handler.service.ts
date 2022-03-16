@@ -412,6 +412,9 @@ export class RepairFormHandlerService {
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
-        return newStatus.id === ERepairStatus.FINISHED_AND_PAID && this.repairControl['price']['value'] !== 0;
+        const statusIsFinishedAndPaid = newStatus.id === ERepairStatus.FINISHED_AND_PAID;
+        const alreadyHasAttachedPayments = this.repair.moneyTransactions.filter((x) => !!x.id).length;
+
+        return statusIsFinishedAndPaid && !alreadyHasAttachedPayments && this.repairControl['price']['value'] !== 0;
     }
 }

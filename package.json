@@ -10,7 +10,7 @@
         "build": "ng build --aot --configuration production",
         "test": "ng test",
         "format:fix": "pretty-quick --staged",
-        "precommit": "run-s format:fix lint",
+        "precommit": "run-s format:fix",
         "lint": "ng lint",
         "format:check": "prettier --config prettier.config.js --list-different \\\"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\\\"",
         "e2e": "ng e2e",
