@@ -127,10 +127,7 @@
                                     />
                                     <div
                                         class="text-danger"
-                                        *ngIf="
-                                            this.repairFormHandlerService.submitted &&
-                                            repairFormHandlerService.deviceControl['manufacturer'].errors?.required
-                                        "
+                                        *ngIf="repairFormHandlerService.deviceControl['manufacturer'].errors?.required"
                                     >
                                         <small>Se requiere la marca del dispositivo</small>
                                     </div>
@@ -147,10 +144,7 @@
                                     />
                                     <div
                                         class="text-danger"
-                                        *ngIf="
-                                            this.repairFormHandlerService.submitted &&
-                                            repairFormHandlerService.deviceControl['model'].errors?.required
-                                        "
+                                        *ngIf="repairFormHandlerService.deviceControl['model'].errors?.required"
                                     >
                                         <small>Se requiere el modelo del dispositivo</small>
                                     </div>
@@ -242,9 +236,9 @@
                                                     <div class="d-flex">
                                                         <div
                                                             class="alert alert-primary mb-0 mr-2"
-                                                            *ngFor="let statusLog of highlightedStatuses"
+                                                            *ngFor="let status of highlightedStatuses"
                                                         >
-                                                            El dispositivo fue {{ statusLog.status.description }}
+                                                            El dispositivo fue {{ status.description }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -289,10 +283,7 @@
                                                                 floatLabelType="Auto"
                                                                 min="0"
                                                                 formControlName="price"
-                                                                [enabled]="
-                                                                    !repairFormHandlerService.saved &&
-                                                                    !hasRegisteredPayments
-                                                                "
+                                                                [enabled]="!repairFormHandlerService.saved"
                                                                 [placeholder]="'Precio'"
                                                                 [showSpinButton]="false"
                                                             ></ejs-numerictextbox>
@@ -344,18 +335,13 @@
                                                             [methodLabel]="'Método de Pago ' + (i + 1)"
                                                             [amountLabel]="'Monto ' + (i + 1)"
                                                             [form]="paymentGroup"
-                                                            [disabled]="
-                                                                !hasFinishedStatus ||
-                                                                hasRegisteredPayments ||
-                                                                repairFormHandlerService.saved
-                                                            "
+                                                            [disabled]="repairFormHandlerService.saved"
                                                         ></app-payment-input>
                                                     </ng-container>
                                                     <div
                                                         class="text-danger"
                                                         *ngIf="
-                                                            repairFormHandlerService.submitted &&
-                                                            repairFormHandlerService.paymentsGroup.errors
+                                                            repairFormHandlerService.formGroup.errors
                                                                 ?.paymentsNotEqualToPrice
                                                         "
                                                     >

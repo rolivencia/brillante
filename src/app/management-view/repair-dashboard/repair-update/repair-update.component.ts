@@ -5,12 +5,13 @@ import { RepairFormHandlerService } from '@management-view/repair-dashboard/repa
 import { RepairService } from '@services/repair.service';
 import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard/repair-voucher-generator.service';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
-import { Repair, RepairStatusHistory } from '@models/repair';
+import { Repair, RepairStatus, RepairStatusHistory } from '@models/repair';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 import { ChangeEventArgs as ChangeEventArgsButton } from '@syncfusion/ej2-angular-buttons';
 import { FormBuilder } from '@angular/forms';
 import { ERepairStatus } from '@enums/repair-status.enum';
 import { EPaymentMethod } from '@enums/payment-methods.enum';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-repair-update',
@@ -31,7 +32,7 @@ export class RepairUpdateComponent implements OnInit {
     public ignoredPaymentRegistrationNotification: boolean = false;
     public showPaymentFields: boolean = true;
 
-    public highlightedStatuses: RepairStatusHistory[] = [];
+    public highlightedStatuses: RepairStatus[] = [];
 
     columns: { header: string; binding: string; width: string | number }[] = [
         { header: 'Estado', binding: 'status.description', width: '*' },
@@ -81,8 +82,14 @@ export class RepairUpdateComponent implements OnInit {
 
             await this.getHistory();
 
-            this.highlightedStatuses = this.repair.history.filter((rhs: RepairStatusHistory) =>
-                [ERepairStatus.REENTERED, ERepairStatus.REENTERED_WITH_WARRANTY].includes(rhs.status.id)
+            // Grab statuses to highlight in the UI, to let the user know if a repair has been re-entered
+            this.highlightedStatuses = _.uniqBy(
+                this.repair.history
+                    .filter((rhs: RepairStatusHistory) =>
+                        [ERepairStatus.REENTERED, ERepairStatus.REENTERED_WITH_WARRANTY].includes(rhs.status.id)
+                    )
+                    .map((x) => x.status),
+                'id'
             );
 
             this.initControls();

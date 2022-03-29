@@ -142,6 +142,9 @@ export function toRepair(repairDTO): Repair {
         checkIn: moment(repairDTO.checkIn),
         lastUpdate: moment(repairDTO.lastUpdate),
         checkOut: repairDTO.checkOut ? moment(repairDTO.checkOut) : repairDTO.checkOut,
+        moneyTransactions: repairDTO.moneyTransactions
+            ? repairDTO.moneyTransactions.map((x) => ({ ...x, date: moment(x.date) }))
+            : [],
     };
 }
 

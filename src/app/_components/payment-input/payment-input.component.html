@@ -1,11 +1,11 @@
 <div class="row" [formGroup]="form">
-    <div class="col-2" *ngIf="form.controls.id.value">
+    <div class="col-2" *ngIf="id?.value">
         <ejs-numerictextbox
             format="###"
             floatLabelType="Auto"
             min="0"
             formControlName="id"
-            [placeholder]="'ID Transacción de Caja'"
+            [placeholder]="'ID Transacción'"
             [showSpinButton]="false"
             [enabled]="false"
         ></ejs-numerictextbox>
@@ -21,7 +21,7 @@
         >
         </ejs-dropdownlist>
     </div>
-    <div class="col">
+    <div class="col-3">
         <ejs-numerictextbox
             format="c2"
             floatLabelType="Auto"
@@ -31,5 +31,13 @@
             [showSpinButton]="false"
             [enabled]="!disabled"
         ></ejs-numerictextbox>
+    </div>
+    <div class="col-3" *ngIf="date?.value">
+        <ejs-textbox
+            floatLabelType="Auto"
+            formControlName="date"
+            [placeholder]="dateLabel"
+            [enabled]="false"
+        ></ejs-textbox>
     </div>
 </div>
