@@ -5,7 +5,7 @@ import { RepairFormHandlerService } from '@management-view/repair-dashboard/repa
 import { RepairService } from '@services/repair.service';
 import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard/repair-voucher-generator.service';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
-import { Repair } from '@models/repair';
+import { Repair, RepairStatusHistory } from '@models/repair';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 import { ChangeEventArgs as ChangeEventArgsButton } from '@syncfusion/ej2-angular-buttons';
 import { FormBuilder } from '@angular/forms';
@@ -31,8 +31,10 @@ export class RepairUpdateComponent implements OnInit {
     public ignoredPaymentRegistrationNotification: boolean = false;
     public showPaymentFields: boolean = true;
 
+    public highlightedStatuses: RepairStatusHistory[] = [];
+
     columns: { header: string; binding: string; width: string | number }[] = [
-        { header: 'Estado', binding: 'status.status', width: '*' },
+        { header: 'Estado', binding: 'status.description', width: '*' },
         { header: 'Cambió', binding: 'updatedAt', width: 110 },
         { header: 'Costo', binding: 'cost', width: 80 },
         { header: 'Precio', binding: 'price', width: 80 },
@@ -49,7 +51,7 @@ export class RepairUpdateComponent implements OnInit {
         private repairVoucherGeneratorService: RepairVoucherGeneratorService
     ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
         if (this.route.snapshot.data['repair']) {
             this.repair = this.route.snapshot.data['repair'];
 
@@ -68,16 +70,21 @@ export class RepairUpdateComponent implements OnInit {
             this.showPaymentFields = this.updatePaymentFieldsVisibility(this.repair);
 
             // Subscribe to...
-            this.repairFormHandlerService.repairGroup.statusChanges.subscribe((x) => {
+            this.repairFormHandlerService.repairGroup.statusChanges.subscribe(() => {
                 this.repairFormHandlerService.paymentsGroup.updateValueAndValidity();
             });
 
-            this.repairFormHandlerService.repairGroup.valueChanges.subscribe((repairValue) => {
+            this.repairFormHandlerService.repairGroup.valueChanges.subscribe(() => {
                 this.repairFormHandlerService.assignRepairForm();
                 this.showPaymentFields = this.updatePaymentFieldsVisibility(this.repairFormHandlerService.repair);
             });
 
-            this.getHistory();
+            await this.getHistory();
+
+            this.highlightedStatuses = this.repair.history.filter((rhs: RepairStatusHistory) =>
+                [ERepairStatus.REENTERED, ERepairStatus.REENTERED_WITH_WARRANTY].includes(rhs.status.id)
+            );
+
             this.initControls();
         }
     }
@@ -111,6 +118,7 @@ export class RepairUpdateComponent implements OnInit {
 
     public async getHistory() {
         const response = await this.repairService.getHistory(this.repairFormHandlerService.repair.id).toPromise();
+        this.repair.history = response;
         this.statusHistory = new CollectionView([].concat(response));
         const sortDescription = new SortDescription('updatedAt', true);
         this.statusHistory.sortDescriptions.push(sortDescription);

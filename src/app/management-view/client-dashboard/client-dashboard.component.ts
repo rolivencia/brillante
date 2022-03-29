@@ -35,7 +35,7 @@ export class ClientDashboardComponent implements OnInit {
         { header: 'Marca', binding: 'device.manufacturer', width: '*' },
         { header: 'Modelo', binding: 'device.model', width: '*' },
         { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
-        { header: 'Estado', binding: 'status.status', width: '*' },
+        { header: 'Estado', binding: 'status.description', width: '*' },
     ];
 
     constructor(

@@ -238,7 +238,16 @@
                                                         </textarea>
                                                     </div>
                                                 </div>
-
+                                                <div class="px-2" *ngIf="highlightedStatuses.length > 0">
+                                                    <div class="d-flex">
+                                                        <div
+                                                            class="alert alert-primary mb-0 mr-2"
+                                                            *ngFor="let statusLog of highlightedStatuses"
+                                                        >
+                                                            El dispositivo fue {{ statusLog.status.description }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="w-100 d-flex justify-content-between pb-2">
                                                     <div class="px-2 flex-grow-1">
                                                         <ejs-dropdownlist

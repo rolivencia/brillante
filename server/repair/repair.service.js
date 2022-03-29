@@ -235,7 +235,7 @@ async function getAll({ showFinished }) {
                 as: 'status',
                 model: repairStatus.RepairStatus,
                 required: true,
-                attributes: ['id', 'status'],
+                attributes: ['id', 'description'],
             },
             {
                 as: 'user',
@@ -322,7 +322,7 @@ async function getAllByDate({ showFinished, startDate, endDate }) {
                 as: 'status',
                 model: repairStatus.RepairStatus,
                 required: true,
-                attributes: ['id', 'status'],
+                attributes: ['id', 'description'],
             },
             {
                 as: 'user',
@@ -399,7 +399,7 @@ async function getById(id) {
                 as: 'status',
                 model: repairStatus.RepairStatus,
                 required: true,
-                attributes: ['id', 'status'],
+                attributes: ['id', 'description'],
             },
             {
                 as: 'user',
@@ -430,6 +430,9 @@ async function getById(id) {
             id: id,
         },
     });
+
+    // Attach history to the repair DAO
+    repairDAO.dataValues.history = await getHistoryByRepairId(id);
 
     return new Promise((resolve, reject) => {
         if (repairDAO) {
@@ -466,7 +469,7 @@ async function getByClientId(idClient) {
                 as: 'status',
                 model: repairStatus.RepairStatus,
                 required: true,
-                attributes: ['id', 'status'],
+                attributes: ['id', 'description'],
             },
         ],
         where: {
@@ -485,14 +488,15 @@ async function getByClientId(idClient) {
         }
     });
 }
+
 async function getHistoryByRepairId(idRepair) {
     return repair.RepairStatusHistory.findAll({
-        attributes: ['id', 'createdAt', 'updatedAt', 'updatedBy', 'paymentInAdvance', 'cost', 'price', 'note'],
+        attributes: ['id', 'createdAt', 'updatedAt', 'paymentInAdvance', 'cost', 'price', 'note'],
         include: [
             {
                 as: 'status',
                 model: repairStatus.RepairStatus,
-                attributes: ['id', 'status'],
+                attributes: ['id', 'description'],
             },
             {
                 as: 'user',
@@ -513,7 +517,6 @@ async function getHistoryByRepairId(idRepair) {
         ],
         where: {
             idRepair: idRepair,
-            //updatedAt: { [Op.ne]: null },
         },
         order: [['updatedAt', 'DESC']],
     });
@@ -533,6 +536,7 @@ function toRepairDTO(repairDAO) {
         enabled,
         deleted,
         idEquipment,
+        history,
         ...destructuredDAORepair
     } = repairDAO;
     return {
@@ -556,6 +560,7 @@ function toRepairDTO(repairDAO) {
         checkIn: dischargeDate,
         lastUpdate: updatedDate,
         checkOut: finishedDate,
+        history: history,
     };
 }
 

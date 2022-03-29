@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import { Customer } from '@models/customer';
 import { Audit } from '@models/audit';
 import { CashTransaction } from '@models/cash-transaction';
+import { User } from '@models/user';
 
 export class Repair {
     public id: number;
@@ -18,7 +19,7 @@ export class Repair {
     public price: number;
     public cost: number;
     public warrantyTerm: number;
-    public history: RepairStatusHistory[] | any[]; // TODO: Implement RepairStatusHistory class
+    public history?: RepairStatusHistory[];
     public moneyTransactions: CashTransaction[];
 
     //FIXME: En carga, traer la lista y ahí asignar vía filter.
@@ -78,5 +79,13 @@ export class RepairStatus {
 }
 
 export class RepairStatusHistory {
-    //TODO: Implement attributes of this class. Check database.
+    id: number;
+    cost: number;
+    createdAt: string;
+    note: string;
+    paymentInAdvance: number;
+    price: number;
+    status: RepairStatus;
+    updatedAt: string;
+    user: User;
 }
