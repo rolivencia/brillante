@@ -154,7 +154,9 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, o
 
             // If status is "Finished and payed", and a transaction is generated, adds related money transactions
             if (generateTransaction && status.id === ERepairStatus.FINISHED_AND_PAID) {
-                for (const payment of moneyTransactions) {
+                for (const payment of moneyTransactions.filter((x) => !x.id)) {
+                    // Grabs only new moneyTransactions, which lack an ID, and ignore the others
+
                     let cashTransactionDAO = await cash.CashTransaction.create(
                         {
                             amount: payment.amount,

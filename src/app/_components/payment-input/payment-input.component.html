@@ -40,4 +40,14 @@
             [enabled]="false"
         ></ejs-textbox>
     </div>
+    <div class="col-1 d-flex align-items-center">
+        <button
+            *ngIf="!id.value && index !== 0"
+            class="btn btn-sm btn-outline-danger"
+            type="button"
+            (click)="onRemove()"
+        >
+            X
+        </button>
+    </div>
 </div>

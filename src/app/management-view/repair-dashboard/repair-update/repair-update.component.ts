@@ -7,7 +7,6 @@ import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Repair, RepairStatus, RepairStatusHistory } from '@models/repair';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
-import { ChangeEventArgs as ChangeEventArgsButton } from '@syncfusion/ej2-angular-buttons';
 import { FormBuilder } from '@angular/forms';
 import { ERepairStatus } from '@enums/repair-status.enum';
 import { EPaymentMethod } from '@enums/payment-methods.enum';
@@ -30,7 +29,7 @@ export class RepairUpdateComponent implements OnInit {
     public hasRegisteredPayments: boolean = false;
     public hasFinishedStatus: boolean = false;
     public ignoredPaymentRegistrationNotification: boolean = false;
-    public showPaymentFields: boolean = true;
+    public disablePaymentFields: boolean = true;
 
     public highlightedStatuses: RepairStatus[] = [];
 
@@ -68,7 +67,7 @@ export class RepairUpdateComponent implements OnInit {
             // Payment section of form initial status:
             this.hasRegisteredPayments = this.repair.moneyTransactions.filter((m) => m.amount !== 0).length > 0;
             this.hasFinishedStatus = this.repair.status.id === ERepairStatus.FINISHED_AND_PAID;
-            this.showPaymentFields = this.updatePaymentFieldsVisibility(this.repair);
+            this.disablePaymentFields = this.updatePaymentFieldsStatus(this.repair);
 
             // Subscribe to...
             this.repairFormHandlerService.repairGroup.statusChanges.subscribe(() => {
@@ -77,7 +76,7 @@ export class RepairUpdateComponent implements OnInit {
 
             this.repairFormHandlerService.repairGroup.valueChanges.subscribe(() => {
                 this.repairFormHandlerService.assignRepairForm();
-                this.showPaymentFields = this.updatePaymentFieldsVisibility(this.repairFormHandlerService.repair);
+                this.disablePaymentFields = this.updatePaymentFieldsStatus(this.repairFormHandlerService.repair);
             });
 
             await this.getHistory();
@@ -96,7 +95,7 @@ export class RepairUpdateComponent implements OnInit {
         }
     }
 
-    private updatePaymentFieldsVisibility(repair: Repair): boolean {
+    private updatePaymentFieldsStatus(repair: Repair): boolean {
         return (
             this.hasRegisteredPayments ||
             (!!repair.price && repair.price !== 0 && repair.status.id === ERepairStatus.FINISHED_AND_PAID)
@@ -154,23 +153,16 @@ export class RepairUpdateComponent implements OnInit {
             event.value !== ERepairStatus.FINISHED_AND_PAID && this.repairFormHandlerService.paymentsGroup.touched;
     }
 
-    public toggleSecondaryPaymentMethod(event: ChangeEventArgsButton) {
-        this.useSecondaryPaymentMethod = event.checked;
-        if (event.checked) {
-            const form = this.formBuilder.group({
-                id: [null],
-                paymentMethod: [EPaymentMethod.CASH],
-                amount: [0],
-            });
-            this.repairFormHandlerService.paymentsGroup.push(form);
-        } else {
-            const paymentsLength = this.repairFormHandlerService.paymentsGroup.length;
-            this.repairFormHandlerService.paymentsGroup.removeAt(paymentsLength - 1);
-        }
+    public addPaymentMethod() {
+        const form = this.formBuilder.group({
+            id: [null],
+            paymentMethod: [EPaymentMethod.CASH],
+            amount: [0],
+        });
+        this.repairFormHandlerService.paymentsGroup.push(form);
     }
 
-    public ignoredPaymentsNotification(): boolean {
-        console.log(this.repairFormHandlerService.repairControl.values);
-        return true;
+    public removePaymentMethod(event: { index: number }) {
+        this.repairFormHandlerService.paymentsGroup.removeAt(event.index);
     }
 }

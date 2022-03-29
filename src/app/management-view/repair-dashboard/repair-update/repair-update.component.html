@@ -217,8 +217,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-8 d-flex flex-wrap">
-                                                <div class="w-100 d-flex">
-                                                    <div class="px-2 w-100">
+                                                <div class="w-100 d-flex mb-2">
+                                                    <div class="w-100">
                                                         <p><strong>Notas sobre la Reparación: </strong></p>
                                                         <textarea
                                                             class="form-control form-control-sm w-100"
@@ -232,7 +232,7 @@
                                                         </textarea>
                                                     </div>
                                                 </div>
-                                                <div class="px-2" *ngIf="highlightedStatuses.length > 0">
+                                                <div class="mb-2" *ngIf="highlightedStatuses.length > 0">
                                                     <div class="d-flex">
                                                         <div
                                                             class="alert alert-primary mb-0 mr-2"
@@ -243,7 +243,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-100 d-flex justify-content-between pb-2">
-                                                    <div class="px-2 flex-grow-1">
+                                                    <div class="flex-grow-1 pr-3">
                                                         <ejs-dropdownlist
                                                             floatLabelType="Auto"
                                                             id="status"
@@ -258,7 +258,7 @@
                                                         >
                                                         </ejs-dropdownlist>
                                                     </div>
-                                                    <div class="px-2">
+                                                    <div class="pr-3">
                                                         <div class="input-group input-group-sm">
                                                             <ejs-numerictextbox
                                                                 id="cost"
@@ -275,7 +275,7 @@
                                                             ></ejs-numerictextbox>
                                                         </div>
                                                     </div>
-                                                    <div class="px-2">
+                                                    <div class="pr-3">
                                                         <div class="input-group input-group-sm">
                                                             <ejs-numerictextbox
                                                                 id="price"
@@ -289,7 +289,7 @@
                                                             ></ejs-numerictextbox>
                                                         </div>
                                                     </div>
-                                                    <div id="warranty-input-group" class="px-2">
+                                                    <div id="warranty-input-group">
                                                         <p><strong>Garantía: </strong></p>
                                                         <div class="input-group input-group-sm">
                                                             <input
@@ -310,19 +310,20 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="w-100" *ngIf="showPaymentFields">
+                                                <div class="w-100">
                                                     <div class="d-flex align-items-center justify-content-between">
-                                                        <ejs-checkbox
-                                                            id="add-secondary-payment-method"
-                                                            label="Agregar segundo método de pago"
-                                                            (change)="toggleSecondaryPaymentMethod($event)"
-                                                            [checked]="useSecondaryPaymentMethod"
+                                                        <button
+                                                            id="add-payment-method"
+                                                            class="btn btn-sm btn-primary mb-2"
+                                                            title="Para agregar un método de pago, cambie el estado a 'Finalizada y abonada'"
+                                                            type="button"
                                                             [disabled]="
-                                                                !hasFinishedStatus ||
-                                                                hasRegisteredPayments ||
-                                                                repairFormHandlerService.saved
+                                                                !hasFinishedStatus || repairFormHandlerService.saved
                                                             "
-                                                        ></ejs-checkbox>
+                                                            (click)="addPaymentMethod()"
+                                                        >
+                                                            Agregar método de pago
+                                                        </button>
                                                     </div>
                                                     <ng-container
                                                         *ngFor="
@@ -332,15 +333,19 @@
                                                         "
                                                     >
                                                         <app-payment-input
-                                                            [methodLabel]="'Método de Pago ' + (i + 1)"
+                                                            [methodLabel]="'Método de Pago'"
                                                             [amountLabel]="'Monto ' + (i + 1)"
                                                             [form]="paymentGroup"
+                                                            [index]="i"
                                                             [disabled]="repairFormHandlerService.saved"
+                                                            (remove)="removePaymentMethod($event)"
                                                         ></app-payment-input>
                                                     </ng-container>
                                                     <div
                                                         class="text-danger"
                                                         *ngIf="
+                                                            (repairFormHandlerService.saved ||
+                                                                repairFormHandlerService.paymentsGroup.touched) &&
                                                             repairFormHandlerService.formGroup.errors
                                                                 ?.paymentsNotEqualToPrice
                                                         "

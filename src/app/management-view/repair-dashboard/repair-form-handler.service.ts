@@ -410,14 +410,11 @@ export class RepairFormHandlerService {
     }
 
     public canRegisterPayment(): boolean {
-        // TODO: Mark depending also on the old status
         const newStatus = this.repairService.repairStatuses.find(
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
         const statusIsFinishedAndPaid = newStatus.id === ERepairStatus.FINISHED_AND_PAID;
-        const alreadyHasAttachedPayments = this.repair.moneyTransactions.filter((x) => !!x.id).length;
-
-        return statusIsFinishedAndPaid && !alreadyHasAttachedPayments && this.repairControl['price']['value'] !== 0;
+        return statusIsFinishedAndPaid && this.repairControl['price']['value'] !== 0;
     }
 }
