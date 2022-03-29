@@ -29,7 +29,6 @@ export class RepairUpdateComponent implements OnInit {
     public hasRegisteredPayments: boolean = false;
     public hasFinishedStatus: boolean = false;
     public ignoredPaymentRegistrationNotification: boolean = false;
-    public disablePaymentFields: boolean = true;
 
     public highlightedStatuses: RepairStatus[] = [];
 
@@ -67,7 +66,6 @@ export class RepairUpdateComponent implements OnInit {
             // Payment section of form initial status:
             this.hasRegisteredPayments = this.repair.moneyTransactions.filter((m) => m.amount !== 0).length > 0;
             this.hasFinishedStatus = this.repair.status.id === ERepairStatus.FINISHED_AND_PAID;
-            this.disablePaymentFields = this.updatePaymentFieldsStatus(this.repair);
 
             // Subscribe to...
             this.repairFormHandlerService.repairGroup.statusChanges.subscribe(() => {
@@ -76,7 +74,6 @@ export class RepairUpdateComponent implements OnInit {
 
             this.repairFormHandlerService.repairGroup.valueChanges.subscribe(() => {
                 this.repairFormHandlerService.assignRepairForm();
-                this.disablePaymentFields = this.updatePaymentFieldsStatus(this.repairFormHandlerService.repair);
             });
 
             await this.getHistory();
@@ -93,13 +90,6 @@ export class RepairUpdateComponent implements OnInit {
 
             this.initControls();
         }
-    }
-
-    private updatePaymentFieldsStatus(repair: Repair): boolean {
-        return (
-            this.hasRegisteredPayments ||
-            (!!repair.price && repair.price !== 0 && repair.status.id === ERepairStatus.FINISHED_AND_PAID)
-        );
     }
 
     private initControls() {

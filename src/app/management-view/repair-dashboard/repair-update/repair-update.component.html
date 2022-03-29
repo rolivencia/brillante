@@ -266,10 +266,7 @@
                                                                 floatLabelType="Auto"
                                                                 min="0"
                                                                 formControlName="cost"
-                                                                [enabled]="
-                                                                    !repairFormHandlerService.saved &&
-                                                                    !hasRegisteredPayments
-                                                                "
+                                                                [enabled]="!repairFormHandlerService.saved"
                                                                 [placeholder]="'Costo'"
                                                                 [showSpinButton]="false"
                                                             ></ejs-numerictextbox>
@@ -337,7 +334,9 @@
                                                             [amountLabel]="'Monto ' + (i + 1)"
                                                             [form]="paymentGroup"
                                                             [index]="i"
-                                                            [disabled]="repairFormHandlerService.saved"
+                                                            [disabled]="
+                                                                repairFormHandlerService.saved || !hasFinishedStatus
+                                                            "
                                                             (remove)="removeRelatedMoneyTransaction($event)"
                                                         ></app-payment-input>
                                                     </ng-container>
@@ -359,7 +358,7 @@
                                                     >
                                                         La información de pagos previamente ingresada será descartada
                                                         por haber cambiado el estado de reparación. Para proceder con el
-                                                        guardado, asigne el estado como "Pagado y Entregado".
+                                                        guardado, asigne el estado como "Finalizada y Abonada".
                                                     </div>
                                                 </div>
                                             </div>
