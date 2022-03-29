@@ -320,9 +320,9 @@
                                                             [disabled]="
                                                                 !hasFinishedStatus || repairFormHandlerService.saved
                                                             "
-                                                            (click)="addPaymentMethod()"
+                                                            (click)="addRelatedMoneyTransaction()"
                                                         >
-                                                            Agregar método de pago
+                                                            Agregar transacción vinculada
                                                         </button>
                                                     </div>
                                                     <ng-container
@@ -338,7 +338,7 @@
                                                             [form]="paymentGroup"
                                                             [index]="i"
                                                             [disabled]="repairFormHandlerService.saved"
-                                                            (remove)="removePaymentMethod($event)"
+                                                            (remove)="removeRelatedMoneyTransaction($event)"
                                                         ></app-payment-input>
                                                     </ng-container>
                                                     <div

@@ -153,7 +153,7 @@ export class RepairUpdateComponent implements OnInit {
             event.value !== ERepairStatus.FINISHED_AND_PAID && this.repairFormHandlerService.paymentsGroup.touched;
     }
 
-    public addPaymentMethod() {
+    public addRelatedMoneyTransaction() {
         const form = this.formBuilder.group({
             id: [null],
             paymentMethod: [EPaymentMethod.CASH],
@@ -162,7 +162,7 @@ export class RepairUpdateComponent implements OnInit {
         this.repairFormHandlerService.paymentsGroup.push(form);
     }
 
-    public removePaymentMethod(event: { index: number }) {
+    public removeRelatedMoneyTransaction(event: { index: number }) {
         this.repairFormHandlerService.paymentsGroup.removeAt(event.index);
     }
 }
