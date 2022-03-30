@@ -9,7 +9,7 @@ import { toMoment } from '@models/date-object';
 import { Repair, RepairStatus } from '@models/repair';
 import { AuthenticationService } from '@services/authentication.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
-import { ERepairStatus } from '@enums/repair-status.enum';
+import { isFinishedStatus } from '@functions/repair.functions';
 
 @Injectable({
     providedIn: 'root',
@@ -413,7 +413,7 @@ export class RepairFormHandlerService {
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
-        const statusIsFinishedAndPaid = newStatus.id === ERepairStatus.FINISHED_AND_PAID;
+        const statusIsFinishedAndPaid = isFinishedStatus(newStatus.id);
         return statusIsFinishedAndPaid && this.repairControl['price']['value'] !== 0;
     }
 }

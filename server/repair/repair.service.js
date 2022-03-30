@@ -152,8 +152,8 @@ async function updateTrackingInfo({ repairToUpdate, user, generateTransaction, o
                 { transaction: t }
             );
 
-            // If status is "Finished and payed", and a transaction is generated, adds related money transactions
-            if (generateTransaction && status.id === ERepairStatus.FINISHED_AND_PAID) {
+            // If status is one of the accepter finish status, and transactions are generated, adds related money transactions
+            if (generateTransaction && isFinishedStatus(status.id)) {
                 for (const payment of moneyTransactions.filter((x) => !x.id)) {
                     // Grabs only new moneyTransactions, which lack an ID, and ignore the others
 
@@ -595,4 +595,12 @@ function mapDeviceType(id) {
         },
     ];
     return deviceTypes.filter((deviceType) => deviceType.id === id).pop();
+}
+
+function isFinishedStatus(idStatus) {
+    return [
+        ERepairStatus.FINISHED_AND_PAID,
+        ERepairStatus.RETURNED_WITHOUT_REPAIR,
+        ERepairStatus.FINISHED_DIAGNOSTICS,
+    ].includes(idStatus);
 }

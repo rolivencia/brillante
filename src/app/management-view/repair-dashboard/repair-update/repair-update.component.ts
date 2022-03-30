@@ -11,6 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { ERepairStatus } from '@enums/repair-status.enum';
 import { EPaymentMethod } from '@enums/payment-methods.enum';
 import * as _ from 'lodash';
+import { isFinishedStatus } from '@functions/repair.functions';
 
 @Component({
     selector: 'app-repair-update',
@@ -65,7 +66,7 @@ export class RepairUpdateComponent implements OnInit {
 
             // Payment section of form initial status:
             this.hasRegisteredPayments = this.repair.moneyTransactions.filter((m) => m.amount !== 0).length > 0;
-            this.hasFinishedStatus = this.repair.status.id === ERepairStatus.FINISHED_AND_PAID;
+            this.hasFinishedStatus = isFinishedStatus(this.repair.status.id);
 
             // Subscribe to...
             this.repairFormHandlerService.repairGroup.statusChanges.subscribe(() => {
@@ -138,9 +139,9 @@ export class RepairUpdateComponent implements OnInit {
     }
 
     public onStatusChange(event: ChangeEventArgs) {
-        this.hasFinishedStatus = event.value === ERepairStatus.FINISHED_AND_PAID;
+        this.hasFinishedStatus = isFinishedStatus(event.value as number);
         this.ignoredPaymentRegistrationNotification =
-            event.value !== ERepairStatus.FINISHED_AND_PAID && this.repairFormHandlerService.paymentsGroup.touched;
+            !isFinishedStatus(event.value as number) && this.repairFormHandlerService.paymentsGroup.touched;
     }
 
     public addRelatedMoneyTransaction() {
