@@ -22,7 +22,7 @@ export class RepairGridResultsComponent implements OnInit {
         { header: 'Modelo', binding: 'device.model', width: '*' },
         // { header: 'IMEI', binding: 'device.deviceId', width: '*' },
         { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
-        { header: 'Estado', binding: 'status.status', width: '*' },
+        { header: 'Estado', binding: 'status.description', width: '*' },
     ];
 
     displayMonths = 1;

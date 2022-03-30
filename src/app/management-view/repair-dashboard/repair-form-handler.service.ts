@@ -145,29 +145,29 @@ export class RepairFormHandlerService {
                 note: [repair.note],
                 issue: [repair.issue, [Validators.required]],
                 paymentInAdvance: [repair.paymentInAdvance, Validators.required],
-                price: [repair.price, Validators.required],
+                price: [repair.price, [Validators.required]],
                 cost: [repair.cost, Validators.required],
                 warrantyTerm: [repair.warrantyTerm, [Validators.required, Validators.min(0), Validators.max(24)]],
             }),
         });
     }
 
-    private mustEqualPrice(): ValidatorFn {
+    private paymentsMustEqualPrice(): ValidatorFn {
         return (currentControl: AbstractControl): { [key: string]: any } => {
-            const repairValue = this.repairGroup.value;
-            if (currentControl.value.length === 0 || repairValue.status !== ERepairStatus.FINISHED_AND_PAID) {
+            const repairValue: any = currentControl.get('repair').value;
+            const paymentsValue: any = currentControl.get('payments').value;
+
+            // Early return if no payments were added to the repair
+            if (paymentsValue.length === 0) {
                 return null;
             }
-            if (currentControl.value.length > 0 && repairValue.status === ERepairStatus.FINISHED_AND_PAID) {
-                const reducer = (previousValue, currentValue) => previousValue + currentValue;
-                const sum = currentControl.value.map((p) => p.amount).reduce(reducer);
-                const price = parseFloat(repairValue.price);
 
-                return sum === price ? null : { paymentsNotEqualToPrice: true };
-            }
+            const reducer = (previousValue, currentValue) => previousValue + currentValue;
+            const sum = paymentsValue.map((p) => p.amount).reduce(reducer);
+            const price = parseFloat(repairValue.price);
+            return sum === price ? null : { paymentsNotEqualToPrice: true };
         };
     }
-
     /**
      * Builds the FormArray to hold the date relevant to payments. If no payments are present
      * for a given repair, loads the default data: no id, cash paymentMethod, and amount of $0
@@ -177,6 +177,7 @@ export class RepairFormHandlerService {
      */
     public buildPaymentsFormGroup(repair: Repair, formGroup: FormGroup) {
         formGroup.addControl('payments', this.formBuilder.array([]));
+        formGroup.addValidators([this.paymentsMustEqualPrice()]);
         const paymentsFormArray: FormArray = formGroup.controls['payments'] as FormArray;
         if (repair.moneyTransactions.length > 0) {
             // Add money transactions to the payments FormArray when form is initially loaded
@@ -185,6 +186,7 @@ export class RepairFormHandlerService {
                     id: [transaction.id],
                     paymentMethod: [transaction.paymentMethod.id],
                     amount: [transaction.amount],
+                    date: [transaction.date.format('DD-MM-YYYY HH:mm')],
                 });
                 paymentsFormArray.push(paymentGroup);
             }
@@ -193,10 +195,10 @@ export class RepairFormHandlerService {
                 id: [],
                 paymentMethod: [1],
                 amount: [0],
+                date: [],
             });
             paymentsFormArray.push(paymentGroup);
         }
-        paymentsFormArray.addValidators([this.mustEqualPrice()]);
     }
 
     /**
@@ -407,14 +409,11 @@ export class RepairFormHandlerService {
     }
 
     public canRegisterPayment(): boolean {
-        // TODO: Mark depending also on the old status
         const newStatus = this.repairService.repairStatuses.find(
             (x: RepairStatus) => x.id === this.repairControl['status']['value']
         );
 
         const statusIsFinishedAndPaid = newStatus.id === ERepairStatus.FINISHED_AND_PAID;
-        const alreadyHasAttachedPayments = this.repair.moneyTransactions.filter((x) => !!x.id).length;
-
-        return statusIsFinishedAndPaid && !alreadyHasAttachedPayments && this.repairControl['price']['value'] !== 0;
+        return statusIsFinishedAndPaid && this.repairControl['price']['value'] !== 0;
     }
 }
