@@ -199,7 +199,6 @@ export class RepairFormHandlerService {
             });
             paymentsFormArray.push(paymentGroup);
         }
-        // paymentsFormArray.addValidators([this.mustEqualPrice()]);
     }
 
     /**
