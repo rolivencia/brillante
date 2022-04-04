@@ -1,19 +1,17 @@
-<div class="global-wrapper clearfix" id="global-wrapper">
-    <section id="products-list-hero" class="w-100 d-none d-md-block">
-        <img class="w-100" src="./assets/imagenes/tema/slides/productos.jpg" alt="" />
-    </section>
+<section id="products-list-hero" class="w-100 d-none d-md-block">
+    <img class="w-100" src="./assets/imagenes/tema/slides/productos.jpg" alt="" />
+</section>
 
-    <br />
+<br />
 
-    <section class="product-grid container-fluid p-0">
-        <div class="row">
-            <div class="d-none d-lg-block col-12 col-lg-2">
-                <app-products-filters></app-products-filters>
-            </div>
-            <div class="col-12 col-lg-10">
-                <router-outlet></router-outlet>
-            </div>
+<section class="product-grid container-fluid p-0">
+    <div class="row">
+        <div class="d-none d-lg-block col-12 col-lg-2">
+            <app-products-filters></app-products-filters>
         </div>
-    </section>
-    <br />
-</div>
+        <div class="col-12 col-lg-10">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>
+<br />
