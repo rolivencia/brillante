@@ -1,0 +1,59 @@
+body {
+    cursor: default;
+}
+a,
+a:hover,
+a:focus {
+    outline: none;
+}
+/*
+ * Navbar
+ */
+
+.navbar-brand > img {
+    width: 180px;
+}
+
+.icono-fa-menu {
+    color: #d3d3d3;
+}
+
+.popup-text {
+    text-align: center;
+}
+.popup-text span {
+    display: block;
+    float: left;
+    height: 100px;
+    text-align: center;
+    padding-bottom: 20px;
+    width: 100%;
+}
+.popup-text i {
+    font-size: 20px;
+}
+.popup-text i {
+    font-size: 16px;
+}
+.form-group {
+    float: left;
+    padding-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.help-block {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.help-block ul {
+    margin: 0;
+    padding: 0;
+}
+.help-block ul li {
+    color: #ff0000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
