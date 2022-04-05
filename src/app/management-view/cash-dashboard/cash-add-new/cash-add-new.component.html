@@ -45,10 +45,8 @@
                             *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
                             class="badge p-2 w-100"
                             [ngClass]="{
-                                'badge-danger':
-                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
-                                'badge-success':
-                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                'bg-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
+                                'bg-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1
                             }"
                         >
                             {{
