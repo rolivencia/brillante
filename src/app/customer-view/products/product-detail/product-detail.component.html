@@ -45,7 +45,7 @@
                     <h3>$ {{ product.price }}</h3>
                     <p>
                         <fa-icon [icon]="faCreditCard" [size]="'1x'"></fa-icon
-                        ><label *ngIf="$installmentsPrice | async as installmentsPrice" class="ml-2"
+                        ><label *ngIf="$installmentsPrice | async as installmentsPrice" class="ms-2"
                             >En 12x $ {{ installmentsPrice }}</label
                         >
                     </p>
@@ -53,10 +53,10 @@
                     <!-- TODO: Remove this validation/hiding when cart is ready-->
                     <ng-container *ngIf="showCart">
                         <div class="form-inline mb-3">
-                            <label class="my-1 mr-2" for="amount">Cantidad</label>
+                            <label class="my-1 me-2" for="amount">Cantidad</label>
                             <select
                                 id="amount"
-                                class="custom-select my-1 ml-4 flex-grow-1 text-right"
+                                class="custom-select my-1 ms-4 flex-grow-1 text-right"
                                 [(ngModel)]="quantity"
                             >
                                 <option [ngValue]="1" selected>1</option>

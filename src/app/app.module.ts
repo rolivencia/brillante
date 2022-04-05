@@ -21,13 +21,7 @@ import { LeftSidebarModule } from '@components/left-sidebar/left-sidebar.module'
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { LayoutService } from '@services/layout.service';
-import {
-    AggregateService,
-    ExcelExportService,
-    FilterService,
-    SortService,
-    ToolbarService,
-} from '@syncfusion/ej2-angular-grids';
+import { AggregateService, ExcelExportService, FilterService, SortService } from '@syncfusion/ej2-angular-grids';
 
 @NgModule({
     imports: [

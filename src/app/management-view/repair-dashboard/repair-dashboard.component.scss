@@ -1,10 +1,4 @@
-@import '../../../../node_modules/bootstrap/scss/bootstrap';
-
-.form-check-input {
-    position: absolute;
-    margin-top: 0.45rem;
-    @extend .ml-1;
-}
+@import 'src/assets/scss/bootstrap-extensions';
 
 #grid-container {
     height: 600px;

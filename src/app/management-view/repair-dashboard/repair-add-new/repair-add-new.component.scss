@@ -1,12 +1,12 @@
-@import '../../../../../node_modules/bootstrap/scss/bootstrap';
+@import 'src/assets/scss/bootstrap-extensions';
 
 .form-inline {
     label {
         width: 60px;
-        @extend .mr-3;
+        @extend .me-3;
     }
     input:not([type='checkbox']) + label {
-        @extend .ml-3;
+        @extend .ms-3;
     }
 }
 
@@ -15,5 +15,5 @@
 }
 
 button + button {
-    @extend .ml-3;
+    @extend .ms-3;
 }

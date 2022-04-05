@@ -37,10 +37,16 @@
             <p><strong>Modelo: </strong> {{ repairDashboardService.selectedRepair.device.model }}</p>
             <p><strong>Estado: </strong>{{ repairDashboardService.selectedRepair.status.description }}</p>
             <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.device.deviceId }}</p>
-            <p>
-                <strong>Encendido: </strong>
-                <input type="checkbox" disabled [ngModel]="repairDashboardService.selectedRepair.device.turnedOn" />
-            </p>
+
+            <label>
+                <ng-container *ngIf="repairDashboardService.selectedRepair.device.turnedOn"
+                    >El equipo llegó encendido</ng-container
+                >
+                <ng-container *ngIf="!repairDashboardService.selectedRepair.device.turnedOn"
+                    >El equipo llegó apagado</ng-container
+                >
+            </label>
+
             <hr />
             <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.issue }}</p>
             <hr />
@@ -89,7 +95,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-sm btn-outline-secondary" (click)="modal.close('Cancel')">⬅️️ Cancelar</button>
-        <button class="ml-3 btn btn-sm btn-outline-danger" (click)="delete(repairDashboardService.selectedRepair.id)">
+        <button class="ms-3 btn btn-sm btn-outline-danger" (click)="delete(repairDashboardService.selectedRepair.id)">
             ❌ Eliminar
         </button>
     </div>

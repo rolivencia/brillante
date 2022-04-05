@@ -1,22 +1,22 @@
 <div class="card">
     <div id="cash-selected-details-header" class="card-header d-flex justify-content-between">
         <ng-container *ngIf="cashDashboardService.isToday() && cashDashboardService.gridCollection.itemCount === 0">
-            <button class="btn btn-sm btn-outline-primary mr-3" (click)="cashDashboardService.openCashRegister()">
+            <button class="btn btn-sm btn-outline-primary me-3" (click)="cashDashboardService.openCashRegister()">
                 💵 Abrir Caja
             </button>
         </ng-container>
         <ng-container *ngIf="cashDashboardService.gridCollection.itemCount > 0">
-            <button class="btn btn-sm btn-outline-primary mr-3" (click)="add()">💵 Crear</button>
+            <button class="btn btn-sm btn-outline-primary me-3" (click)="add()">💵 Crear</button>
             <button
                 *ngIf="isEditable(cashDashboardService.selectedTransaction)"
-                class="btn btn-sm btn-outline-dark mr-3"
+                class="btn btn-sm btn-outline-dark me-3"
                 (click)="update(cashDashboardService.selectedTransaction.id)"
                 [disabled]="!cashDashboardService.selectedTransaction"
             >
                 ✏️ Editar
             </button>
             <button
-                class="btn btn-sm btn-outline-danger mr-3"
+                class="btn btn-sm btn-outline-danger me-3"
                 (click)="delete()"
                 [disabled]="!cashDashboardService.selectedTransaction"
             >

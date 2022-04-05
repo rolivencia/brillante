@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label>Tipo de Equipo</label>
                                     <div class="d-flex">
-                                        <div class="form-inline flex-grow-1 pr-5">
+                                        <div class="form-inline flex-grow-1 pe-5">
                                             <wj-combo-box
                                                 class="form-control form-control-sm p-0"
                                                 id="type"
@@ -56,16 +56,15 @@
                                                 [displayMemberPath]="'description'"
                                             ></wj-combo-box>
                                         </div>
-                                        <div class="form-check-inline">
+                                        <div class="form-check form-switch">
                                             <input
-                                                name="arrivedTurnedOn"
                                                 class="form-check-input"
                                                 type="checkbox"
                                                 id="arrivedTurnedOn"
                                                 formControlName="turnedOn"
                                             />
                                             <label class="form-check-label" for="arrivedTurnedOn"
-                                                >Llegó Encendido</label
+                                                >¿Llegó Encendido?</label
                                             >
                                         </div>
                                     </div>

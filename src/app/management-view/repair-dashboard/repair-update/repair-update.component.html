@@ -15,8 +15,8 @@
             >
                 💾 Guardar cambios
             </button>
-            <button class="btn btn-sm btn-outline-secondary ml-3" (click)="print()">🖨️ Generar Comprobante</button>
-            <button class="btn btn-sm btn-outline-secondary ml-3" (click)="location.back()">⬅️ Volver</button>
+            <button class="btn btn-sm btn-outline-secondary ms-3" (click)="print()">🖨️ Generar Comprobante</button>
+            <button class="btn btn-sm btn-outline-secondary ms-3" (click)="location.back()">⬅️ Volver</button>
         </div>
     </div>
     <div class="card-body">
@@ -235,7 +235,7 @@
                                                 <div class="mb-2" *ngIf="highlightedStatuses.length > 0">
                                                     <div class="d-flex">
                                                         <div
-                                                            class="alert alert-primary mb-0 mr-2"
+                                                            class="alert alert-primary mb-0 me-2"
                                                             *ngFor="let status of highlightedStatuses"
                                                         >
                                                             El dispositivo fue {{ status.description }}
@@ -243,7 +243,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-100 d-flex justify-content-between pb-2">
-                                                    <div class="flex-grow-1 pr-3">
+                                                    <div class="flex-grow-1 pe-3">
                                                         <ejs-dropdownlist
                                                             floatLabelType="Auto"
                                                             id="status"
@@ -258,7 +258,7 @@
                                                         >
                                                         </ejs-dropdownlist>
                                                     </div>
-                                                    <div class="pr-3">
+                                                    <div class="pe-3">
                                                         <div class="input-group input-group-sm">
                                                             <ejs-numerictextbox
                                                                 id="cost"
@@ -272,7 +272,7 @@
                                                             ></ejs-numerictextbox>
                                                         </div>
                                                     </div>
-                                                    <div class="pr-3">
+                                                    <div class="pe-3">
                                                         <div class="input-group input-group-sm">
                                                             <ejs-numerictextbox
                                                                 id="price"
