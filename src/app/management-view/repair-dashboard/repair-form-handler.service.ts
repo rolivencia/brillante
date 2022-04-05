@@ -6,7 +6,7 @@ import { PaymentMethod } from '@models/cash-transaction';
 import { RepairService } from '@services/repair.service';
 import { ToastrService } from 'ngx-toastr';
 import { toMoment } from '@models/date-object';
-import { Repair, RepairStatus } from '@models/repair';
+import { DeviceType, Repair, RepairStatus } from '@models/repair';
 import { AuthenticationService } from '@services/authentication.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { isFinishedStatus } from '@functions/repair.functions';
@@ -136,7 +136,7 @@ export class RepairFormHandlerService {
                 id: [repair.id],
                 device: this.formBuilder.group({
                     turnedOn: [repair.device.turnedOn, Validators.required],
-                    type: [repair.device.type, Validators.required],
+                    type: [repair.device.type.id, Validators.required],
                     manufacturer: [repair.device.manufacturer, Validators.required],
                     model: [repair.device.model, Validators.required],
                     deviceId: [repair.device.deviceId],
@@ -235,7 +235,7 @@ export class RepairFormHandlerService {
                 id: repair.id,
                 device: {
                     turnedOn: repair.device.turnedOn,
-                    type: repair.device.type,
+                    type: repair.device.type.id,
                     manufacturer: repair.device.manufacturer,
                     model: repair.device.model,
                     deviceId: repair.device.deviceId,
@@ -280,7 +280,7 @@ export class RepairFormHandlerService {
             customer: this.customer,
             device: {
                 turnedOn: deviceForm.turnedOn.value,
-                type: deviceForm.type.value,
+                type: this.repairService.deviceTypes.find((x: DeviceType) => x.id === deviceForm.type.value),
                 manufacturer: deviceForm.manufacturer.value,
                 model: deviceForm.model.value,
                 deviceId: deviceForm.deviceId.value,
