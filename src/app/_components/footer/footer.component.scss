@@ -10,3 +10,39 @@
         margin-top: 20px;
     }
 }
+
+a.footerAlmaLogo {
+    white-space: nowrap;
+    background: url('https://alma.com.ar/alma_ng_iso.png') no-repeat;
+    background-size: contain;
+    padding: 0 0 0 32px;
+    line-height: 26px;
+    transition: 350ms width ease-in-out;
+    overflow: hidden;
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    font-family: 'Montserrat', sans-serif;
+    color: #464646;
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.8;
+    margin: 10px;
+
+    @media (min-width: 600px) {
+        transform: translate(0);
+        float: left;
+        margin: 0 0 0 auto;
+    }
+
+    strong {
+        font-weight: 300;
+    }
+
+    &:hover {
+        font-weight: 300;
+        width: 306px;
+        color: #464646 !important;
+        opacity: 1;
+    }
+}

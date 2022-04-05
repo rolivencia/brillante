@@ -1,10 +1,5 @@
+@import 'src/assets/scss/bootstrap-colors';
 @import 'src/assets/scss/bootstrap-extensions';
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-}
 
 #header-container {
     width: 100%;
@@ -19,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    //background-color: $background-color;
+    background-color: $background-color;
 }
 
 #outlet-container {
