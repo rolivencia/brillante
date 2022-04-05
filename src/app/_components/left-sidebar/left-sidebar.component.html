@@ -26,7 +26,7 @@
                             [routerLink]="route.route"
                             (click)="onHide()"
                         >
-                            <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                            <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
                             {{ route.text }}</a
                         >
                         <a
@@ -36,7 +36,7 @@
                             [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
                             [href]="route.route"
                         >
-                            <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                            <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
                             {{ route.text }}</a
                         >
                     </div>
@@ -55,7 +55,7 @@
                         [routerLink]="route.route"
                         (click)="onHide()"
                     >
-                        <fa-icon class="mr-3" [icon]="route.icon"></fa-icon>
+                        <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
                         {{ route.text }}</a
                     >
                 </div>

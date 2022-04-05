@@ -1,4 +1,4 @@
-@import 'src/assets/scss/bootstrap-theming';
+@import 'src/assets/scss/bootstrap-extensions';
 
 html,
 body {
@@ -19,7 +19,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    background-color: $background-color;
+    //background-color: $background-color;
 }
 
 #outlet-container {
