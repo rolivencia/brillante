@@ -385,30 +385,48 @@
 
                                                     <p><strong>Historial de la Reparación: </strong></p>
                                                     <!--TODO: Mover lógica a servicio de reparaciones-->
-                                                    <div *ngIf="!statusHistory.itemCount">
+                                                    <div *ngIf="!statusHistory.length">
                                                         <p>La reparación aún no presenta ningún cambio de estado.</p>
                                                     </div>
-                                                    <wj-flex-grid
+                                                    <ejs-grid
                                                         #repairHistoryGrid
                                                         id="repair-history-grid"
-                                                        *ngIf="statusHistory.itemCount > 0"
-                                                        [itemsSource]="statusHistory"
-                                                        [selectionMode]="'Row'"
-                                                        [headersVisibility]="'Column'"
-                                                        [allowResizing]="'Columns'"
+                                                        *ngIf="statusHistory.length > 0"
                                                         [allowSorting]="false"
-                                                        [showSelectedHeaders]="'Row'"
-                                                        [isReadOnly]="true"
+                                                        [dataSource]="statusHistory"
+                                                        [height]="'332px'"
                                                     >
-                                                        <wj-flex-grid-column
-                                                            *ngFor="let column of columns"
-                                                            [width]="column.width"
-                                                            [binding]="column.binding"
-                                                            [header]="column.header"
-                                                            [visible]="true"
-                                                        >
-                                                        </wj-flex-grid-column>
-                                                    </wj-flex-grid>
+                                                        <e-columns>
+                                                            <e-column
+                                                                field="status.description"
+                                                                headerText="Estado"
+                                                                width="200"
+                                                            ></e-column>
+                                                            <e-column
+                                                                field="updatedAt"
+                                                                headerText="Cambió"
+                                                                width="120"
+                                                            ></e-column>
+                                                            <e-column
+                                                                field="cost"
+                                                                headerText="Costo"
+                                                                width="80"
+                                                                format="c2"
+                                                            ></e-column>
+                                                            <e-column
+                                                                field="price"
+                                                                headerText="Precio"
+                                                                width="80"
+                                                                format="c2"
+                                                            ></e-column>
+                                                            <e-column field="note" headerText="Nota"></e-column>
+                                                            <e-column
+                                                                field="user.userName"
+                                                                headerText="Usuario Responsable"
+                                                                width="150"
+                                                            ></e-column>
+                                                        </e-columns>
+                                                    </ejs-grid>
                                                 </div>
 
                                                 <div class="px-2" style="display: none">
