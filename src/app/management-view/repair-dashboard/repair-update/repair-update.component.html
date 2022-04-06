@@ -108,21 +108,10 @@
                                         formControlName="type"
                                         [fields]="deviceTypeFields"
                                         [dataSource]="repairService.deviceTypes"
+                                        [contentEditable]="false"
+                                        [readonly]="repairFormHandlerService.saved"
                                     >
                                     </ejs-dropdownlist>
-                                    <!--                                    <wj-combo-box-->
-                                    <!--                                        class="form-control form-control-sm p-0"-->
-                                    <!--                                        id="type"-->
-                                    <!--                                        name="type"-->
-                                    <!--                                        aria-describedby="type"-->
-                                    <!--                                        formControlName="type"-->
-                                    <!--                                        [isEditable]="false"-->
-                                    <!--                                        [isReadOnly]="repairFormHandlerService.saved"-->
-                                    <!--                                        [itemsSource]="repairService.deviceTypes"-->
-                                    <!--                                        [selectedItem]="repairFormHandlerService.repair.device.type"-->
-                                    <!--                                        [selectedIndex]="repairFormHandlerService.repair.device.type.id"-->
-                                    <!--                                        [displayMemberPath]="'description'"-->
-                                    <!--                                    ></wj-combo-box>-->
                                 </div>
                                 <div class="px-2">
                                     <p><strong>Marca: </strong></p>
