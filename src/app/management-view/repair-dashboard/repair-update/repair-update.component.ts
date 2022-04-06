@@ -4,7 +4,6 @@ import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@services/repair.service';
 import { RepairVoucherGeneratorService } from '@management-view/repair-dashboard/repair-voucher-generator.service';
-import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { Repair, RepairStatus, RepairStatusHistory } from '@models/repair';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 import { FormBuilder } from '@angular/forms';
@@ -22,7 +21,7 @@ export class RepairUpdateComponent implements OnInit {
     public deviceTypeFields: FieldSettingsModel = { text: 'description', value: 'id' };
 
     public repair: Repair;
-    public statusHistory = new CollectionView([]);
+    public statusHistory: RepairStatusHistory[] = [];
 
     public editDevice: boolean = false;
 
@@ -34,15 +33,6 @@ export class RepairUpdateComponent implements OnInit {
     public ignoredPaymentRegistrationNotification: boolean = false;
 
     public highlightedStatuses: RepairStatus[] = [];
-
-    columns: { header: string; binding: string; width: string | number }[] = [
-        { header: 'Estado', binding: 'status.description', width: '*' },
-        { header: 'Cambió', binding: 'updatedAt', width: 110 },
-        { header: 'Costo', binding: 'cost', width: 80 },
-        { header: 'Precio', binding: 'price', width: 80 },
-        { header: 'Nota', binding: 'note', width: '*' },
-        { header: 'Usuario', binding: 'user.userName', width: 70 },
-    ];
 
     constructor(
         public location: Location,
@@ -95,32 +85,10 @@ export class RepairUpdateComponent implements OnInit {
         }
     }
 
-    private initControls() {
-        const paymentsLength = this.repairFormHandlerService.paymentsGroup.length;
-        if (paymentsLength > 1) {
-            this.useSecondaryPaymentMethod = true;
-        }
-    }
-
-    private canGenerateReport(): boolean {
-        const repair = this.repairFormHandlerService.repair;
-        return (
-            [
-                ERepairStatus.REQUIRES_CUSTOMER_INTERVENTION,
-                ERepairStatus.FINISHED_AND_PAID,
-                ERepairStatus.IN_BOARD_REPAIR,
-            ].includes(repair.status.id) &&
-            repair.note &&
-            !!repair.price
-        );
-    }
-
     public async getHistory() {
         const response = await this.repairService.getHistory(this.repairFormHandlerService.repair.id).toPromise();
         this.repair.history = response;
-        this.statusHistory = new CollectionView([].concat(response));
-        const sortDescription = new SortDescription('updatedAt', true);
-        this.statusHistory.sortDescriptions.push(sortDescription);
+        this.statusHistory = response;
     }
 
     public print() {
@@ -157,5 +125,25 @@ export class RepairUpdateComponent implements OnInit {
 
     public removeRelatedMoneyTransaction(event: { index: number }) {
         this.repairFormHandlerService.paymentsGroup.removeAt(event.index);
+    }
+
+    private initControls() {
+        const paymentsLength = this.repairFormHandlerService.paymentsGroup.length;
+        if (paymentsLength > 1) {
+            this.useSecondaryPaymentMethod = true;
+        }
+    }
+
+    private canGenerateReport(): boolean {
+        const repair = this.repairFormHandlerService.repair;
+        return (
+            [
+                ERepairStatus.REQUIRES_CUSTOMER_INTERVENTION,
+                ERepairStatus.FINISHED_AND_PAID,
+                ERepairStatus.IN_BOARD_REPAIR,
+            ].includes(repair.status.id) &&
+            repair.note &&
+            !!repair.price
+        );
     }
 }
