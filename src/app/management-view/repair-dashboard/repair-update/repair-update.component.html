@@ -101,19 +101,17 @@
                             <div *ngIf="editDevice" id="device-edit-data" class="d-flex justify-content-between">
                                 <div class="px-2">
                                     <p><strong>Dispositivo: </strong></p>
-                                    <wj-combo-box
-                                        class="form-control form-control-sm p-0"
+                                    <ejs-dropdownlist
                                         id="type"
                                         name="type"
-                                        aria-describedby="type"
+                                        floatLabelType="Auto"
                                         formControlName="type"
-                                        [isEditable]="false"
-                                        [isReadOnly]="repairFormHandlerService.saved"
-                                        [itemsSource]="repairService.deviceTypes"
-                                        [selectedItem]="repairFormHandlerService.repair.device.type"
-                                        [selectedIndex]="repairFormHandlerService.repair.device.type.id"
-                                        [displayMemberPath]="'description'"
-                                    ></wj-combo-box>
+                                        [fields]="deviceTypeFields"
+                                        [dataSource]="repairService.deviceTypes"
+                                        [contentEditable]="false"
+                                        [readonly]="repairFormHandlerService.saved"
+                                    >
+                                    </ejs-dropdownlist>
                                 </div>
                                 <div class="px-2">
                                     <p><strong>Marca: </strong></p>

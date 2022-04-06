@@ -19,6 +19,8 @@ import { isFinishedStatus } from '@functions/repair.functions';
     styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairUpdateComponent implements OnInit {
+    public deviceTypeFields: FieldSettingsModel = { text: 'description', value: 'id' };
+
     public repair: Repair;
     public statusHistory = new CollectionView([]);
 
