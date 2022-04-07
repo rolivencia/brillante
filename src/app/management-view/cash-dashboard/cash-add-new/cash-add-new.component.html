@@ -84,10 +84,10 @@
 
                                 <div class="col-7">
                                     <app-payment-method-selector
-                                        id="method"
-                                        name="method"
-                                        aria-describedby="method"
-                                        formControlName="method"
+                                        id="paymentMethod"
+                                        name="paymentMethod"
+                                        aria-describedby="paymentMethod"
+                                        [formGroup]="payment"
                                         [label]="'Método de pago'"
                                         [isReadOnly]="cashFormHandlerService.saved"
                                     ></app-payment-method-selector>

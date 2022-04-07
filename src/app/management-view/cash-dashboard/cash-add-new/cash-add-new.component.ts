@@ -40,6 +40,9 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
         this.cashFormHandlerService.cashTransaction.concept = this.cashFormHandlerService.transactionParentConcept.children
             .slice(0, 1)
             .pop();
+        this.cashFormHandlerService.cashTransaction.payments = [
+            { amount: 0, paymentMethod: this.cashFormHandlerService.cashTransaction.paymentMethod },
+        ];
         this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
         this.cashFormHandlerService.patch();
     }
