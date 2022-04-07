@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WjInputModule } from '@grapecity/wijmo.angular2.input';
-import { OfficeBranchesRoutingModule } from './office-branches-routing.module';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { OfficeBranchesComponent } from './office-branches.component';
-import { FormsModule } from '@angular/forms';
+import { OfficeBranchesRoutingModule } from './office-branches-routing.module';
 
 @NgModule({
     declarations: [OfficeBranchesComponent],
-    imports: [CommonModule, FormsModule, OfficeBranchesRoutingModule, WjInputModule],
+    imports: [CommonModule, DropDownListModule, FormsModule, OfficeBranchesRoutingModule, ReactiveFormsModule],
 })
 export class OfficeBranchesModule {}
