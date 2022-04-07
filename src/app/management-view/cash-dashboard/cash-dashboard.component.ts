@@ -30,7 +30,6 @@ export class CashDashboardComponent implements OnInit {
         this.cashDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(
             this.cashDashboardService.date
         );
-        this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
 
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;
