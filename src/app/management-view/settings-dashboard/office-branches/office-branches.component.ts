@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { OfficeBranchService } from '@services/office-branch.service';
+import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfficeBranch } from '@models/office-branch';
-import { first } from 'rxjs/operators';
+import { OfficeBranchService } from '@services/office-branch.service';
 import { ToastrService } from 'ngx-toastr';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'app-office-branches',
@@ -10,11 +12,34 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./office-branches.component.scss'],
 })
 export class OfficeBranchesComponent implements OnInit {
+    public form: FormGroup;
+    public officeBranchFields: FieldSettingsModel = { text: 'name', value: 'id' };
     public officeBranches: OfficeBranch[] = [];
     public selectedBranch: OfficeBranch = new OfficeBranch();
-    constructor(public officeBranchService: OfficeBranchService, private toastrService: ToastrService) {}
+
+    constructor(
+        public officeBranchService: OfficeBranchService,
+        private formBuilder: FormBuilder,
+        private toastrService: ToastrService
+    ) {}
 
     ngOnInit(): void {
+        this.buildForm();
+        this.load();
+    }
+
+    public assign() {
+        const selectedIdBranch = this.form.get('idBranch').value;
+        const selectedBranch = this.officeBranches.filter((o) => o.id === selectedIdBranch).pop();
+        this.officeBranchService.assign(selectedBranch);
+        this.toastrService.success(`Sucursal ${selectedBranch.name} asignada correctamente.`);
+    }
+
+    private buildForm() {
+        this.form = this.formBuilder.group({ idBranch: [0, Validators.required] });
+    }
+
+    private load() {
         this.officeBranchService
             .fetch()
             .pipe(first())
@@ -23,11 +48,7 @@ export class OfficeBranchesComponent implements OnInit {
                 this.selectedBranch = this.officeBranchService.current.value
                     ? this.officeBranchService.current.value
                     : branches[0];
+                this.form.get('idBranch').setValue(this.selectedBranch.id);
             });
-    }
-
-    assign(selectedBranch) {
-        this.officeBranchService.assign(selectedBranch);
-        this.toastrService.success(`Sucursal ${selectedBranch.name} asignada correctamente.`);
     }
 }
