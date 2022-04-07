@@ -12,7 +12,7 @@ export class CashTransaction {
     public audit: Audit;
     public operation?: Operation;
     public paymentMethod: PaymentMethod;
-    public payments?: (number & PaymentMethod)[]; // TODO: Create the "Payment" class
+    public payments?: Payment[];
     public officeBranch?: OfficeBranch;
 
     constructor(
@@ -24,7 +24,7 @@ export class CashTransaction {
         audit?: Audit,
         operation?: Operation,
         paymentMethod?: PaymentMethod,
-        payments?: (number & PaymentMethod)[],
+        payments?: Payment[],
         officeBranch?: OfficeBranch
     ) {
         this.id = id;
@@ -90,6 +90,16 @@ export class TransactionConcept {
         this.modifiable = modifiable;
         this.enabled = enabled;
         this.audit = audit ? audit : new Audit();
+    }
+}
+
+export class Payment {
+    amount: number;
+    paymentMethod: PaymentMethod;
+
+    constructor(amount?: number, paymentMethod?: PaymentMethod) {
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
     }
 }
 

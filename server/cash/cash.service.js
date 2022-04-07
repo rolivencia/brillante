@@ -109,7 +109,7 @@ async function create(cashTransactions) {
                         transactionTypeId: cashTransaction.concept.transactionType.id,
                         transactionConceptId: cashTransaction.concept.id,
                         createdBy: cashTransaction.user.id,
-                        paymentMethodId: cashTransaction.payments[0].method.id,
+                        paymentMethodId: cashTransaction.payments[0].paymentMethod.id,
                         idBranch: cashTransactions.branch.id,
                     });
                     returnedData.push(tranaux);
@@ -133,7 +133,7 @@ async function update({ transaction, user }) {
             transactionTypeId: transaction.concept.transactionType.id,
             transactionConceptId: transaction.concept.id,
             createdBy: user.id,
-            paymentMethodId: transaction.paymentMethod.id,
+            paymentMethodId: transaction.payments[0].paymentMethod.id,
         },
         { where: { id: transaction.id } }
     );
@@ -148,7 +148,7 @@ function toTransactionDTO({ createdBy, deleted, enabled, user, operation, amount
         ...transactionDAO,
         amount: amount,
         paymentMethod: paymentMethod.dataValues,
-        payments: [{ amount: amount, method: paymentMethod.dataValues }],
+        payments: [{ amount: amount, paymentMethod: paymentMethod.dataValues }],
         concept: {
             ...transactionDAO.concept.dataValues,
             children: [],

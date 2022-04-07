@@ -1,18 +1,14 @@
-<label
-    ><b>{{ label }}:</b></label
->
-<div class="input-group input-group-sm mb-2">
-    <wj-combo-box
-        #combobox
-        class="form-control form-control-sm p-0"
-        [isEditable]="false"
-        [isDisabled]="isDisabled"
-        [isReadOnly]="isReadOnly"
-        [itemsSource]="paymentMethodsService.paymentMethods"
-        [displayMemberPath]="'description'"
-        [selectedItem]="selectedItem"
-        [selectedIndex]="selectedIndex"
-        (selectedIndexChanged)="selectedItemChanged(combobox.selectedItem)"
+<div [formGroup]="formGroup">
+    <label
+        ><b>{{ label }}:</b></label
     >
-    </wj-combo-box>
+    <div class="input-group input-group-sm mb-2">
+        <ejs-dropdownlist
+            floatLabelType="Auto"
+            formControlName="paymentMethodId"
+            [contentEditable]="false"
+            [dataSource]="paymentMethodsService.paymentMethods"
+            [fields]="paymentMethodFields"
+        ></ejs-dropdownlist>
+    </div>
 </div>

@@ -1,52 +1,28 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PaymentMethodsService } from '@services/payment-methods.service';
-import { PaymentMethod } from '@models/cash-transaction';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as wjInput from '@grapecity/wijmo.angular2.input';
+import { FormGroup } from '@angular/forms';
+import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
     selector: 'app-payment-method-selector',
     templateUrl: './payment-method-selector.component.html',
     styleUrls: ['./payment-method-selector.component.scss'],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            multi: true,
-            useExisting: forwardRef(() => PaymentMethodSelectorComponent),
-        },
-    ],
 })
-export class PaymentMethodSelectorComponent implements ControlValueAccessor, OnInit {
+export class PaymentMethodSelectorComponent implements OnInit {
     @Input() id: string;
     @Input() label: string = 'Método de pago';
     @Input() isReadOnly: boolean = false;
     @Input() isDisabled: boolean = false;
-    @Input() selectedItem: PaymentMethod;
-    @Input() selectedIndex: number;
+    @Input() formGroup: FormGroup;
 
-    @ViewChild('combobox') combobox: wjInput.WjComboBox;
+    public paymentMethodFields: FieldSettingsModel = { text: 'description', value: 'id' };
 
     onChange = (_: any) => {};
     onTouch = () => {};
 
     constructor(public paymentMethodsService: PaymentMethodsService) {}
 
-    ngOnInit(): void {}
-
-    selectedItemChanged(selectedItem: PaymentMethod) {
-        this.selectedItem = selectedItem;
-        this.onTouch();
-        this.onChange(this.selectedItem);
-    }
-
-    writeValue(value: any) {
-        this.selectedItem = value;
-    }
-    registerOnChange(fn: any) {
-        this.onChange = fn;
-    }
-
-    registerOnTouched(fn: any) {
-        this.onTouch = fn;
+    ngOnInit(): void {
+        console.log(this.formGroup);
     }
 }

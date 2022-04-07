@@ -1,12 +1,13 @@
 import { Audit } from '@models/audit';
 import { CashService } from '@services/cash.service';
-import { CashTransaction, Operation, PaymentMethod, TransactionConcept } from '@models/cash-transaction';
+import { CashTransaction, Operation, TransactionConcept } from '@models/cash-transaction';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { AuthenticationService } from '@services/authentication.service';
+import { PaymentMethodsService } from '@services/payment-methods.service';
 
 @Injectable({
     providedIn: 'root',
@@ -64,11 +65,12 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         private authenticationService: AuthenticationService,
         private cashService: CashService,
         private formBuilder: FormBuilder,
+        private paymentMethodsService: PaymentMethodsService,
         private toastrService: ToastrService
     ) {}
 
     public load(transaction: CashTransaction = this.cashTransaction): FormGroup {
-        return this.formBuilder.group({
+        const form = this.formBuilder.group({
             id: [transaction.id],
             concept: [transaction.concept, [Validators.required]],
             date: [transaction.date, [Validators.required]],
@@ -76,16 +78,22 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             operation: [transaction.operation],
             amount: [transaction.amount, [Validators.required]],
             paymentMethod: [transaction.paymentMethod, [Validators.required]],
-            payments: this.formBuilder.array(
-                transaction.payments.length ? transaction.payments : [this.createPayment()]
-            ),
         });
+        form.addControl(
+            'payments',
+            this.formBuilder.array(
+                transaction.payments.length
+                    ? transaction.payments.map((p) => this.createPaymentGroup(p.amount, p.paymentMethod.id))
+                    : [this.createPaymentGroup()]
+            )
+        );
+        return form;
     }
 
-    private createPayment() {
+    private createPaymentGroup(amount: number = 0, paymentMethodId: number = 0): FormGroup {
         return this.formBuilder.group({
-            amount: [0, [Validators.required, Validators.min(1)]],
-            method: [new PaymentMethod(), [Validators.required]],
+            amount: [amount, [Validators.required, Validators.min(1)]],
+            paymentMethodId: [paymentMethodId, [Validators.required]],
         });
     }
 
@@ -98,7 +106,9 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             note: transaction.note,
             operation: transaction.operation,
             paymentMethod: transaction.paymentMethod,
-            payments: transaction.payments ? transaction.payments : [],
+            payments: transaction.payments
+                ? transaction.payments.map((p) => this.createPaymentGroup(p.amount, p.paymentMethod.id))
+                : [],
         });
     }
 
@@ -118,7 +128,12 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
             operation: cashTransactionForm.operation.value,
             audit: new Audit(), // FIXME: Check on how to load/refresh audit here
             paymentMethod: cashTransactionForm.paymentMethod.value,
-            payments: cashTransactionForm.payments.value,
+            payments: cashTransactionForm.payments.value.map((p) => ({
+                amount: p.amount,
+                paymentMethod: this.paymentMethodsService.paymentMethods
+                    .filter((m) => m.id === p.paymentMethodId)
+                    .shift(),
+            })),
         };
     }
 
