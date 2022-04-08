@@ -8,6 +8,8 @@ import { MoneyTransactionConceptsService } from '@management-view/settings-dashb
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { User } from '@models/user';
 import { AuthenticationService } from '@services/authentication.service';
+import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { TransactionConcept } from '@models/cash-transaction';
 
 @Component({
     selector: 'app-cash-add-new',
@@ -17,6 +19,10 @@ import { AuthenticationService } from '@services/authentication.service';
 export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     public currentDateTime: string;
     public currentUser: User;
+
+    public transactionConceptFields: FieldSettingsModel = { text: 'description', value: 'id' };
+    public idTransactionParentConcept: number;
+    public idTransactionConcept: number;
 
     constructor(
         public cashCategoriesService: MoneyTransactionConceptsService,
@@ -34,6 +40,10 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
         this.cashFormHandlerService.transactionParentConcept = this.cashCategoriesService.selectableTransactionConcepts
             .slice(0, 1)
             .pop();
+
+        this.idTransactionParentConcept = this.cashFormHandlerService.transactionParentConcept.id;
+        this.idTransactionConcept = this.cashFormHandlerService.transactionParentConcept.children[0].id;
+
         this.cashFormHandlerService.cashTransaction.paymentMethod = this.paymentMethodsService.paymentMethods
             .slice(0, 1)
             .pop();
@@ -66,8 +76,23 @@ export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
         }
     }
 
-    back() {
+    public back() {
         this.cashFormHandlerService.clean();
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
+    }
+
+    public onTransactionParentConceptChange(event: ChangeEventArgs) {
+        const parentConcept = event.itemData as TransactionConcept;
+        this.cashFormHandlerService.transactionParentConcept = parentConcept;
+
+        // Reassign child to the first of collection
+        this.idTransactionConcept = parentConcept.children[0].id;
+        this.cashFormHandlerService.cashTransaction.concept = parentConcept.children[0];
+        this.cashFormHandlerService.patch();
+    }
+
+    public onTransactionConceptChange(event: ChangeEventArgs) {
+        this.cashFormHandlerService.cashTransaction.concept = event.itemData as TransactionConcept;
+        this.cashFormHandlerService.patch();
     }
 }

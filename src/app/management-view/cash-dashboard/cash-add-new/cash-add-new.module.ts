@@ -1,22 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { CashAddNewRoutingModule } from './cash-add-new-routing.module';
 import { CashAddNewComponent } from './cash-add-new.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WjInputModule } from '@grapecity/wijmo.angular2.input';
-import { PaymentMethodSelectorModule } from '../../../_components/payment-method-selector/payment-method-selector.module';
+import { CashAddNewRoutingModule } from './cash-add-new-routing.module';
 import { CashFormHandlerService } from '../cash-form-handler.service';
+import { CommonModule } from '@angular/common';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { PaymentMethodSelectorModule } from '@components/payment-method-selector/payment-method-selector.module';
 
 @NgModule({
     declarations: [CashAddNewComponent],
     imports: [
-        CommonModule,
         CashAddNewRoutingModule,
+        CommonModule,
+        DropDownListModule,
         FormsModule,
-        ReactiveFormsModule,
-        WjInputModule,
         PaymentMethodSelectorModule,
+        ReactiveFormsModule,
     ],
     providers: [CashFormHandlerService],
 })
