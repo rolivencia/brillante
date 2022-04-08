@@ -22,43 +22,33 @@
                         >
                             <label>{{ cashFormHandlerService.cashTransaction.concept.parent.description }}</label>
                         </ng-container>
-
-                        <wj-combo-box
+                        <ejs-dropdownlist
                             *ngIf="
                                 cashFormHandlerService.cashTransaction.concept.parent.userAssignable &&
                                 cashFormHandlerService.cashTransaction.concept.userAssignable
                             "
-                            class="form-control form-control-sm p-0"
-                            [(ngModel)]="cashFormHandlerService.transactionParentConcept"
+                            [(ngModel)]="idTransactionParentConcept"
                             [ngModelOptions]="{ standalone: true }"
-                            [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="moneyTransactionConceptsService.selectableTransactionConcepts"
-                            [selectedItem]="cashFormHandlerService.transactionParentConcept"
-                            [displayMemberPath]="'description'"
-                        >
-                        </wj-combo-box>
+                            [contentEditable]="false"
+                            [dataSource]="moneyTransactionConceptsService.selectableTransactionConcepts"
+                            [fields]="transactionConceptFields"
+                            (change)="onTransactionParentConceptChange($event)"
+                        ></ejs-dropdownlist>
                     </div>
                     <label><b>Subconcepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
                         <ng-container *ngIf="!cashFormHandlerService.cashTransaction.concept.userAssignable">
                             <label>{{ cashFormHandlerService.cashTransaction.concept.description }}</label>
                         </ng-container>
-
-                        <wj-combo-box
+                        <ejs-dropdownlist
                             *ngIf="cashFormHandlerService.cashTransaction.concept.userAssignable"
-                            class="form-control form-control-sm p-0"
-                            id="concept"
-                            name="concept"
-                            aria-describedby="concept"
-                            formControlName="concept"
-                            [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
-                            [selectedItem]="cashFormHandlerService.cashTransaction.concept"
-                            [displayMemberPath]="'description'"
-                        >
-                        </wj-combo-box>
+                            [(ngModel)]="idTransactionConcept"
+                            [ngModelOptions]="{ standalone: true }"
+                            [contentEditable]="false"
+                            [dataSource]="cashFormHandlerService.transactionParentConcept.children"
+                            [fields]="transactionConceptFields"
+                            (change)="onTransactionConceptChange($event)"
+                        ></ejs-dropdownlist>
                     </div>
                     <label><b>Tipo de Transacción:</b></label>
                     <div class="input-group input-group-sm mb-2">
@@ -66,10 +56,8 @@
                             *ngIf="cashFormHandlerService.transactionParentConcept.transactionType"
                             class="badge p-2 w-100"
                             [ngClass]="{
-                                'badge-danger':
-                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
-                                'badge-success':
-                                    cashFormHandlerService.transactionParentConcept.transactionType.id === 1
+                                'bg-danger': cashFormHandlerService.transactionParentConcept.transactionType.id === 0,
+                                'bg-success': cashFormHandlerService.transactionParentConcept.transactionType.id === 1
                             }"
                         >
                             {{
@@ -133,15 +121,14 @@
                     </div>
 
                     <label><b>Fecha y Hora:</b></label>
-                    <div class="input-group input-group-sm mb-2">
-                        <wj-input-date-time
-                            class="form-control p-0"
-                            aria-describedby="dateTime"
-                            [required]="true"
-                            [(ngModel)]="dateTime"
-                            [ngModelOptions]="{ standalone: true }"
-                        ></wj-input-date-time>
-                    </div>
+                    <ejs-datetimepicker
+                        aria-describedby="dateTime"
+                        format="dd/MM/yyyy HH:mm"
+                        [enableMask]="true"
+                        [required]="true"
+                        [(ngModel)]="dateTime"
+                        [ngModelOptions]="{ standalone: true }"
+                    ></ejs-datetimepicker>
                     <label><b>Nota:</b></label>
                     <div class="form-group pb-0 mb-0">
                         <textarea class="h-100 form-control" rows="4" aria-describedby="note" formControlName="note">
