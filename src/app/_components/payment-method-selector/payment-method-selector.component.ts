@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { FormGroup } from '@angular/forms';
 import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
@@ -8,7 +8,7 @@ import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
     templateUrl: './payment-method-selector.component.html',
     styleUrls: ['./payment-method-selector.component.scss'],
 })
-export class PaymentMethodSelectorComponent implements OnInit {
+export class PaymentMethodSelectorComponent {
     @Input() id: string;
     @Input() label: string = 'Método de pago';
     @Input() isReadOnly: boolean = false;
@@ -21,8 +21,4 @@ export class PaymentMethodSelectorComponent implements OnInit {
     onTouch = () => {};
 
     constructor(public paymentMethodsService: PaymentMethodsService) {}
-
-    ngOnInit(): void {
-        console.log(this.formGroup);
-    }
 }
