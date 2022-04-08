@@ -10,34 +10,25 @@
                 <div class="col-12">
                     <label><b>Concepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
-                        <wj-combo-box
-                            class="form-control form-control-sm p-0"
-                            [(ngModel)]="cashFormHandlerService.transactionParentConcept"
+                        <ejs-dropdownlist
+                            [(ngModel)]="idTransactionParentConcept"
                             [ngModelOptions]="{ standalone: true }"
-                            [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="cashCategoriesService.selectableTransactionConcepts"
-                            [selectedItem]="cashFormHandlerService.transactionParentConcept"
-                            [displayMemberPath]="'description'"
-                        >
-                        </wj-combo-box>
+                            [contentEditable]="false"
+                            [dataSource]="cashCategoriesService.selectableTransactionConcepts"
+                            [fields]="transactionConceptFields"
+                            (change)="onTransactionParentConceptChange($event)"
+                        ></ejs-dropdownlist>
                     </div>
                     <label><b>Subconcepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
-                        <wj-combo-box
-                            class="form-control form-control-sm p-0"
-                            id="concept"
-                            name="concept"
-                            aria-describedby="concept"
-                            formControlName="concept"
-                            [isEditable]="false"
-                            [isReadOnly]="cashFormHandlerService.saved"
-                            [itemsSource]="cashFormHandlerService.transactionParentConcept.children"
-                            [selectedItem]="cashFormHandlerService.cashTransaction.concept"
-                            [selectedIndex]="cashFormHandlerService.cashTransaction.concept.id"
-                            [displayMemberPath]="'description'"
-                        >
-                        </wj-combo-box>
+                        <ejs-dropdownlist
+                            [(ngModel)]="idTransactionConcept"
+                            [ngModelOptions]="{ standalone: true }"
+                            [contentEditable]="false"
+                            [dataSource]="cashFormHandlerService.transactionParentConcept.children"
+                            [fields]="transactionConceptFields"
+                            (change)="onTransactionConceptChange($event)"
+                        ></ejs-dropdownlist>
                     </div>
                     <label><b>Tipo de Transacción:</b></label>
                     <div class="input-group input-group-sm mb-2">
