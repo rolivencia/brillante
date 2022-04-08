@@ -5,6 +5,8 @@ import { CashFormHandlerService } from '@management-view/cash-dashboard/cash-for
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
+import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { TransactionConcept } from '@models/cash-transaction';
 
 @Component({
     selector: 'app-cash-update',
@@ -13,6 +15,10 @@ import { PaymentMethodsService } from '@services/payment-methods.service';
 })
 export class CashUpdateComponent implements OnDestroy, OnInit {
     public dateTime: Date;
+
+    public transactionConceptFields: FieldSettingsModel = { text: 'description', value: 'id' };
+    public idTransactionParentConcept: number;
+    public idTransactionConcept: number;
 
     constructor(
         public cashDashboardService: CashDashboardService,
@@ -34,6 +40,10 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
             this.cashFormHandlerService.transactionParentConcept = this.moneyTransactionConceptsService.selectableTransactionConcepts.filter(
                 (concept) => this.cashFormHandlerService.cashTransaction.concept.parent.id === concept.id
             )[0];
+
+            this.idTransactionParentConcept = this.cashFormHandlerService.transactionParentConcept.id;
+            this.idTransactionConcept = this.cashFormHandlerService.cashTransaction.concept.id;
+
             // Assign payment method
             this.cashFormHandlerService.cashTransaction.paymentMethod = this.paymentMethodsService.paymentMethods.filter(
                 (paymentMethod) => this.cashFormHandlerService.cashTransaction.paymentMethod.id === paymentMethod.id
@@ -63,5 +73,20 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     back() {
         this.cashFormHandlerService.clean();
         this.router.navigate(['cash-dashboard/manage', { outlets: { left: 'grid', right: 'selected' } }]);
+    }
+
+    public onTransactionParentConceptChange(event: ChangeEventArgs) {
+        const parentConcept = event.itemData as TransactionConcept;
+        this.cashFormHandlerService.transactionParentConcept = parentConcept;
+
+        // Reassign child to the first of collection
+        this.idTransactionConcept = parentConcept.children[0].id;
+        this.cashFormHandlerService.cashTransaction.concept = parentConcept.children[0];
+        this.cashFormHandlerService.patch();
+    }
+
+    public onTransactionConceptChange(event: ChangeEventArgs) {
+        this.cashFormHandlerService.cashTransaction.concept = event.itemData as TransactionConcept;
+        this.cashFormHandlerService.patch();
     }
 }
