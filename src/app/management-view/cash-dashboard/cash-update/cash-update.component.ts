@@ -14,6 +14,14 @@ import { TransactionConcept } from '@models/cash-transaction';
     styleUrls: ['./cash-update.component.scss'],
 })
 export class CashUpdateComponent implements OnDestroy, OnInit {
+    get parentConceptIsUserAssignable(): boolean {
+        return this.cashFormHandlerService.cashTransaction.concept?.parent.userAssignable;
+    }
+
+    get conceptIsUserAssignable(): boolean {
+        return this.cashFormHandlerService.cashTransaction.concept?.userAssignable;
+    }
+
     public dateTime: Date;
 
     public transactionConceptFields: FieldSettingsModel = { text: 'description', value: 'id' };
