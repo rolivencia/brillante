@@ -14,19 +14,11 @@
                     </div>
                     <label><b>Concepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
-                        <ng-container
-                            *ngIf="
-                                !cashFormHandlerService.cashTransaction.concept.parent.userAssignable ||
-                                !cashFormHandlerService.cashTransaction.concept.userAssignable
-                            "
-                        >
+                        <ng-container *ngIf="!parentConceptIsUserAssignable || !conceptIsUserAssignable">
                             <label>{{ cashFormHandlerService.cashTransaction.concept.parent.description }}</label>
                         </ng-container>
                         <ejs-dropdownlist
-                            *ngIf="
-                                cashFormHandlerService.cashTransaction.concept.parent.userAssignable &&
-                                cashFormHandlerService.cashTransaction.concept.userAssignable
-                            "
+                            *ngIf="parentConceptIsUserAssignable && conceptIsUserAssignable"
                             [(ngModel)]="idTransactionParentConcept"
                             [ngModelOptions]="{ standalone: true }"
                             [contentEditable]="false"
@@ -37,11 +29,11 @@
                     </div>
                     <label><b>Subconcepto:</b></label>
                     <div class="input-group input-group-sm mb-2">
-                        <ng-container *ngIf="!cashFormHandlerService.cashTransaction.concept.userAssignable">
+                        <ng-container *ngIf="!conceptIsUserAssignable">
                             <label>{{ cashFormHandlerService.cashTransaction.concept.description }}</label>
                         </ng-container>
                         <ejs-dropdownlist
-                            *ngIf="cashFormHandlerService.cashTransaction.concept.userAssignable"
+                            *ngIf="conceptIsUserAssignable"
                             [(ngModel)]="idTransactionConcept"
                             [ngModelOptions]="{ standalone: true }"
                             [contentEditable]="false"

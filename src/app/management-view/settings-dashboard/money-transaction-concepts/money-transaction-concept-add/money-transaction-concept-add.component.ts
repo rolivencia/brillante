@@ -2,8 +2,9 @@ import { MoneyTransactionConceptsFormHandlerService } from '@management-view/set
 import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { MoneyTransactionConceptsHttpService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.http.service';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TransactionConcept } from '@models/cash-transaction';
+import { TransactionConcept, TransactionType } from '@models/cash-transaction';
 import { ToastrService } from 'ngx-toastr';
+import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
     selector: 'app-cash-transaction-concept-add',
@@ -17,18 +18,20 @@ export class MoneyTransactionConceptAddComponent implements OnInit {
 
     @Output() created: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
-    concept: TransactionConcept = new TransactionConcept();
-    addMode: boolean = false;
+    public moneyTransactionFields: FieldSettingsModel = { text: 'description', value: 'id' };
+    public concept: TransactionConcept = new TransactionConcept();
+    public addMode: boolean = false;
+    public typeId: number = 0; // FIXME: Replace this placeholder variable for a reactive form to handle the whole component
 
     constructor(
-        public moneyTransactionConceptsFormHandlerService: MoneyTransactionConceptsFormHandlerService,
         public cashTransactionConceptsService: MoneyTransactionConceptsService,
+        public moneyTransactionConceptsFormHandlerService: MoneyTransactionConceptsFormHandlerService,
         private cashTransactionConceptsHttpService: MoneyTransactionConceptsHttpService,
         private toastrService: ToastrService
     ) {}
 
     ngOnInit(): void {
-        this.concept.transactionType = [].concat(this.cashTransactionConceptsService.transactionTypes).pop();
+        this.concept.transactionType = [].concat(this.cashTransactionConceptsService.transactionTypes).shift();
         if (this.parent) {
             this.concept.parent = this.parent; // Contemplates case where parent has no children and concept no siblings
             this.concept.transactionType = this.parent.transactionType;
@@ -61,5 +64,9 @@ export class MoneyTransactionConceptAddComponent implements OnInit {
             value: false,
             concept: concept,
         });
+    }
+
+    public onTypeChange(event: ChangeEventArgs) {
+        this.concept.transactionType = event.itemData as TransactionType;
     }
 }

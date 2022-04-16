@@ -11,16 +11,15 @@
     <div class="px-2 flex-grow-1">
         <label><b>Tipo:</b></label>
         <div class="input-group input-group-sm">
-            <wj-combo-box
+            <ejs-dropdownlist
                 *ngIf="!concept.parent"
-                class="form-control form-control-sm p-0"
-                [(ngModel)]="concept.transactionType"
-                [isEditable]="false"
-                [itemsSource]="cashTransactionConceptsService.transactionTypes"
-                [selectedIndex]="concept.transactionType.id"
-                [selectedItem]="concept.transactionType"
-                [displayMemberPath]="'description'"
-            ></wj-combo-box>
+                [(ngModel)]="typeId"
+                [contentEditable]="false"
+                [dataSource]="cashTransactionConceptsService.transactionTypes"
+                [fields]="moneyTransactionFields"
+                (change)="onTypeChange($event)"
+            ></ejs-dropdownlist>
+
             <div *ngIf="!!concept.parent">{{ concept.parent.transactionType.description }}</div>
         </div>
     </div>
