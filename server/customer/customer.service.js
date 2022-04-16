@@ -45,6 +45,7 @@ async function getByDni(dni) {
         const dataValues = rawCustomer.dataValues;
         customerDAO = {
             address: dataValues.address,
+            birthDate: dataValues.birthDate,
             dni: dataValues.dni,
             email: dataValues.email,
             firstName: dataValues.firstName,
