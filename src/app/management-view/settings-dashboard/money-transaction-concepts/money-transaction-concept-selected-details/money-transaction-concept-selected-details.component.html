@@ -5,23 +5,21 @@
             <b>"Agregar"</b> a la derecha.</label
         >
     </ng-container>
-    <ng-container *ngIf="concept && itemsSource.length > 0">
+    <ng-container *ngIf="concept && itemsSource.length > 0" [formGroup]="form">
         <div class="pe-2">
             <label
                 ><b>{{ label }}:</b></label
             >
             <div class="input-group input-group-sm">
-                <wj-combo-box
+                <ejs-dropdownlist
+                    formControlName="idSelectedConcept"
                     *ngIf="!showSiblingsGrid && !editMode && !addMode"
-                    class="form-control form-control-sm p-0"
-                    [(ngModel)]="concept"
-                    [isEditable]="false"
-                    [itemsSource]="itemsSource"
-                    [selectedItem]="concept"
-                    [displayMemberPath]="'description'"
-                    (ngModelChange)="onSelectionChange($event)"
+                    [contentEditable]="false"
+                    [fields]="moneyTransactionFields"
+                    [dataSource]="itemsSource"
+                    (change)="onSelectionChange($event)"
                 >
-                </wj-combo-box>
+                </ejs-dropdownlist>
                 <label *ngIf="showSiblingsGrid || editMode || addMode" class="mb-0">{{ concept.description }}</label>
             </div>
         </div>
@@ -61,10 +59,14 @@
 
     <div *ngIf="!addMode && !editMode" class="d-block">
         <!-- Agregado de nuevas -->
-        <button class="btn btn-block btn-sm btn-outline-success" (click)="enableAddMode()">Agregar</button>
+        <button class="btn btn-block btn-sm btn-outline-success" type="button" (click)="enableAddMode()">
+            Agregar
+        </button>
 
         <ng-container *ngIf="concept && itemsSource.length > 0 && concept?.modifiable">
-            <button class="btn btn-block btn-sm btn-outline-primary mx-3" (click)="enableEditMode()">Editar</button>
+            <button class="btn btn-block btn-sm btn-outline-primary mx-3" type="button" (click)="enableEditMode()">
+                Editar
+            </button>
 
             <!-- Habilitar/Deshabilitar -->
             <!-- TODO: Enable the trigger status feature -->
@@ -72,6 +74,7 @@
                 *ngIf="concept.modifiable"
                 [ngClass]="{ 'btn-outline-danger': concept.enabled, 'btn-outline-info': !concept.enabled }"
                 class="btn btn-block btn-sm"
+                type="button"
                 (click)="toggleStatus()"
             >
                 {{ concept.enabled ? 'Deshabilitar' : 'Habilitar' }}

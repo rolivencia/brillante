@@ -1,16 +1,17 @@
-import { CollectionView } from '@grapecity/wijmo';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TransactionConcept } from '@models/cash-transaction';
 import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { MoneyTransactionConceptsHttpService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
+import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-cash-transaction-concept-details',
     templateUrl: './money-transaction-concept-selected-details.component.html',
     styleUrls: ['./money-transaction-concept-selected-details.component.scss'],
 })
-export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit, OnChanges {
+export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit {
     @Input() concept: TransactionConcept;
     @Input() addMode: boolean = false;
     @Input() editMode: boolean = false;
@@ -21,18 +22,22 @@ export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit, 
     @Output() statusChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
     @Output() selectionChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
-    public conceptsCollection: CollectionView<TransactionConcept>;
+    public moneyTransactionFields: FieldSettingsModel = { text: 'description', value: 'id' };
+    public form: FormGroup = new FormGroup({});
 
     constructor(
+        private formBuilder: FormBuilder,
         private moneyTransactionConceptsHttpService: MoneyTransactionConceptsHttpService,
         private moneyTransactionConceptsService: MoneyTransactionConceptsService,
         private toastrService: ToastrService
     ) {}
 
-    ngOnInit(): void {}
-
-    ngOnChanges() {
-        this.conceptsCollection = new CollectionView<TransactionConcept>(this.itemsSource);
+    ngOnInit(): void {
+        if (this.concept) {
+            this.form = this.formBuilder.group({
+                idSelectedConcept: [this.concept.id, [Validators.required]],
+            });
+        }
     }
 
     enableAddMode() {
@@ -72,9 +77,9 @@ export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit, 
         }
     }
 
-    onSelectionChange($event: TransactionConcept) {
-        if ($event) {
-            this.selectionChanged.emit($event);
+    onSelectionChange(event: ChangeEventArgs) {
+        if (event) {
+            this.selectionChanged.emit(event.itemData as TransactionConcept);
         }
     }
 }
