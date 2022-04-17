@@ -122,32 +122,16 @@
                 <label for="birthDate">Fecha de Nacimiento</label>
             </div>
             <div class="input-group input-group-sm">
-                <input
-                    id="birthDate"
-                    class="form-control form-control-sm"
-                    placeholder="AAAA-MM-DD"
-                    name="birthDate"
-                    [disabled]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
-                    [minDate]="customerFormService.ngbMinDate"
-                    [maxDate]="customerFormService.ngbMaxDate"
-                    [displayMonths]="displayMonths"
-                    [navigation]="navigation"
-                    [outsideDays]="outsideDays"
+                <ejs-datepicker
+                    aria-describedby="birthDate"
                     formControlName="birthDate"
-                    (click)="from.toggle()"
-                    ngbDatepicker
-                    #from="ngbDatepicker"
-                />
-                <div class="input-group-append">
-                    <button
-                        class="btn btn-outline-secondary"
-                        [disabled]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
-                        (click)="from.toggle()"
-                        type="button"
-                    >
-                        📅
-                    </button>
-                </div>
+                    id="birthDate"
+                    [format]="'dd/MM/yyyy'"
+                    [enabled]="!repairFormHandlerService.customerExists && !repairFormHandlerService.saved"
+                    [enableMask]="true"
+                    [maskPlaceholder]="maskPlaceholderValue"
+                    [required]="true"
+                ></ejs-datepicker>
             </div>
         </div>
         <div class="form-group">
