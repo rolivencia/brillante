@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { CustomerFormService } from './customer-form.service';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 @NgModule({
     declarations: [CustomerFormComponent],
     exports: [CustomerFormComponent],
-    imports: [CommonModule, NgbDatepickerModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule, DatePickerModule],
     providers: [CustomerFormService, RepairFormHandlerService],
 })
 export class CustomerFormModule {}

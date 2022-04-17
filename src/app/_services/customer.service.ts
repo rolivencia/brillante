@@ -23,6 +23,9 @@ export class CustomerService {
     }
 
     public create(customer): Observable<[Customer, boolean]> {
-        return this.http.post<[Customer, boolean]>(`${environment.apiUrl}/client/create`, { ...customer });
+        return this.http.post<[Customer, boolean]>(`${environment.apiUrl}/client/create`, {
+            birthDate: customer.birthDate.toISOString(),
+            ...customer,
+        });
     }
 }

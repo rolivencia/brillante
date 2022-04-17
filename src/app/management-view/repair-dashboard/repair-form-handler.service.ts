@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { PaymentMethod } from '@models/cash-transaction';
 import { RepairService } from '@services/repair.service';
 import { ToastrService } from 'ngx-toastr';
-import { toMoment } from '@models/date-object';
 import { DeviceType, Repair, RepairStatus } from '@models/repair';
 import { AuthenticationService } from '@services/authentication.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
@@ -221,7 +220,7 @@ export class RepairFormHandlerService {
                 dni: customer.dni,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
-                birthDate: customer.birthDate,
+                birthDate: customer.birthDate ? new Date(customer.birthDate as string) : null,
                 email: customer.email,
                 address: customer.address,
                 telephone: customer.telephone,
@@ -317,7 +316,7 @@ export class RepairFormHandlerService {
             dni: customerForm.dni.value,
             firstName: customerForm.firstName.value,
             lastName: customerForm.lastName.value,
-            birthDate: customerForm.birthDate.value ? toMoment(customerForm.birthDate.value) : null,
+            birthDate: customerForm.birthDate.value ? customerForm.birthDate.value : null,
             email: customerForm.email.value,
             telephone: customerForm.telephone.value,
             address: customerForm.address.value,

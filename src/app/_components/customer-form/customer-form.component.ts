@@ -3,17 +3,22 @@ import { RepairFormHandlerService } from '@management-view/repair-dashboard/repa
 import { RepairService } from '@services/repair.service';
 import { ControlContainer, FormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
+import { MaskedDateTimeService } from '@syncfusion/ej2-angular-calendars';
+import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskplaceholder-model';
 
 @Component({
     selector: 'app-customer-form',
     templateUrl: './customer-form.component.html',
     styleUrls: ['./customer-form.component.scss'],
+    providers: [MaskedDateTimeService],
 })
 export class CustomerFormComponent implements OnInit {
     public form: FormGroup;
     public displayMonths = 1;
     public navigation = 'select';
     public outsideDays = 'visible';
+
+    public maskPlaceholderValue: MaskPlaceholderModel = { day: 'DD', month: 'MM', year: 'AAAA' };
 
     constructor(
         public repairFormHandlerService: RepairFormHandlerService,
