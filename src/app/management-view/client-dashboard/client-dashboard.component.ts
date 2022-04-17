@@ -6,29 +6,24 @@ import { ProgressLoaderService } from '@components/progress-loader/progress-load
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Repair } from '@models/repair';
+import { PageService, PageSettingsModel, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { Customer } from '@models/customer';
 
 @Component({
     selector: 'app-client-dashboard',
     templateUrl: './client-dashboard.component.html',
     styleUrls: ['./client-dashboard.component.scss'],
+    providers: [PageService],
 })
 export class ClientDashboardComponent implements OnInit {
     selectedRepairData: Repair;
-    clientGridData: any;
+    public customerGridData: Customer[] = [];
     repairGridData: any;
-    clientGridCollection: CollectionView;
     repairGridCollection: CollectionView;
-    pageSize = 22;
+
+    pageSettings: PageSettingsModel = { pageSize: 30 };
 
     private _selectedClientData: any = null;
-
-    clientColumns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'DNI', binding: 'dni', width: '*' },
-        { header: 'Nombre', binding: 'firstName', width: '*' },
-        { header: 'Apellido', binding: 'lastName', width: '*' },
-        { header: 'Natalicio', binding: 'birthDate', width: '*' },
-    ];
 
     repairColumns: any[] = [
         { header: 'ID', binding: 'id', width: 50 },
@@ -49,8 +44,8 @@ export class ClientDashboardComponent implements OnInit {
         this.getGridData();
     }
 
-    getClientDetails(item) {
-        this._selectedClientData = item;
+    getClientDetails(event: RowSelectEventArgs) {
+        this._selectedClientData = event.data;
         this.repairGridCollection = null;
         if (this._selectedClientData) {
             this.getUserRepairs(this._selectedClientData);
@@ -86,13 +81,10 @@ export class ClientDashboardComponent implements OnInit {
         this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
-                this.clientGridData = data.rows.map((customer) => ({
+                this.customerGridData = data.rows.map((customer) => ({
                     ...customer,
                     birthDate: customer.birthDate ? moment(customer.birthDate).format('YYYY-MM-DD') : null,
                 }));
-                this.clientGridCollection = new CollectionView(this.clientGridData);
-                this.clientGridCollection.pageSize = this.pageSize;
-                this.clientGridCollection.currentItem = null;
                 this.progressLoaderService.hide();
             },
             (error) => {

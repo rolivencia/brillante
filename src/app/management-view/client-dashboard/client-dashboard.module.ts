@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { WjInputModule } from '@grapecity/wijmo.angular2.input';
-import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
-import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
-import { ClientDashboardRoutingModule } from '@management-view/client-dashboard/client-dashboard-routing.module';
 import { ClientDashboardComponent } from '@management-view/client-dashboard/client-dashboard.component';
+import { ClientDashboardRoutingModule } from '@management-view/client-dashboard/client-dashboard-routing.module';
+import { CommonModule } from '@angular/common';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
+import { NgModule } from '@angular/core';
+import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
 
 @NgModule({
     declarations: [ClientDashboardComponent],
-    imports: [CommonModule, WjGridModule, WjGridFilterModule, WjInputModule, ClientDashboardRoutingModule],
+    imports: [CommonModule, WjGridModule, ClientDashboardRoutingModule, GridModule],
 })
 export class ClientDashboardModule {}

@@ -3,43 +3,25 @@
         <div class="card h-100">
             <div class="card-body">
                 <div id="client-grid-container">
-                    <div class="alert alert-info h-100 text-center" *ngIf="!clientGridCollection">
+                    <div class="alert alert-info h-100 text-center" *ngIf="!customerGridData">
                         <h3>Cargando...</h3>
                     </div>
-
-                    <wj-flex-grid
-                        *ngIf="clientGridCollection"
-                        [itemsSource]="clientGridCollection"
-                        [selectionMode]="'Row'"
-                        [headersVisibility]="'Column'"
-                        [allowResizing]="'Columns'"
-                        [showSelectedHeaders]="'Row'"
-                        [isReadOnly]="true"
-                        (selectionChanged)="getClientDetails(clientGridCollection.currentItem)"
+                    <ejs-grid
+                        #grid
+                        *ngIf="customerGridData"
+                        [allowPaging]="true"
+                        [dataSource]="customerGridData"
+                        [pageSettings]=""
+                        (rowSelected)="getClientDetails($event)"
                     >
-                        <wj-flex-grid-filter></wj-flex-grid-filter>
-                        <wj-flex-grid-column
-                            *ngFor="let column of clientColumns"
-                            [width]="column.width"
-                            [binding]="column.binding"
-                            [header]="column.header"
-                            [visible]="true"
-                        >
-                        </wj-flex-grid-column>
-                    </wj-flex-grid>
-                </div>
-
-                <p></p>
-
-                <div class="footer-controls row">
-                    <div class="col-12 col-md-6">
-                        <wj-collection-view-pager [cv]="clientGridCollection"> </wj-collection-view-pager>
-                    </div>
-                    <div class="col-12 col-md-6 text-right">
-                        <button class="btn btn-sm btn-outline-primary h-100" (click)="getGridData()">
-                            🔄 Actualizar Lista
-                        </button>
-                    </div>
+                        <e-columns>
+                            <e-column field="id" headerText="ID" width="80"></e-column>
+                            <e-column field="dni" headerText="DNI" width="120"></e-column>
+                            <e-column field="firstName" headerText="Nombre"></e-column>
+                            <e-column field="lastName" headerText="Apellido"></e-column>
+                            <e-column field="birthDate" headerText="Natalicio" width="120"></e-column>
+                        </e-columns>
+                    </ejs-grid>
                 </div>
             </div>
         </div>
