@@ -1,42 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '@services/customer.service';
 import { RepairService } from '@services/repair.service';
-import { CollectionView } from '@grapecity/wijmo';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Repair } from '@models/repair';
+import { PageService, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { Customer } from '@models/customer';
 
 @Component({
     selector: 'app-client-dashboard',
     templateUrl: './client-dashboard.component.html',
     styleUrls: ['./client-dashboard.component.scss'],
+    providers: [PageService],
 })
 export class ClientDashboardComponent implements OnInit {
-    selectedRepairData: Repair;
-    clientGridData: any;
-    repairGridData: any;
-    clientGridCollection: CollectionView;
-    repairGridCollection: CollectionView;
-    pageSize = 22;
+    public selectedRepairData: Repair;
+    public customerGridData: Customer[] = [];
+    public repairGridData: Repair[] = [];
 
     private _selectedClientData: any = null;
-
-    clientColumns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'DNI', binding: 'dni', width: '*' },
-        { header: 'Nombre', binding: 'firstName', width: '*' },
-        { header: 'Apellido', binding: 'lastName', width: '*' },
-        { header: 'Natalicio', binding: 'birthDate', width: '*' },
-    ];
-
-    repairColumns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'Marca', binding: 'device.manufacturer', width: '*' },
-        { header: 'Modelo', binding: 'device.model', width: '*' },
-        { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
-        { header: 'Estado', binding: 'status.description', width: '*' },
-    ];
 
     constructor(
         private clientService: CustomerService,
@@ -49,9 +32,8 @@ export class ClientDashboardComponent implements OnInit {
         this.getGridData();
     }
 
-    getClientDetails(item) {
-        this._selectedClientData = item;
-        this.repairGridCollection = null;
+    getClientDetails(event: RowSelectEventArgs) {
+        this._selectedClientData = event.data;
         if (this._selectedClientData) {
             this.getUserRepairs(this._selectedClientData);
         }
@@ -75,10 +57,10 @@ export class ClientDashboardComponent implements OnInit {
         this.selectedRepairData = item;
     }
 
-    goToUpdate(repair: Repair) {
+    goToUpdate() {
         this.router.navigate([
             'repair-dashboard/manage',
-            { outlets: { top: 'update/' + repair.id, left: null, right: null } },
+            { outlets: { top: 'update/' + this.selectedRepairData.id, left: null, right: null } },
         ]);
     }
 
@@ -86,13 +68,10 @@ export class ClientDashboardComponent implements OnInit {
         this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
-                this.clientGridData = data.rows.map((customer) => ({
+                this.customerGridData = data.rows.map((customer) => ({
                     ...customer,
                     birthDate: customer.birthDate ? moment(customer.birthDate).format('YYYY-MM-DD') : null,
                 }));
-                this.clientGridCollection = new CollectionView(this.clientGridData);
-                this.clientGridCollection.pageSize = this.pageSize;
-                this.clientGridCollection.currentItem = null;
                 this.progressLoaderService.hide();
             },
             (error) => {
@@ -106,9 +85,6 @@ export class ClientDashboardComponent implements OnInit {
         this.repairService.getByClientId(clientData.id).subscribe(
             (data) => {
                 this.repairGridData = data;
-                this.repairGridCollection = new CollectionView(this.repairGridData);
-                this.repairGridCollection.currentItem = this.repairGridCollection.items[0];
-                this.getRepairDetails(this.repairGridCollection.currentItem);
             },
             (error) => console.error(error)
         );
