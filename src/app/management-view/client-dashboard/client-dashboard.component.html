@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-7">
+    <div class="col-6">
         <div class="card h-100">
             <div class="card-body">
                 <div id="client-grid-container">
@@ -10,8 +10,9 @@
                         #grid
                         *ngIf="customerGridData"
                         [allowPaging]="true"
+                        [allowFiltering]="true"
                         [dataSource]="customerGridData"
-                        [pageSettings]=""
+                        [pageSettings]="{ pageSize: 16 }"
                         (rowSelected)="getClientDetails($event)"
                     >
                         <e-columns>
@@ -26,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="col-5">
+    <div class="col-6">
         <div class="card h-100">
             <div class="card-header d-flex justify-content-between">
                 <button class="btn btn-sm btn-primary" (click)="update(selectedClientData)">💾️ Actualizar</button>
@@ -63,48 +64,38 @@
                 <div
                     id="repair-loading-alert"
                     class="alert alert-info d-flex justify-content-center align-items-center"
-                    *ngIf="selectedClientData && !repairGridCollection"
+                    *ngIf="selectedClientData && !repairGridData"
                 >
                     <h4>Cargando...</h4>
                 </div>
 
-                <ng-container *ngIf="selectedClientData && repairGridCollection && repairGridCollection.itemCount">
+                <ng-container *ngIf="selectedClientData && repairGridData && repairGridData.length">
                     <div id="repair-grid-container">
-                        <wj-flex-grid
-                            [itemsSource]="repairGridCollection"
-                            [selectionMode]="'Row'"
-                            [headersVisibility]="'Column'"
-                            [autoGenerateColumns]="0"
-                            [allowResizing]="'Columns'"
-                            [showSelectedHeaders]="'Row'"
-                            [isReadOnly]="true"
-                            (selectionChanged)="getRepairDetails(repairGridCollection.currentItem)"
+                        <ejs-grid
+                            [dataSource]="repairGridData"
+                            [allowPaging]="true"
+                            [pageSettings]="{ pageSize: 5 }"
+                            (rowSelected)="getRepairDetails($event)"
                         >
-                            <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column
-                                *ngFor="let column of repairColumns"
-                                [width]="column.width"
-                                [binding]="column.binding"
-                                [header]="column.header"
-                                [visible]="true"
-                            >
-                                <ng-template
-                                    *ngIf="column.binding === 'lastUpdate'"
-                                    wjFlexGridCellTemplate
-                                    [cellType]="'Cell'"
-                                    let-cell="cell"
-                                >
-                                    {{ cell.item.lastUpdate.format('YYYY-MM-DD') }}
-                                </ng-template>
-                            </wj-flex-grid-column>
-                        </wj-flex-grid>
+                            <e-columns>
+                                <e-column field="id" headerText="ID" width="80"></e-column>
+                                <e-column field="device.manufacturer" headerText="Marca"></e-column>
+                                <e-column field="device.model" headerText="Modelo"></e-column>
+                                <e-column field="lastUpdate" headerText="Última Act." width="100">
+                                    <ng-template #template let-data>
+                                        {{ data.lastUpdate.format('YYYY-MM-DD') }}
+                                    </ng-template>
+                                </e-column>
+                                <e-column field="status.description" headerText="Estado"></e-column>
+                            </e-columns>
+                        </ejs-grid>
                     </div>
 
                     <hr class="mt-2 mb-2" />
 
                     <div class="footer-controls row" *ngIf="selectedRepairData">
                         <div class="col-12 text-right">
-                            <button class="btn btn-sm btn-primary h-100" (click)="goToUpdate(selectedRepairData)">
+                            <button class="btn btn-sm btn-primary h-100" (click)="goToUpdate()">
                                 🛠️ Ver en Reparaciones
                             </button>
                         </div>

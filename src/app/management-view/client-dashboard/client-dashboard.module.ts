@@ -3,10 +3,9 @@ import { ClientDashboardRoutingModule } from '@management-view/client-dashboard/
 import { CommonModule } from '@angular/common';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { NgModule } from '@angular/core';
-import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
 
 @NgModule({
     declarations: [ClientDashboardComponent],
-    imports: [CommonModule, WjGridModule, ClientDashboardRoutingModule, GridModule],
+    imports: [CommonModule, ClientDashboardRoutingModule, GridModule],
 })
 export class ClientDashboardModule {}
