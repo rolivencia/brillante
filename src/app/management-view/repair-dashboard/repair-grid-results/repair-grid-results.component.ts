@@ -3,11 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { RepairDashboardService } from '@management-view/repair-dashboard/repair-dashboard.service';
 import { DateObject } from '@models/date-object';
 import { DateHandlerService } from '@services/date-handler.service';
+import { PageService, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { Repair } from '@models/repair';
 
 @Component({
     selector: 'app-repair-grid-results',
     templateUrl: './repair-grid-results.component.html',
     styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss'],
+    providers: [PageService],
 })
 export class RepairGridResultsComponent implements OnInit {
     constructor(
@@ -15,19 +18,9 @@ export class RepairGridResultsComponent implements OnInit {
         public repairDashboardService: RepairDashboardService
     ) {}
 
-    columns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'Cliente', binding: 'customer.fullName', width: '*' },
-        { header: 'Marca', binding: 'device.manufacturer', width: 100 },
-        { header: 'Modelo', binding: 'device.model', width: '*' },
-        // { header: 'IMEI', binding: 'device.deviceId', width: '*' },
-        { header: 'Última Act.', binding: 'lastUpdate', width: '*' },
-        { header: 'Estado', binding: 'status.description', width: '*' },
-    ];
-
-    displayMonths = 1;
-    navigation = 'select';
-    outsideDays = 'visible';
+    public displayMonths = 1;
+    public navigation = 'select';
+    public outsideDays = 'visible';
 
     ngOnInit() {
         this.repairDashboardService._dateTo = moment();
@@ -58,7 +51,7 @@ export class RepairGridResultsComponent implements OnInit {
         }
     }
 
-    getRepairDetails(item) {
-        this.repairDashboardService.selectedRepair = item;
+    getRepairDetails(event: RowSelectEventArgs) {
+        this.repairDashboardService.selectedRepair = event.data as Repair;
     }
 }
