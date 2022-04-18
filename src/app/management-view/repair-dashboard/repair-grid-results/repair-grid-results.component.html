@@ -10,44 +10,32 @@
                 <div class="alert alert-info h-100 text-center" *ngIf="!repairDashboardService.gridCollection">
                     <h3>Cargando...</h3>
                 </div>
-
-                <wj-flex-grid
-                    *ngIf="repairDashboardService.gridCollection"
-                    [itemsSource]="repairDashboardService.gridCollection"
-                    [selectionMode]="'Row'"
-                    [headersVisibility]="'Column'"
-                    [allowResizing]="'Columns'"
-                    [showSelectedHeaders]="'Row'"
-                    [isReadOnly]="true"
-                    (selectionChanged)="getRepairDetails(repairDashboardService.gridCollection.currentItem)"
+                <ejs-grid
+                    *ngIf="repairDashboardService.gridData"
+                    [allowPaging]="true"
+                    [dataSource]="repairDashboardService.gridData"
+                    [pageSettings]="{ pageSize: 20 }"
+                    (rowSelected)="getRepairDetails($event)"
                 >
-                    <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column
-                        *ngFor="let column of columns"
-                        [width]="column.width"
-                        [binding]="column.binding"
-                        [header]="column.header"
-                        [visible]="true"
-                    >
-                        <ng-template
-                            *ngIf="column.header === 'Última Act.'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'Cell'"
-                            let-cell="cell"
-                        >
-                            {{ cell.item.lastUpdate.format('YYYY-MM-DD HH:mm') }}
-                        </ng-template>
-                    </wj-flex-grid-column>
-                </wj-flex-grid>
+                    <e-columns>
+                        <e-column field="id" headerText="ID"></e-column>
+                        <e-column field="customer.fullName" headerText="Cliente"></e-column>
+                        <e-column field="device.manufacturer" headerText="Marca"></e-column>
+                        <e-column field="device.model" headerText="Modelo"></e-column>
+                        <e-column field="device.model" headerText="Última Actualización">
+                            <ng-template #template let-data>
+                                {{ data.lastUpdate.format('YYYY-MM-DD  HH:mm') }}
+                            </ng-template>
+                        </e-column>
+                        <e-column field="status.description" headerText="Estado"></e-column>
+                    </e-columns>
+                </ejs-grid>
             </div>
 
             <p></p>
 
             <div id="footerControls" class="row no-gutters">
-                <div class="col-12 col-md-5">
-                    <wj-collection-view-pager [cv]="repairDashboardService.gridCollection"> </wj-collection-view-pager>
-                </div>
-                <div class="col-12 col-md-7 d-flex justify-content-end align-items-center">
+                <div class="col-12 d-flex justify-content-end align-items-center">
                     <button class="btn btn-sm btn-outline-primary h-100" (click)="repairDashboardService.getGridData()">
                         🔄 Actualizar Lista
                     </button>
