@@ -1,15 +1,15 @@
 import { MoneyTransactionConceptsService } from '@management-view/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
-import { CollectionView } from '@grapecity/wijmo';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TransactionConcept } from '@models/cash-transaction';
+import { RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
 
 @Component({
     selector: 'app-cash-transaction-concept-input-group',
     templateUrl: './money-transaction-concept-input-group.component.html',
     styleUrls: ['./money-transaction-concept-input-group.component.scss'],
 })
-export class MoneyTransactionConceptInputGroupComponent implements OnInit, OnDestroy, OnChanges {
+export class MoneyTransactionConceptInputGroupComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;
     @Input() parent: TransactionConcept = null;
 
@@ -46,20 +46,6 @@ export class MoneyTransactionConceptInputGroupComponent implements OnInit, OnDes
     public addModeSubscription: Subscription;
     public editModeSubscription: Subscription;
 
-    public conceptsCollection: CollectionView<TransactionConcept>;
-
-    conceptsGridColumns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'Subconcepto', binding: 'description', width: '*' },
-        {
-            header: 'Tipo de Transacción',
-            binding: 'transactionType.description',
-            width: '*',
-        },
-        { header: 'Modificable', binding: 'modifiable', width: '*' },
-        { header: 'Status', binding: 'enabled', width: '*' },
-    ];
-
     constructor(public moneyTransactionConceptsService: MoneyTransactionConceptsService) {}
 
     ngOnInit(): void {
@@ -74,16 +60,13 @@ export class MoneyTransactionConceptInputGroupComponent implements OnInit, OnDes
         });
     }
 
-    ngOnChanges() {
-        this.conceptsCollection = new CollectionView<TransactionConcept>(this.itemsSource);
-    }
-
     ngOnDestroy() {
         this.addModeSubscription.unsubscribe();
         this.editModeSubscription.unsubscribe();
     }
 
-    gridSelectionChange(concept: TransactionConcept) {
+    gridSelectionChange(event: RowSelectEventArgs) {
+        const concept: TransactionConcept = event.data as TransactionConcept;
         if (concept) {
             this.concept = concept;
             this.selectedConceptChanged.emit(concept);

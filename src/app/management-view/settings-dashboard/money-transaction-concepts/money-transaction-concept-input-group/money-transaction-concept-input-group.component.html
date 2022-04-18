@@ -1,72 +1,59 @@
-<div *ngIf="showSiblingsGrid">
-    <wj-flex-grid
-        id="concepts-grid"
-        [selectionMode]="editMode ? 'None' : 'Row'"
-        [itemsSource]="conceptsCollection"
-        [selectionMode]="'Row'"
-        [headersVisibility]="'Column'"
-        [allowResizing]="'Columns'"
-        [showSelectedHeaders]="'Row'"
-        [isReadOnly]="true"
-        (itemsSourceChanged)="gridSelectionChange(conceptsCollection.currentItem)"
-        (selectionChanged)="gridSelectionChange(conceptsCollection.currentItem)"
-    >
-        <wj-flex-grid-filter></wj-flex-grid-filter>
-        <wj-flex-grid-column
-            *ngFor="let column of conceptsGridColumns"
-            [width]="column.width"
-            [binding]="column.binding"
-            [header]="column.header"
-            [visible]="true"
+<div class="d-flex flex-column justify-content-between align-items-stretch">
+    <div id="concepts-grid-container" *ngIf="showSiblingsGrid">
+        <ejs-grid
+            [allowSelection]="!editMode"
+            [dataSource]="itemsSource"
+            [selectionSettings]="{ mode: 'Row' }"
+            (dataSourceChanged)="gridSelectionChange($event)"
+            (rowSelected)="gridSelectionChange($event)"
         >
-            <ng-template
-                *ngIf="column.binding === 'enabled'"
-                wjFlexGridCellTemplate
-                [cellType]="'Cell'"
-                let-cell="cell"
-            >
-                {{ cell.item.enabled ? 'Habilitado' : 'Deshabilitado' }}
-            </ng-template>
-            <ng-template
-                *ngIf="column.binding === 'modifiable'"
-                wjFlexGridCellTemplate
-                [cellType]="'Cell'"
-                let-cell="cell"
-            >
-                {{ cell.item.modifiable ? 'Sí' : 'No' }}
-            </ng-template>
-        </wj-flex-grid-column>
-    </wj-flex-grid>
-</div>
+            <e-columns>
+                <e-column field="id" headerText="ID" width="80"></e-column>
+                <e-column field="description" headerText="Subconcepto"></e-column>
+                <e-column field="transactionType.description" headerText="Tipo de Transacción"></e-column>
+                <e-column field="modifiable" headerText="Modificable">
+                    <ng-template #template let-data>
+                        {{ data.modifiable ? 'Habilitado' : 'Deshabilitado' }}
+                    </ng-template>
+                </e-column>
+                <e-column field="enabled" headerText="Status">
+                    <ng-template #template let-data>
+                        {{ data.enabled ? 'Sí' : 'No' }}
+                    </ng-template>
+                </e-column>
+            </e-columns>
+        </ejs-grid>
+    </div>
 
-<div class="d-flex justify-content-between align-items-center">
-    <app-cash-transaction-concept-details
-        *ngIf="detailsConditions"
-        class="w-100"
-        [concept]="concept"
-        [addMode]="addMode"
-        [editMode]="editMode"
-        [itemsSource]="itemsSource"
-        [label]="label"
-        [showSiblingsGrid]="showSiblingsGrid"
-        (statusChanged)="onConceptUpdated($event)"
-        (selectionChanged)="onSelectionChange($event)"
-    ></app-cash-transaction-concept-details>
-    <app-cash-transaction-concept-add
-        *ngIf="createConditions"
-        class="w-100"
-        [label]="label"
-        [parent]="parent"
-        (created)="onConceptCreated($event)"
-    >
-    </app-cash-transaction-concept-add>
-    <app-cash-transaction-concept-update
-        *ngIf="editConditions"
-        class="w-100"
-        [concept]="concept"
-        [canEditType]="false"
-        [label]="label"
-        (updated)="onConceptUpdated($event)"
-    >
-    </app-cash-transaction-concept-update>
+    <div>
+        <app-cash-transaction-concept-details
+            *ngIf="detailsConditions"
+            class="w-100"
+            [concept]="concept"
+            [addMode]="addMode"
+            [editMode]="editMode"
+            [itemsSource]="itemsSource"
+            [label]="label"
+            [showSiblingsGrid]="showSiblingsGrid"
+            (statusChanged)="onConceptUpdated($event)"
+            (selectionChanged)="onSelectionChange($event)"
+        ></app-cash-transaction-concept-details>
+        <app-cash-transaction-concept-add
+            *ngIf="createConditions"
+            class="w-100"
+            [label]="label"
+            [parent]="parent"
+            (created)="onConceptCreated($event)"
+        >
+        </app-cash-transaction-concept-add>
+        <app-cash-transaction-concept-update
+            *ngIf="editConditions"
+            class="w-100"
+            [concept]="concept"
+            [canEditType]="false"
+            [label]="label"
+            (updated)="onConceptUpdated($event)"
+        >
+        </app-cash-transaction-concept-update>
+    </div>
 </div>
