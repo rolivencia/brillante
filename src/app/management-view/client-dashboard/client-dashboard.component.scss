@@ -5,9 +5,6 @@
 #repair-grid-container,
 #repair-loading-alert {
     height: 230px;
-    .wj-flexgrid {
-        height: inherit;
-    }
 }
 
 .footer-controls {
@@ -16,10 +13,6 @@
 
 .alert h3 {
     margin-top: 15rem !important;
-}
-
-.wj-flexgrid {
-    font-size: 0.75rem;
 }
 
 .card-body {
