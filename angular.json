@@ -23,12 +23,7 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": [
-                            "node_modules/@grapecity/wijmo.styles/wijmo.scss",
-                            "src/styles.scss",
-                            "src/assets/scss/layout.scss",
-                            "src/assets/scss/theme.scss"
-                        ],
+                        "styles": ["src/styles.scss", "src/assets/scss/layout.scss", "src/assets/scss/theme.scss"],
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules/@syncfusion"]
                         },

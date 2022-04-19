@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { CashFormHandlerService } from '@management-view/cash-dashboard/cash-form-handler.service';
 import { CashService } from '@services/cash.service';
 import { CashTransaction } from '@models/cash-transaction';
-import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { DateObject } from '@models/date-object';
 import { Injectable } from '@angular/core';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
