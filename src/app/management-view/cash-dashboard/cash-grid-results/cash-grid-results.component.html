@@ -40,131 +40,86 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="!loading">
-                <div *ngIf="editMode && cashDashboardService.gridCollection.itemCount > 0" class="alert alert-info">
+                <div *ngIf="editMode && cashDashboardService.gridData.length > 0" class="alert alert-info">
                     Presioná en "Volver" arriba en el menú derecho para desactivar el <b>modo edición</b> y poder
                     seleccionar transacciones de la grilla.
                 </div>
-                <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
+                <div *ngIf="cashDashboardService.gridData.length === 0" class="alert alert-info">
                     No hay transacciones registradas en la sucursal asignada para esta fecha.
                     <ng-container *ngIf="cashDashboardService.isToday()"
                         >Recordá que tenés que <b>abrir caja</b> para poder crear nuevas transacciones para el día de
                         hoy y visualizarlas.
                     </ng-container>
                 </div>
-                <wj-flex-grid
-                    #cashGrid
-                    *ngIf="cashDashboardService.gridCollection.itemCount > 0"
+                <ejs-grid
+                    *ngIf="cashDashboardService.gridData.length > 0"
                     class="flex-grow-1"
-                    [selectionMode]="editMode ? 'None' : 'Row'"
-                    [itemsSource]="cashDashboardService.gridCollection"
-                    [headersVisibility]="'Column'"
-                    [allowResizing]="'Columns'"
-                    [allowSorting]="false"
-                    [showSelectedHeaders]="'Row'"
-                    [isReadOnly]="true"
-                    (initialized)="cashDashboardService.initializeGrid(cashGrid)"
-                    (selectionChanged)="getRegisterDetails(cashDashboardService.gridCollection.currentItem)"
+                    [dataSource]="cashDashboardService.gridData"
+                    (rowSelected)="getRegisterDetails($event)"
                 >
-                    <wj-flex-grid-filter
-                        [filterColumns]="['paymentMethod.description']"
-                        [showSortButtons]="false"
-                    ></wj-flex-grid-filter>
-                    <wj-flex-grid-column
-                        *ngFor="let column of columns"
-                        [width]="column.width"
-                        [binding]="column.binding"
-                        [header]="column.header"
-                        [visible]="true"
-                        [aggregate]="
-                            column.header === 'Ingreso' || column.header === 'Egreso' || column.header === 'Saldo'
-                                ? 'Sum'
-                                : 'None'
-                        "
-                    >
-                        <ng-template
-                            *ngIf="column.header === 'Ingreso'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'Cell'"
-                            let-cell="cell"
-                        >
-                            <ng-container *ngIf="cell.item.concept.transactionType.id === 1">
+                    <e-columns>
+                        <e-column field="id" headerText="ID"></e-column>
+                        <e-column field="concept.parent.description" headerText="Concepto"></e-column>
+                        <e-column field="concept.description" headerText="Subconcepto"></e-column>
+                        <e-column field="income" headerText="Ingreso">
+                            <ng-template #template let-data>
+                                <ng-container *ngIf="data.concept.transactionType.id === 1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            {{ '$ ' + cashDashboardService.decimalSeparatorParser(data.income) }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-template>
+                        </e-column>
+                        <e-column field="expense" headerText="Egreso">
+                            <ng-template #template let-data>
+                                <ng-container *ngIf="data.concept.transactionType.id !== 1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            {{ '$ ' + cashDashboardService.decimalSeparatorParser(data.expense) }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-template>
+                        </e-column>
+                        <e-column field="amount" headerText="Saldo">
+                            <ng-template #template let-data>
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        {{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.item.income) }}
+                                        {{ '$ ' + cashDashboardService.decimalSeparatorParser(data.amount) }}
                                     </div>
                                 </div>
-                            </ng-container>
-                        </ng-template>
-
-                        <ng-template
-                            *ngIf="column.header === 'Ingreso'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'ColumnFooter'"
-                            let-cell="cell"
-                        >
-                            <div class="alert alert-success mb-0 p-1 border-0 d-flex justify-content-between">
-                                <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
-                            </div>
-                        </ng-template>
-
-                        <ng-template
-                            *ngIf="column.header === 'Egreso'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'Cell'"
-                            let-cell="cell"
-                        >
-                            <ng-container *ngIf="cell.item.concept.transactionType.id === 0">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        {{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.item.expense) }}
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </ng-template>
-
-                        <ng-template
-                            *ngIf="column.header === 'Egreso'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'ColumnFooter'"
-                            let-cell="cell"
-                        >
-                            <div class="alert alert-danger mb-0 p-1 border-0 d-flex justify-content-between">
-                                <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
-                            </div>
-                        </ng-template>
-
-                        <ng-template
-                            *ngIf="column.header === 'Saldo'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'Cell'"
-                            let-cell="cell"
-                        >
-                            <div class="d-flex justify-content-between">
-                                <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.item.amount) }}</div>
-                            </div>
-                        </ng-template>
-
-                        <ng-template
-                            *ngIf="column.header === 'Saldo'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'ColumnFooter'"
-                            let-cell="cell"
-                        >
-                            <div class="alert alert-info mb-0 p-1 border-0 d-flex justify-content-between">
-                                <div>{{ '$ ' + cashDashboardService.decimalSeparatorParser(cell.value) }}</div>
-                            </div>
-                        </ng-template>
-
-                        <ng-template
-                            *ngIf="column.header === 'Hora'"
-                            wjFlexGridCellTemplate
-                            [cellType]="'Cell'"
-                            let-cell="cell"
-                        >
-                            <div class="text-right">{{ cell.item.date.format('HH:mm') }}</div>
-                        </ng-template>
-                    </wj-flex-grid-column>
-                </wj-flex-grid>
+                            </ng-template>
+                        </e-column>
+                        <e-column field="date" headerText="Hora">
+                            <ng-template #template let-data>
+                                {{ data.date.format('HH:mm') }}
+                            </ng-template>
+                        </e-column>
+                    </e-columns>
+                    <e-aggregates>
+                        <e-aggregate>
+                            <e-columns>
+                                <e-column field="income" type="sum" format="c2">
+                                    <ng-template #footerTemplate let-data
+                                        ><div class="alert-success p-1">{{ data.sum }}</div></ng-template
+                                    >
+                                </e-column>
+                                <e-column field="expense" type="sum" format="c2">
+                                    <ng-template #footerTemplate let-data
+                                        ><div class="alert-danger p-1">{{ data.sum }}</div></ng-template
+                                    >
+                                </e-column>
+                                <e-column field="amount" type="sum" format="c2">
+                                    <ng-template #footerTemplate let-data
+                                        ><div class="alert-info p-1">{{ data.sum }}</div></ng-template
+                                    >
+                                </e-column>
+                            </e-columns>
+                        </e-aggregate>
+                    </e-aggregates>
+                </ejs-grid>
             </ng-container>
         </div>
     </div>

@@ -3,19 +3,11 @@ import { CashGridResultsRoutingModule } from './cash-grid-results-routing.module
 import { CommonModule } from '@angular/common';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
-import { WjGridFilterModule } from '@grapecity/wijmo.angular2.grid.filter';
-import { WjGridModule } from '@grapecity/wijmo.angular2.grid';
 import { FormsModule } from '@angular/forms';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
 
 @NgModule({
     declarations: [CashGridResultsComponent],
-    imports: [
-        CashGridResultsRoutingModule,
-        CommonModule,
-        FormsModule,
-        NgbDatepickerModule,
-        WjGridFilterModule,
-        WjGridModule,
-    ],
+    imports: [CashGridResultsRoutingModule, CommonModule, FormsModule, GridModule, NgbDatepickerModule],
 })
 export class CashGridResultsModule {}
