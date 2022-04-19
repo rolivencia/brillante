@@ -19,9 +19,7 @@ export class RepairDashboardService {
     }
 
     //FIXME: Generar getters y setters para variables de servicio
-    public gridData;
-    public gridCollection;
-    public pageSize = 22;
+    public gridData: Repair[] = [];
 
     public date: Moment = moment();
 
@@ -56,11 +54,6 @@ export class RepairDashboardService {
     async getGridData() {
         this.progressLoaderService.showWithOverlay();
         this.gridData = await this.repairService.getAll(this._showFinished).toPromise();
-        this.gridCollection = new CollectionView(this.gridData);
-        this.gridCollection.pageSize = this.pageSize;
-        this.gridCollection.currentItem = null;
-        const sortDescription = new SortDescription('lastUpdate', false);
-        this.gridCollection.sortDescriptions.push(sortDescription);
         this.progressLoaderService.hide();
     }
 }

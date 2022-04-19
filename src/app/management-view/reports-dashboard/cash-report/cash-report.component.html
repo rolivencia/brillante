@@ -59,7 +59,7 @@
                     ✅ Generar
                 </button>
                 <button
-                    *ngIf="cashDashboardService.gridCollection.itemCount > 0"
+                    *ngIf="cashDashboardService.gridData.length > 0"
                     class="ms-3 me-3 btn btn-sm btn-outline-dark h-100"
                     (click)="exportToXls()"
                 >
@@ -79,7 +79,7 @@
         </ng-container>
 
         <div *ngIf="!loading">
-            <div *ngIf="cashDashboardService.gridCollection.itemCount === 0" class="alert alert-info">
+            <div *ngIf="cashDashboardService.gridData.length === 0" class="alert alert-info">
                 Seleccioná las fechas a analizar y clickeá en "Generar" para para visualizar el reporte.
             </div>
             <ejs-grid
@@ -203,7 +203,11 @@
                         textAlign="Left"
                         width="70"
                         [allowFiltering]="true"
-                    ></e-column>
+                    >
+                        <ng-template #template let-data>
+                            {{ data.date.format('YYYY-MM-DD HH:mm') }}
+                        </ng-template>
+                    </e-column>
                 </e-columns>
                 <e-aggregates>
                     <e-aggregate>

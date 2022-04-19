@@ -7,7 +7,7 @@
     <div class="card-body">
         <ng-container>
             <div id="grid-container">
-                <div class="alert alert-info h-100 text-center" *ngIf="!repairDashboardService.gridCollection">
+                <div class="alert alert-info h-100 text-center" *ngIf="!repairDashboardService.gridData.length">
                     <h3>Cargando...</h3>
                 </div>
                 <ejs-grid

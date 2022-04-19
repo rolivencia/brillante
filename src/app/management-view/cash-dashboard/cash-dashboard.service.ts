@@ -6,7 +6,6 @@ import { CashService } from '@services/cash.service';
 import { CashTransaction } from '@models/cash-transaction';
 import { CollectionView, SortDescription } from '@grapecity/wijmo';
 import { DateObject } from '@models/date-object';
-import { FlexGrid, GroupRow } from '@grapecity/wijmo.grid';
 import { Injectable } from '@angular/core';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
 import { OfficeBranch } from '@models/office-branch';
@@ -19,6 +18,7 @@ import { AuthenticationService } from '@services/authentication.service';
     providedIn: 'root',
 })
 export class CashDashboardService {
+    public gridData: CashTransaction[] = [];
     public editMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -50,7 +50,6 @@ export class CashDashboardService {
 
     public transactions: CashTransaction[] = [];
 
-    public gridCollection: CollectionView = new CollectionView([]);
     public data: any[] = [];
     public selectedTransaction: CashTransaction = null;
 
@@ -99,7 +98,7 @@ export class CashDashboardService {
             this.loadData(moment());
         }
     }
-    public gridData = [];
+
     // FIXME: Restructure this to get rid of coupling. Think of two methods: one for single date, other for starting and ending
     async refreshGrid(date?: DateObject) {
         this.date = date ? formatDate(date) : moment();
@@ -123,16 +122,9 @@ export class CashDashboardService {
                 (transaction) => !filterConcepts.includes(transaction.concept.id)
             );
         }
-        // Wijmo Version
-        this.gridCollection = new CollectionView<any>(this.transactions);
-        this.gridCollection.currentItem = null;
 
-        // SyncFusion version
-        this.gridData = this.transactions.map((t) => ({ ...t, date: t.date.format('YYYY-MM-DD HH:mm') }));
+        this.gridData = this.transactions;
 
-        const sortById = new SortDescription('date', true);
-        this.gridCollection.sortDescriptions.clear();
-        this.gridCollection.sortDescriptions.push(sortById);
         this.progressLoaderService.hide();
         this.loading.next(false);
     }
@@ -140,11 +132,6 @@ export class CashDashboardService {
     setTodayDate() {
         this.ngbDateFrom = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
         this.ngbDateTo = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
-    }
-
-    initializeGrid(flex: FlexGrid) {
-        flex.columnFooters.rows.push(new GroupRow());
-        flex.bottomLeftCells.setCellData(0, 0, '$');
     }
 
     // TODO: Refactor import

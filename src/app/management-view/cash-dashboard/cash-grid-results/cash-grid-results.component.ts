@@ -1,21 +1,13 @@
 import * as moment from 'moment';
 import { CashDashboardService } from '@management-view/cash-dashboard/cash-dashboard.service';
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateObject } from '@models/date-object';
-import { FlexGrid } from '@grapecity/wijmo.grid';
 import { CashTransaction } from '@models/cash-transaction';
 import { Subscription } from 'rxjs';
 import { EUserRole } from '@enums/user.enum';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { AuthenticationService } from '@services/authentication.service';
+import { RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
 
 @Component({
     selector: 'app-cash-grid-results',
@@ -24,8 +16,6 @@ import { AuthenticationService } from '@services/authentication.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('cashGrid', { static: false }) cashGrid: FlexGrid;
-
     public displayMonths = 1;
     public navigation = 'select';
     public outsideDays = 'visible';
@@ -38,17 +28,6 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
 
     private editModeSubscription: Subscription;
     private loadingSubscription: Subscription;
-
-    columns: any[] = [
-        { header: 'ID', binding: 'id', width: 50 },
-        { header: 'Concepto', binding: 'concept.parent.description', width: '*' },
-        { header: 'Subconcepto', binding: 'concept.description', width: '*' },
-        { header: 'Método', binding: 'paymentMethod.description', width: 90 },
-        { header: 'Ingreso', binding: 'income', width: 70 },
-        { header: 'Egreso', binding: 'expense', width: 70 },
-        { header: 'Saldo', binding: 'amount', width: 70 },
-        { header: 'Hora', binding: 'date', width: 55 },
-    ];
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -94,7 +73,7 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
         this.cashDashboardService.refreshGrid(this.cashDashboardService.ngbDateFrom);
     }
 
-    public getRegisterDetails(currentItem: CashTransaction) {
-        this.cashDashboardService.selectedTransaction = currentItem;
+    public getRegisterDetails(event: RowSelectEventArgs) {
+        this.cashDashboardService.selectedTransaction = event.data as CashTransaction;
     }
 }

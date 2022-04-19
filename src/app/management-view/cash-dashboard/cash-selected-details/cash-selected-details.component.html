@@ -1,11 +1,11 @@
 <div class="card">
     <div id="cash-selected-details-header" class="card-header d-flex justify-content-between">
-        <ng-container *ngIf="cashDashboardService.isToday() && cashDashboardService.gridCollection.itemCount === 0">
+        <ng-container *ngIf="cashDashboardService.isToday() && cashDashboardService.gridData.length === 0">
             <button class="btn btn-sm btn-outline-primary me-3" (click)="cashDashboardService.openCashRegister()">
                 💵 Abrir Caja
             </button>
         </ng-container>
-        <ng-container *ngIf="cashDashboardService.gridCollection.itemCount > 0">
+        <ng-container *ngIf="cashDashboardService.gridData.length > 0">
             <button class="btn btn-sm btn-outline-primary me-3" (click)="add()">💵 Crear</button>
             <button
                 *ngIf="isEditable(cashDashboardService.selectedTransaction)"
@@ -25,9 +25,7 @@
         </ng-container>
     </div>
     <div id="cash-transaction-selected" class="card-body">
-        <ng-container
-            *ngIf="!cashDashboardService.selectedTransaction && cashDashboardService.gridCollection.itemCount > 0"
-        >
+        <ng-container *ngIf="!cashDashboardService.selectedTransaction && cashDashboardService.gridData.length > 0">
             <div class="alert alert-info">
                 Seleccioná una transacción de la grilla para visualizar sus detalles
             </div></ng-container
