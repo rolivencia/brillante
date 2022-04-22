@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { RepairDashboardService } from '@management-view/repair-dashboard/repair-dashboard.service';
 import { DateObject } from '@models/date-object';
 import { DateHandlerService } from '@services/date-handler.service';
-import { PageService, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { FilterService, PageService, RowSelectEventArgs, SortService } from '@syncfusion/ej2-angular-grids';
 import { Repair } from '@models/repair';
 
 @Component({
     selector: 'app-repair-grid-results',
     templateUrl: './repair-grid-results.component.html',
     styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss'],
-    providers: [PageService],
+    providers: [FilterService, PageService, SortService],
 })
 export class RepairGridResultsComponent implements OnInit {
     constructor(

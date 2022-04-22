@@ -12,19 +12,21 @@
                 </div>
                 <ejs-grid
                     *ngIf="repairDashboardService.gridData"
+                    [allowFiltering]="true"
                     [allowPaging]="true"
+                    [allowSorting]="true"
                     [dataSource]="repairDashboardService.gridData"
-                    [pageSettings]="{ pageSize: 20 }"
+                    [pageSettings]="{ pageSize: 15 }"
                     (rowSelected)="getRepairDetails($event)"
                 >
                     <e-columns>
-                        <e-column field="id" headerText="ID"></e-column>
+                        <e-column field="id" headerText="ID" width="70"></e-column>
                         <e-column field="customer.fullName" headerText="Cliente"></e-column>
                         <e-column field="device.manufacturer" headerText="Marca"></e-column>
                         <e-column field="device.model" headerText="Modelo"></e-column>
-                        <e-column field="device.model" headerText="Última Actualización">
+                        <e-column field="device.model" headerText="Última Actualización" width="110">
                             <ng-template #template let-data>
-                                {{ data.lastUpdate.format('YYYY-MM-DD  HH:mm') }}
+                                {{ data.lastUpdate.format('YYYY-MM-DD   HH:mm') }}
                             </ng-template>
                         </e-column>
                         <e-column field="status.description" headerText="Estado"></e-column>

@@ -1,19 +1,18 @@
-import * as moment from 'moment';
 import { CashDashboardService } from '@management-view/cash-dashboard/cash-dashboard.service';
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateObject } from '@models/date-object';
 import { CashTransaction } from '@models/cash-transaction';
 import { Subscription } from 'rxjs';
 import { EUserRole } from '@enums/user.enum';
-import { OfficeBranchService } from '@services/office-branch.service';
 import { AuthenticationService } from '@services/authentication.service';
-import { RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
+import { RowSelectEventArgs, SortService, SortSettingsModel } from '@syncfusion/ej2-angular-grids';
 
 @Component({
     selector: 'app-cash-grid-results',
     templateUrl: './cash-grid-results.component.html',
     styleUrls: ['./cash-grid-results.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    providers: [SortService],
 })
 export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestroy {
     public displayMonths = 1;
@@ -25,15 +24,14 @@ export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestro
     public canUserNavigateDates: boolean = false;
 
     public minDate: DateObject;
-
+    public sortOptions: SortSettingsModel = { columns: [{ field: 'date', direction: 'Ascending' }] };
     private editModeSubscription: Subscription;
     private loadingSubscription: Subscription;
 
     constructor(
         public authenticationService: AuthenticationService,
         public cashDashboardService: CashDashboardService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private officeBranchService: OfficeBranchService
+        private changeDetectorRef: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
