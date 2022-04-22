@@ -24,7 +24,7 @@
                         <e-column field="customer.fullName" headerText="Cliente"></e-column>
                         <e-column field="device.manufacturer" headerText="Marca"></e-column>
                         <e-column field="device.model" headerText="Modelo"></e-column>
-                        <e-column field="device.model" headerText="Última Actualización" width="110">
+                        <e-column field="device.model" headerText="Actualizada" width="110">
                             <ng-template #template let-data>
                                 {{ data.lastUpdate.format('YYYY-MM-DD   HH:mm') }}
                             </ng-template>
