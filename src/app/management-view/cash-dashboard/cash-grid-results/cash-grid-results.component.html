@@ -54,14 +54,16 @@
                 <ejs-grid
                     *ngIf="cashDashboardService.gridData.length > 0"
                     class="flex-grow-1"
+                    [allowSorting]="true"
+                    [sortSettings]="sortOptions"
                     [dataSource]="cashDashboardService.gridData"
                     (rowSelected)="getRegisterDetails($event)"
                 >
                     <e-columns>
-                        <e-column field="id" headerText="ID"></e-column>
+                        <e-column field="id" headerText="ID" width="80"></e-column>
                         <e-column field="concept.parent.description" headerText="Concepto"></e-column>
                         <e-column field="concept.description" headerText="Subconcepto"></e-column>
-                        <e-column field="income" headerText="Ingreso">
+                        <e-column field="income" headerText="Ingreso" width="100">
                             <ng-template #template let-data>
                                 <ng-container *ngIf="data.concept.transactionType.id === 1">
                                     <div class="d-flex justify-content-between">
@@ -72,7 +74,7 @@
                                 </ng-container>
                             </ng-template>
                         </e-column>
-                        <e-column field="expense" headerText="Egreso">
+                        <e-column field="expense" headerText="Egreso" width="100">
                             <ng-template #template let-data>
                                 <ng-container *ngIf="data.concept.transactionType.id !== 1">
                                     <div class="d-flex justify-content-between">
@@ -83,7 +85,7 @@
                                 </ng-container>
                             </ng-template>
                         </e-column>
-                        <e-column field="amount" headerText="Saldo">
+                        <e-column field="amount" headerText="Saldo" width="100">
                             <ng-template #template let-data>
                                 <div class="d-flex justify-content-between">
                                     <div>
@@ -92,7 +94,7 @@
                                 </div>
                             </ng-template>
                         </e-column>
-                        <e-column field="date" headerText="Hora">
+                        <e-column field="date" headerText="Hora" width="80">
                             <ng-template #template let-data>
                                 {{ data.date.format('HH:mm') }}
                             </ng-template>
