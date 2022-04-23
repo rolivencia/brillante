@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@services/repair.service';
 import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { Customer } from '@models/customer';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -22,5 +23,9 @@ export class RepairAddNewComponent implements OnInit {
     ngOnInit() {
         this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
         this.cdr.detectChanges();
+    }
+
+    public goToCustomerUpdate(customer: Customer) {
+        window.open('client-dashboard/update/' + customer.id, '_blank');
     }
 }
