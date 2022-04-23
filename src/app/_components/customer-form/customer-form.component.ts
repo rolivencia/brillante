@@ -30,10 +30,6 @@ export class CustomerFormComponent implements OnInit {
     }
 
     public form: FormGroup;
-    public displayMonths = 1;
-    public navigation = 'select';
-    public outsideDays = 'visible';
-
     public maskPlaceholderValue: MaskPlaceholderModel = { day: 'DD', month: 'MM', year: 'AAAA' };
 
     constructor(
