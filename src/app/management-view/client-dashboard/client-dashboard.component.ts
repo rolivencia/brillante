@@ -68,7 +68,7 @@ export class ClientDashboardComponent implements OnInit {
         this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
-                this.customerGridData = data.rows.map((customer) => ({
+                this.customerGridData = data.map((customer) => ({
                     ...customer,
                     birthDate: customer.birthDate ? moment(customer.birthDate).format('YYYY-MM-DD') : null,
                 }));
