@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@services/repair.service';
-import { ControlContainer, FormGroup } from '@angular/forms';
+import { ControlContainer, FormControl, FormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
 import { MaskedDateTimeService } from '@syncfusion/ej2-angular-calendars';
 import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskplaceholder-model';
@@ -13,6 +13,22 @@ import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskp
     providers: [MaskedDateTimeService],
 })
 export class CustomerFormComponent implements OnInit {
+    get customerControl(): FormControl {
+        return this.repairFormHandlerService.customerControl;
+    }
+
+    get customerExists(): boolean {
+        return this.repairFormHandlerService.customerExists;
+    }
+
+    get formSaved(): boolean {
+        return this.repairFormHandlerService.saved;
+    }
+
+    get formSubmitted(): boolean {
+        return this.repairFormHandlerService.submitted;
+    }
+
     public form: FormGroup;
     public displayMonths = 1;
     public navigation = 'select';
