@@ -121,6 +121,18 @@
             <div class="d-flex justify-content-between">
                 <label for="birthDate">Fecha de Nacimiento</label>
             </div>
+            <div
+                class="text-danger"
+                *ngIf="
+                    this.repairFormHandlerService.submitted &&
+                    repairFormHandlerService.customerControl['birthDate'].errors?.required
+                "
+            >
+                <small
+                    >Ingrese fecha de nacimiento válida. Para clientes ya registrados, proceda a editar datos del
+                    cliente accediendo desde el botón superior.</small
+                >
+            </div>
             <div class="input-group input-group-sm">
                 <ejs-datepicker
                     aria-describedby="birthDate"
