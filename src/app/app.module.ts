@@ -22,6 +22,7 @@ import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { LayoutService } from '@services/layout.service';
 import { AggregateService, ExcelExportService, FilterService, SortService } from '@syncfusion/ej2-angular-grids';
+import { DateTimeService } from '@services/date-time.service';
 
 @NgModule({
     imports: [
@@ -68,6 +69,7 @@ import { AggregateService, ExcelExportService, FilterService, SortService } from
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         CartService,
+        DateTimeService,
         DeviceDetectorService,
         AggregateService,
         ExcelExportService,

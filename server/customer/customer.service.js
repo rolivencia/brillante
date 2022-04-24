@@ -10,7 +10,6 @@ module.exports = {
 };
 
 async function create({ dni, firstName, lastName, address, telephone, email, secondaryTelephone, birthDate }) {
-    //TODO: Implement user cross-assignation
     return customer.Customer.findOrCreate({
         where: { dni: dni },
         defaults: {

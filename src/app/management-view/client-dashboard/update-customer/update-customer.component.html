@@ -1,15 +1,14 @@
 <div class="card">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between">
         Editar Datos de Cliente
-        <button
-            type="submit"
-            class="btn btn-sm btn-outline-success"
-            (click)="update()"
-            [disabled]="form.pristine || saved"
-        >
-            Actualizar
-        </button>
-        <button type="submit" class="btn btn-sm btn-outline-secondary ms-3" (click)="location.back()">Volver</button>
+        <div>
+            <button type="submit" class="btn btn-sm btn-primary" (click)="update()" [disabled]="form.pristine || saved">
+                💾 Actualizar
+            </button>
+            <button type="submit" class="btn btn-sm btn-outline-secondary ms-3" (click)="location.back()">
+                ⬅️ Volver
+            </button>
+        </div>
     </div>
     <div class="card-body">
         <app-customer-form
