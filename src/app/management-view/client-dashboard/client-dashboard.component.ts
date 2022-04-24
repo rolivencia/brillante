@@ -15,6 +15,10 @@ import { Customer } from '@models/customer';
     providers: [PageService],
 })
 export class ClientDashboardComponent implements OnInit {
+    get selectedClientData() {
+        return this._selectedClientData;
+    }
+
     public selectedRepairData: Repair;
     public customerGridData: Customer[] = [];
     public repairGridData: Repair[] = [];
@@ -39,36 +43,31 @@ export class ClientDashboardComponent implements OnInit {
         }
     }
 
-    get selectedClientData() {
-        return this._selectedClientData;
+    public goToCustomerUpdate(clientData: any) {
+        this.router.navigate(['client-dashboard/update/' + clientData.id]);
     }
 
-    update(clientData: any) {
+    public delete(clientData: any) {
         // TODO: Implementar método
         alert('Funcionalidad no implementada');
     }
 
-    delete(clientData: any) {
-        // TODO: Implementar método
-        alert('Funcionalidad no implementada');
-    }
-
-    getRepairDetails(item) {
+    public getRepairDetails(item) {
         this.selectedRepairData = item;
     }
 
-    goToUpdate() {
+    public goToUpdate() {
         this.router.navigate([
             'repair-dashboard/manage',
             { outlets: { top: 'update/' + this.selectedRepairData.id, left: null, right: null } },
         ]);
     }
 
-    getGridData() {
+    public getGridData() {
         this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
-                this.customerGridData = data.rows.map((customer) => ({
+                this.customerGridData = data.map((customer) => ({
                     ...customer,
                     birthDate: customer.birthDate ? moment(customer.birthDate).format('YYYY-MM-DD') : null,
                 }));

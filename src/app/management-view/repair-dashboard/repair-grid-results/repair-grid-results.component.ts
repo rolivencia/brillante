@@ -3,7 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { RepairDashboardService } from '@management-view/repair-dashboard/repair-dashboard.service';
 import { DateObject } from '@models/date-object';
 import { DateHandlerService } from '@services/date-handler.service';
-import { FilterService, PageService, RowSelectEventArgs, SortService } from '@syncfusion/ej2-angular-grids';
+import {
+    FilterService,
+    PageService,
+    RowSelectEventArgs,
+    SortService,
+    SortSettingsModel,
+} from '@syncfusion/ej2-angular-grids';
 import { Repair } from '@models/repair';
 
 @Component({
@@ -21,6 +27,9 @@ export class RepairGridResultsComponent implements OnInit {
     public displayMonths = 1;
     public navigation = 'select';
     public outsideDays = 'visible';
+    public sortOptions: SortSettingsModel = {
+        columns: [{ field: 'lastUpdate', direction: 'Descending' }],
+    };
 
     ngOnInit() {
         this.repairDashboardService._dateTo = moment();

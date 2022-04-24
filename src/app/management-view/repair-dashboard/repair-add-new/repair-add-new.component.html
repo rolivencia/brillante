@@ -7,6 +7,14 @@
             >
         </ng-container>
         <div>
+            <ng-container *ngIf="repairFormHandlerService.customerExists">
+                <button
+                    class="btn btn-sm btn-outline-info me-5"
+                    (click)="goToCustomerUpdate(repairFormHandlerService.customer)"
+                >
+                    🔄 Actualizar datos de cliente
+                </button>
+            </ng-container>
             <ng-container *ngIf="!repairFormHandlerService.saved">
                 <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.save()">
                     💾 Guardar reparación
@@ -31,7 +39,12 @@
         <form [formGroup]="repairFormHandlerService.formGroup" (ngSubmit)="repairFormHandlerService.save()">
             <div class="row">
                 <div class="col-6">
-                    <app-customer-form [formGroup]="repairFormHandlerService.formGroup"></app-customer-form>
+                    <app-customer-form
+                        [customerExists]="repairFormHandlerService.customerExists"
+                        [saved]="repairFormHandlerService.saved"
+                        [submitted]="repairFormHandlerService.submitted"
+                        [formGroup]="customerGroup"
+                    ></app-customer-form>
                 </div>
                 <div class="col-6">
                     <div id="equipment-data" class="card">

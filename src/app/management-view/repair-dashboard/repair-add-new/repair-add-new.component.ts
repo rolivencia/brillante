@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
 import { RepairService } from '@services/repair.service';
 import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
+import { Customer } from '@models/customer';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -10,6 +12,10 @@ import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
     styleUrls: ['./repair-add-new.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairAddNewComponent implements OnInit {
+    get customerGroup(): FormGroup {
+        return this.repairFormHandlerService.formGroup.get('customer') as FormGroup;
+    }
+
     public deviceTypeFields: FieldSettingsModel = { text: 'description', value: 'id' };
 
     constructor(
@@ -22,5 +28,9 @@ export class RepairAddNewComponent implements OnInit {
     ngOnInit() {
         this.repairFormHandlerService.formGroup = this.repairFormHandlerService.load();
         this.cdr.detectChanges();
+    }
+
+    public goToCustomerUpdate(customer: Customer) {
+        window.open('client-dashboard/update/' + customer.id, '_blank');
     }
 }

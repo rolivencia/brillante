@@ -26,6 +26,23 @@ async function create({ dni, firstName, lastName, address, telephone, email, sec
     });
 }
 
+async function update({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, birthDate }) {
+    console.log({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, birthDate });
+    return customer.Customer.update(
+        {
+            dni: dni,
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            telephone: telephone,
+            email: email,
+            secondaryTelephone: secondaryTelephone,
+            birthDate: birthDate,
+        },
+        { where: { id: id } }
+    );
+}
+
 async function getAll(offset, limit, sortBy = {}) {
     // TODO: Implement pagination and sorting to retrieve data on-demand
     return customer.Customer.findAndCountAll();
@@ -77,21 +94,4 @@ async function getById(id) {
             id: id,
         },
     });
-}
-
-async function update({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, user }) {
-    //TODO: Implement user cross-assignation
-    //TODO: Leave full implementation for Phase 2. Not currently required.
-    return customer.Customer.update(
-        {
-            firstName: firstName,
-            lastName: lastName,
-            dni: dni,
-            address: address,
-            telephone: telephone,
-            email: email,
-            secondaryTelephone: secondaryTelephone,
-        },
-        { where: { id: id } }
-    );
 }

@@ -1,31 +1,15 @@
 <div id="customer-data" class="card" [formGroup]="form">
     <div class="card-header text-white bg-secondary">🙍 Datos del Cliente</div>
-    <div formGroupName="customer" class="card-body">
+    <div class="card-body">
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="dni">DNI</label>
                 <div>
-                    <span *ngIf="repairFormHandlerService.customerExists" class="badge badge-info p-2"
-                        >Cliente ya registrado</span
-                    >
-                    <div
-                        class="text-danger"
-                        *ngIf="
-                            !repairFormHandlerService.customerExists &&
-                            this.repairFormHandlerService.submitted &&
-                            repairFormHandlerService.customerControl['dni'].errors?.required
-                        "
-                    >
+                    <span *ngIf="customerExists" class="badge badge-info p-2">Cliente ya registrado</span>
+                    <div class="text-danger" *ngIf="!customerExists && submitted && controls['dni'].errors?.required">
                         <small>Se requiere el DNI del cliente</small>
                     </div>
-                    <div
-                        class="text-danger"
-                        *ngIf="
-                            !repairFormHandlerService.customerExists &&
-                            this.repairFormHandlerService.submitted &&
-                            repairFormHandlerService.customerControl['dni'].errors?.minLength
-                        "
-                    >
+                    <div class="text-danger" *ngIf="!customerExists && submitted && controls['dni'].errors?.minLength">
                         <small>Ingrese un DNI válido - 7 números o más</small>
                     </div>
                 </div>
@@ -45,13 +29,7 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="firstName">Nombre</label>
-                <div
-                    class="text-danger"
-                    *ngIf="
-                        this.repairFormHandlerService.submitted &&
-                        repairFormHandlerService.customerControl['firstName'].errors?.required
-                    "
-                >
+                <div class="text-danger" *ngIf="submitted && controls['firstName'].errors?.required">
                     <small>Se requiere el nombre del cliente</small>
                 </div>
             </div>
@@ -61,19 +39,13 @@
                 class="form-control form-control-sm"
                 id="firstName"
                 formControlName="firstName"
-                [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
+                [readonly]="customerExists || saved"
             />
         </div>
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="lastName">Apellido</label>
-                <div
-                    class="text-danger"
-                    *ngIf="
-                        this.repairFormHandlerService.submitted &&
-                        repairFormHandlerService.customerControl['firstName'].errors?.required
-                    "
-                >
+                <div class="text-danger" *ngIf="submitted && controls['firstName'].errors?.required">
                     <small>Se requiere el apellido del cliente</small>
                 </div>
             </div>
@@ -83,28 +55,16 @@
                 class="form-control form-control-sm"
                 id="lastName"
                 formControlName="lastName"
-                [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
+                [readonly]="customerExists || saved"
             />
         </div>
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="email">Email</label>
-                <div
-                    class="text-danger"
-                    *ngIf="
-                        this.repairFormHandlerService.submitted &&
-                        repairFormHandlerService.customerControl['email'].errors?.required
-                    "
-                >
+                <div class="text-danger" *ngIf="submitted && controls['email'].errors?.required">
                     <small>Se requiere un email del cliente</small>
                 </div>
-                <div
-                    class="text-danger"
-                    *ngIf="
-                        this.repairFormHandlerService.submitted &&
-                        repairFormHandlerService.customerControl['email'].errors?.email
-                    "
-                >
+                <div class="text-danger" *ngIf="submitted && controls['email'].errors?.email">
                     <small>Ingrese un email válido</small>
                 </div>
             </div>
@@ -114,12 +74,18 @@
                 class="form-control form-control-sm"
                 id="email"
                 formControlName="email"
-                [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
+                [readonly]="customerExists || saved"
             />
         </div>
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="birthDate">Fecha de Nacimiento</label>
+            </div>
+            <div class="text-danger" *ngIf="submitted && controls['birthDate'].errors?.required">
+                <small
+                    >Ingrese fecha de nacimiento válida. Para clientes ya registrados, proceda a editar datos del
+                    cliente accediendo desde el botón superior.</small
+                >
             </div>
             <div class="input-group input-group-sm">
                 <ejs-datepicker
@@ -127,7 +93,7 @@
                     formControlName="birthDate"
                     id="birthDate"
                     [format]="'dd/MM/yyyy'"
-                    [enabled]="!repairFormHandlerService.customerExists && !repairFormHandlerService.saved"
+                    [enabled]="!customerExists && !saved"
                     [enableMask]="true"
                     [maskPlaceholder]="maskPlaceholderValue"
                     [required]="true"
@@ -137,13 +103,7 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="telephone">Teléfono</label>
-                <div
-                    class="text-danger"
-                    *ngIf="
-                        this.repairFormHandlerService.submitted &&
-                        repairFormHandlerService.customerControl['telephone'].errors?.required
-                    "
-                >
+                <div class="text-danger" *ngIf="submitted && controls['telephone'].errors?.required">
                     <small>Se requiere un teléfono del cliente</small>
                 </div>
             </div>
@@ -156,19 +116,13 @@
                 step="1"
                 placeholder="Sólo numeros"
                 formControlName="telephone"
-                [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
+                [readonly]="customerExists || saved"
             />
         </div>
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="address">Dirección</label>
-                <div
-                    class="text-danger"
-                    *ngIf="
-                        repairFormHandlerService.submitted &&
-                        repairFormHandlerService.customerControl['address'].errors?.required
-                    "
-                >
+                <div class="text-danger" *ngIf="submitted && controls['address'].errors?.required">
                     <small>Se requiere una dirección para el cliente</small>
                 </div>
             </div>
@@ -178,7 +132,7 @@
                 class="form-control form-control-sm"
                 id="address"
                 formControlName="address"
-                [readonly]="repairFormHandlerService.customerExists || repairFormHandlerService.saved"
+                [readonly]="customerExists || saved"
             />
         </div>
     </div>

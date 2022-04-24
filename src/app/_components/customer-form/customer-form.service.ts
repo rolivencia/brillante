@@ -1,29 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Moment } from 'moment';
-import * as moment from 'moment';
-import { DateObject } from '@models/date-object';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Customer } from '@models/customer';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CustomerFormService {
-    // TODO: Issue #98 - Limit how many days can an employee with access to the cash register can see in the past. Make it configurable.
-    public date: Moment = moment();
+    constructor(private formBuilder: FormBuilder) {}
 
-    public ngbDateFrom: DateObject;
-    public ngbDateTo: DateObject;
-
-    public ngbMinDate: DateObject = {
-        year: 1900,
-        month: 1,
-        day: 1,
-    };
-
-    public ngbMaxDate: DateObject = {
-        year: this.date.year(),
-        month: (this.date.month() + 1) % 13,
-        day: this.date.date(),
-    };
-
-    constructor() {}
+    buildForm(customer: Customer): FormGroup {
+        return this.formBuilder.group({
+            id: [customer.id],
+            dni: [customer.dni, [Validators.required, Validators.minLength(7)]],
+            firstName: [customer.firstName, [Validators.required, Validators.minLength(2)]],
+            lastName: [customer.lastName, [Validators.required, Validators.minLength(2)]],
+            birthDate: [customer.birthDate ? new Date(customer.birthDate as string) : null],
+            email: [customer.email, [Validators.required, Validators.email]],
+            address: [customer.address, [Validators.required]],
+            telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]],
+            secondaryTelephone: [customer.telephone, [Validators.pattern('[0-9]+')]],
+        });
+    }
 }
