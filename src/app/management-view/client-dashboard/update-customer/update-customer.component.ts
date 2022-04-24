@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Customer } from '@models/customer';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
+import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
+import { CustomerService } from '@services/customer.service';
 
 @Component({
     selector: 'app-update-customer',
@@ -17,10 +20,16 @@ export class UpdateCustomerComponent implements OnInit {
     private _customer: Customer;
     public form: FormGroup;
 
+    public saved: boolean = false;
+    public submitted: boolean = false;
+
     constructor(
+        public location: Location,
+        private customerFormService: CustomerFormService,
+        private customerService: CustomerService,
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
-        private customerFormService: CustomerFormService
+        private toastrService: ToastrService
     ) {}
 
     ngOnInit(): void {
@@ -28,5 +37,20 @@ export class UpdateCustomerComponent implements OnInit {
         if (this._customer) {
             this.form = this.customerFormService.buildForm(this._customer);
         }
+    }
+
+    public async update() {
+        this.submitted = true;
+        if (this.form.invalid) {
+            this.toastrService.error('Datos de formulario inválidos. Revea los datos ingresados e intente nuevamente');
+            return;
+        }
+
+        this.customerService.update(this.form.value).subscribe((result) => {
+            if (result) {
+                this.saved = true;
+                this.toastrService.success('Datos del cliente actualizados correctamente');
+            }
+        });
     }
 }

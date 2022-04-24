@@ -39,7 +39,12 @@
         <form [formGroup]="repairFormHandlerService.formGroup" (ngSubmit)="repairFormHandlerService.save()">
             <div class="row">
                 <div class="col-6">
-                    <app-customer-form [formGroup]="customerGroup"></app-customer-form>
+                    <app-customer-form
+                        [customerExists]="repairFormHandlerService.customerExists"
+                        [saved]="repairFormHandlerService.saved"
+                        [submitted]="repairFormHandlerService.submitted"
+                        [formGroup]="customerGroup"
+                    ></app-customer-form>
                 </div>
                 <div class="col-6">
                     <div id="equipment-data" class="card">

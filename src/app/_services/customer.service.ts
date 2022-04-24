@@ -31,4 +31,10 @@ export class CustomerService {
             ...customer,
         });
     }
+
+    public update(customer: Customer): Observable<[number]> {
+        return this.http.put<[number]>(`${environment.apiUrl}/client/update`, {
+            ...customer,
+        });
+    }
 }
