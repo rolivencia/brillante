@@ -1,13 +1,14 @@
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AuthenticationService } from '@services/authentication.service';
 import { Customer } from '@models/customer';
 import { CustomerService } from '@services/customer.service';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { DateTimeService } from '@services/date-time.service';
+import { DeviceType, Repair, RepairStatus } from '@models/repair';
 import { Injectable } from '@angular/core';
 import { PaymentMethod } from '@models/cash-transaction';
+import { PaymentMethodsService } from '@services/payment-methods.service';
 import { RepairService } from '@services/repair.service';
 import { ToastrService } from 'ngx-toastr';
-import { DeviceType, Repair, RepairStatus } from '@models/repair';
-import { AuthenticationService } from '@services/authentication.service';
-import { PaymentMethodsService } from '@services/payment-methods.service';
 import { isFinishedStatus } from '@functions/repair.functions';
 
 @Injectable({
@@ -107,6 +108,7 @@ export class RepairFormHandlerService {
     constructor(
         private authenticationService: AuthenticationService,
         private customerService: CustomerService,
+        private dateTimeService: DateTimeService,
         private formBuilder: FormBuilder,
         private paymentMethodsService: PaymentMethodsService,
         private repairService: RepairService,
@@ -220,7 +222,7 @@ export class RepairFormHandlerService {
                 dni: customer.dni,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
-                birthDate: customer.birthDate ? new Date(customer.birthDate as string) : null,
+                birthDate: customer.birthDate ? this.dateTimeService.toDate(customer.birthDate as string) : null,
                 email: customer.email,
                 address: customer.address,
                 telephone: customer.telephone,
