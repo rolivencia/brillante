@@ -4,13 +4,17 @@ import { AuthGuard } from './_guards';
 
 import { OfficeBranchGuard } from '@guards/office-branch.guard';
 
+export const routePaths = {
+    repair: { path: 'repair-dashboard', children: {} },
+};
+
 const appRoutes: Routes = [
     {
         path: '',
         loadChildren: () => import('./customer-view/customer-view.module').then((m) => m.CustomerViewModule),
     },
     {
-        path: 'repair-dashboard',
+        path: routePaths.repair.path,
         loadChildren: () =>
             import('@management-view/repair-dashboard/repair-dashboard.module').then((m) => m.RepairDashboardModule),
         canActivate: [AuthGuard, OfficeBranchGuard],
