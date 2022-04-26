@@ -3,6 +3,7 @@ import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 
 import { OfficeBranchGuard } from '@guards/office-branch.guard';
+import { RepairDashboardGuard } from '@management-view/repair-dashboard/repair-dashboard.guard';
 
 export const routePaths = {
     repair: { path: 'repair-dashboard', children: {} },
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
         path: routePaths.repair.path,
         loadChildren: () =>
             import('@management-view/repair-dashboard/repair-dashboard.module').then((m) => m.RepairDashboardModule),
-        canActivate: [AuthGuard, OfficeBranchGuard],
+        canActivate: [AuthGuard, RepairDashboardGuard, OfficeBranchGuard],
     },
     {
         path: 'client-dashboard',
