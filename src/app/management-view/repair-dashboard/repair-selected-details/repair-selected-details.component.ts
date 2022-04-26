@@ -37,13 +37,13 @@ export class RepairSelectedDetailsComponent implements OnInit {
     }
 
     add() {
-        this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'add', left: null, right: null } }]);
+        this.router.navigate(['repair-dashboard', { outlets: { top: 'add', left: null, right: null } }]);
     }
 
     //FIXME: Actualizar a Repair una vez finalizada la migración
     update(repair: Repair) {
         this.router.navigate([
-            'repair-dashboard/manage',
+            'repair-dashboard',
             { outlets: { top: 'update/' + repair.id, left: null, right: null } },
         ]);
     }

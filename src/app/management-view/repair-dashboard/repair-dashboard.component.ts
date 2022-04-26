@@ -14,11 +14,5 @@ export class RepairDashboardComponent implements OnInit {
         private router: Router
     ) {}
 
-    ngOnInit() {
-        // this.router.navigate(['manage', { outlets: { left: 'grid', right: 'selected' } }], { relativeTo: this.route });
-        // this.router.navigate([{ outlets: { bookPopup: [ 'update-book' ] }}]);
-        // this.router
-        //     .navigate([{ outlets: { left: ['grid'], right: ['selected'], primary: ['repair-dashboard'] } }, { relativeTo: this.route }])
-        //     .then(result => console.log(result));
-    }
+    ngOnInit() {}
 }

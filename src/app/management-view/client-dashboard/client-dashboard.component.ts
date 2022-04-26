@@ -58,7 +58,7 @@ export class ClientDashboardComponent implements OnInit {
 
     public goToUpdate() {
         this.router.navigate([
-            'repair-dashboard/manage',
+            'repair-dashboard',
             { outlets: { top: 'update/' + this.selectedRepairData.id, left: null, right: null } },
         ]);
     }

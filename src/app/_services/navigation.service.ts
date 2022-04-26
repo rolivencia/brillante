@@ -45,7 +45,7 @@ export class NavigationService {
         {
             id: '3',
             text: 'Reparaciones',
-            route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
+            route: ['repair-dashboard', { outlets: { left: 'grid', right: 'selected', top: null } }],
             enabled: true,
             visible: true,
             roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK, EUserRole.REPAIRMAN, EUserRole.EMPLOYEE],
