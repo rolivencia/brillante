@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { Repair } from '@models/repair';
 import { PageService, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
 import { Customer } from '@models/customer';
-import { routePaths } from '../../app.routing';
+import { routePaths } from '@app/app.routing';
 
 @Component({
     selector: 'app-client-dashboard',

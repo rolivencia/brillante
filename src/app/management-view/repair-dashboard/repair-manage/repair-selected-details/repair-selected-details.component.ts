@@ -5,12 +5,12 @@ import { RepairService } from '@services/repair.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Repair } from '@models/repair';
-import { routePaths } from '../../../app.routing';
+import { routePaths } from '@app/app.routing';
 
 @Component({
     selector: 'app-repair-selected-details',
     templateUrl: './repair-selected-details.component.html',
-    styleUrls: ['./repair-selected-details.component.scss', '../repair-dashboard.component.scss'],
+    styleUrls: ['./repair-selected-details.component.scss', '../../repair-dashboard.component.scss'],
 })
 export class RepairSelectedDetailsComponent implements OnInit {
     constructor(

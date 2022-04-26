@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CashTransaction, Operation } from '@models/cash-transaction';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { routePaths } from '../../../app.routing';
+import { routePaths } from '@app/app.routing';
 
 @Component({
     selector: 'app-cash-selected-details',
