@@ -5,7 +5,8 @@ import { RepairDashboardComponent } from '@management-view/repair-dashboard/repa
 const routes: Routes = [
     {
         path: 'manage',
-        loadChildren: () => import('./manage/repair-manage-routing.module').then((m) => m.RepairManageRoutingModule),
+        loadChildren: () =>
+            import('./repair-manage/repair-manage-routing.module').then((m) => m.RepairManageRoutingModule),
     },
     {
         path: '',
