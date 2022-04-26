@@ -18,6 +18,7 @@ import {
     faToolbox,
     faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import { routePaths } from '@app/app.routing';
 
 @Injectable({
     providedIn: 'root',
@@ -45,7 +46,7 @@ export class NavigationService {
         {
             id: '3',
             text: 'Reparaciones',
-            route: ['repair-dashboard/manage', { outlets: { left: 'grid', right: 'selected', top: null } }],
+            route: [`${routePaths.repair.path}/manage`],
             enabled: true,
             visible: true,
             roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK, EUserRole.REPAIRMAN, EUserRole.EMPLOYEE],

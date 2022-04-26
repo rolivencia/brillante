@@ -1,48 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepairDashboardComponent } from '@management-view/repair-dashboard/repair-dashboard.component';
-import { RepairDashboardGuard } from '@management-view/repair-dashboard/repair-dashboard.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: RepairDashboardComponent,
-        canActivate: [RepairDashboardGuard],
-        children: [
-            {
-                path: 'manage',
-                children: [
-                    {
-                        path: 'grid',
-                        loadChildren: () =>
-                            import('./repair-grid-results/repair-grid-results.module').then(
-                                (m) => m.RepairGridResultsModule
-                            ),
-                        outlet: 'left',
-                    },
-                    {
-                        path: 'selected',
-                        loadChildren: () =>
-                            import('./repair-selected-details/repair-selected-details.module').then(
-                                (m) => m.RepairSelectedDetailsModule
-                            ),
-                        outlet: 'right',
-                    },
-                    {
-                        path: 'add',
-                        loadChildren: () =>
-                            import('./repair-add-new/repair-add-new.module').then((m) => m.RepairAddNewModule),
-                        outlet: 'top',
-                    },
-                    {
-                        path: 'update',
-                        loadChildren: () =>
-                            import('./repair-update/repair-update.module').then((m) => m.RepairUpdateModule),
-                        outlet: 'top',
-                    },
-                ],
-            },
-        ],
+        children: [],
+    },
+    {
+        path: 'manage',
+        loadChildren: () => import('./repair-manage/repair-manage.module').then((m) => m.RepairManageModule),
+    },
+    {
+        path: 'add',
+        loadChildren: () => import('./repair-add-new/repair-add-new.module').then((m) => m.RepairAddNewModule),
+    },
+    {
+        path: 'update',
+        loadChildren: () => import('./repair-update/repair-update.module').then((m) => m.RepairUpdateModule),
     },
 ];
 

@@ -15,7 +15,7 @@ import { Repair } from '@models/repair';
 @Component({
     selector: 'app-repair-grid-results',
     templateUrl: './repair-grid-results.component.html',
-    styleUrls: ['./repair-grid-results.component.scss', '../repair-dashboard.component.scss'],
+    styleUrls: ['./repair-grid-results.component.scss', '../../repair-dashboard.component.scss'],
     providers: [FilterService, PageService, SortService],
 })
 export class RepairGridResultsComponent implements OnInit {

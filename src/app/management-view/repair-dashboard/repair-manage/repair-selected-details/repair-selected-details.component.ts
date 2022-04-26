@@ -5,11 +5,12 @@ import { RepairService } from '@services/repair.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Repair } from '@models/repair';
+import { routePaths } from '@app/app.routing';
 
 @Component({
     selector: 'app-repair-selected-details',
     templateUrl: './repair-selected-details.component.html',
-    styleUrls: ['./repair-selected-details.component.scss', '../repair-dashboard.component.scss'],
+    styleUrls: ['./repair-selected-details.component.scss', '../../repair-dashboard.component.scss'],
 })
 export class RepairSelectedDetailsComponent implements OnInit {
     constructor(
@@ -36,19 +37,15 @@ export class RepairSelectedDetailsComponent implements OnInit {
         );
     }
 
-    add() {
-        this.router.navigate(['repair-dashboard/manage', { outlets: { top: 'add', left: null, right: null } }]);
+    public add() {
+        this.router.navigate([`${routePaths.repair.path}/add`]);
     }
 
-    //FIXME: Actualizar a Repair una vez finalizada la migración
-    update(repair: Repair) {
-        this.router.navigate([
-            'repair-dashboard/manage',
-            { outlets: { top: 'update/' + repair.id, left: null, right: null } },
-        ]);
+    public update(repair: Repair) {
+        this.router.navigate([`${routePaths.repair.path}/update/${repair.id}`]);
     }
 
-    open(content) {
+    public open(content) {
         this.modalService.open(content);
     }
 }

@@ -12,6 +12,7 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["es2020", "dom"],
         "paths": {
+            "@app/*": ["src/app/*"],
             "@customer-view/*": ["src/app/customer-view/*"],
             "@management-view/*": ["src/app/management-view/*"],
             "@enums/*": ["src/app/_enums/*"],
