@@ -6,7 +6,7 @@ import { OfficeBranchGuard } from '@guards/office-branch.guard';
 import { RepairDashboardGuard } from '@management-view/repair-dashboard/repair-dashboard.guard';
 
 export const routePaths = {
-    repair: { path: 'repair-dashboard', children: {} },
+    repair: { path: 'repair', children: {} },
 };
 
 const appRoutes: Routes = [
