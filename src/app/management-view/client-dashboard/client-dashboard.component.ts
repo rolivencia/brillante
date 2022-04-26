@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { Repair } from '@models/repair';
 import { PageService, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
 import { Customer } from '@models/customer';
+import { routePaths } from '../../app.routing';
 
 @Component({
     selector: 'app-client-dashboard',
@@ -58,7 +59,7 @@ export class ClientDashboardComponent implements OnInit {
 
     public goToUpdate() {
         this.router.navigate([
-            'repair-dashboard',
+            routePaths.repair.path,
             { outlets: { top: 'update/' + this.selectedRepairData.id, left: null, right: null } },
         ]);
     }
