@@ -1,11 +1,121 @@
+<div class="row pb-3">
+    <div class="col-xxl-3 col-md-6">
+        <div class="card">
+            <div class="card-header">Reparaciones Pendientes</div>
+            <div class="card-body d-flex align-items-center">
+                <span class="me-3"><h2 class="m-0">15</h2></span><span>Reparaciones actualmente activas</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-3 col-md-6">
+        <div class="card">
+            <div class="card-header">Ingresos en la última semana</div>
+            <div class="card-body d-flex align-items-center">
+                <span class="me-3"><h2 class="m-0">4</h2></span><span>Reparaciones ingresadas en la última semana</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-3 col-md-6">
+        <div class="card bg-danger text-white">
+            <div class="card-header">Reparaciones Atrasadas</div>
+            <div class="card-body d-flex align-items-center">
+                <span class="me-3"><h2 class="m-0">5</h2></span
+                ><span>Reparaciones con más de 1 mes desde último cambio</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-3 col-md-6">
+        <div class="card bg-primary text-white">
+            <div class="card-header"><h5 class="m-0">Administrar reparaciones</h5></div>
+            <div class="card-body">Acceder a la sección de gestión de reparaciones</div>
+        </div>
+    </div>
+</div>
 <div class="row">
-    <div class="col-12">
-        <router-outlet name="top"></router-outlet>
+    <div class="col-xxl-8 col-md-12">
+        <div class="card">
+            <div class="card-header">Ingresos de la Última Semana</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Equipo</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Ramiro Olivencia</td>
+                            <td>iPhone XS</td>
+                            <td>Ingresada</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Felipe Reinheimer</td>
+                            <td>Motorola Moto G8</td>
+                            <td>En Proceso</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Ailin Franzoy</td>
+                            <td>Samsung S21</td>
+                            <td>En Espera de Repuestos</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>Lucas Penayo</td>
+                            <td>Lenovo Thinkpad</td>
+                            <td>Listo para Entrega</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">5</th>
+                            <td>Luciano Cosundino</td>
+                            <td>Apple Macbook 2019</td>
+                            <td>En Espera de Repuestos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="col-8">
-        <router-outlet name="left"></router-outlet>
-    </div>
-    <div class="col-4">
-        <router-outlet name="right"></router-outlet>
+    <div class="col-xxl-4 col-md-12">
+        <div class="card">
+            <div class="card-header">Reparaciones pendientes por categoría</div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Reparación en Placa</th>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pantalla</th>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Cámara</th>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pin de Carga</th>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Otras</th>
+                            <td>3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
