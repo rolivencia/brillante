@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CashTransaction, Operation } from '@models/cash-transaction';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { routePaths } from '../../../app.routing';
 
 @Component({
     selector: 'app-cash-selected-details',
@@ -51,7 +52,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
         switch (operation.description) {
             case 'Reparación':
                 this.router.navigate([
-                    'repair-dashboard',
+                    routePaths.repair.path,
                     { outlets: { top: 'update/' + operation['id'], left: null, right: null } },
                 ]);
                 break;
