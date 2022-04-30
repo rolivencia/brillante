@@ -23,8 +23,18 @@
                     <e-columns>
                         <e-column field="id" headerText="ID" width="70"></e-column>
                         <e-column field="customer.fullName" headerText="Cliente"></e-column>
-                        <e-column field="device.manufacturer" headerText="Marca"></e-column>
-                        <e-column field="device.model" headerText="Modelo"></e-column>
+                        <!--                        <e-column field="device.manufacturer" headerText="Marca">-->
+                        <e-column field="device.manufacturer" headerText="Dispositivo">
+                            <ng-template #template let-data>
+                                {{ data.device.manufacturer }} {{ data.device.model }}
+                            </ng-template>
+                        </e-column>
+                        <!--                        <e-column field="device.model" headerText="Modelo"></e-column>-->
+                        <e-column field="checkIn" headerText="Ingresada" width="110">
+                            <ng-template #template let-data>
+                                {{ data.checkIn.format('YYYY-MM-DD   HH:mm') }}
+                            </ng-template>
+                        </e-column>
                         <e-column field="lastUpdate" headerText="Actualizada" width="110">
                             <ng-template #template let-data>
                                 {{ data.lastUpdate.format('YYYY-MM-DD   HH:mm') }}
