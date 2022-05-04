@@ -10,7 +10,7 @@ import { routePaths } from '@app/app.routing';
 @Component({
     selector: 'app-repair-selected-details',
     templateUrl: './repair-selected-details.component.html',
-    styleUrls: ['./repair-selected-details.component.scss', '../../repair-dashboard.component.scss'],
+    styleUrls: ['./repair-selected-details.component.scss', '../repair-manage.component.scss'],
 })
 export class RepairSelectedDetailsComponent implements OnInit {
     constructor(
