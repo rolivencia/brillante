@@ -111,6 +111,7 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
             this.cashGrid.filterByColumn(field, 'equal', args.value);
         }
     }
+
     private calculateGridHeight() {
         if (this.cashGrid) {
             const headerHeight = 42;
