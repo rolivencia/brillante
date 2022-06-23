@@ -4,64 +4,88 @@
             <div class="col-12">Gestión de Reparaciones</div>
         </div>
     </div>
-    <div class="card-body">
-        <ng-container>
-            <div id="grid-container">
-                <div class="alert alert-info h-100 text-center" *ngIf="!repairDashboardService.gridData.length">
-                    <h3>Cargando...</h3>
-                </div>
-                <ejs-grid
-                    *ngIf="repairDashboardService.gridData"
-                    [allowFiltering]="true"
-                    [allowPaging]="true"
-                    [allowSorting]="true"
-                    [dataSource]="repairDashboardService.gridData"
-                    [pageSettings]="{ pageSize: 15 }"
-                    [sortSettings]="sortOptions"
-                    (rowSelected)="getRepairDetails($event)"
-                >
-                    <e-columns>
-                        <e-column field="id" headerText="ID" width="70"></e-column>
-                        <e-column field="customer.fullName" headerText="Cliente"></e-column>
-                        <e-column field="device.manufacturer" headerText="Dispositivo">
-                            <ng-template #template let-data>
-                                {{ data.device.manufacturer }} {{ data.device.model }}
-                            </ng-template>
-                        </e-column>
-                        <e-column field="checkIn" headerText="Ingresada" width="110">
-                            <ng-template #template let-data>
-                                {{ data.checkIn.format('YYYY-MM-DD   HH:mm') }}
-                            </ng-template>
-                        </e-column>
-                        <e-column field="lastUpdate" headerText="Actualizada" width="110">
-                            <ng-template #template let-data>
-                                {{ data.lastUpdate.format('YYYY-MM-DD   HH:mm') }}
-                            </ng-template>
-                        </e-column>
-                        <e-column field="status.description" headerText="Estado"></e-column>
-                    </e-columns>
-                </ejs-grid>
+    <div class="card-body d-flex flex-column justify-content-between">
+        <div id="grid-container">
+            <div class="alert alert-info h-100 text-center" *ngIf="!repairDashboardService.gridData.length">
+                <h3>Cargando...</h3>
             </div>
+            <ejs-grid
+                #grid
+                *ngIf="repairDashboardService.gridData"
+                [allowFiltering]="true"
+                [allowPaging]="true"
+                [allowSorting]="true"
+                [dataSource]="repairDashboardService.gridData"
+                [pageSettings]="{ pageSize: 15 }"
+                [sortSettings]="sortOptions"
+                (rowSelected)="getRepairDetails($event)"
+            >
+                <e-columns>
+                    <e-column field="id" headerText="ID" width="65"></e-column>
+                    <e-column field="customer.fullName" headerText="Cliente"></e-column>
+                    <e-column field="device.manufacturer" headerText="Marca">
+                        <ng-template #filterTemplate let-data>
+                            <ejs-dropdownlist
+                                [(ngModel)]="data.Name"
+                                [enabled]="true"
+                                (change)="onFilterChange($event, 'device.manufacturer')"
+                                [dataSource]="filterDropdownData['manufacturer']"
+                            ></ejs-dropdownlist>
+                        </ng-template>
+                    </e-column>
+                    <e-column field="device.model" headerText="Modelo">
+                        <ng-template #filterTemplate let-data>
+                            <ejs-dropdownlist
+                                [(ngModel)]="data.Name"
+                                [enabled]="true"
+                                (change)="onFilterChange($event, 'device.model')"
+                                [dataSource]="filterDropdownData['model']"
+                            ></ejs-dropdownlist>
+                        </ng-template>
+                    </e-column>
+                    <e-column field="device.deviceId" headerText="IMEI / UUID / Serial"></e-column>
+                    <e-column field="checkIn" headerText="Ingresada" width="110">
+                        <ng-template #template let-data>
+                            {{ data.checkIn.format('YYYY-MM-DD   HH:mm') }}
+                        </ng-template>
+                    </e-column>
+                    <e-column field="lastUpdate" headerText="Actualizada" width="110">
+                        <ng-template #template let-data>
+                            {{ data.lastUpdate.format('YYYY-MM-DD   HH:mm') }}
+                        </ng-template>
+                    </e-column>
+                    <e-column field="status.description" headerText="Estado">
+                        <ng-template #filterTemplate let-data>
+                            <ejs-dropdownlist
+                                [(ngModel)]="data.Name"
+                                [enabled]="true"
+                                (change)="onFilterChange($event, 'status.description')"
+                                [dataSource]="filterDropdownData['status']"
+                            ></ejs-dropdownlist>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
 
-            <p></p>
+        <p></p>
 
-            <div id="footerControls" class="row no-gutters">
-                <div class="col-12 d-flex justify-content-end align-items-center">
-                    <button class="btn btn-sm btn-outline-primary h-100" (click)="repairDashboardService.getGridData()">
-                        🔄 Actualizar Lista
-                    </button>
+        <div id="footerControls" class="row no-gutters">
+            <div class="col-12 d-flex justify-content-end align-items-center">
+                <button class="btn btn-sm btn-outline-primary h-100" (click)="repairDashboardService.getGridData()">
+                    🔄 Actualizar Lista
+                </button>
 
-                    <div class="form-check form-switch ms-4">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            id="finished-repairs-check"
-                            [(ngModel)]="repairDashboardService._showFinished"
-                        />
-                        <label class="form-check-label" for="finished-repairs-check">Ver completados</label>
-                    </div>
+                <div class="form-check form-switch ms-4">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="finished-repairs-check"
+                        [(ngModel)]="repairDashboardService._showFinished"
+                    />
+                    <label class="form-check-label" for="finished-repairs-check">Ver completados</label>
                 </div>
             </div>
-        </ng-container>
+        </div>
     </div>
 </div>

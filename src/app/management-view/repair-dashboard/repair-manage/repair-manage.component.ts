@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutService } from '@services/layout.service';
 
 @Component({
     selector: 'app-repair-manage',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./repair-manage.component.scss'],
 })
 export class RepairManageComponent implements OnInit {
-    constructor() {}
+    constructor(private layoutService: LayoutService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.layoutService.useContainer.next(false);
+    }
 }

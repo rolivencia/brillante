@@ -1,16 +1,18 @@
 import * as moment from 'moment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RepairDashboardService } from '@management-view/repair-dashboard/repair-dashboard.service';
 import { DateObject } from '@models/date-object';
 import { DateHandlerService } from '@services/date-handler.service';
 import {
     FilterService,
+    GridComponent,
     PageService,
     RowSelectEventArgs,
     SortService,
     SortSettingsModel,
 } from '@syncfusion/ej2-angular-grids';
 import { Repair } from '@models/repair';
+import { DataUtil } from '@syncfusion/ej2-data';
 
 @Component({
     selector: 'app-repair-grid-results',
@@ -19,6 +21,8 @@ import { Repair } from '@models/repair';
     providers: [FilterService, PageService, SortService],
 })
 export class RepairGridResultsComponent implements OnInit {
+    @ViewChild('grid', { static: false }) grid: GridComponent;
+
     constructor(
         private dateHandlerService: DateHandlerService,
         public repairDashboardService: RepairDashboardService
@@ -31,7 +35,9 @@ export class RepairGridResultsComponent implements OnInit {
         columns: [{ field: 'lastUpdate', direction: 'Descending' }],
     };
 
-    ngOnInit() {
+    public filterDropdownData = { manufacturer: [], model: [], status: [] };
+
+    async ngOnInit() {
         this.repairDashboardService._dateTo = moment();
         this.repairDashboardService._dateFrom = moment().subtract(1, 'month');
 
@@ -45,7 +51,18 @@ export class RepairGridResultsComponent implements OnInit {
             this.repairDashboardService._dateTo
         );
 
-        this.repairDashboardService.getGridData();
+        await this.repairDashboardService.getGridData();
+        this.filterDropdownData = {
+            manufacturer: ['']
+                .concat(DataUtil.distinct(this.repairDashboardService.gridData, 'device.manufacturer') as string[])
+                .sort(),
+            model: ['']
+                .concat(DataUtil.distinct(this.repairDashboardService.gridData, 'device.model') as string[])
+                .sort(),
+            status: ['']
+                .concat(DataUtil.distinct(this.repairDashboardService.gridData, 'status.description') as string[])
+                .sort(),
+        };
     }
 
     //FIXME: Move this methods to a service
@@ -62,5 +79,13 @@ export class RepairGridResultsComponent implements OnInit {
 
     getRepairDetails(event: RowSelectEventArgs) {
         this.repairDashboardService.selectedRepair = event.data as Repair;
+    }
+
+    public onFilterChange(args: any, field: string): void {
+        if (args.value === '') {
+            this.grid.clearFiltering([field]);
+        } else {
+            this.grid.filterByColumn(field, 'equal', args.value);
+        }
     }
 }
