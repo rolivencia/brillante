@@ -51,10 +51,7 @@ export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
         const operation: Operation = this.cashDashboardService.selectedTransaction.operation;
         switch (operation.description) {
             case 'Reparación':
-                this.router.navigate([
-                    routePaths.repair.path,
-                    { outlets: { top: 'update/' + operation['id'], left: null, right: null } },
-                ]);
+                this.router.navigate([`${routePaths.repair.path}/update/${operation['id']}`]);
                 break;
             default:
                 break;
