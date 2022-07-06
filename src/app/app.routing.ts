@@ -1,5 +1,4 @@
 ﻿import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login';
 import { AuthGuard } from './_guards';
 
 import { OfficeBranchGuard } from '@guards/office-branch.guard';
@@ -54,8 +53,6 @@ const appRoutes: Routes = [
             import('@management-view/reports-dashboard/reports-dashboard.module').then((m) => m.ReportsDashboardModule),
         canActivate: [AuthGuard],
     },
-
-    { path: 'login', component: LoginComponent },
 
     { path: '**', redirectTo: 'home' },
 ];
