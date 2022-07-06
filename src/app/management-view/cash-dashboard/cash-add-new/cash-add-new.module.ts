@@ -1,6 +1,5 @@
 import { CashAddNewComponent } from './cash-add-new.component';
 import { CashAddNewRoutingModule } from './cash-add-new-routing.module';
-import { CashFormHandlerService } from '../cash-form-handler.service';
 import { CommonModule } from '@angular/common';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +16,5 @@ import { PaymentMethodSelectorModule } from '@components/payment-method-selector
         PaymentMethodSelectorModule,
         ReactiveFormsModule,
     ],
-    providers: [CashFormHandlerService],
 })
 export class CashAddNewModule {}
