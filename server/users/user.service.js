@@ -1,19 +1,17 @@
 ﻿const user = require('server/users/user.model');
 const role = require('server/users/role.model');
 const userRole = require('server/users/user-role.model');
-
-const bcrypt = require('bcrypt');
 const environment = require('server/_helpers/environment');
 const jwt = require('jsonwebtoken');
 const { EUserRole } = require('./user-role-enum');
 
 module.exports = {
-    authenticate,
+    authenticateByEmail,
     getAll,
-    getByEmail,
     register,
 };
 
+// TODO: Build workflow to register new users via Auth0
 async function register({ firstName, lastName, email, password }) {
     // Assign the customer role by default
 
@@ -52,7 +50,7 @@ async function register({ firstName, lastName, email, password }) {
     });
 }
 
-async function authenticate({ username, password }) {
+async function authenticateByEmail({ email, secret }) {
     const currentUser = await user.User.findOne({
         include: [
             {
@@ -64,7 +62,7 @@ async function authenticate({ username, password }) {
         ],
 
         where: {
-            userName: username,
+            email: email,
             enabled: true,
             deleted: false,
         },
@@ -73,37 +71,10 @@ async function authenticate({ username, password }) {
     return new Promise((resolve, reject) => {
         if (!currentUser || !currentUser.dataValues) reject(error);
 
-        bcrypt.compareSync(password, currentUser.dataValues.password, 10)
-            ? resolve({
-                  ...currentUser.dataValues,
-                  token: jwt.sign({ sub: currentUser.id }, environment.secret),
-              })
-            : reject(error);
-    });
-}
-
-async function getByEmail(email) {
-    return user.User.findOne({
-        attributes: [
-            'id',
-            'firstName',
-            'lastName',
-            'userName',
-            'avatar',
-            'createdAt',
-            'updatedAt',
-            'enabled',
-            'deleted',
-        ],
-        include: [
-            {
-                model: role.Role,
-                required: true,
-                attributes: ['id', 'description'],
-                through: { attributes: [] },
-            },
-        ],
-        where: { email: email, enabled: true, deleted: false },
+        resolve({
+            ...currentUser.dataValues,
+            token: jwt.sign({ sub: currentUser.id }, environment.secret),
+        });
     });
 }
 
