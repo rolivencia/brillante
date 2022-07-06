@@ -9,8 +9,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProgressLoaderModule } from '@components/progress-loader/progress-loader.module';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginModule } from './login/login.module';
-import { RegisterModule } from './register/register.module';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { MainHeaderModule } from '@components/main-header/main-header.module';
 import { PaymentMethodsService } from '@services/payment-methods.service';
@@ -23,7 +21,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { LayoutService } from '@services/layout.service';
 import { AggregateService, ExcelExportService, FilterService, SortService } from '@syncfusion/ej2-angular-grids';
 import { DateTimeService } from '@services/date-time.service';
-import { AuthModule } from '@auth0/auth0-angular';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { environment } from '@environments/environment';
 
 @NgModule({
@@ -31,8 +29,6 @@ import { environment } from '@environments/environment';
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        LoginModule,
-        RegisterModule,
         routing,
         ToastrModule.forRoot(),
         ProgressLoaderModule,
@@ -40,10 +36,22 @@ import { environment } from '@environments/environment';
         MainHeaderModule,
         LeftSidebarModule,
         SidebarModule,
-        // Auth0
         AuthModule.forRoot({
             domain: environment.auth0.domain,
             clientId: environment.auth0.clientId,
+            audience: environment.auth0.audience,
+            scope: 'read:current_user',
+            httpInterceptor: {
+                allowedList: [
+                    {
+                        uri: `${environment.auth0.audience}/*`,
+                        tokenOptions: {
+                            audience: `${environment.auth0.audience}`,
+                            scope: 'read:current_user',
+                        },
+                    },
+                ],
+            },
         }),
     ],
     declarations: [AppComponent],
@@ -75,6 +83,7 @@ import { environment } from '@environments/environment';
         },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
         CartService,
         DateTimeService,
         DeviceDetectorService,
