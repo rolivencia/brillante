@@ -31,6 +31,12 @@ User.init(
             allowNull: false,
             field: 'user_name',
         },
+        email: {
+            type: Sequelize.STRING,
+            unique: true,
+            allowNull: false,
+            field: 'email',
+        },
         avatar: {
             type: Sequelize.STRING,
             allowNull: true,
