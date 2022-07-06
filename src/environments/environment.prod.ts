@@ -1,5 +1,8 @@
 export const environment = {
     production: true,
     apiUrl: '',
-    // apiUrl: "http://brillante-server.herokuapp.com"
+    auth0: {
+        domain: 'brillantestore.us.auth0.com',
+        clientId: '5JPVRa51TTPdWZz8y44WMoFuzLRjs2Sq',
+    },
 };

@@ -7,6 +7,10 @@ export const environment = {
     // apiUrl: "http://brillante-server.herokuapp.com"
     // apiUrl: 'https://localhost:443',
     apiUrl: 'http://localhost:4000',
+    auth0: {
+        domain: 'dev-0wyaah0g.us.auth0.com',
+        clientId: '9qi6RSZk0xYtttld6Z9W9wpxlCIXf2YN',
+    },
 };
 
 /*
