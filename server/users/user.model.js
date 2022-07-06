@@ -12,7 +12,7 @@ User.init(
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            allowNull: false,
+            autoIncrement: true,
             field: 'id',
         },
         firstName: {
@@ -30,6 +30,12 @@ User.init(
             unique: true,
             allowNull: false,
             field: 'user_name',
+        },
+        email: {
+            type: Sequelize.STRING,
+            unique: true,
+            allowNull: false,
+            field: 'email',
         },
         avatar: {
             type: Sequelize.STRING,

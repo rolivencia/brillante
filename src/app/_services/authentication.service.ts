@@ -1,15 +1,16 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { Role, User } from '@models/user';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     public currentUser: BehaviorSubject<User>;
 
-    constructor(private http: HttpClient) {
+    constructor(private auth0Service: AuthService, private http: HttpClient) {
         const localStorageUserData = JSON.parse(localStorage.getItem('currentUser'));
         const user = localStorageUserData ? new User(localStorageUserData) : null;
         this.currentUser = new BehaviorSubject<User>(user);
@@ -19,11 +20,10 @@ export class AuthenticationService {
         return this.currentUser.value;
     }
 
-    login(username: string, password: string): Observable<User> {
+    public authenticateAgainstDatabase(email: string): Observable<User> {
         return this.http
-            .post<any>(`${environment.apiUrl}/users/authenticate`, {
-                username,
-                password,
+            .post<any>(`${environment.apiUrl}/users/authenticateByEmail`, {
+                email,
             })
             .pipe(
                 map((user) => {
@@ -41,10 +41,31 @@ export class AuthenticationService {
             );
     }
 
-    logout() {
+    public redirectToLoginPortal() {
+        this.auth0Service.loginWithRedirect();
+    }
+
+    /**
+     * Obtains the email of the Auth0 active account and proceeds to
+     * authenticate the app through the database.
+     */
+    public login(): Observable<User> {
+        return this.auth0Service.user$.pipe(
+            switchMap((user) => {
+                if (!user) {
+                    return of(null);
+                }
+
+                return this.authenticateAgainstDatabase(user.email);
+            })
+        );
+    }
+
+    public logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUser.next(null);
+        this.auth0Service.logout();
     }
 }
 

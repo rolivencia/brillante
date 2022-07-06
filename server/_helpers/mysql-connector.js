@@ -12,6 +12,7 @@ const sequelizeConnection = new Sequelize(database, {
         freezeTableName: true,
         timestamps: true,
     },
+    logging: false,
 });
 function sequelizeConnector() {
     return sequelizeConnection;

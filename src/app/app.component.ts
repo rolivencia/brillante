@@ -54,6 +54,10 @@ export class AppComponent implements OnInit, AfterViewInit {
                 this.titleService.setTitle('Brillante Store');
             }
         });
+
+        this.authenticationService.login().subscribe((loggedUser) => {
+            this.authenticationService.currentUser.next(loggedUser);
+        });
     }
 
     ngAfterViewInit() {
