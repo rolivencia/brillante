@@ -10,6 +10,7 @@ const { EUserRole } = require('./user-role-enum');
 module.exports = {
     authenticate,
     getAll,
+    getByEmail,
     register,
 };
 
@@ -78,6 +79,31 @@ async function authenticate({ username, password }) {
                   token: jwt.sign({ sub: currentUser.id }, environment.secret),
               })
             : reject(error);
+    });
+}
+
+async function getByEmail(email) {
+    return user.User.findOne({
+        attributes: [
+            'id',
+            'firstName',
+            'lastName',
+            'userName',
+            'avatar',
+            'createdAt',
+            'updatedAt',
+            'enabled',
+            'deleted',
+        ],
+        include: [
+            {
+                model: role.Role,
+                required: true,
+                attributes: ['id', 'description'],
+                through: { attributes: [] },
+            },
+        ],
+        where: { email: email, enabled: true, deleted: false },
     });
 }
 

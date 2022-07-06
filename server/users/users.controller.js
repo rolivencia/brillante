@@ -6,6 +6,7 @@ const userService = require('./user.service');
 router.post('/authenticate', authenticate);
 router.post('/register', register);
 router.get('/', getAll);
+router.get('/getByEmail/:email', getByEmail);
 
 module.exports = router;
 
@@ -21,6 +22,13 @@ function authenticate(req, res, next) {
 function getAll(req, res, next) {
     userService
         .getAll()
+        .then((users) => res.json(users))
+        .catch((err) => next(err));
+}
+
+function getByEmail(req, res, next) {
+    userService
+        .getByEmail(req.params.email)
         .then((users) => res.json(users))
         .catch((err) => next(err));
 }
