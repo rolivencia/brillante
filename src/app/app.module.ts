@@ -23,6 +23,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { LayoutService } from '@services/layout.service';
 import { AggregateService, ExcelExportService, FilterService, SortService } from '@syncfusion/ej2-angular-grids';
 import { DateTimeService } from '@services/date-time.service';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment } from '@environments/environment';
 
 @NgModule({
     imports: [
@@ -38,6 +40,11 @@ import { DateTimeService } from '@services/date-time.service';
         MainHeaderModule,
         LeftSidebarModule,
         SidebarModule,
+        // Auth0
+        AuthModule.forRoot({
+            domain: environment.auth0.domain,
+            clientId: environment.auth0.clientId,
+        }),
     ],
     declarations: [AppComponent],
     providers: [
