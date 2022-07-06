@@ -12,7 +12,7 @@ User.init(
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            allowNull: false,
+            autoIncrement: true,
             field: 'id',
         },
         firstName: {

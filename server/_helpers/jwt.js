@@ -11,6 +11,7 @@ function jwt() {
             '/users/authenticate',
             '/dashboard',
             '/login',
+            '/users/register',
             '/cash/getPaymentMethods',
             '/repair/getStatusData',
             new RegExp('/cash-dashboard/*', 'i'),
