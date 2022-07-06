@@ -70,10 +70,13 @@ export class MainHeaderComponent implements OnInit {
         });
     }
 
+    login() {
+        this.authenticationService.redirectToLoginPortal();
+    }
+
     logout() {
-        this.authenticationService.logout();
         this._adminLinks = [];
-        this.router.navigate(['/']);
+        this.authenticationService.logout();
     }
 
     public onToggleSidebar() {

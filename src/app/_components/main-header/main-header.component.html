@@ -23,7 +23,7 @@
                 </li>
             </ng-container>
             <li class="ps-3">
-                <a [routerLink]="'login'" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
+                <a (click)="login()" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
             </li>
         </ul>
     </nav>
