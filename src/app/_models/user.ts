@@ -11,6 +11,7 @@
     token: string;
     avatar: string;
     roles: Role[];
+    email: string;
 
     constructor(user?: Partial<User>) {
         Object.assign(this, user);
