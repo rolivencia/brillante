@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { BehaviorSubject } from 'rxjs';
-import { CashFormHandlerService } from '@management-view/cash-dashboard/cash-form-handler.service';
 import { CashService } from '@services/cash.service';
 import { CashTransaction } from '@models/cash-transaction';
 import { DateObject } from '@models/date-object';
@@ -55,7 +54,6 @@ export class CashDashboardService {
     constructor(
         public authenticationService: AuthenticationService,
         public cashService: CashService,
-        private cashFormHandler: CashFormHandlerService,
         private officeBranchService: OfficeBranchService,
         private progressLoaderService: ProgressLoaderService
     ) {}
