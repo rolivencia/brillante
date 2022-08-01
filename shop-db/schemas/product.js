@@ -62,8 +62,8 @@ export default {
                 'Productos relacionados al actual. Pensar en combo de productos, por ejemplo. Se puede hacer uso de esta característica para vincular productos que van en combo, como un iPhone y los AirPods.',
             of: [
                 {
-                    title: 'Producto',
-                    type: 'product',
+                    type: 'reference',
+                    to: { type: 'product' },
                 },
             ],
         },
@@ -87,8 +87,19 @@ export default {
             type: 'localeString',
         },
         {
+            name: 'colors',
+            title: 'Colores disponibles',
+            type: 'array',
+            of: [
+                {
+                    type: 'reference',
+                    to: { type: 'colors' },
+                },
+            ],
+        },
+        {
             name: 'categories',
-            title: 'Categories',
+            title: 'Categorías',
             type: 'array',
             description:
                 'Categoría del producto. Si la categoría del producto no existe, debe cargarse en el sistema previamente',
