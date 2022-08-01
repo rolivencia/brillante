@@ -10,6 +10,7 @@ import product from './product';
 import productVariant from './productVariant';
 import manufacturer from './manufacturer';
 import featuredProduct from './featuredProduct';
+import color from './color';
 
 import localeString from './locale/String';
 import localeText from './locale/Text';
@@ -28,6 +29,7 @@ export default createSchema({
         product,
         featuredProduct,
         category,
+        color,
         // When added to this list, object types can be used as
         // { type: 'typename' } in other document schemas
         blockContent,
