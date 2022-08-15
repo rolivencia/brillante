@@ -4,7 +4,7 @@
             <div>
                 <strong>{{ currentUser.welcomeName }}</strong>
             </div>
-            <div>
+            <div *ngIf="adminLinks.length !== 0">
                 Sucursal:
                 <strong>
                     {{ officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna' }}</strong
