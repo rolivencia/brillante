@@ -67,10 +67,10 @@ User.init(
             allowNull: false,
             field: 'deleted',
         },
-        finishedRegistration: {
+        hasFinishedRegistration: {
             type: Sequelize.BOOLEAN,
             allowNull: false,
-            field: 'finished_registration',
+            field: 'has_finished_registration',
         },
     },
     {
