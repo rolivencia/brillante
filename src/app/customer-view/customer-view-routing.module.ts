@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CustomerViewComponent } from './customer-view.component';
+import { FinishedRegistrationGuard } from '@guards/finished-registration.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: CustomerViewComponent,
+        canActivate: [FinishedRegistrationGuard],
         children: [
             {
                 path: '',
