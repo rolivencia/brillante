@@ -67,6 +67,11 @@ User.init(
             allowNull: false,
             field: 'deleted',
         },
+        finishedRegistration: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            field: 'finished_registration',
+        },
     },
     {
         sequelize: sequelizeConnector,

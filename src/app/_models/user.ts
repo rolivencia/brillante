@@ -12,6 +12,7 @@
     avatar: string;
     roles: Role[];
     email: string;
+    hasFinishedRegistration: boolean;
 
     constructor(user?: Partial<User>) {
         Object.assign(this, user);
