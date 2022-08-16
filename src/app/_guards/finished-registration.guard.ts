@@ -1,20 +1,44 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+    ActivatedRouteSnapshot,
+    CanActivate,
+    CanActivateChild,
+    Router,
+    RouterStateSnapshot,
+    UrlTree,
+} from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '@app/_services';
+import { AuthenticationService, hasRoles } from '@app/_services';
 import { routePaths } from '@app/app.routing';
+import { EUserRole } from '@enums/user.enum';
 
 @Injectable({
     providedIn: 'root',
 })
-export class FinishedRegistrationGuard implements CanActivate {
+export class FinishedRegistrationGuard implements CanActivate, CanActivateChild {
     constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        return this.hasUserFinishedRegistrationCheck(route, state);
+    }
+
+    canActivateChild(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        return this.hasUserFinishedRegistrationCheck(route, state);
+    }
+
+    private hasUserFinishedRegistrationCheck(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const currentUser = this.authenticationService.currentUserValue;
+
+        // If user is not a customer, then allow access always
+        if (!hasRoles(currentUser.roles, [EUserRole.CUSTOMER])) {
+            return true;
+        }
 
         // User not logged in or user logged and with registration finished
         if (!currentUser || (currentUser && currentUser.hasFinishedRegistration)) {
