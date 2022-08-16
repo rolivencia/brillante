@@ -14,7 +14,7 @@ module.exports = {
             await queryInterface.addColumn(
                 'user',
                 'has_finished_registration',
-                { type: Sequelize.DataTypes.BOOLEAN },
+                { type: Sequelize.DataTypes.BOOLEAN, defaultValue: false },
                 { transaction }
             );
             await queryInterface.addColumn(
