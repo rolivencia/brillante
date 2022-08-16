@@ -7,8 +7,6 @@ module.exports = {
             await queryInterface.renameTable('sh_fix_client', 'sh_fix_customer', { transaction });
             await queryInterface.changeColumn('sh_fix_customer', 'client_id', {
                 type: Sequelize.DataTypes.INTEGER.UNSIGNED,
-                autoIncrement: true,
-                primaryKey: true,
             });
             await queryInterface.renameColumn('sh_fix_customer', 'client_id', 'id', { transaction });
             await queryInterface.renameColumn('sh_fix_customer', 'nombre', 'first_name', { transaction });
@@ -24,6 +22,7 @@ module.exports = {
             await queryInterface.removeColumn('sh_fix_customer', 'usuario');
             await queryInterface.removeColumn('sh_fix_customer', 'telefono2');
         } catch (err) {
+            await this.down(queryInterface, Sequelize);
             transaction.rollback();
             throw err;
         }
@@ -50,12 +49,9 @@ module.exports = {
             await queryInterface.renameColumn('sh_fix_customer', 'id', 'client_id', { transaction });
             await queryInterface.changeColumn('sh_fix_customer', 'client_id', {
                 type: Sequelize.DataTypes.BIGINT.UNSIGNED,
-                autoIncrement: true,
-                primaryKey: true,
             });
             await queryInterface.renameTable('sh_fix_customer', 'sh_fix_client', { transaction });
         } catch (err) {
-            await this.down(queryInterface, Sequelize);
             transaction.rollback();
             throw err;
         }
