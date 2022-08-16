@@ -5,10 +5,11 @@ module.exports = {
         const transaction = await queryInterface.sequelize.transaction();
         try {
             await queryInterface.renameTable('sh_fix_client', 'sh_fix_customer', { transaction });
-            await queryInterface.changeColumn('sh_fix_customer', 'client_id', {
-                type: Sequelize.DataTypes.INTEGER.UNSIGNED,
-            });
             await queryInterface.renameColumn('sh_fix_customer', 'client_id', 'id', { transaction });
+            await queryInterface.changeColumn('sh_fix_customer', 'id', {
+                type: Sequelize.DataTypes.INTEGER.UNSIGNED,
+                autoIncrement: true,
+            });
             await queryInterface.renameColumn('sh_fix_customer', 'nombre', 'first_name', { transaction });
             await queryInterface.renameColumn('sh_fix_customer', 'apellido', 'last_name', { transaction });
             await queryInterface.renameColumn('sh_fix_customer', 'telefono', 'telephone_number', { transaction });
@@ -46,10 +47,11 @@ module.exports = {
             await queryInterface.renameColumn('sh_fix_customer', 'telephone_number', 'telefono', { transaction });
             await queryInterface.renameColumn('sh_fix_customer', 'last_name', 'apellido', { transaction });
             await queryInterface.renameColumn('sh_fix_customer', 'first_name', 'nombre', { transaction });
-            await queryInterface.renameColumn('sh_fix_customer', 'id', 'client_id', { transaction });
-            await queryInterface.changeColumn('sh_fix_customer', 'client_id', {
+            await queryInterface.changeColumn('sh_fix_customer', 'id', {
                 type: Sequelize.DataTypes.BIGINT.UNSIGNED,
+                autoIncrement: true,
             });
+            await queryInterface.renameColumn('sh_fix_customer', 'id', 'client_id', { transaction });
             await queryInterface.renameTable('sh_fix_customer', 'sh_fix_client', { transaction });
         } catch (err) {
             transaction.rollback();
