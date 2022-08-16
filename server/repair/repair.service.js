@@ -230,7 +230,15 @@ async function getAll({ showFinished }) {
                     'lastName',
                     'email',
                     'telephone',
-                    [Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName'],
+                    [
+                        Sequelize.fn(
+                            'CONCAT',
+                            Sequelize.col('customer.first_name'),
+                            ' ',
+                            Sequelize.col('customer.last_name')
+                        ),
+                        'fullName',
+                    ],
                 ],
             },
             {
@@ -317,7 +325,15 @@ async function getAllByDate({ showFinished, startDate, endDate }) {
                     'lastName',
                     'email',
                     'telephone',
-                    [Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName'],
+                    [
+                        Sequelize.fn(
+                            'CONCAT',
+                            Sequelize.col('customer.first_name'),
+                            ' ',
+                            Sequelize.col('customer.last_name')
+                        ),
+                        'fullName',
+                    ],
                 ],
             },
             {
@@ -394,7 +410,15 @@ async function getById(id) {
                     'lastName',
                     'email',
                     'telephone',
-                    [Sequelize.fn('CONCAT', Sequelize.col('nombre'), ' ', Sequelize.col('apellido')), 'fullName'],
+                    [
+                        Sequelize.fn(
+                            'CONCAT',
+                            Sequelize.col('customer.first_name'),
+                            ' ',
+                            Sequelize.col('customer.last_name')
+                        ),
+                        'fullName',
+                    ],
                 ],
             },
             {

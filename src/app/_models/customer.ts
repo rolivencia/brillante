@@ -10,7 +10,6 @@ export class Customer {
     public birthDate: Moment | string | Date;
     public address: string;
     public telephone: string;
-    public secondaryTelephone: string;
     public user: User;
 
     constructor() {

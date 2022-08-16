@@ -9,20 +9,20 @@ module.exports = { Customer };
 Customer.init(
     {
         id: {
-            type: Sequelize.BIGINT,
+            type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
-            field: 'client_id',
+            field: 'id',
         },
         firstName: {
             type: Sequelize.STRING,
             allowNull: false,
-            field: 'nombre',
+            field: 'first_name',
         },
         lastName: {
             type: Sequelize.STRING,
             allowNull: false,
-            field: 'apellido',
+            field: 'last_name',
         },
         dni: {
             type: Sequelize.STRING,
@@ -32,66 +32,56 @@ Customer.init(
         telephone: {
             type: Sequelize.BIGINT,
             allowNull: true,
-            field: 'telefono',
-        },
-        secondaryTelephone: {
-            type: Sequelize.BIGINT,
-            allowNull: true,
-            field: 'telefono2',
+            field: 'telephone_number',
         },
         address: {
             type: Sequelize.STRING,
             allowNull: true,
-            field: 'direccion',
-        },
-        idUser: {
-            type: Sequelize.BIGINT,
-            allowNull: true,
-            field: 'usuario',
+            field: 'address',
         },
         email: {
             type: Sequelize.STRING,
             allowNull: true,
             field: 'email',
         },
+        createdAt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            field: 'created_at',
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            field: 'updated_at',
+        },
+        createdBy: {
+            type: Sequelize.BIGINT,
+            allowNull: true,
+            field: 'created_by',
+        },
+        updatedBy: {
+            type: Sequelize.BIGINT,
+            allowNull: true,
+            field: 'updated_by',
+        },
+        enabled: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: 1,
+            field: 'enabled',
+        },
+        deleted: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0,
+            field: 'deleted',
+        },
         birthDate: {
             type: Sequelize.DATE,
             allowNull: true,
             field: 'birth_date',
         },
-        createdAt: {
-            type: Sequelize.DATE,
-            allowNull: false,
-            field: 'fecha_creacion',
-        },
-        updatedAt: {
-            type: Sequelize.DATE,
-            allowNull: false,
-            field: 'fecha_modificacion',
-        },
-        createdBy: {
-            type: Sequelize.BIGINT,
-            allowNull: true,
-            field: 'usuario_creador',
-        },
-        updatedBy: {
-            type: Sequelize.BIGINT,
-            allowNull: true,
-            field: 'usuario_modificador',
-        },
-        enabled: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: 1,
-            field: 'habilitado',
-        },
-        deleted: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: 0,
-            field: 'eliminado',
-        },
     },
     {
         sequelize: sequelizeConnector,
-        modelName: 'sh_fix_client',
+        modelName: 'sh_fix_customer',
     }
 );

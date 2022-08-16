@@ -131,7 +131,6 @@ export class RepairFormHandlerService {
                 email: [customer.email, [Validators.required, Validators.email]],
                 address: [customer.address, [Validators.required]],
                 telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]],
-                secondaryTelephone: [customer.telephone, [Validators.pattern('[0-9]+')]],
             }),
             repair: this.formBuilder.group({
                 id: [repair.id],
@@ -310,7 +309,6 @@ export class RepairFormHandlerService {
         };
     }
 
-    //FIXME: Add "user" and "secondaryTelephone" missing attributes. Delete ...
     assignCustomerForm(customerForm = this.customerControl) {
         this.customer = {
             ...this.customer,
