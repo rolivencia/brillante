@@ -6,6 +6,7 @@ import { RepairDashboardGuard } from '@management-view/repair-dashboard/repair-d
 
 export const routePaths = {
     repair: { path: 'repair', children: {} },
+    customer: { path: '', children: { userProfile: { path: 'user-profile' } } },
 };
 
 const appRoutes: Routes = [
@@ -18,6 +19,10 @@ const appRoutes: Routes = [
         loadChildren: () =>
             import('@management-view/repair-dashboard/repair-dashboard.module').then((m) => m.RepairDashboardModule),
         canActivate: [AuthGuard, RepairDashboardGuard, OfficeBranchGuard],
+    },
+    {
+        path: routePaths.customer.children.userProfile.path,
+        loadChildren: () => import('@customer-view/user-profile/user-profile.module').then((m) => m.UserProfileModule),
     },
     {
         path: 'client-dashboard',
