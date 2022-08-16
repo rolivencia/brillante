@@ -2,7 +2,7 @@
     "development": {
         "username": "dev",
         "password": "root",
-        "database": "pvdg0tz8ye1641dd",
+        "database": "brillante",
         "host": "localhost",
         "dialect": "mysql"
     },
