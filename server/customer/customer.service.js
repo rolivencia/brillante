@@ -9,7 +9,7 @@ module.exports = {
     update,
 };
 
-async function create({ dni, firstName, lastName, address, telephone, email, secondaryTelephone, birthDate }) {
+async function create({ dni, firstName, lastName, address, telephone, email, birthDate }) {
     return customer.Customer.findOrCreate({
         where: { dni: dni },
         defaults: {
@@ -19,14 +19,12 @@ async function create({ dni, firstName, lastName, address, telephone, email, sec
             address: address,
             telephone: telephone,
             email: email,
-            secondaryTelephone: secondaryTelephone,
             birthDate: birthDate,
         },
     });
 }
 
-async function update({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, birthDate }) {
-    console.log({ id, dni, firstName, lastName, address, telephone, email, secondaryTelephone, birthDate });
+async function update({ id, dni, firstName, lastName, address, telephone, email, birthDate }) {
     return customer.Customer.update(
         {
             dni: dni,
@@ -35,7 +33,6 @@ async function update({ id, dni, firstName, lastName, address, telephone, email,
             address: address,
             telephone: telephone,
             email: email,
-            secondaryTelephone: secondaryTelephone,
             birthDate: birthDate,
         },
         { where: { id: id } }
@@ -67,7 +64,6 @@ async function getByDni(dni) {
             firstName: dataValues.firstName,
             id: dataValues.id,
             lastName: dataValues.lastName,
-            secondaryTelephone: dataValues.secondaryTelephone,
             telephone: dataValues.telephone,
             user: {},
             audit: {
