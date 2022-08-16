@@ -6,7 +6,7 @@
     },
     "scripts": {
         "ng": "ng",
-        "start": "node server.js",
+        "start": "sequelize db:migrate && node server.js",
         "build": "ng build --aot --configuration production",
         "dev": "concurrently -p=\"{name}\" -n=\"NodeJS,Angular\" -c=\"red,green\" \"npm run serve:be\" \"npm run serve:fe\"",
         "test": "ng test",
