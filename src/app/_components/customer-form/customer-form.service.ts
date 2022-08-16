@@ -19,7 +19,6 @@ export class CustomerFormService {
             email: [customer.email, [Validators.required, Validators.email]],
             address: [customer.address, [Validators.required]],
             telephone: [customer.telephone, [Validators.required, Validators.pattern('[0-9]+')]],
-            secondaryTelephone: [customer.telephone, [Validators.pattern('[0-9]+')]],
         });
     }
 }
