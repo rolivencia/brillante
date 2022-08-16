@@ -56,7 +56,7 @@ module.exports = {
          */
         const transaction = await queryInterface.sequelize.transaction();
         try {
-            await queryInterface.removeColumn('user', 'finished_registration', { transaction });
+            await queryInterface.removeColumn('user', 'has_finished_registration', { transaction });
             await queryInterface.removeColumn('user', 'id_customer', { transaction });
         } catch (err) {
             transaction.rollback();
