@@ -42,11 +42,6 @@ User.init(
             allowNull: true,
             field: 'avatar',
         },
-        password: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            field: 'password',
-        },
         createdAt: {
             type: Sequelize.DATE,
             allowNull: false,

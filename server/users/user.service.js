@@ -12,7 +12,7 @@ module.exports = {
 };
 
 // TODO: Build workflow to register new users via Auth0
-async function register({ firstName, lastName, email, password }) {
+async function register({ firstName, lastName, email }) {
     // Assign the customer role by default
 
     const t = await sequelizeConnector.transaction();
@@ -27,7 +27,6 @@ async function register({ firstName, lastName, email, password }) {
                     firstName: firstName,
                     lastName: lastName,
                     userName: email,
-                    password: 'dummy',
                     deleted: false,
                     enabled: true,
                     roleId: EUserRole.CUSTOMER,
@@ -50,7 +49,7 @@ async function register({ firstName, lastName, email, password }) {
     });
 }
 
-async function authenticateByEmail({ email, secret }) {
+async function authenticateByEmail({ email }) {
     const currentUser = await user.User.findOne({
         include: [
             {
