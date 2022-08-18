@@ -1,9 +1,8 @@
 const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
 const sequelizeConnector = connector.sequelizeConnector();
-
-const role = require('./role.model');
-const userRole = require('./user-role.model');
+const { Role } = require('./role.model');
+const { UserRole } = require('./user-role.model');
 
 class User extends Sequelize.Model {}
 
@@ -76,13 +75,13 @@ User.init(
 );
 
 // Mediante las dos llamadas siguientes, se define en Sequelize la relación N a M entre Role y User
-User.belongsToMany(role.Role, {
-    through: userRole.UserRole,
+User.belongsToMany(Role, {
+    through: UserRole,
     foreignKey: 'id_user',
 });
 
-role.Role.belongsToMany(User, {
-    through: userRole.UserRole,
+Role.belongsToMany(User, {
+    through: UserRole,
     foreignKey: 'id_role',
 });
 
