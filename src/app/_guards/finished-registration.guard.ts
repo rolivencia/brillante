@@ -35,13 +35,13 @@ export class FinishedRegistrationGuard implements CanActivate, CanActivateChild 
     private hasUserFinishedRegistrationCheck(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const currentUser = this.authenticationService.currentUserValue;
 
-        // If user is not a customer, then allow access always
-        if (!hasRoles(currentUser.roles, [EUserRole.CUSTOMER])) {
+        // User not logged in or user logged and with registration finished
+        if (!currentUser || (currentUser && currentUser.hasFinishedRegistration)) {
             return true;
         }
 
-        // User not logged in or user logged and with registration finished
-        if (!currentUser || (currentUser && currentUser.hasFinishedRegistration)) {
+        // If user is not a customer, then allow access always
+        if (!hasRoles(currentUser.roles, [EUserRole.CUSTOMER])) {
             return true;
         }
 
