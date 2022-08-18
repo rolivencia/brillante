@@ -1,50 +1,60 @@
 <section id="sidebar-content">
-    <div *ngIf="currentUser$ | async as currentUser" id="user-info" class="my-3 d-flex justify-content-between">
-        <div>
-            <div>
-                <strong>{{ currentUser.welcomeName }}</strong>
-            </div>
-            <div *ngIf="adminLinks.length !== 0">
-                Sucursal:
-                <strong>
-                    {{ officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna' }}</strong
-                >
+    <ng-container *ngIf="currentUser$ | async as currentUser">
+        <div id="user-info" class="my-3 d-flex justify-content-between">
+            <div *ngIf="currentUser.welcomeName">
+                <div>
+                    <strong>{{ currentUser.welcomeName }}</strong>
+                </div>
+                <div *ngIf="adminLinks.length !== 0">
+                    Sucursal:
+                    <strong>
+                        {{
+                            officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
+                        }}</strong
+                    >
+                </div>
             </div>
         </div>
-    </div>
 
-    <ng-container *ngIf="currentUser$ | async as currentUser"
-        ><h6 class="title">Gestión Interna</h6>
-        <ejs-listview id="internal-management" [dataSource]="adminLinks" cssClass="e-list-template" [fields]="fields">
-            <ng-template #template let-route="">
-                <ng-container *ngIf="route.visible">
-                    <div class="e-list-wrapper">
-                        <a
-                            *ngIf="route.type === 'Internal'"
-                            class="nav-link"
-                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                            [routerLink]="route.route"
-                            (click)="onHide()"
-                        >
-                            <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
-                            {{ route.text }}</a
-                        >
-                        <a
-                            *ngIf="route.type === 'External'"
-                            class="nav-link"
-                            target="_blank"
-                            [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                            [href]="route.route"
-                        >
-                            <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
-                            {{ route.text }}</a
-                        >
-                    </div>
-                </ng-container>
-            </ng-template>
-        </ejs-listview>
-        <h6 class="title">Módulos Públicos</h6></ng-container
-    >
+        <ng-container *ngIf="adminLinks.length !== 0"
+            ><h6 class="title">Gestión Interna</h6>
+            <ejs-listview
+                id="internal-management"
+                [dataSource]="adminLinks"
+                cssClass="e-list-template"
+                [fields]="fields"
+            >
+                <ng-template #template let-route="">
+                    <ng-container *ngIf="route.visible">
+                        <div class="e-list-wrapper">
+                            <a
+                                *ngIf="route.type === 'Internal'"
+                                class="nav-link"
+                                [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                                [routerLink]="route.route"
+                                (click)="onHide()"
+                            >
+                                <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
+                                {{ route.text }}</a
+                            >
+                            <a
+                                *ngIf="route.type === 'External'"
+                                class="nav-link"
+                                target="_blank"
+                                [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                                [href]="route.route"
+                            >
+                                <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
+                                {{ route.text }}</a
+                            >
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </ejs-listview>
+            <h6 class="title">Módulos Públicos</h6>
+        </ng-container>
+    </ng-container>
+
     <ejs-listview id="public-modules" [dataSource]="userLinks" cssClass="e-list-template" [fields]="fields">
         <ng-template #template let-route="">
             <ng-container *ngIf="route.visible">
@@ -63,7 +73,7 @@
         </ng-template>
     </ejs-listview>
     <ng-container *ngIf="currentUser$ | async as currentUser">
-        <div *ngIf="currentUser">
+        <div *ngIf="currentUser" class="py-3">
             <a (click)="onLogout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
                 >CERRAR SESIÓN</a
             >
