@@ -1,18 +1,18 @@
-﻿const user = require('server/users/user.model');
-const role = require('server/users/role.model');
+﻿const role = require('server/users/role.model');
 const userRole = require('server/users/user-role.model');
 const environment = require('server/_helpers/environment');
 const jwt = require('jsonwebtoken');
 const { EUserRole } = require('./user-role-enum');
+const { User } = require('./user.model');
 
 module.exports = {
-    authenticateByEmail,
+    authenticate,
     getAll,
     register,
 };
 
 // TODO: Build workflow to register new users via Auth0
-async function register({ firstName, lastName, email }) {
+async function register(user) {
     // Assign the customer role by default
 
     const t = await sequelizeConnector.transaction();
@@ -22,11 +22,11 @@ async function register({ firstName, lastName, email }) {
 
     return new Promise(async (resolve, reject) => {
         try {
-            userDAO = await user.User.create(
+            userDAO = await User.create(
                 {
-                    firstName: firstName,
-                    lastName: lastName,
-                    userName: email,
+                    firstName: user.firstName ?? '',
+                    lastName: user.lastName ?? '',
+                    userName: user.email,
                     deleted: false,
                     enabled: true,
                     roleId: EUserRole.CUSTOMER,
@@ -41,6 +41,7 @@ async function register({ firstName, lastName, email }) {
                 },
                 { transaction: t }
             );
+            await t.rollback();
         } catch (error) {
             console.error(error);
             await t.rollback();
@@ -49,8 +50,8 @@ async function register({ firstName, lastName, email }) {
     });
 }
 
-async function authenticateByEmail({ email }) {
-    const currentUser = await user.User.findOne({
+async function authenticate({ user }) {
+    const currentUser = await User.findOne({
         include: [
             {
                 model: role.Role,
@@ -61,7 +62,7 @@ async function authenticateByEmail({ email }) {
         ],
 
         where: {
-            email: email,
+            email: user.email,
             enabled: true,
             deleted: false,
         },
@@ -78,7 +79,7 @@ async function authenticateByEmail({ email }) {
 }
 
 async function getAll() {
-    return user.User.findAll({
+    return User.findAll({
         attributes: [
             'id',
             'firstName',

@@ -20,19 +20,19 @@ export class AuthenticationService {
         return this.currentUser.value;
     }
 
-    public authenticateAgainstDatabase(email: string): Observable<User> {
+    public authenticateAgainstDatabase(user): Observable<User> {
         return this.http
-            .post<any>(`${environment.apiUrl}/users/authenticateByEmail`, {
-                email,
+            .post<any>(`${environment.apiUrl}/users/authenticate`, {
+                user,
             })
             .pipe(
-                map((user) => {
+                map((result) => {
                     // login successful if there's a jwt token in the response
                     let loggedUser: User;
-                    if (user && user.token) {
+                    if (result && result.token) {
                         // store user details and jwt token in local storage to keep user logged in between page refreshes
-                        localStorage.setItem('currentUser', JSON.stringify(user));
-                        loggedUser = new User(user);
+                        localStorage.setItem('currentUser', JSON.stringify(result));
+                        loggedUser = new User(result);
                         this.currentUser.next(loggedUser);
                     }
 
@@ -56,7 +56,7 @@ export class AuthenticationService {
                     return of(null);
                 }
 
-                return this.authenticateAgainstDatabase(user.email);
+                return this.authenticateAgainstDatabase(user);
             })
         );
     }

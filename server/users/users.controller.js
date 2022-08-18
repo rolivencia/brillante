@@ -3,16 +3,16 @@ const router = express.Router();
 const userService = require('./user.service');
 
 // routes
-router.post('/authenticateByEmail', authenticateByEmail);
+router.post('/authenticate', authenticate);
 router.post('/register', register);
 router.get('/', getAll);
 
 module.exports = router;
 
 // TODO: Should the authentication via email be in charge of registering a new user in the database?
-function authenticateByEmail(req, res, next) {
+function authenticate(req, res, next) {
     userService
-        .authenticateByEmail(req.body)
+        .authenticate(req.body)
         .then((user) => (user ? res.json(user) : res.status(400).json({ message: 'Email not found in database' })))
         .catch((err) => next(err));
 }
