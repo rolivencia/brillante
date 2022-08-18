@@ -1,20 +1,20 @@
-﻿const user = require('server/users/user.model');
-const role = require('server/users/role.model');
-const userRole = require('server/users/user-role.model');
+﻿const connector = require('../_helpers/mysql-connector');
 const environment = require('server/_helpers/environment');
 const jwt = require('jsonwebtoken');
+const sequelizeConnector = connector.sequelizeConnector();
 const { EUserRole } = require('./user-role-enum');
+const { Role } = require('./role.model');
+const { User } = require('./user.model');
+const { UserRole } = require('./user-role.model');
 
 module.exports = {
-    authenticateByEmail,
+    authenticate,
     getAll,
     register,
 };
 
 // TODO: Build workflow to register new users via Auth0
-async function register({ firstName, lastName, email, password }) {
-    // Assign the customer role by default
-
+async function register(user) {
     const t = await sequelizeConnector.transaction();
 
     let userDAO;
@@ -22,39 +22,49 @@ async function register({ firstName, lastName, email, password }) {
 
     return new Promise(async (resolve, reject) => {
         try {
-            userDAO = await user.User.create(
-                {
-                    firstName: firstName,
-                    lastName: lastName,
-                    userName: email,
-                    password: 'dummy',
-                    deleted: false,
-                    enabled: true,
-                    roleId: EUserRole.CUSTOMER,
-                },
-                { transaction: t }
-            );
+            userDAO = (
+                await User.create(
+                    {
+                        firstName: user.firstName ?? '',
+                        lastName: user.lastName ?? '',
+                        email: user.email,
+                        userName: user.nickname,
+                        deleted: false,
+                        enabled: true,
+                        roleId: EUserRole.CUSTOMER,
+                    },
+                    { transaction: t }
+                )
+            ).get({ plain: true });
 
-            userRoleDAO = userRole.UserRole.create(
-                {
-                    idUser: userDAO.dataValues.id,
-                    idRole: EUserRole.CUSTOMER,
-                },
-                { transaction: t }
-            );
+            // Assign the customer role by default
+            userRoleDAO = (
+                await UserRole.create(
+                    {
+                        idUser: userDAO.id,
+                        idRole: EUserRole.CUSTOMER,
+                    },
+                    { transaction: t }
+                )
+            ).get({ plain: true });
+
+            await t.commit();
+
+            const newUser = findByUserEmail(userDAO.email);
+            resolve(newUser);
         } catch (error) {
             console.error(error);
             await t.rollback();
-            reject([0]);
+            reject(error);
         }
     });
 }
 
-async function authenticateByEmail({ email, secret }) {
-    const currentUser = await user.User.findOne({
+function findByUserEmail(email) {
+    return User.findOne({
         include: [
             {
-                model: role.Role,
+                model: Role,
                 required: true,
                 attributes: ['id', 'description'],
                 through: { attributes: [] },
@@ -67,6 +77,15 @@ async function authenticateByEmail({ email, secret }) {
             deleted: false,
         },
     });
+}
+
+async function authenticate({ user }) {
+    let currentUser = await findByUserEmail(user.email);
+
+    if (!currentUser) {
+        let registeredUser = await register(user);
+        currentUser = registeredUser;
+    }
 
     return new Promise((resolve, reject) => {
         if (!currentUser || !currentUser.dataValues) reject(error);
@@ -79,7 +98,7 @@ async function authenticateByEmail({ email, secret }) {
 }
 
 async function getAll() {
-    return user.User.findAll({
+    return User.findAll({
         attributes: [
             'id',
             'firstName',
@@ -93,7 +112,7 @@ async function getAll() {
         ],
         include: [
             {
-                model: role.Role,
+                model: Role,
                 required: true,
                 attributes: ['id', 'description'],
                 through: { attributes: [] },
