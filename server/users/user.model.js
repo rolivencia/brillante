@@ -64,7 +64,8 @@ User.init(
         },
         hasFinishedRegistration: {
             type: Sequelize.BOOLEAN,
-            allowNull: false,
+            allowNull: true,
+            defaultValue: false,
             field: 'has_finished_registration',
         },
     },
