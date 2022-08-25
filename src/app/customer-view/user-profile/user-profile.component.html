@@ -1,9 +1,9 @@
-<div class="alert alert-primary">
-    ¡Hola! Parece que todavía no completaste tu perfil de usuario en Brillante Store. Completá los siguientes datos para
-    acceder a la tienda y disfrutar de todo lo que Brillante tiene para vos.
-</div>
-
 <ng-container *ngIf="currentUser$ | async as currentUser">
+    <div class="alert alert-primary" *ngIf="!currentUser.hasFinishedRegistration">
+        ¡Hola! Parece que todavía no completaste tu perfil de usuario en Brillante Store. Completá los siguientes datos
+        para acceder a la tienda y disfrutar de todo lo que Brillante tiene para vos.
+    </div>
+
     <div class="card shadow border-0 form-container">
         <div class="card-body">
             <form [formGroup]="form">
