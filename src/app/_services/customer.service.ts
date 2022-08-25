@@ -21,8 +21,8 @@ export class CustomerService {
         return this.http.get<Customer>(`${environment.apiUrl}/client/getById/${id}`);
     }
 
-    public getByEmail(id: number | string): Observable<Customer> {
-        return this.http.get<Customer>(`${environment.apiUrl}/client/getById/${id}`);
+    public getByEmail(email: number | string): Observable<Customer> {
+        return this.http.get<Customer>(`${environment.apiUrl}/client/getByEmail/${email}`);
     }
 
     public getByDni(email: number | string): Observable<Customer> {
