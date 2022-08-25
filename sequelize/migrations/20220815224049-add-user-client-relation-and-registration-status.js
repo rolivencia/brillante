@@ -25,11 +25,10 @@ module.exports = {
             );
             await queryInterface.addConstraint(
                 'user',
-                ['id_customer'],
                 {
-                    fields: ['id_customer'],
-                    type: 'foreign key',
+                    type: 'FOREIGN KEY',
                     name: 'fk_user_customer',
+                    fields: ['id_customer'],
                     references: {
                         table: 'sh_fix_customer',
                         field: 'id',
