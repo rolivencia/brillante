@@ -5,6 +5,7 @@ module.exports = {
     create,
     getAll,
     getByDni,
+    getByEmail,
     getById,
     update,
 };
@@ -53,32 +54,54 @@ async function getByDni(dni) {
     });
 
     if (rawCustomer) {
-        // TODO: Agregar usuario creador
-        // TODO: Agregar usuario ligado
-        const dataValues = rawCustomer.dataValues;
-        customerDAO = {
-            address: dataValues.address,
-            birthDate: dataValues.birthDate,
-            dni: dataValues.dni,
-            email: dataValues.email,
-            firstName: dataValues.firstName,
-            id: dataValues.id,
-            lastName: dataValues.lastName,
-            telephone: dataValues.telephone,
-            user: {},
-            audit: {
-                createdAt: dataValues.createdAt,
-                updatedAt: dataValues.updatedAt,
-                enabled: dataValues.enabled,
-                deleted: dataValues.deleted,
-            },
-        };
+        customerDAO = parseCustomer(rawCustomer.dataValues);
     }
 
     return new Promise((resolve, reject) => {
-        customerDAO ? resolve(customerDAO) : reject(error);
+        customerDAO ? resolve(customerDAO) : reject(Error);
     });
 }
+
+function parseCustomer(dataValues) {
+    // TODO: Agregar usuario creador
+    // TODO: Agregar usuario ligado
+
+    return {
+        address: dataValues.address,
+        birthDate: dataValues.birthDate,
+        dni: dataValues.dni,
+        email: dataValues.email,
+        firstName: dataValues.firstName,
+        id: dataValues.id,
+        lastName: dataValues.lastName,
+        telephone: dataValues.telephone,
+        user: {},
+        audit: {
+            createdAt: dataValues.createdAt,
+            updatedAt: dataValues.updatedAt,
+            enabled: dataValues.enabled,
+            deleted: dataValues.deleted,
+        },
+    };
+}
+
+async function getByEmail(email) {
+    let customerDAO = null;
+    const rawCustomer = await customer.Customer.findOne({
+        where: {
+            email: email,
+        },
+    });
+
+    if (rawCustomer) {
+        customerDAO = parseCustomer(rawCustomer.dataValues);
+    }
+
+    return new Promise((resolve, reject) => {
+        customerDAO ? resolve(customerDAO) : reject(Error);
+    });
+}
+
 async function countAll() {
     return customer.Customer.count();
 }

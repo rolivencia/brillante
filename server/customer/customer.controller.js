@@ -5,6 +5,7 @@ const customerService = require('./customer.service');
 router.get('/countAll', countAll);
 router.get('/getAll/:offset/:limit', getAll);
 router.get('/getByDni/:dni', getByDni);
+router.get('/getByEmail/:email', getByEmail);
 router.get('/getById/:id', getById);
 router.post('/create', create);
 router.put('/update', update);
@@ -22,6 +23,14 @@ function getByDni(req, res, next) {
     const dni = parseInt(req.params.dni);
     customerService
         .getByDni(dni)
+        .then((customer) => res.json(customer))
+        .catch((err) => next(err));
+}
+
+function getByEmail(req, res, next) {
+    const email = req.params.email;
+    customerService
+        .getByEmail(email)
         .then((customer) => res.json(customer))
         .catch((err) => next(err));
 }
