@@ -40,8 +40,20 @@
                         <label class="form-label">Dirección</label>
                         <input class="form-control" formControlName="address" />
                     </div>
+                    <div class="col-lg-6 mb-3">
+                        <label class="form-label">Fecha de Nacimiento</label>
+                        <ejs-datepicker
+                            aria-describedby="birthDate"
+                            formControlName="birthDate"
+                            id="birthDate"
+                            [format]="'yyyy/MM/dd'"
+                            [enableMask]="true"
+                            [maskPlaceholder]="maskPlaceholderValue"
+                            [required]="true"
+                        ></ejs-datepicker>
+                    </div>
                     <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary" (click)="onUpdateButtonClicked($event)">
+                        <button type="button" class="btn btn-primary" (click)="onUpdateButtonClicked(form)">
                             Actualizar
                         </button>
                     </div>
