@@ -50,7 +50,7 @@ async function register(user) {
 
             await t.commit();
 
-            const newUser = findByUserEmail(userDAO.email);
+            const newUser = await findByUserEmail(userDAO.email);
             resolve(newUser);
         } catch (error) {
             console.error(error);
@@ -60,7 +60,7 @@ async function register(user) {
     });
 }
 
-function findByUserEmail(email) {
+async function findByUserEmail(email) {
     return User.findOne({
         include: [
             {
