@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const connector = require('server/_helpers/mysql-connector');
+const { User } = require('../users/user.model');
 const sequelizeConnector = connector.sequelizeConnector();
 
 class Customer extends Sequelize.Model {}
@@ -25,8 +26,8 @@ Customer.init(
             field: 'last_name',
         },
         dni: {
-            type: Sequelize.STRING,
-            allowNull: false,
+            type: Sequelize.INTEGER,
+            allowNull: true,
             field: 'dni',
         },
         telephone: {
@@ -79,9 +80,17 @@ Customer.init(
             allowNull: true,
             field: 'birth_date',
         },
+        idUser: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            field: 'id_user',
+        },
     },
     {
         sequelize: sequelizeConnector,
         modelName: 'sh_fix_customer',
     }
 );
+
+Customer.belongsTo(User, { as: 'user', foreignKey: 'id_user' });
+User.hasOne(Customer, { as: 'customer', foreignKey: 'id_user' });

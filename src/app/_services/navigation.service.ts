@@ -16,6 +16,7 @@ import {
     faShop,
     faShoppingBag,
     faToolbox,
+    faUser,
     faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { routePaths } from '@app/app.routing';
@@ -169,6 +170,15 @@ export class NavigationService {
             enabled: true,
             visible: true,
             icon: faQuestion,
+            type: 'Internal',
+        },
+        {
+            id: '107',
+            text: 'Perfil de Usuario',
+            route: 'user-profile',
+            enabled: true,
+            visible: true,
+            icon: faUser,
             type: 'Internal',
         },
     ];

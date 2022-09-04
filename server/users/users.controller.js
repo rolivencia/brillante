@@ -26,7 +26,7 @@ function getAll(req, res, next) {
 
 function register(req, res, next) {
     userService
-        .register(req.body)
+        .registerCustomerUser(req.body)
         .then((user) => res.json(user))
         .catch((err) => next(err));
 }

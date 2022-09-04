@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { User } from '@models/user';
+import { Observable } from 'rxjs';
+import { Customer } from '@models/customer';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -22,6 +24,10 @@ export class UserService {
 
     update(user: User) {
         return this.http.put(`${environment.apiUrl}/users/${user.id}`, user);
+    }
+
+    public updateCustomerUser(user: Partial<User>, customer: Partial<Customer>): Observable<[User, Customer]> {
+        return this.http.put<[User, Customer]>(`${environment.apiUrl}/completeRegistration`, { user, customer });
     }
 
     delete(id: number) {

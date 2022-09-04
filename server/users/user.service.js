@@ -6,19 +6,21 @@ const { EUserRole } = require('./user-role-enum');
 const { Role } = require('./role.model');
 const { User } = require('./user.model');
 const { UserRole } = require('./user-role.model');
+const { Customer } = require('../customer/customer.model');
 
 module.exports = {
     authenticate,
     getAll,
-    register,
+    registerCustomerUser,
 };
 
 // TODO: Build workflow to register new users via Auth0
-async function register(user) {
+async function registerCustomerUser(user) {
     const t = await sequelizeConnector.transaction();
 
     let userDAO;
     let userRoleDAO;
+    let customerDAO;
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -48,9 +50,42 @@ async function register(user) {
                 )
             ).get({ plain: true });
 
-            await t.commit();
+            const [result, created] = await Customer.findOrCreate({
+                where: { email: user.email },
+                defaults: {
+                    dni: null,
+                    firstName: '',
+                    lastName: '',
+                    address: '',
+                    telephone: '',
+                    email: user.email,
+                    birthDate: null,
+                    idUser: userDAO.id,
+                },
+                raw: true,
+                transaction: t,
+            });
 
-            const newUser = findByUserEmail(userDAO.email);
+            customerDAO = result ?? result.get({ plain: true });
+
+            // Case where we're registering a user of an already-existing customer
+            if (!created) {
+                await Customer.update({ idUser: userDAO.id }, { where: { email: user.email }, transaction: t });
+                const customerData = (await Customer.findOne({ where: { idUser: userDAO.id }, transaction: t })).get({
+                    plain: true,
+                });
+                await User.update(
+                    {
+                        firstName: customerData.firstName,
+                        lastName: customerData.lastName,
+                        hasFinishedRegistration: true,
+                    },
+                    { where: { id: userDAO.id }, transaction: t }
+                );
+            }
+
+            await t.commit();
+            const newUser = await findByUserEmail(userDAO.email);
             resolve(newUser);
         } catch (error) {
             console.error(error);
@@ -60,7 +95,7 @@ async function register(user) {
     });
 }
 
-function findByUserEmail(email) {
+async function findByUserEmail(email) {
     return User.findOne({
         include: [
             {
@@ -68,6 +103,11 @@ function findByUserEmail(email) {
                 required: true,
                 attributes: ['id', 'description'],
                 through: { attributes: [] },
+            },
+            {
+                as: 'customer',
+                model: Customer,
+                required: false,
             },
         ],
 
@@ -83,7 +123,7 @@ async function authenticate({ user }) {
     let currentUser = await findByUserEmail(user.email);
 
     if (!currentUser) {
-        let registeredUser = await register(user);
+        let registeredUser = await registerCustomerUser(user);
         currentUser = registeredUser;
     }
 
