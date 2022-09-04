@@ -6,15 +6,16 @@ const { EUserRole } = require('./user-role-enum');
 const { Role } = require('./role.model');
 const { User } = require('./user.model');
 const { UserRole } = require('./user-role.model');
+const { Customer } = require('../customer/customer.model');
 
 module.exports = {
     authenticate,
     getAll,
-    register,
+    registerCustomerUser,
 };
 
 // TODO: Build workflow to register new users via Auth0
-async function register(user) {
+async function registerCustomerUser(user) {
     const t = await sequelizeConnector.transaction();
 
     let userDAO;
@@ -49,7 +50,6 @@ async function register(user) {
             ).get({ plain: true });
 
             await t.commit();
-
             const newUser = await findByUserEmail(userDAO.email);
             resolve(newUser);
         } catch (error) {
@@ -69,6 +69,11 @@ async function findByUserEmail(email) {
                 attributes: ['id', 'description'],
                 through: { attributes: [] },
             },
+            {
+                as: 'customer',
+                model: Customer,
+                required: false,
+            },
         ],
 
         where: {
@@ -83,7 +88,7 @@ async function authenticate({ user }) {
     let currentUser = await findByUserEmail(user.email);
 
     if (!currentUser) {
-        let registeredUser = await register(user);
+        let registeredUser = await registerCustomerUser(user);
         currentUser = registeredUser;
     }
 
