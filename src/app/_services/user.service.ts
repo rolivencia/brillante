@@ -26,7 +26,7 @@ export class UserService {
         return this.http.put(`${environment.apiUrl}/users/${user.id}`, user);
     }
 
-    updateCustomerUser(user: Partial<User>, customer: Partial<Customer>): Observable<[User, Customer]> {
+    public updateCustomerUser(user: Partial<User>, customer: Partial<Customer>): Observable<[User, Customer]> {
         return this.http.put<[User, Customer]>(`${environment.apiUrl}/completeRegistration`, { user, customer });
     }
 
