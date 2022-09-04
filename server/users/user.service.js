@@ -30,6 +30,7 @@ async function registerCustomerUser(user) {
                         firstName: user.firstName ?? '',
                         lastName: user.lastName ?? '',
                         email: user.email,
+                        avatar: user.picture ? user.picture : '',
                         userName: user.nickname,
                         deleted: false,
                         enabled: true,
@@ -84,7 +85,7 @@ async function registerCustomerUser(user) {
                 );
             }
 
-            await t.commit();
+            await t.rollback();
             const newUser = await findByUserEmail(userDAO.email);
             resolve(newUser);
         } catch (error) {

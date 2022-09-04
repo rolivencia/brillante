@@ -12,7 +12,7 @@
                         width="160px"
                         height="160px"
                         alt="Avatar de Usuario"
-                        [src]="'assets/img/avatar-placeholder.png'"
+                        [src]="!!avatarUrl ? avatarUrl : 'assets/img/avatar-placeholder.png'"
                     />
                 </div>
                 <div class="row">

@@ -14,6 +14,7 @@ import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskp
     styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+    public avatarUrl: string = '';
     public maskPlaceholderValue: MaskPlaceholderModel = { day: 'DD', month: 'MM', year: 'AAAA' };
 
     public currentUser$: Observable<User>;
@@ -36,7 +37,7 @@ export class UserProfileComponent implements OnInit {
 
     private buildForm() {
         this.form = this.formBuilder.group({
-            avatar: ['', Validators.required],
+            // avatar: ['', Validators.required],
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             dni: [null, Validators.required],
@@ -56,7 +57,8 @@ export class UserProfileComponent implements OnInit {
                 })
             )
             .subscribe(([user, customer]) => {
-                this.form.controls['avatar'].setValue(user.avatar ? user.avatar : '');
+                this.avatarUrl = !!user.avatar ? user.avatar : '';
+                // this.form.controls['avatar'].setValue(user.avatar ? user.avatar : '');
                 this.form.controls['firstName'].setValue(user.firstName);
                 this.form.controls['lastName'].setValue(user.lastName);
                 this.form.controls['email'].setValue(user.email);
