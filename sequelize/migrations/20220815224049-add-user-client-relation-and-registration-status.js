@@ -18,19 +18,19 @@ module.exports = {
                 { transaction }
             );
             await queryInterface.addColumn(
-                'user',
-                'id_customer',
+                'sh_fix_customer',
+                'id_user',
                 { type: Sequelize.DataTypes.INTEGER.UNSIGNED },
                 { transaction }
             );
             await queryInterface.addConstraint(
-                'user',
+                'sh_fix_customer',
                 {
                     type: 'FOREIGN KEY',
-                    name: 'fk_user_customer',
-                    fields: ['id_customer'],
+                    name: 'fk_customer_user',
+                    fields: ['id_user'],
                     references: {
-                        table: 'sh_fix_customer',
+                        table: 'user',
                         field: 'id',
                     },
                     onDelete: 'set null',
@@ -56,7 +56,7 @@ module.exports = {
         const transaction = await queryInterface.sequelize.transaction();
         try {
             await queryInterface.removeColumn('user', 'has_finished_registration', { transaction });
-            await queryInterface.removeColumn('user', 'id_customer', { transaction });
+            await queryInterface.removeColumn('sh_fix_customer', 'id_user', { transaction });
         } catch (err) {
             transaction.rollback();
             throw err;
