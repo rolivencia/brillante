@@ -26,7 +26,7 @@ export class CustomerService {
     }
 
     public getByDni(email: number | string): Observable<Customer> {
-        return this.http.get<Customer>(`${environment.apiUrl}/client/geByEmail/${email}`);
+        return this.http.get<Customer>(`${environment.apiUrl}/client/getByDni/${email}`);
     }
 
     public create(customer): Observable<[Customer, boolean]> {
