@@ -19,14 +19,23 @@
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Nombre</label>
                         <input class="form-control" formControlName="firstName" />
+                        <div class="text-danger" *ngIf="submitted && form.controls['firstName'].errors?.required">
+                            <small>¡Ups! El campo nombre no puede estar vacío.</small>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Apellido</label>
                         <input class="form-control" formControlName="lastName" />
+                        <div class="text-danger" *ngIf="submitted && form.controls['firstName'].errors?.required">
+                            <small>Ingresá tu apellido para completar el registro.</small>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">DNI</label>
                         <input class="form-control" formControlName="dni" />
+                        <div class="text-danger" *ngIf="submitted && form.controls['dni'].errors?.required">
+                            <small>Se requiere un DNI válido para actualizar tus datos.</small>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Email (sólo lectura)</label>
@@ -35,10 +44,16 @@
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Teléfono</label>
                         <input class="form-control" formControlName="telephone" />
+                        <div class="text-danger" *ngIf="submitted && form.controls['dni'].errors?.required">
+                            <small>Ingresá un número de teléfono para que podamos contactarnos con vos.</small>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Dirección</label>
                         <input class="form-control" formControlName="address" />
+                        <div class="text-danger" *ngIf="submitted && form.controls['dni'].errors?.required">
+                            <small>Brindanos una dirección para despachar tus envíos.</small>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Fecha de Nacimiento</label>
@@ -51,6 +66,9 @@
                             [maskPlaceholder]="maskPlaceholderValue"
                             [required]="true"
                         ></ejs-datepicker>
+                        <div class="text-danger" *ngIf="submitted && form.controls['birthDate'].errors?.required">
+                            <small>Por cuestiones legales, necesitamos actualices tu fecha de nacimiento.</small>
+                        </div>
                     </div>
                     <div class="col-lg-12">
                         <button type="button" class="btn btn-primary" (click)="onUpdateButtonClicked(form)">
