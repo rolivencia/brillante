@@ -25,8 +25,8 @@ Customer.init(
             field: 'last_name',
         },
         dni: {
-            type: Sequelize.STRING,
-            allowNull: false,
+            type: Sequelize.INTEGER,
+            allowNull: true,
             field: 'dni',
         },
         telephone: {
