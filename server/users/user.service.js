@@ -20,6 +20,7 @@ async function registerCustomerUser(user) {
 
     let userDAO;
     let userRoleDAO;
+    let customerDAO;
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -48,6 +49,40 @@ async function registerCustomerUser(user) {
                     { transaction: t }
                 )
             ).get({ plain: true });
+
+            const [result, created] = await Customer.findOrCreate({
+                where: { email: user.email },
+                defaults: {
+                    dni: null,
+                    firstName: '',
+                    lastName: '',
+                    address: '',
+                    telephone: '',
+                    email: user.email,
+                    birthDate: null,
+                    idUser: userDAO.id,
+                },
+                raw: true,
+                transaction: t,
+            });
+
+            customerDAO = result ?? result.get({ plain: true });
+
+            // Case where we're registering a user of an already-existing customer
+            if (!created) {
+                await Customer.update({ idUser: userDAO.id }, { where: { email: user.email }, transaction: t });
+                const customerData = (await Customer.findOne({ where: { idUser: userDAO.id }, transaction: t })).get({
+                    plain: true,
+                });
+                await User.update(
+                    {
+                        firstName: customerData.firstName,
+                        lastName: customerData.lastName,
+                        hasFinishedRegistration: true,
+                    },
+                    { where: { id: userDAO.id }, transaction: t }
+                );
+            }
 
             await t.commit();
             const newUser = await findByUserEmail(userDAO.email);
