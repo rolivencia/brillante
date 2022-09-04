@@ -57,7 +57,7 @@ async function registerCustomerUser(user) {
                     firstName: '',
                     lastName: '',
                     address: '',
-                    telephone: '',
+                    telephone: null,
                     email: user.email,
                     birthDate: null,
                     idUser: userDAO.id,
