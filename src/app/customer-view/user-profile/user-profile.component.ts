@@ -2,11 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, UserService } from '@app/_services';
 import { combineLatest, Observable, of } from 'rxjs';
 import { User } from '@app/_models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+    AbstractControl,
+    AsyncValidatorFn,
+    FormBuilder,
+    FormGroup,
+    ValidationErrors,
+    Validators,
+} from '@angular/forms';
 import { CustomerService } from '@services/customer.service';
-import { first, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, first, map, switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskplaceholder-model';
+import { Customer } from '@models/customer';
 
 @Component({
     selector: 'app-register',
@@ -40,7 +48,13 @@ export class UserProfileComponent implements OnInit {
             // avatar: ['', Validators.required],
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            dni: [null, Validators.required],
+            dni: [
+                null,
+                {
+                    validators: [Validators.required],
+                    asyncValidators: [existingDniValidator(this.customerService)],
+                },
+            ],
             email: ['', Validators.required],
             telephone: ['', Validators.required],
             address: ['', Validators.required],
@@ -71,31 +85,58 @@ export class UserProfileComponent implements OnInit {
             });
     }
 
-    public onUpdateButtonClicked(form: FormGroup) {
+    public onUpdateButtonClicked() {
         this.submitted = true;
-        if (form.invalid) {
+        if (this.form.invalid) {
             return;
         }
 
-        const userProfileForm = form.value;
-
-        this.userService.updateCustomerUser(
-            {
-                firstName: userProfileForm.firstName,
-                lastName: userProfileForm.lastName,
-                avatar: userProfileForm.avatar,
-                userName: `${userProfileForm.firstName}_${userProfileForm.lastName}`, //FIXME: Build a username based on firstName and lastName
-                email: userProfileForm.email,
-            },
-            {
-                firstName: userProfileForm.firstName,
-                lastName: userProfileForm.lastName,
-                dni: userProfileForm.dni,
-                telephone: userProfileForm.telephone,
-                address: userProfileForm.address,
-                birthDate: userProfileForm.birthDate,
-                email: userProfileForm.email,
-            }
-        );
+        const userProfileForm = this.form.value;
+        this.currentUser$
+            .pipe(
+                switchMap((user) =>
+                    this.userService.updateCustomerUser(
+                        {
+                            id: user.id,
+                            firstName: userProfileForm.firstName,
+                            lastName: userProfileForm.lastName,
+                            avatar: userProfileForm.avatar,
+                            userName:
+                                `${userProfileForm.firstName}_${userProfileForm.lastName}_`.toLowerCase() + user.id,
+                            email: userProfileForm.email,
+                        },
+                        {
+                            firstName: userProfileForm.firstName,
+                            lastName: userProfileForm.lastName,
+                            dni: userProfileForm.dni,
+                            telephone: userProfileForm.telephone,
+                            address: userProfileForm.address,
+                            birthDate: userProfileForm.birthDate,
+                            email: userProfileForm.email,
+                        }
+                    )
+                )
+            )
+            .subscribe(
+                (result) => {
+                    console.log(result);
+                    this.toastService.success('Actualizado');
+                },
+                (error) => {
+                    this.toastService.error('Error: ' + error);
+                }
+            );
     }
+}
+
+function existingDniValidator(customerService: CustomerService): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+        return control.valueChanges.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap((value) => customerService.getByDni(value)),
+            map((customer: Customer) => (customer && customer.dni ? { dniAlreadyAssigned: true } : null)),
+            first()
+        );
+    };
 }

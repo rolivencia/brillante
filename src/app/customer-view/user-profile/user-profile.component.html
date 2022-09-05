@@ -36,6 +36,9 @@
                         <div class="text-danger" *ngIf="submitted && form.controls['dni'].errors?.required">
                             <small>Se requiere un DNI válido para actualizar tus datos.</small>
                         </div>
+                        <div class="text-danger" *ngIf="form.controls['dni'].errors?.dniAlreadyAssigned">
+                            <small>El DNI ingresado ya se encuentra asignado a un cliente existente.</small>
+                        </div>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="form-label">Email (sólo lectura)</label>
@@ -67,11 +70,11 @@
                             [required]="true"
                         ></ejs-datepicker>
                         <div class="text-danger" *ngIf="submitted && form.controls['birthDate'].errors?.required">
-                            <small>Por cuestiones legales, necesitamos actualices tu fecha de nacimiento.</small>
+                            <small>Por cuestiones legales, necesitamos que actualices tu fecha de nacimiento.</small>
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary" (click)="onUpdateButtonClicked(form)">
+                        <button type="button" class="btn btn-primary" (click)="onUpdateButtonClicked()">
                             Actualizar
                         </button>
                     </div>
