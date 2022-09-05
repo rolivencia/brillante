@@ -13,6 +13,11 @@ const sequelizeConnection = new Sequelize(database, {
         timestamps: true,
     },
     logging: false,
+    pool: {
+        max: 10,
+        min: 0,
+        idle: 5000,
+    },
 });
 function sequelizeConnector() {
     return sequelizeConnection;
