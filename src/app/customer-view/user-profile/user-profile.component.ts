@@ -15,6 +15,7 @@ import { debounceTime, distinctUntilChanged, first, map, switchMap } from 'rxjs/
 import { ToastrService } from 'ngx-toastr';
 import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskplaceholder-model';
 import { Customer } from '@models/customer';
+import { FormValidators } from '@syncfusion/ej2-angular-inputs';
 
 @Component({
     selector: 'app-register',
@@ -28,6 +29,7 @@ export class UserProfileComponent implements OnInit {
     public currentUser$: Observable<User>;
     public form: FormGroup;
     public submitted: boolean = false;
+    public saved: boolean = false;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -58,7 +60,7 @@ export class UserProfileComponent implements OnInit {
             email: ['', Validators.required],
             telephone: ['', Validators.required],
             address: ['', Validators.required],
-            birthDate: ['', Validators.required],
+            birthDate: [null, { validators: [FormValidators.max(new Date()), Validators.required] }],
         });
     }
 
@@ -80,14 +82,15 @@ export class UserProfileComponent implements OnInit {
                     this.form.controls['dni'].setValue(customer.dni);
                     this.form.controls['telephone'].setValue(customer.telephone);
                     this.form.controls['address'].setValue(customer.address);
-                    this.form.controls['birthDate'].setValue(customer.birthDate);
+                    this.form.controls['birthDate'].setValue(customer.birthDate ? customer.birthDate : null);
                 }
             });
     }
 
     public onUpdateButtonClicked() {
         this.submitted = true;
-        if (this.form.invalid) {
+        // Hacky validation to avoid parent form not being updated
+        if (this.form.invalid || this.form.controls['birthDate'].invalid) {
             return;
         }
 
@@ -119,11 +122,12 @@ export class UserProfileComponent implements OnInit {
             )
             .subscribe(
                 (result) => {
-                    console.log(result);
-                    this.toastService.success('Actualizado');
+                    this.saved = true;
+                    this.form.disable();
+                    this.toastService.success('¡Tus datos fueron actualizados correctamente!');
                 },
                 (error) => {
-                    this.toastService.error('Error: ' + error);
+                    this.toastService.error('Error en actualización de datos: ' + error);
                 }
             );
     }
