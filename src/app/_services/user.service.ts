@@ -26,8 +26,8 @@ export class UserService {
         return this.http.put(`${environment.apiUrl}/users/${user.id}`, user);
     }
 
-    public updateCustomerUser(user: Partial<User>, customer: Partial<Customer>): Observable<[User, Customer]> {
-        return this.http.put<[User, Customer]>(`${environment.apiUrl}/users/updateCustomerUser`, { user, customer });
+    public updateCustomerUser(user: Partial<User>, customer: Partial<Customer>): Observable<User> {
+        return this.http.put<User>(`${environment.apiUrl}/users/updateCustomerUser`, { user, customer });
     }
 
     delete(id: number) {
