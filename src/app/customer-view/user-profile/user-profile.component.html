@@ -77,15 +77,17 @@
                             <small>Ingresá una fecha de nacimiento válida</small>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            [disabled]="!form.dirty || saved"
-                            (click)="onUpdateButtonClicked()"
-                        >
-                            Actualizar
-                        </button>
+                    <div class="col-lg-6 d-flex justify-content-end align-items-end">
+                        <div class="mb-3">
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                [disabled]="!form.dirty || saved"
+                                (click)="onUpdateButtonClicked()"
+                            >
+                                Actualizar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
