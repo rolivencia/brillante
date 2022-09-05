@@ -4,6 +4,7 @@ const userService = require('./user.service');
 
 // routes
 router.post('/authenticate', authenticate);
+router.put('/updateCustomerUser', updateCustomerUser);
 router.post('/register', register);
 router.get('/', getAll);
 
@@ -17,9 +18,9 @@ function authenticate(req, res, next) {
         .catch((err) => next(err));
 }
 
-function getAll(req, res, next) {
+function updateCustomerUser(req, res, next) {
     userService
-        .getAll()
+        .updateCustomerUser(req.body)
         .then((users) => res.json(users))
         .catch((err) => next(err));
 }
@@ -28,5 +29,12 @@ function register(req, res, next) {
     userService
         .registerCustomerUser(req.body)
         .then((user) => res.json(user))
+        .catch((err) => next(err));
+}
+
+function getAll(req, res, next) {
+    userService
+        .getAll()
+        .then((users) => res.json(users))
         .catch((err) => next(err));
 }
