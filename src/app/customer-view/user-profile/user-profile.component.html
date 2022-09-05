@@ -36,7 +36,10 @@
                         <div class="text-danger" *ngIf="submitted && form.controls['dni'].errors?.required">
                             <small>Se requiere un DNI válido para actualizar tus datos.</small>
                         </div>
-                        <div class="text-danger" *ngIf="form.controls['dni'].errors?.dniAlreadyAssigned">
+                        <div
+                            class="text-danger"
+                            *ngIf="form.controls['dni'].dirty && form.controls['dni'].errors?.dniAlreadyAssigned"
+                        >
                             <small>El DNI ingresado ya se encuentra asignado a un cliente existente.</small>
                         </div>
                     </div>

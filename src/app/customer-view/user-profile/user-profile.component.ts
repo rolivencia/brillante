@@ -50,13 +50,7 @@ export class UserProfileComponent implements OnInit {
             // avatar: ['', Validators.required],
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            dni: [
-                null,
-                {
-                    validators: [Validators.required],
-                    asyncValidators: [existingDniValidator(this.customerService)],
-                },
-            ],
+            dni: [null, Validators.required],
             email: ['', Validators.required],
             telephone: ['', Validators.required],
             address: ['', Validators.required],
@@ -84,6 +78,11 @@ export class UserProfileComponent implements OnInit {
                     this.form.controls['address'].setValue(customer.address);
                     this.form.controls['birthDate'].setValue(customer.birthDate ? customer.birthDate : null);
                 }
+
+                // Assign initial value for validation of duplicated DNI
+                this.form.controls['dni'].setAsyncValidators([
+                    existingDniValidator(this.customerService, customer.dni),
+                ]);
             });
     }
 
@@ -95,9 +94,14 @@ export class UserProfileComponent implements OnInit {
         }
 
         const userProfileForm = this.form.value;
+
         this.currentUser$
             .pipe(
-                switchMap((user) =>
+                first(),
+                switchMap((user) => {
+                    return combineLatest([of(user), this.customerService.getByEmail(user.email)]);
+                }),
+                switchMap(([user, customer]) =>
                     this.userService.updateCustomerUser(
                         {
                             id: user.id,
@@ -109,6 +113,7 @@ export class UserProfileComponent implements OnInit {
                             email: userProfileForm.email,
                         },
                         {
+                            id: customer.id,
                             firstName: userProfileForm.firstName,
                             lastName: userProfileForm.lastName,
                             dni: userProfileForm.dni,
@@ -133,13 +138,15 @@ export class UserProfileComponent implements OnInit {
     }
 }
 
-function existingDniValidator(customerService: CustomerService): AsyncValidatorFn {
+function existingDniValidator(customerService: CustomerService, initialValue = null): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
         return control.valueChanges.pipe(
             debounceTime(300),
             distinctUntilChanged(),
             switchMap((value) => customerService.getByDni(value)),
-            map((customer: Customer) => (customer && customer.dni ? { dniAlreadyAssigned: true } : null)),
+            map((customer: Customer) =>
+                customer && customer.dni && customer.dni !== initialValue ? { dniAlreadyAssigned: true } : null
+            ),
             first()
         );
     };
