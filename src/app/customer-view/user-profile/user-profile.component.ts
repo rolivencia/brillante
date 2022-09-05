@@ -129,7 +129,7 @@ export class UserProfileComponent implements OnInit {
                 (result) => {
                     this.saved = true;
                     this.form.disable();
-                    this.currentUser$ = of(result);
+                    this.authenticationService.currentUser.next(result);
                     this.toastService.success('¡Tus datos fueron actualizados correctamente!');
                 },
                 (error) => {
