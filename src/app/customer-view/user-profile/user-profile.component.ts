@@ -2,11 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, UserService } from '@app/_services';
 import { combineLatest, Observable, of } from 'rxjs';
 import { User } from '@app/_models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+    AbstractControl,
+    AsyncValidatorFn,
+    FormBuilder,
+    FormGroup,
+    ValidationErrors,
+    Validators,
+} from '@angular/forms';
 import { CustomerService } from '@services/customer.service';
-import { first, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, first, map, switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskplaceholder-model';
+import { Customer } from '@models/customer';
+import { FormValidators } from '@syncfusion/ej2-angular-inputs';
 
 @Component({
     selector: 'app-register',
@@ -20,6 +29,7 @@ export class UserProfileComponent implements OnInit {
     public currentUser$: Observable<User>;
     public form: FormGroup;
     public submitted: boolean = false;
+    public saved: boolean = false;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -44,7 +54,7 @@ export class UserProfileComponent implements OnInit {
             email: ['', Validators.required],
             telephone: ['', Validators.required],
             address: ['', Validators.required],
-            birthDate: ['', Validators.required],
+            birthDate: [null, { validators: [FormValidators.max(new Date()), Validators.required] }],
         });
     }
 
@@ -66,36 +76,79 @@ export class UserProfileComponent implements OnInit {
                     this.form.controls['dni'].setValue(customer.dni);
                     this.form.controls['telephone'].setValue(customer.telephone);
                     this.form.controls['address'].setValue(customer.address);
-                    this.form.controls['birthDate'].setValue(customer.birthDate);
+                    this.form.controls['birthDate'].setValue(customer.birthDate ? customer.birthDate : null);
                 }
+
+                // Assign initial value for validation of duplicated DNI
+                this.form.controls['dni'].setAsyncValidators([
+                    existingDniValidator(this.customerService, customer.dni),
+                ]);
             });
     }
 
-    public onUpdateButtonClicked(form: FormGroup) {
+    public onUpdateButtonClicked() {
         this.submitted = true;
-        if (form.invalid) {
+        // Hacky validation to avoid parent form not being updated
+        if (this.form.invalid || this.form.controls['birthDate'].invalid) {
             return;
         }
 
-        const userProfileForm = form.value;
+        const userProfileForm = this.form.value;
 
-        this.userService.updateCustomerUser(
-            {
-                firstName: userProfileForm.firstName,
-                lastName: userProfileForm.lastName,
-                avatar: userProfileForm.avatar,
-                userName: `${userProfileForm.firstName}_${userProfileForm.lastName}`, //FIXME: Build a username based on firstName and lastName
-                email: userProfileForm.email,
-            },
-            {
-                firstName: userProfileForm.firstName,
-                lastName: userProfileForm.lastName,
-                dni: userProfileForm.dni,
-                telephone: userProfileForm.telephone,
-                address: userProfileForm.address,
-                birthDate: userProfileForm.birthDate,
-                email: userProfileForm.email,
-            }
-        );
+        this.currentUser$
+            .pipe(
+                first(),
+                switchMap((user) => {
+                    return combineLatest([of(user), this.customerService.getByEmail(user.email)]);
+                }),
+                switchMap(([user, customer]) =>
+                    this.userService.updateCustomerUser(
+                        {
+                            id: user.id,
+                            firstName: userProfileForm.firstName,
+                            lastName: userProfileForm.lastName,
+                            avatar: userProfileForm.avatar,
+                            userName:
+                                `${userProfileForm.firstName}_${userProfileForm.lastName}_`.toLowerCase() + user.id,
+                            email: userProfileForm.email,
+                        },
+                        {
+                            id: customer.id,
+                            firstName: userProfileForm.firstName,
+                            lastName: userProfileForm.lastName,
+                            dni: userProfileForm.dni,
+                            telephone: userProfileForm.telephone,
+                            address: userProfileForm.address,
+                            birthDate: userProfileForm.birthDate,
+                            email: userProfileForm.email,
+                        }
+                    )
+                )
+            )
+            .subscribe(
+                (result) => {
+                    this.saved = true;
+                    this.form.disable();
+                    this.currentUser$ = of(result);
+                    this.toastService.success('¡Tus datos fueron actualizados correctamente!');
+                },
+                (error) => {
+                    this.toastService.error('Error en actualización de datos: ' + error);
+                }
+            );
     }
+}
+
+function existingDniValidator(customerService: CustomerService, initialValue = null): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+        return control.valueChanges.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap((value) => customerService.getByDni(value)),
+            map((customer: Customer) =>
+                customer && customer.dni && customer.dni !== initialValue ? { dniAlreadyAssigned: true } : null
+            ),
+            first()
+        );
+    };
 }

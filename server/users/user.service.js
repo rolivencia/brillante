@@ -12,9 +12,45 @@ module.exports = {
     authenticate,
     getAll,
     registerCustomerUser,
+    updateCustomerUser,
 };
 
-// TODO: Build workflow to register new users via Auth0
+async function updateCustomerUser({ user, customer }) {
+    const t = await sequelizeConnector.transaction();
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            await User.update(
+                {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    userName: user.userName,
+                    hasFinishedRegistration: true,
+                },
+                { where: { id: user.id }, transaction: t }
+            );
+            await Customer.update(
+                {
+                    firstName: customer.firstName,
+                    lastName: customer.lastName,
+                    address: customer.address,
+                    dni: customer.dni,
+                    telephone: customer.telephone,
+                    birthDate: customer.birthDate,
+                },
+                { where: { id: customer.id }, transaction: t }
+            );
+
+            t.commit();
+            resolve(await findByUserEmail(user.email));
+        } catch (error) {
+            console.error(error);
+            await t.rollback();
+            reject(error);
+        }
+    });
+}
+
 async function registerCustomerUser(user) {
     const t = await sequelizeConnector.transaction();
 
@@ -85,7 +121,7 @@ async function registerCustomerUser(user) {
                 );
             }
 
-            await t.rollback();
+            await t.commit();
             const newUser = await findByUserEmail(userDAO.email);
             resolve(newUser);
         } catch (error) {
