@@ -67,11 +67,11 @@ export class RepairVoucherGeneratorService {
 
             doc.text('SERVICIO TÉCNICO', 15, lastLine);
 
-            moment.locale('es'); //Colocamos fechas para que vayan con el formato espaÃ±ol, identificando los dÃ­as
+            moment.locale('es'); //Colocamos fechas para que vayan con el locale español
 
             const fechaActual = moment(new Date());
 
-            const fechaIngreso = repair.checkIn;
+            const fechaIngreso = moment(repair.checkIn.toDate());
 
             doc.setFontSize(14);
 
@@ -80,7 +80,7 @@ export class RepairVoucherGeneratorService {
                     ' ' +
                     fechaActual.format('DD') +
                     ' de ' +
-                    this.capitalize(fechaIngreso.format('MMMM')) +
+                    this.capitalize(fechaActual.format('MMMM')) +
                     ' de ' +
                     fechaActual.format('YYYY'),
                 130,
