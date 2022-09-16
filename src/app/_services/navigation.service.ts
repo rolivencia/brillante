@@ -114,6 +114,15 @@ export class NavigationService {
             icon: faChartLine,
             type: 'Internal',
         },
+        {
+            id: '107',
+            text: 'Perfil de Usuario',
+            route: 'user-profile',
+            enabled: true,
+            visible: true,
+            icon: faUser,
+            type: 'Internal',
+        },
     ];
 
     private _userLinks: NavigationLink[] = [
@@ -170,15 +179,6 @@ export class NavigationService {
             enabled: true,
             visible: true,
             icon: faQuestion,
-            type: 'Internal',
-        },
-        {
-            id: '107',
-            text: 'Perfil de Usuario',
-            route: 'user-profile',
-            enabled: true,
-            visible: true,
-            icon: faUser,
             type: 'Internal',
         },
     ];
