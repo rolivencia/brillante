@@ -2,11 +2,11 @@
 
 export class User {
     get welcomeName(): string {
-        if (!this.avatar || !this.firstName || !this.lastName) {
+        if (!this.firstName || !this.lastName) {
             return null;
         }
 
-        return `${this.avatar} ${this.firstName} ${this.lastName}`;
+        return `${this.firstName} ${this.lastName}`;
     }
 
     id: number;

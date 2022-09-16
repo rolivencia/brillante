@@ -1,18 +1,15 @@
 <section id="sidebar-content">
     <ng-container *ngIf="currentUser$ | async as currentUser">
-        <div id="user-info" class="my-3 d-flex justify-content-between">
-            <div *ngIf="currentUser.welcomeName">
-                <div>
-                    <strong>{{ currentUser.welcomeName }}</strong>
-                </div>
-                <div *ngIf="adminLinks.length !== 0">
-                    Sucursal:
-                    <strong>
-                        {{
-                            officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
-                        }}</strong
-                    >
-                </div>
+        <div *ngIf="currentUser.welcomeName" id="user-info" class="m-3">
+            <div class="d-flex align-items-center">
+                <img *ngIf="currentUser.avatar" class="me-2" height="24px" width="24px" [src]="currentUser.avatar" />
+                <strong>{{ currentUser.welcomeName }}</strong>
+            </div>
+            <div *ngIf="adminLinks.length !== 0">
+                Sucursal:
+                <strong>
+                    {{ officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna' }}</strong
+                >
             </div>
         </div>
 
@@ -73,7 +70,7 @@
         </ng-template>
     </ejs-listview>
     <ng-container *ngIf="currentUser$ | async as currentUser">
-        <div *ngIf="currentUser" class="py-3">
+        <div *ngIf="currentUser" class="p-3">
             <a (click)="onLogout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
                 >CERRAR SESIÓN</a
             >
