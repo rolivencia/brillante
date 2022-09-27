@@ -42,9 +42,13 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
         this.authenticationService.currentUser.subscribe((user) => {
             if (user) {
                 const currentUserRoles = user.roles.map((UserRole) => UserRole.id);
-                this._adminLinks = this.navigationService.allAdminLinks.filter((Link) =>
-                    Link.roles.some((role) => currentUserRoles.includes(role))
-                );
+                this._adminLinks = this.navigationService.allAdminLinks.filter((Link) => {
+                    // If no roles are defined, then it means access should be available for all roles
+                    if (!Link.roles || Link.roles.length === 0) {
+                        return true;
+                    }
+                    return Link.roles.some((role) => currentUserRoles.includes(role));
+                });
             }
         });
     }
