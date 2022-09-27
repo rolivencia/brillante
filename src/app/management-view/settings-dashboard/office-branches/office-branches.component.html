@@ -1,5 +1,13 @@
 <div class="card">
-    <div class="card-header"><h5>Configuración: Sucursales</h5></div>
+    <div class="card-header d-flex justify-content-between">
+        <h5>Configuración: Sucursales</h5>
+        <div>
+            <button class="btn btn-sm btn-outline-secondary me-3" (click)="goToSelect($event)">
+                🏢 Asignar Sucursal
+            </button>
+            <button class="btn btn-sm btn-outline-primary" (click)="goToAdd($event)">➕ Agregar Nueva</button>
+        </div>
+    </div>
     <div class="card-body">
         <router-outlet></router-outlet>
     </div>
