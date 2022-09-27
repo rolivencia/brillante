@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
-import { OfficeBranch } from '@models/office-branch';
-import { Observable, of } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -12,7 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddOfficeBranchComponent implements OnInit {
     public form: FormGroup;
-    public officeBranches$: Observable<OfficeBranch[]> = of();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,7 +18,6 @@ export class AddOfficeBranchComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.officeBranches$ = this.officeBranchService.fetch();
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
             address: ['', Validators.required],
@@ -35,7 +31,6 @@ export class AddOfficeBranchComponent implements OnInit {
 
         this.officeBranchService.create(this.form.value).subscribe((branch) => {
             this.toastrService.success(`Creada nueva sucursal "${branch.name}"`);
-            this.officeBranches$ = this.officeBranchService.fetch();
         });
     }
 }
