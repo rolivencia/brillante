@@ -19,7 +19,7 @@ export class OfficeBranchesComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.officeBranches$ = this.officeBranchService.fetch();
+        this.officeBranches$ = this.officeBranchService.officeBranches$.asObservable();
     }
 
     goToAdd($event) {
