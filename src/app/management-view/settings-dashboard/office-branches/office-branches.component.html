@@ -1,31 +1,30 @@
-<form [formGroup]="form">
-    <div class="card">
-        <div class="card-header"><h5>Configuración: Sucursales</h5></div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <section>
-                        <h6>Sucursal asignada:</h6>
-                        <label>{{
-                            officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
-                        }}</label>
-                    </section>
-                </div>
-                <div class="col-12 col-md-6">
-                    <section>
-                        <h6>Elegir sucursal actual:</h6>
-                        <ejs-dropdownlist
-                            id="idBranch"
-                            formControlName="idBranch"
-                            floatLabelType="Auto"
-                            [contentEditable]="false"
-                            [dataSource]="officeBranches"
-                            [fields]="officeBranchFields"
-                        ></ejs-dropdownlist>
-                        <button class="mt-2 btn btn-primary" (click)="assign()">Asignar Sucursal</button>
-                    </section>
-                </div>
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h5>Configuración: Sucursales</h5>
+        <div>
+            <button class="btn btn-sm btn-outline-secondary me-3" (click)="goToSelect($event)">
+                🏢 Asignar Sucursal
+            </button>
+            <button class="btn btn-sm btn-outline-primary" (click)="goToAdd($event)">➕ Agregar Nueva</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h6>Lista de Sucursales</h6>
+                <ng-container *ngIf="officeBranches$ | async as officeBranches">
+                    <ejs-grid [dataSource]="officeBranches" [selectionSettings]="{ mode: 'Row' }">
+                        <e-columns>
+                            <e-column field="id" headerText="ID" width="80"></e-column>
+                            <e-column field="name" headerText="Nombre"></e-column>
+                            <e-column field="address" headerText="Dirección"></e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </ng-container>
+            </div>
+            <div class="col">
+                <router-outlet></router-outlet>
             </div>
         </div>
     </div>
-</form>
+</div>

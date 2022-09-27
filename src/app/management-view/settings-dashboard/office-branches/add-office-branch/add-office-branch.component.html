@@ -1,0 +1,9 @@
+<form [formGroup]="form">
+    <div class="e-input-group mb-3">
+        <input formControlName="name" class="e-input" name="input" type="text" placeholder="Nombre de Sucursal" />
+    </div>
+    <div class="e-input-group">
+        <input formControlName="address" class="e-input" name="input" type="text" placeholder="Dirección" />
+    </div>
+    <button class="mt-2 btn btn-primary" (click)="onSave($event)">Crear Sucursal</button>
+</form>

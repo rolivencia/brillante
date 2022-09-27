@@ -16,6 +16,8 @@ export class OfficeBranchService {
         return this._current;
     }
 
+    public officeBranches$: BehaviorSubject<OfficeBranch[]> = new BehaviorSubject<OfficeBranch[]>([]);
+
     /**
      * Stores the currently assigned Office Branch for the running application instance
      * @private
@@ -50,6 +52,9 @@ export class OfficeBranchService {
      */
     public fetch(): Observable<OfficeBranch[]> {
         return this.http.get<OfficeBranch[]>(`${environment.apiUrl}/office-branch/getAll`);
-        // return of([{ id: 1, name: '25 de Mayo', address: '25 de Mayo' }]);
+    }
+
+    public create(branch: Partial<OfficeBranch>): Observable<OfficeBranch> {
+        return this.http.post<OfficeBranch>(`${environment.apiUrl}/office-branch/create`, branch);
     }
 }

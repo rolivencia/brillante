@@ -7,19 +7,24 @@ class OfficeBranch extends Sequelize.Model {}
 OfficeBranch.init(
     {
         id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
             field: 'id',
         },
         name: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
             field: 'name',
+        },
+        codeName: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            field: 'code_name',
         },
         address: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
             field: 'address',
         },
     },
