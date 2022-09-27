@@ -51,4 +51,8 @@ export class OfficeBranchService {
     public fetch(): Observable<OfficeBranch[]> {
         return this.http.get<OfficeBranch[]>(`${environment.apiUrl}/office-branch/getAll`);
     }
+
+    public create(branch: Partial<OfficeBranch>): Observable<OfficeBranch> {
+        return this.http.post<OfficeBranch>(`${environment.apiUrl}/office-branch/create`, branch);
+    }
 }
