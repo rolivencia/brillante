@@ -1,31 +1,6 @@
-<form [formGroup]="form">
-    <div class="card">
-        <div class="card-header"><h5>Configuración: Sucursales</h5></div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <section>
-                        <h6>Sucursal asignada:</h6>
-                        <label>{{
-                            officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna'
-                        }}</label>
-                    </section>
-                </div>
-                <div class="col-12 col-md-6">
-                    <section>
-                        <h6>Elegir sucursal actual:</h6>
-                        <ejs-dropdownlist
-                            id="idBranch"
-                            formControlName="idBranch"
-                            floatLabelType="Auto"
-                            [contentEditable]="false"
-                            [dataSource]="officeBranches"
-                            [fields]="officeBranchFields"
-                        ></ejs-dropdownlist>
-                        <button class="mt-2 btn btn-primary" (click)="assign()">Asignar Sucursal</button>
-                    </section>
-                </div>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-header"><h5>Configuración: Sucursales</h5></div>
+    <div class="card-body">
+        <app-select-office-branch></app-select-office-branch>
     </div>
-</form>
+</div>
