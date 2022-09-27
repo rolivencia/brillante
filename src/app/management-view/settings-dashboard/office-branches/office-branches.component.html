@@ -9,6 +9,22 @@
         </div>
     </div>
     <div class="card-body">
-        <router-outlet></router-outlet>
+        <div class="row">
+            <div class="col">
+                <h6>Lista de Sucursales</h6>
+                <ng-container *ngIf="officeBranches$ | async as officeBranches">
+                    <ejs-grid [dataSource]="officeBranches" [selectionSettings]="{ mode: 'Row' }">
+                        <e-columns>
+                            <e-column field="id" headerText="ID" width="80"></e-column>
+                            <e-column field="name" headerText="Nombre"></e-column>
+                            <e-column field="address" headerText="Dirección"></e-column>
+                        </e-columns>
+                    </ejs-grid>
+                </ng-container>
+            </div>
+            <div class="col">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
     </div>
 </div>

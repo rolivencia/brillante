@@ -1,31 +1,9 @@
-<div class="row">
-    <div class="col">
-        <h6>Lista de Sucursales</h6>
-        <ng-container *ngIf="officeBranches$ | async as officeBranches">
-            <ejs-grid [dataSource]="officeBranches" [selectionSettings]="{ mode: 'Row' }">
-                <e-columns>
-                    <e-column field="id" headerText="ID" width="80"></e-column>
-                    <e-column field="name" headerText="Nombre"></e-column>
-                    <e-column field="address" headerText="Dirección"></e-column>
-                </e-columns>
-            </ejs-grid>
-        </ng-container>
+<form [formGroup]="form">
+    <div class="e-input-group mb-3">
+        <input formControlName="name" class="e-input" name="input" type="text" placeholder="Nombre de Sucursal" />
     </div>
-    <div class="col">
-        <form [formGroup]="form">
-            <div class="e-input-group mb-3">
-                <input
-                    formControlName="name"
-                    class="e-input"
-                    name="input"
-                    type="text"
-                    placeholder="Nombre de Sucursal"
-                />
-            </div>
-            <div class="e-input-group">
-                <input formControlName="address" class="e-input" name="input" type="text" placeholder="Dirección" />
-            </div>
-            <button class="mt-2 btn btn-primary" (click)="onSave($event)">Crear Sucursal</button>
-        </form>
+    <div class="e-input-group">
+        <input formControlName="address" class="e-input" name="input" type="text" placeholder="Dirección" />
     </div>
-</div>
+    <button class="mt-2 btn btn-primary" (click)="onSave($event)">Crear Sucursal</button>
+</form>
