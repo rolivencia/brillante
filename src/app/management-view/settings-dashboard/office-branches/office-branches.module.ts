@@ -6,9 +6,17 @@ import { OfficeBranchesComponent } from './office-branches.component';
 import { OfficeBranchesRoutingModule } from './office-branches-routing.module';
 import { SelectOfficeBranchComponent } from './select-office-branch/select-office-branch.component';
 import { AddOfficeBranchComponent } from './add-office-branch/add-office-branch.component';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
 
 @NgModule({
     declarations: [OfficeBranchesComponent, SelectOfficeBranchComponent, AddOfficeBranchComponent],
-    imports: [CommonModule, DropDownListModule, FormsModule, OfficeBranchesRoutingModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        DropDownListModule,
+        FormsModule,
+        OfficeBranchesRoutingModule,
+        ReactiveFormsModule,
+        GridModule,
+    ],
 })
 export class OfficeBranchesModule {}

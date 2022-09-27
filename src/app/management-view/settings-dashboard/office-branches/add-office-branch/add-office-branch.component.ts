@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
+import { OfficeBranch } from '@models/office-branch';
+import { Observable, of } from 'rxjs';
+import { OfficeBranchService } from '@services/office-branch.service';
 
 @Component({
     selector: 'app-add-office-branch',
@@ -8,12 +11,15 @@ import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 })
 export class AddOfficeBranchComponent implements OnInit {
     public form: FormGroup;
+    public officeBranches$: Observable<OfficeBranch[]> = of();
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder, private officeBranchService: OfficeBranchService) {}
 
     ngOnInit(): void {
+        this.officeBranches$ = this.officeBranchService.fetch();
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
+            address: ['', Validators.required],
         });
     }
 
