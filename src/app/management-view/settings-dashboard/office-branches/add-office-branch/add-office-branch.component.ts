@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { ToastrService } from 'ngx-toastr';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-add-office-branch',
@@ -29,8 +30,18 @@ export class AddOfficeBranchComponent implements OnInit {
             this.toastrService.error(`Los datos ingresados son inválidos.`);
         }
 
-        this.officeBranchService.create(this.form.value).subscribe((branch) => {
-            this.toastrService.success(`Creada nueva sucursal "${branch.name}"`);
-        });
+        this.officeBranchService
+            .create(this.form.value)
+            .pipe(
+                switchMap((branch) => {
+                    this.toastrService.success(`Creada nueva sucursal "${branch.name}"`);
+                    return this.officeBranchService.fetch();
+                })
+            )
+            .subscribe((branches) => {
+                // Update grid state
+                this.officeBranchService.officeBranches$.next(branches);
+                this.form.reset();
+            });
     }
 }
