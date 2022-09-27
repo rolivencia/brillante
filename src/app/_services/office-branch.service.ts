@@ -16,6 +16,8 @@ export class OfficeBranchService {
         return this._current;
     }
 
+    public officeBranches$: BehaviorSubject<OfficeBranch[]> = new BehaviorSubject<OfficeBranch[]>([]);
+
     /**
      * Stores the currently assigned Office Branch for the running application instance
      * @private
