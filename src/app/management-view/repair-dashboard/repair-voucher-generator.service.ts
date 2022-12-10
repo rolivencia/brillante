@@ -49,7 +49,11 @@ export class RepairVoucherGeneratorService {
 
             lastLine += 20;
 
-            doc.text('25 de Mayo 3567 - Santa Fe, Capital', 136, lastLine);
+            doc.text('25 de Mayo 3567 - Santa Fe', 149, lastLine);
+            lastLine += 4;
+            doc.text('San Jerónimo 1767 - Santa Fe', 147, lastLine);
+            lastLine += 4;
+            doc.text('Victoria 114 - Paraná', 163, lastLine);
 
             lastLine += 4;
 
