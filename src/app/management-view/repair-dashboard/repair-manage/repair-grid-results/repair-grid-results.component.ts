@@ -12,7 +12,7 @@ import {
     SortSettingsModel,
 } from '@syncfusion/ej2-angular-grids';
 import { Repair } from '@models/repair';
-import { DataUtil } from '@syncfusion/ej2-data';
+import { RepairService } from '@services/repair.service';
 
 @Component({
     selector: 'app-repair-grid-results',
@@ -25,6 +25,7 @@ export class RepairGridResultsComponent implements OnInit {
 
     constructor(
         private dateHandlerService: DateHandlerService,
+        private repairService: RepairService,
         public repairDashboardService: RepairDashboardService
     ) {}
 
@@ -35,7 +36,7 @@ export class RepairGridResultsComponent implements OnInit {
         columns: [{ field: 'lastUpdate', direction: 'Descending' }],
     };
 
-    public filterDropdownData = { manufacturer: [], model: [], status: [] };
+    public filterDropdownData = { status: [] };
 
     async ngOnInit() {
         this.repairDashboardService._dateTo = moment();
@@ -53,15 +54,7 @@ export class RepairGridResultsComponent implements OnInit {
 
         await this.repairDashboardService.getGridData();
         this.filterDropdownData = {
-            manufacturer: ['']
-                .concat(DataUtil.distinct(this.repairDashboardService.gridData, 'device.manufacturer') as string[])
-                .sort(),
-            model: ['']
-                .concat(DataUtil.distinct(this.repairDashboardService.gridData, 'device.model') as string[])
-                .sort(),
-            status: ['']
-                .concat(DataUtil.distinct(this.repairDashboardService.gridData, 'status.description') as string[])
-                .sort(),
+            status: this.repairService.repairStatuses.map((status) => status.description).sort(),
         };
     }
 
