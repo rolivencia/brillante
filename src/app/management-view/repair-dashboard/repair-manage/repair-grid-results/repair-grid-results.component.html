@@ -23,26 +23,8 @@
                 <e-columns>
                     <e-column field="id" headerText="ID" width="65"></e-column>
                     <e-column field="customer.fullName" headerText="Cliente"></e-column>
-                    <e-column field="device.manufacturer" headerText="Marca">
-                        <ng-template #filterTemplate let-data>
-                            <ejs-dropdownlist
-                                [(ngModel)]="data.Name"
-                                [enabled]="true"
-                                (change)="onFilterChange($event, 'device.manufacturer')"
-                                [dataSource]="filterDropdownData['manufacturer']"
-                            ></ejs-dropdownlist>
-                        </ng-template>
-                    </e-column>
-                    <e-column field="device.model" headerText="Modelo">
-                        <ng-template #filterTemplate let-data>
-                            <ejs-dropdownlist
-                                [(ngModel)]="data.Name"
-                                [enabled]="true"
-                                (change)="onFilterChange($event, 'device.model')"
-                                [dataSource]="filterDropdownData['model']"
-                            ></ejs-dropdownlist>
-                        </ng-template>
-                    </e-column>
+                    <e-column field="device.manufacturer" headerText="Marca"></e-column>
+                    <e-column field="device.model" headerText="Modelo"></e-column>
                     <e-column field="device.deviceId" headerText="IMEI / UUID / Serial"></e-column>
                     <e-column field="checkIn" headerText="Ingresada" width="110">
                         <ng-template #template let-data>
