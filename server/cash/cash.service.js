@@ -25,6 +25,7 @@ async function getPaymentMethods() {
             required: false,
             attributes: ['installments', 'interestRate'],
         },
+        where: { enabled: true },
     });
 }
 
