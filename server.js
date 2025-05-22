@@ -75,4 +75,4 @@ else {
     });
 }
 
-module.exports = server;
+module.exports = { app };
