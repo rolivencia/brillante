@@ -1,9 +1,9 @@
 {
     "development": {
-        "username": "dev",
-        "password": "root",
-        "database": "brillante",
-        "host": "localhost",
+        "username": "opdtfx91u35bdj85",
+        "password": "fvtf0h2x1whu9fhd",
+        "database": "pvdg0tz8ye1641dd",
+        "host": "w3epjhex7h2ccjxx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         "dialect": "mysql"
     },
     "staging": {
