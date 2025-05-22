@@ -2,7 +2,7 @@
     "version": 2,
     "public": true,
     "name": "brillante",
-    "installCommand": "npm install",
+    "installCommand": "npm ci",
     "devCommand": "npm run dev",
     "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
     "functions": {
