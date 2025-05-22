@@ -2,11 +2,11 @@
     "name": "brillante",
     "version": "2.0.0",
     "engines": {
-        "node": "18.x"
+        "node": "22.x"
     },
     "scripts": {
         "ng": "ng",
-        "start": "sequelize db:migrate && node server.js",
+        "start": "node server.js",
         "build": "ng build --aot --configuration production",
         "dev": "concurrently -p=\"{name}\" -n=\"NodeJS,Angular\" -c=\"red,green\" \"npm run serve:be\" \"npm run serve:fe\"",
         "test": "ng test",
