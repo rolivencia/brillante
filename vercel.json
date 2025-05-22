@@ -6,7 +6,7 @@
     "devCommand": "pnpm run dev",
     "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
     "functions": {
-        "api/index.js": {
+        "api/index.mjs": {
             "includeFiles": "dist/brillante/**"
         }
     }
