@@ -5,7 +5,7 @@
         "node": "22.x"
     },
     "scripts": {
-        "preinstall": "npm -g install @angular/cli@13",
+        "postinstall": "npm -g install @angular/cli@13",
         "ng": "ng",
         "start": "sequelize db:migrate && node server.js",
         "build": "ng build --aot --configuration production",
