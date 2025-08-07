@@ -29,10 +29,6 @@ export class NavigationService {
         return this._allAdminLinks;
     }
 
-    get userLinks(): NavigationLink[] {
-        return this._userLinks;
-    }
-
     private _allAdminLinks: NavigationLink[] = [
         {
             id: '2',
@@ -134,64 +130,4 @@ export class NavigationService {
             type: 'Internal',
         },
     ];
-
-    private _userLinks: NavigationLink[] = [
-        { id: '100', text: 'Inicio', route: '/', enabled: true, visible: true, icon: faHome, type: 'Internal' },
-        {
-            id: '101',
-            text: 'Productos',
-            route: '/products',
-            enabled: true,
-            visible: true,
-            icon: faShoppingBag,
-            type: 'Internal',
-        },
-        {
-            id: '102',
-            text: 'Celulares',
-            route: '/smartphones',
-            enabled: false,
-            visible: false,
-            icon: faMobile,
-            type: 'Internal',
-        },
-        {
-            id: '103',
-            text: 'Reparaciones',
-            route: '/repairs',
-            enabled: true,
-            visible: true,
-            icon: faToolbox,
-            type: 'Internal',
-        },
-        {
-            id: '104',
-            text: 'Servicio a empresas',
-            route: 'enterprise',
-            enabled: true,
-            visible: true,
-            icon: faBuilding,
-            type: 'Internal',
-        },
-        {
-            id: '105',
-            text: 'Novedades',
-            route: 'news',
-            enabled: false,
-            visible: false,
-            icon: faNewspaper,
-            type: 'Internal',
-        },
-        {
-            id: '106',
-            text: 'Contacto',
-            route: 'contact',
-            enabled: true,
-            visible: true,
-            icon: faQuestion,
-            type: 'Internal',
-        },
-    ];
-
-    constructor() {}
 }

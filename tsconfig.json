@@ -13,8 +13,7 @@
         "lib": ["es2020", "dom"],
         "paths": {
             "@app/*": ["src/app/*"],
-            "@customer-view/*": ["src/app/customer-view/*"],
-            "@management-view/*": ["src/app/management-view/*"],
+            "@pages/*": ["src/app/pages/*"],
             "@enums/*": ["src/app/_enums/*"],
             "@functions/*": ["src/app/_functions/*"],
             "@guards/*": ["src/app/_guards/*"],

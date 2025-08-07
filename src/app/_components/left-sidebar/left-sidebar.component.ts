@@ -17,10 +17,6 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
     @Output() hide: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() logout: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    get userLinks(): NavigationLink[] {
-        return this.navigationService.userLinks;
-    }
-
     get adminLinks(): NavigationLink[] {
         return this._adminLinks;
     }

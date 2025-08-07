@@ -30,10 +30,6 @@ export class MainHeaderComponent implements OnInit {
     @Input() sidebarOpen: boolean = false;
     @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    get userLinks(): NavigationLink[] {
-        return this.navigationService.userLinks;
-    }
-
     get adminLinks(): NavigationLink[] {
         return this._adminLinks;
     }

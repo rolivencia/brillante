@@ -32,17 +32,6 @@
 <ng-template #navTemplate>
     <!-- TODO: #200 - Add responsive solution for nav visualization -->
     <div id="nav-container" class="flex-grow-1 d-none d-xl-block">
-        <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-around">
-            <ng-container *ngFor="let route of userLinks">
-                <li class="nav-item" *ngIf="route.visible">
-                    <a
-                        class="nav-link px-2 px-xxl-3"
-                        [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                        [routerLink]="route.route"
-                        >{{ route.text }}</a
-                    >
-                </li>
-            </ng-container>
-        </ul>
+        <ul class="nav d-flex d-flex flex-column flex-sm-row justify-content-around"></ul>
     </div>
 </ng-template>
