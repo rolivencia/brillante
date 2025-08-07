@@ -11,18 +11,10 @@ export const routePaths = {
 
 const appRoutes: Routes = [
     {
-        path: '',
-        loadChildren: () => import('./customer-view/customer-view.module').then((m) => m.CustomerViewModule),
-    },
-    {
         path: routePaths.repair.path,
         loadChildren: () =>
             import('@management-view/repair-dashboard/repair-dashboard.module').then((m) => m.RepairDashboardModule),
         canActivate: [AuthGuard, RepairDashboardGuard, OfficeBranchGuard],
-    },
-    {
-        path: routePaths.customer.children.userProfile.path,
-        loadChildren: () => import('@customer-view/user-profile/user-profile.module').then((m) => m.UserProfileModule),
     },
     {
         path: 'client-dashboard',
@@ -59,7 +51,7 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
     },
 
-    { path: '**', redirectTo: 'home' },
+    { path: '**', redirectTo: 'client-dashboard' },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes, {
