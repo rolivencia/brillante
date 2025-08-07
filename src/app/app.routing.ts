@@ -49,8 +49,11 @@ const appRoutes: Routes = [
             import('@pages/reports-dashboard/reports-dashboard.module').then((m) => m.ReportsDashboardModule),
         canActivate: [AuthGuard],
     },
-
-    { path: '**', redirectTo: 'client-dashboard' },
+    {
+        path: '',
+        redirectTo: 'settings-dashboard',
+        pathMatch: 'full',
+    },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes, {
