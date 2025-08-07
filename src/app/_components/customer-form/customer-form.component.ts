@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RepairFormHandlerService } from '@management-view/repair-dashboard/repair-form-handler.service';
+import { RepairFormHandlerService } from '@pages/repair-dashboard/repair-form-handler.service';
 import { ControlContainer, FormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
 import { MaskedDateTimeService } from '@syncfusion/ej2-angular-calendars';
