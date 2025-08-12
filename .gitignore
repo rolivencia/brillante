@@ -6,11 +6,6 @@
 /tmp
 /out-tsc
 
-# Sanity
-/shop-db/node_modules
-/shop-db/dist
-/shop-db/config/.checksums
-
 # dependencies
 /brillante-alma
 /node_modules
