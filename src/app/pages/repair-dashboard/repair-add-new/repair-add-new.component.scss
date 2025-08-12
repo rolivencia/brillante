@@ -1,19 +1,11 @@
-@import 'src/assets/scss/bootstrap-extensions';
-
 .form-inline {
     label {
         width: 60px;
-        @extend .me-3;
-    }
-    input:not([type='checkbox']) + label {
-        @extend .ms-3;
     }
 }
 
 .form-group {
-    @extend .pb-0;
 }
 
 button + button {
-    @extend .ms-3;
 }

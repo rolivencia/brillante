@@ -1,8 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'assets/scss/bootstrap-theming';
-@import 'node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
-@import 'node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
-@import '~ngx-toastr/toastr';
+@import 'ngx-toastr/toastr';
 
 /* SyncFusion theming */
 $theme-name: 'material';
@@ -22,6 +19,8 @@ $primary: #999;
 @import 'ej2-popups/styles/material.scss';
 @import 'ej2-lists/styles/material.scss';
 @import 'ej2-splitbuttons/styles/material.scss';
+
+@import 'assets/scss/bootstrap-theming';
 
 :root {
     --progress-loader-color: #00ffff;
