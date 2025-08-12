@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-    ActivatedRouteSnapshot,
-    CanActivate,
-    CanActivateChild,
-    Router,
-    RouterStateSnapshot,
-    UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService, hasRoles } from '@app/_services';
 import { routePaths } from '@app/app.routing';
@@ -15,7 +8,7 @@ import { EUserRole } from '@enums/user.enum';
 @Injectable({
     providedIn: 'root',
 })
-export class FinishedRegistrationGuard implements CanActivate, CanActivateChild {
+export class FinishedRegistrationGuard {
     constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
     canActivate(

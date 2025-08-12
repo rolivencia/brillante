@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CoreAppSettings } from './core-app-settings.service';
+import { CoreAppSettingsGuard } from './core-app-settings.guard';
 
 describe('CoreAppSettingsGuard', () => {
-    let guard: CoreAppSettings;
+    let guard: CoreAppSettingsGuard;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        guard = TestBed.inject(CoreAppSettings);
+        guard = TestBed.inject(CoreAppSettingsGuard);
     });
 
     it('should be created', () => {

@@ -2,7 +2,7 @@ import { CashDashboardComponent } from '@pages/cash-dashboard/cash-dashboard.com
 import { CashDashboardResolverService } from './cash-dashboard.resolver.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CashRolesGuard } from '@services/cash-roles-guard.service';
+import { CashRolesGuard } from '@guards/cash-roles.guard';
 
 const routes: Routes = [
     {

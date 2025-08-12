@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { switchMap, tap } from 'rxjs/operators';
@@ -8,12 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
     providedIn: 'root',
 })
-export class OfficeBranchGuard implements CanActivate {
+export class OfficeBranchGuard {
     constructor(private officeBranchService: OfficeBranchService, private toastrService: ToastrService) {}
-    canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.officeBranchService.current.pipe(
             switchMap((branch) => of(branch !== null)),
             tap((value) => {

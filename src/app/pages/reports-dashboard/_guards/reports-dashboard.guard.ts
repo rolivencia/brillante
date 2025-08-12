@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthenticationService, hasRoles } from '@services/authentication.service';
 import { EUserRole } from '@enums/user.enum';
@@ -9,7 +9,7 @@ import { switchMap, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root',
 })
-export class ReportsDashboardGuard implements CanActivate {
+export class ReportsDashboardGuard {
     constructor(private authenticationService: AuthenticationService, private toastrService: ToastrService) {}
     canActivate(
         next: ActivatedRouteSnapshot,
