@@ -39,15 +39,15 @@ import { environment } from '@environments/environment';
         AuthModule.forRoot({
             domain: environment.auth0.domain,
             clientId: environment.auth0.clientId,
-            audience: environment.auth0.audience,
-            scope: 'read:current_user',
             httpInterceptor: {
                 allowedList: [
                     {
                         uri: `${environment.auth0.audience}/*`,
                         tokenOptions: {
-                            audience: `${environment.auth0.audience}`,
-                            scope: 'read:current_user',
+                            authorizationParams: {
+                                audience: `${environment.auth0.audience}`,
+                                scope: 'read:current_user',
+                            },
                         },
                     },
                 ],

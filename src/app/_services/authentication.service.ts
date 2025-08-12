@@ -65,7 +65,7 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUser.next(null);
-        this.auth0Service.logout({ federated: true });
+        this.auth0Service.logout({ logoutParams: { federated: true } });
     }
 }
 
