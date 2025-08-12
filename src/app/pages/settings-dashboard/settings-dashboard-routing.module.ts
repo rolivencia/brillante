@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SettingsDashboardComponent } from './settings-dashboard.component';
 import { CashDashboardResolverService } from '@pages/cash-dashboard/cash-dashboard.resolver.service';
-import { CoreAppSettings } from './_guards/core-app-settings.service';
+import { CoreAppSettingsGuard } from './_guards/core-app-settings.guard';
 import { AdministrativeAppSettingsGuard } from './_guards/administrative-app-settings.guard';
 
 const routes: Routes = [
@@ -13,12 +13,12 @@ const routes: Routes = [
     {
         path: 'office-branches',
         loadChildren: () => import('./office-branches/office-branches.module').then((m) => m.OfficeBranchesModule),
-        canActivate: [CoreAppSettings],
+        canActivate: [CoreAppSettingsGuard],
     },
     {
         path: 'user-management',
         loadChildren: () => import('./user-management/user-management.module').then((m) => m.UserManagementModule),
-        canActivate: [CoreAppSettings],
+        canActivate: [CoreAppSettingsGuard],
     },
     {
         path: 'concepts',

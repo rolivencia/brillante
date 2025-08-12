@@ -16,6 +16,7 @@ import { EUserRole } from '@enums/user.enum';
 import { SidebarComponent } from '@syncfusion/ej2-angular-navigations';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { LayoutService } from '@services/layout.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-brillante',
@@ -74,7 +75,7 @@ export class AppComponent implements OnInit, AfterViewInit {
      */
     private progressBarHandler(router: Router, progressLoaderService: ProgressLoaderService): void {
         // Subscribing to router events, in order to show loading indicator
-        router.events.subscribe((event: RouterEvent) => {
+        router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
             // We don't show any progress loader in the login view
             switch (true) {
                 case event instanceof NavigationStart:

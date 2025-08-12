@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CustomerService } from '@services/customer.service';
 import { Customer } from '@models/customer';
@@ -7,7 +7,7 @@ import { Customer } from '@models/customer';
 @Injectable({
     providedIn: 'root',
 })
-export class UpdateCustomerResolver implements Resolve<Customer> {
+export class UpdateCustomerResolver {
     constructor(private customerService: CustomerService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Customer> {

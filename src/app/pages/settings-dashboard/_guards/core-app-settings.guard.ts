@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { EUserRole } from '@enums/user.enum';
 import { switchMap, tap } from 'rxjs/operators';
@@ -9,12 +9,9 @@ import { AuthenticationService, hasRoles } from '@services/authentication.servic
 @Injectable({
     providedIn: 'root',
 })
-export class CoreAppSettings implements CanActivate {
+export class CoreAppSettingsGuard {
     constructor(private authenticationService: AuthenticationService, private toastrService: ToastrService) {}
-    canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.authenticationService.currentUser.pipe(
             switchMap((user) => of(hasRoles(user.roles, [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK]))),
             tap((value) => {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { MoneyTransactionConceptsService } from '@pages/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { TransactionConcept } from '@models/cash-transaction';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CashDashboardResolverService implements Resolve<CashDashboardAssets> {
+export class CashDashboardResolverService {
     constructor(public moneyTransactionConceptsService: MoneyTransactionConceptsService) {}
 
     async resolve(route: ActivatedRouteSnapshot): Promise<CashDashboardAssets> {
