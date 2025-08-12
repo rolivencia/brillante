@@ -4,6 +4,10 @@ export const environment = {
     auth0: {
         domain: 'brillante-staging.us.auth0.com',
         clientId: 'TvdUyvQnzDAaQ5nypXB5CLW9RpMkFCw1',
-        audience: 'https://brillante-staging.us.auth0.com/api/v2/',
+        authorizationParams: {
+            audience: 'https://brillante-staging.us.auth0.com/api/v2/',
+            redirect_uri: window.location.origin,
+        },
+        errorPath: '/callback',
     },
 };

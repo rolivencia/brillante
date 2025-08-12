@@ -42,7 +42,11 @@ export class AuthenticationService {
     }
 
     public redirectToLoginPortal() {
-        this.auth0Service.loginWithRedirect();
+        this.auth0Service.loginWithRedirect({
+            authorizationParams: {
+                redirect_uri: window.location.origin,
+            },
+        });
     }
 
     /**
@@ -65,7 +69,7 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUser.next(null);
-        this.auth0Service.logout({ federated: true });
+        this.auth0Service.logout({ logoutParams: { federated: true } });
     }
 }
 

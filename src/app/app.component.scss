@@ -1,5 +1,4 @@
 @import 'src/assets/scss/bootstrap-colors';
-@import 'src/assets/scss/bootstrap-extensions';
 
 #header-container {
     width: 100%;
@@ -20,14 +19,8 @@
 #outlet-container {
     height: 100vh;
     &.add-header-margin {
-        @include media-breakpoint-down(xs) {
-            height: calc(100vh - 48px);
-            margin-top: 48px;
-        }
-        @include media-breakpoint-up(sm) {
-            height: calc(100vh - 64px);
-            margin-top: 64px;
-        }
+        height: calc(100vh - 64px);
+        margin-top: 64px;
     }
 
     flex-grow: 1;
@@ -41,12 +34,7 @@
 
 #default-sidebar {
     &.add-header-margin {
-        @include media-breakpoint-down(xs) {
-            margin-top: 48px;
-        }
-        @include media-breakpoint-up(sm) {
-            margin-top: 64px;
-        }
+        margin-top: 64px;
     }
 
     .e-list-wrapper {
