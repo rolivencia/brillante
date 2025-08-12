@@ -102,18 +102,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "brillante:build"
+                        "buildTarget": "brillante:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "brillante:build:production"
+                            "buildTarget": "brillante:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "brillante:build"
+                        "buildTarget": "brillante:build"
                     }
                 },
                 "test": {
