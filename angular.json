@@ -150,7 +150,6 @@
             }
         }
     },
-    "defaultProject": "brillante",
     "cli": {
         "analytics": "3b0ea8e4-88bd-4417-bce9-811d09dc8235"
     }
