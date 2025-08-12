@@ -4,7 +4,7 @@ import { MoneyTransactionConceptsService } from '@pages/settings-dashboard/money
 import { MoneyTransactionConceptsHttpService } from '@pages/settings-dashboard/money-transaction-concepts/money-transaction-concepts.http.service';
 import { ToastrService } from 'ngx-toastr';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-cash-transaction-concept-details',
@@ -23,10 +23,10 @@ export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit {
     @Output() selectionChanged: EventEmitter<TransactionConcept> = new EventEmitter<TransactionConcept>();
 
     public moneyTransactionFields: FieldSettingsModel = { text: 'description', value: 'id' };
-    public form: FormGroup = new FormGroup({});
+    public form: UntypedFormGroup = new UntypedFormGroup({});
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private moneyTransactionConceptsHttpService: MoneyTransactionConceptsHttpService,
         private moneyTransactionConceptsService: MoneyTransactionConceptsService,
         private toastrService: ToastrService

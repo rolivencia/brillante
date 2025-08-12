@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 import { OfficeBranch } from '@models/office-branch';
 import { OfficeBranchService } from '@services/office-branch.service';
@@ -12,14 +12,14 @@ import { first } from 'rxjs/operators';
     styleUrls: ['./select-office-branch.component.scss'],
 })
 export class SelectOfficeBranchComponent implements OnInit {
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public officeBranchFields: FieldSettingsModel = { text: 'name', value: 'id' };
     public officeBranches: OfficeBranch[] = [];
     public selectedBranch: OfficeBranch = new OfficeBranch();
 
     constructor(
         public officeBranchService: OfficeBranchService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private toastrService: ToastrService
     ) {}
 

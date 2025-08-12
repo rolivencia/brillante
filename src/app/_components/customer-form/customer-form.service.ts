@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Customer } from '@models/customer';
 import { DateTimeService } from '@services/date-time.service';
 
@@ -7,9 +7,9 @@ import { DateTimeService } from '@services/date-time.service';
     providedIn: 'root',
 })
 export class CustomerFormService {
-    constructor(private dateTimeService: DateTimeService, private formBuilder: FormBuilder) {}
+    constructor(private dateTimeService: DateTimeService, private formBuilder: UntypedFormBuilder) {}
 
-    buildForm(customer: Customer): FormGroup {
+    buildForm(customer: Customer): UntypedFormGroup {
         return this.formBuilder.group({
             id: [customer.id],
             dni: [customer.dni, [Validators.required, Validators.minLength(7)]],

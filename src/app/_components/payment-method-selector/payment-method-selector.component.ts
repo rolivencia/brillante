@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PaymentMethodsService } from '@services/payment-methods.service';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 
 @Component({
@@ -13,7 +13,7 @@ export class PaymentMethodSelectorComponent {
     @Input() label: string = 'Método de pago';
     @Input() isReadOnly: boolean = false;
     @Input() isDisabled: boolean = false;
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
     public paymentMethodFields: FieldSettingsModel = { text: 'description', value: 'id' };
 

@@ -1,4 +1,11 @@
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+    AbstractControl,
+    UntypedFormArray,
+    UntypedFormBuilder,
+    UntypedFormGroup,
+    ValidatorFn,
+    Validators,
+} from '@angular/forms';
 import { AuthenticationService } from '@services/authentication.service';
 import { Customer } from '@models/customer';
 import { CustomerService } from '@services/customer.service';
@@ -31,12 +38,12 @@ export class RepairFormHandlerService {
         this._saved = value;
     }
 
-    get paymentMethodGroup(): FormGroup {
-        return this.formGroup.controls.payment as FormGroup;
+    get paymentMethodGroup(): UntypedFormGroup {
+        return this.formGroup.controls.payment as UntypedFormGroup;
     }
 
-    get paymentsGroup(): FormArray {
-        return this.formGroup.controls.payments as FormArray;
+    get paymentsGroup(): UntypedFormArray {
+        return this.formGroup.controls.payments as UntypedFormArray;
     }
 
     get customerControl() {
@@ -83,15 +90,15 @@ export class RepairFormHandlerService {
         this._repair = value;
     }
 
-    get repairGroup(): FormGroup {
-        return this.formGroup.controls.repair as FormGroup;
+    get repairGroup(): UntypedFormGroup {
+        return this.formGroup.controls.repair as UntypedFormGroup;
     }
 
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._formGroup;
     }
 
-    set formGroup(value: FormGroup) {
+    set formGroup(value: UntypedFormGroup) {
         this._formGroup = value;
     }
 
@@ -103,13 +110,13 @@ export class RepairFormHandlerService {
     private _customer: Customer = new Customer();
     private _repair: Repair = new Repair();
 
-    private _formGroup: FormGroup;
+    private _formGroup: UntypedFormGroup;
 
     constructor(
         private authenticationService: AuthenticationService,
         private customerService: CustomerService,
         private dateTimeService: DateTimeService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private paymentMethodsService: PaymentMethodsService,
         private repairService: RepairService,
         private toastrService: ToastrService
@@ -120,7 +127,7 @@ export class RepairFormHandlerService {
      * @param customer
      * @param repair
      */
-    public load(customer: Customer = this.customer, repair: Repair = this.repair): FormGroup {
+    public load(customer: Customer = this.customer, repair: Repair = this.repair): UntypedFormGroup {
         return this.formBuilder.group({
             customer: this.formBuilder.group({
                 id: [customer.id],
@@ -175,10 +182,10 @@ export class RepairFormHandlerService {
      * @param formGroup
      * @private
      */
-    public buildPaymentsFormGroup(repair: Repair, formGroup: FormGroup) {
+    public buildPaymentsFormGroup(repair: Repair, formGroup: UntypedFormGroup) {
         formGroup.addControl('payments', this.formBuilder.array([]));
         formGroup.addValidators([this.paymentsMustEqualPrice()]);
-        const paymentsFormArray: FormArray = formGroup.controls['payments'] as FormArray;
+        const paymentsFormArray: UntypedFormArray = formGroup.controls['payments'] as UntypedFormArray;
         if (repair.moneyTransactions.length > 0) {
             // Add money transactions to the payments FormArray when form is initially loaded
             for (const transaction of repair.moneyTransactions) {

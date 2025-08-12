@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 export abstract class FormComponent<T> {
     get controls() {
@@ -9,7 +9,7 @@ export abstract class FormComponent<T> {
         return this.form.value;
     }
 
-    protected form: FormGroup;
+    protected form: UntypedFormGroup;
     protected saved: boolean;
     protected submitted: boolean;
 }

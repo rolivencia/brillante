@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RepairFormHandlerService } from '@pages/repair-dashboard/repair-form-handler.service';
-import { ControlContainer, FormGroup } from '@angular/forms';
+import { ControlContainer, UntypedFormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
 import { MaskedDateTimeService } from '@syncfusion/ej2-angular-calendars';
 import { MaskPlaceholderModel } from '@syncfusion/ej2-calendars/src/common/maskplaceholder-model';
@@ -22,7 +22,7 @@ export class CustomerFormComponent extends FormComponent<Customer> implements On
         return this.form.controls;
     }
 
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public maskPlaceholderValue: MaskPlaceholderModel = { day: 'DD', month: 'MM', year: 'AAAA' };
 
     constructor(
@@ -34,6 +34,6 @@ export class CustomerFormComponent extends FormComponent<Customer> implements On
     }
 
     ngOnInit(): void {
-        this.form = <FormGroup>this.controlContainer.control;
+        this.form = <UntypedFormGroup>this.controlContainer.control;
     }
 }
