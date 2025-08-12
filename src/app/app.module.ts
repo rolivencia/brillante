@@ -1,7 +1,6 @@
 ﻿import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ErrorInterceptor, JwtInterceptor } from './_helpers';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,14 +20,14 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { LayoutService } from '@services/layout.service';
 import { AggregateService, ExcelExportService, FilterService, SortService } from '@syncfusion/ej2-angular-grids';
 import { DateTimeService } from '@services/date-time.service';
-import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { AuthModule, authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { environment } from '@environments/environment';
+import { errorInterceptor, jwtInterceptor } from '@app/_helpers';
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule,
         routing,
         ToastrModule.forRoot(),
         ProgressLoaderModule,
@@ -36,23 +35,6 @@ import { environment } from '@environments/environment';
         MainHeaderModule,
         LeftSidebarModule,
         SidebarModule,
-        AuthModule.forRoot({
-            domain: environment.auth0.domain,
-            clientId: environment.auth0.clientId,
-            httpInterceptor: {
-                allowedList: [
-                    {
-                        uri: `${environment.auth0.audience}/*`,
-                        tokenOptions: {
-                            authorizationParams: {
-                                audience: `${environment.auth0.audience}`,
-                                scope: 'read:current_user',
-                            },
-                        },
-                    },
-                ],
-            },
-        }),
     ],
     declarations: [AppComponent],
     providers: [
@@ -81,9 +63,29 @@ import { environment } from '@environments/environment';
             deps: [RepairService],
             multi: true,
         },
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+        provideAuth0({
+            domain: environment.auth0.domain,
+            clientId: environment.auth0.clientId,
+            authorizationParams: {
+                redirect_uri: environment.auth0.authorizationParams.redirect_uri,
+                audience: environment.auth0.authorizationParams.audience,
+            },
+            cacheLocation: 'localstorage',
+            httpInterceptor: {
+                allowedList: [
+                    {
+                        uri: `${environment.auth0.authorizationParams.audience}/*`,
+                        tokenOptions: {
+                            authorizationParams: {
+                                audience: environment.auth0.authorizationParams.audience,
+                                scope: 'read:current_user',
+                            },
+                        },
+                    },
+                ],
+            },
+        }),
+        provideHttpClient(withInterceptors([authHttpInterceptorFn, jwtInterceptor, errorInterceptor])),
         CartService,
         DateTimeService,
         DeviceDetectorService,

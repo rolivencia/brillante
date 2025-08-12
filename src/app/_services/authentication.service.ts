@@ -42,7 +42,11 @@ export class AuthenticationService {
     }
 
     public redirectToLoginPortal() {
-        this.auth0Service.loginWithRedirect();
+        this.auth0Service.loginWithRedirect({
+            authorizationParams: {
+                redirect_uri: window.location.origin,
+            },
+        });
     }
 
     /**

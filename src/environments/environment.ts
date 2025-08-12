@@ -8,7 +8,11 @@ export const environment = {
     auth0: {
         domain: 'dev-0wyaah0g.us.auth0.com',
         clientId: '9qi6RSZk0xYtttld6Z9W9wpxlCIXf2YN',
-        audience: 'https://dev-0wyaah0g.us.auth0.com/api/v2/',
+        authorizationParams: {
+            audience: 'https://dev-0wyaah0g.us.auth0.com/api/v2/',
+            redirect_uri: 'https://localhost:4200',
+        },
+        errorPath: '/callback',
     },
 };
 
