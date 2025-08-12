@@ -1,4 +1,4 @@
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -8,7 +8,7 @@ import { Audit } from '@models/audit';
 @Injectable({
     providedIn: 'root',
 })
-export class MoneyTransactionConceptsFormHandlerService implements FormHandler<FormGroup, TransactionConcept> {
+export class MoneyTransactionConceptsFormHandlerService implements FormHandler<UntypedFormGroup, TransactionConcept> {
     get transactionConcept(): TransactionConcept {
         return this._transactionConcept;
     }
@@ -16,11 +16,11 @@ export class MoneyTransactionConceptsFormHandlerService implements FormHandler<F
     set transactionConcept(value: TransactionConcept) {
         this._transactionConcept = value;
     }
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._formGroup;
     }
 
-    set formGroup(value: FormGroup) {
+    set formGroup(value: UntypedFormGroup) {
         this._formGroup = value;
     }
 
@@ -37,12 +37,12 @@ export class MoneyTransactionConceptsFormHandlerService implements FormHandler<F
     }
 
     private _transactionConcept: TransactionConcept;
-    private _formGroup: FormGroup;
+    private _formGroup: UntypedFormGroup;
     private _submitted: boolean = false;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: UntypedFormBuilder) {}
 
-    public load(transactionConcept: TransactionConcept = this.transactionConcept): FormGroup {
+    public load(transactionConcept: TransactionConcept = this.transactionConcept): UntypedFormGroup {
         return this.formBuilder.group({
             id: [transactionConcept.id],
             description: [transactionConcept.description, [Validators.required, Validators.minLength(3)]],
@@ -90,12 +90,12 @@ export class MoneyTransactionConceptsFormHandlerService implements FormHandler<F
         };
     }
 
-    public create(form: FormGroup = this.formGroup): Promise<boolean> {
+    public create(form: UntypedFormGroup = this.formGroup): Promise<boolean> {
         // TODO: Implement method
         return Promise.resolve(false);
     }
 
-    public update(form: FormGroup = this.formGroup): Promise<boolean> {
+    public update(form: UntypedFormGroup = this.formGroup): Promise<boolean> {
         // TODO: Implement method
         return Promise.resolve(false);
     }

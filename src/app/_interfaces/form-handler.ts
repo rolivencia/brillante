@@ -1,7 +1,7 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup } from '@angular/forms';
 
 export interface FormHandler<Form, Object> {
-    load(object: Object): FormGroup;
+    load(object: Object): UntypedFormGroup;
     clean(): void;
     patch(object: Object): void;
     get(): Object;

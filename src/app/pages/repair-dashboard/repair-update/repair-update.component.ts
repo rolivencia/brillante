@@ -6,7 +6,7 @@ import { RepairService } from '@services/repair.service';
 import { RepairVoucherGeneratorService } from '@pages/repair-dashboard/repair-voucher-generator.service';
 import { Repair, RepairStatus, RepairStatusHistory } from '@models/repair';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ERepairStatus } from '@enums/repair-status.enum';
 import { EPaymentMethod } from '@enums/payment-methods.enum';
 import * as _ from 'lodash';
@@ -38,7 +38,7 @@ export class RepairUpdateComponent implements OnInit {
         public location: Location,
         public repairFormHandlerService: RepairFormHandlerService,
         public repairService: RepairService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private repairVoucherGeneratorService: RepairVoucherGeneratorService
     ) {}

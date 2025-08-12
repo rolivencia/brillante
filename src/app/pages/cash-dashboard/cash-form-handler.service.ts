@@ -1,7 +1,7 @@
 import { Audit } from '@models/audit';
 import { CashService } from '@services/cash.service';
 import { CashTransaction, Operation, TransactionConcept } from '@models/cash-transaction';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FormHandler } from '@interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { PaymentMethodsService } from '@services/payment-methods.service';
 @Injectable({
     providedIn: 'root',
 })
-export class CashFormHandlerService implements FormHandler<FormGroup, CashTransaction> {
+export class CashFormHandlerService implements FormHandler<UntypedFormGroup, CashTransaction> {
     get submitted(): boolean {
         return this._submitted;
     }
@@ -21,11 +21,11 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         this._submitted = value;
     }
 
-    get formGroup(): FormGroup {
+    get formGroup(): UntypedFormGroup {
         return this._formGroup;
     }
 
-    set formGroup(value: FormGroup) {
+    set formGroup(value: UntypedFormGroup) {
         this._formGroup = value;
     }
     get cashTransaction(): CashTransaction {
@@ -48,8 +48,8 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         return this.formGroup.controls;
     }
 
-    get paymentsArray(): FormArray {
-        return this._formGroup.get('payments') as FormArray;
+    get paymentsArray(): UntypedFormArray {
+        return this._formGroup.get('payments') as UntypedFormArray;
     }
 
     private _submitted: boolean = false;
@@ -58,18 +58,18 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
     private _transactionOperations: Operation[] = [];
     public transactionParentConcept: TransactionConcept = new TransactionConcept();
 
-    private _formGroup: FormGroup;
+    private _formGroup: UntypedFormGroup;
     private _cashTransaction: CashTransaction = new CashTransaction();
 
     constructor(
         private authenticationService: AuthenticationService,
         private cashService: CashService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private paymentMethodsService: PaymentMethodsService,
         private toastrService: ToastrService
     ) {}
 
-    public load(transaction: CashTransaction = this.cashTransaction): FormGroup {
+    public load(transaction: CashTransaction = this.cashTransaction): UntypedFormGroup {
         const form = this.formBuilder.group({
             id: [transaction.id],
             concept: [transaction.concept, [Validators.required]],
@@ -90,7 +90,7 @@ export class CashFormHandlerService implements FormHandler<FormGroup, CashTransa
         return form;
     }
 
-    private createPaymentGroup(amount: number = 0, paymentMethodId: number = 0): FormGroup {
+    private createPaymentGroup(amount: number = 0, paymentMethodId: number = 0): UntypedFormGroup {
         return this.formBuilder.group({
             amount: [amount, [Validators.required, Validators.min(1)]],
             paymentMethodId: [paymentMethodId, [Validators.required]],

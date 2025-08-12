@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Customer } from '@models/customer';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CustomerFormService } from '@components/customer-form/customer-form.service';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
@@ -18,7 +18,7 @@ export class UpdateCustomerComponent implements OnInit {
     }
 
     private _customer: Customer;
-    public form: FormGroup;
+    public form: UntypedFormGroup;
 
     public saved: boolean = false;
     public submitted: boolean = false;
@@ -27,7 +27,7 @@ export class UpdateCustomerComponent implements OnInit {
         public location: Location,
         private customerFormService: CustomerFormService,
         private customerService: CustomerService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private toastrService: ToastrService
     ) {}

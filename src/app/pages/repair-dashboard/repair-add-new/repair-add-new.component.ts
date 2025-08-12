@@ -4,7 +4,7 @@ import { RepairFormHandlerService } from '@pages/repair-dashboard/repair-form-ha
 import { RepairService } from '@services/repair.service';
 import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
 import { Customer } from '@models/customer';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-repair-add-new',
@@ -12,8 +12,8 @@ import { FormGroup } from '@angular/forms';
     styleUrls: ['./repair-add-new.component.scss', '../repair-dashboard.component.scss'],
 })
 export class RepairAddNewComponent implements OnInit {
-    get customerGroup(): FormGroup {
-        return this.repairFormHandlerService.formGroup.get('customer') as FormGroup;
+    get customerGroup(): UntypedFormGroup {
+        return this.repairFormHandlerService.formGroup.get('customer') as UntypedFormGroup;
     }
 
     public deviceTypeFields: FieldSettingsModel = { text: 'description', value: 'id' };

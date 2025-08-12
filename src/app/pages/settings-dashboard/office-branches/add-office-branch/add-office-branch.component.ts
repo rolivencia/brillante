@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { OfficeBranchService } from '@services/office-branch.service';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs/operators';
@@ -10,10 +10,10 @@ import { switchMap } from 'rxjs/operators';
     styleUrls: ['./add-office-branch.component.scss'],
 })
 export class AddOfficeBranchComponent implements OnInit {
-    public form: FormGroup;
+    public form: UntypedFormGroup;
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private officeBranchService: OfficeBranchService,
         private toastrService: ToastrService
     ) {}

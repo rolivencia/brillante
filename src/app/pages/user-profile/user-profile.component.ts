@@ -5,8 +5,8 @@ import { User } from '@app/_models';
 import {
     AbstractControl,
     AsyncValidatorFn,
-    FormBuilder,
-    FormGroup,
+    UntypedFormBuilder,
+    UntypedFormGroup,
     ValidationErrors,
     Validators,
 } from '@angular/forms';
@@ -27,14 +27,14 @@ export class UserProfileComponent implements OnInit {
     public maskPlaceholderValue: MaskPlaceholderModel = { day: 'DD', month: 'MM', year: 'AAAA' };
 
     public currentUser$: Observable<User>;
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public submitted: boolean = false;
     public saved: boolean = false;
 
     constructor(
         private authenticationService: AuthenticationService,
         private customerService: CustomerService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private toastService: ToastrService,
         private userService: UserService
     ) {}
