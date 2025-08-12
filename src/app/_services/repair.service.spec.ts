@@ -1,12 +1,13 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { RepairService } from './repair.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('RepairService', () => {
     beforeEach(() =>
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [RepairService],
+            imports: [],
+            providers: [RepairService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
         })
     );
 
