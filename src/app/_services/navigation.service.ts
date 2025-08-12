@@ -81,16 +81,6 @@ export class NavigationService {
             type: 'Internal',
         },
         {
-            id: '7',
-            text: 'Gestor de Contenido',
-            route: 'https://brillante-store.sanity.studio/',
-            enabled: true,
-            visible: true,
-            roles: [EUserRole.ADMIN, EUserRole.OWNER, EUserRole.COUNTER_CLERK, EUserRole.EMPLOYEE],
-            icon: faLayerGroup,
-            type: 'External',
-        },
-        {
             id: '8',
             text: 'Configuración',
             route: '/settings-dashboard',
