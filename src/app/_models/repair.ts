@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { Customer } from '@models/customer';
 import { Audit } from '@models/audit';
 import { CashTransaction } from '@models/cash-transaction';
@@ -12,9 +11,9 @@ export class Repair {
     public issue: string;
     public status: RepairStatus;
     public audit: Audit;
-    public checkIn: Moment;
-    public lastUpdate: Moment;
-    public checkOut: Moment;
+    public checkIn: Date;
+    public lastUpdate: Date;
+    public checkOut: Date;
     public paymentInAdvance: number;
     public price: number;
     public cost: number;
