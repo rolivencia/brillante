@@ -1,12 +1,3 @@
-const sanityConnector = require('../_helpers/sanity-connector');
-const imageUrlBuilder = require('@sanity/image-url');
-
-const builder = imageUrlBuilder(sanityConnector.client);
-
-function urlFor(source) {
-    return builder.image(source);
-}
-
 module.exports = {
     get,
     getById,
@@ -16,89 +7,20 @@ module.exports = {
 };
 
 async function getFeatured() {
-    const query = `*[_type == 'featuredProduct']{_id, product->}`;
-    const featuredProducts = await sanityConnector.client.fetch(query, {});
-    const mappedProducts = featuredProducts.map((featuredProduct) => ({
-        id: featuredProduct.product._id,
-        name: featuredProduct.product.title,
-        price: featuredProduct.product.retailPrice,
-        imageUrls: featuredProduct.product.images.map((image) => urlFor(image).url()),
-        categories: [],
-        manufacturer: featuredProduct.product.manufacturer,
-    }));
-    return mappedProducts;
+    return [];
 }
 async function get({ offset, manufacturer, category, searchText }) {
-    //TODO: Add offset-based selection for query
-    const queryOffset = `[${12 * (offset - 1)}...${12 + (offset - 1) * 12}]`;
-    let queryManufacturer = '';
-    let queryCategory = '';
-    let querySearchText = '';
-
-    if (!!manufacturer && manufacturer !== 'all') {
-        queryManufacturer = ` && references('${manufacturer}')`;
-    }
-    if (!!category && category !== 'all') {
-        queryCategory = ` && references('${category}')`;
-    }
-    if (!!searchText && searchText !== '') {
-        querySearchText = ` && title match '*${searchText.toLowerCase()}*'`;
-    }
-
-    const query = `*[_type == 'product'${queryManufacturer}${queryCategory}${querySearchText}]${queryOffset}{_id, title, retailPrice, images, manufacturer->}`;
-    const countQuery = `count(*[_type == 'product'${queryManufacturer}${queryCategory}${querySearchText}])`;
-    const count = await sanityConnector.client.fetch(countQuery, {});
-    const products = await sanityConnector.client.fetch(query, {});
-    // return products;
-    const mappedProducts = products.map((product) => ({
-        id: product._id,
-        name: product.title,
-        price: product.retailPrice,
-        imageUrls: product.images.map((image) => urlFor(image).url()),
-        categories: [],
-        manufacturer: product.manufacturer,
-    }));
-    // console.log(mappedProducts);
-    return { products: mappedProducts, count: count };
+    return { products: [], count: 0 };
 }
 
 async function getManufacturers(id = null) {
-    const query = "*[_type == 'manufacturer'] | order(title)";
-    const manufacturers = await sanityConnector.client.fetch(query, {});
-    // console.log(manufacturers);
-    return manufacturers.map((manufacturer) => ({
-        id: manufacturer._id,
-        title: manufacturer.title,
-        logo: manufacturer.logo,
-    }));
+    return [];
 }
 
 async function getById(id) {
-    const query = `*[_type == 'product' && _id == '${id}']{_id, title, retailPrice, body, images, manufacturer->}`;
-    const product = await sanityConnector.client.fetch(query, {});
-    const mappedProduct =
-        product.length === 0
-            ? null
-            : product
-                  .map((product) => ({
-                      id: product._id,
-                      name: product.title,
-                      price: product.retailPrice,
-                      imageUrls: product.images.map((image) => urlFor(image).url()),
-                      categories: [],
-                      description: product.body.en.pop().children.pop().text.split('\n'),
-                      manufacturer: {
-                          id: product.manufacturer._id,
-                          title: product.manufacturer.title,
-                          logo: urlFor(product.manufacturer.logo).url(),
-                      },
-                  }))
-                  .pop();
-    return mappedProduct;
+    return null;
 }
 
 async function getCategories(id = null) {
-    const query = "*[_type == 'category']{_id, title, parents} | order(title)";
-    const categories = await sanityConnector.client.fetch(query, {});
-    return categories.map((category) => ({ id: category._id, title: category.title, parents: category.parents }));
+    return [];
 }
