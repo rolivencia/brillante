@@ -3,7 +3,7 @@ import { CustomerService } from '@services/customer.service';
 import { RepairService } from '@services/repair.service';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+import { format, isValid, parseISO } from 'date-fns';
 import { Repair } from '@models/repair';
 import { PageService, RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
 import { Customer } from '@models/customer';
@@ -68,10 +68,22 @@ export class ClientDashboardComponent implements OnInit {
         this.progressLoaderService.showWithOverlay();
         this.clientService.getAll().subscribe(
             (data) => {
-                this.customerGridData = data.map((customer) => ({
-                    ...customer,
-                    birthDate: customer.birthDate ? moment(customer.birthDate).format('YYYY-MM-DD') : null,
-                }));
+                this.customerGridData = data.map((customer) => {
+                    if (!customer.birthDate || !isValid(customer.birthDate)) {
+                        return {
+                            ...customer,
+                            birthDate: null,
+                        };
+                    }
+
+                    const date = parseISO(`${customer.birthDate}`);
+                    const formattedDate = format(date, 'yyyy-MM-dd');
+
+                    return {
+                        ...customer,
+                        birthDate: formattedDate,
+                    };
+                });
                 this.progressLoaderService.hide();
             },
             (error) => {
