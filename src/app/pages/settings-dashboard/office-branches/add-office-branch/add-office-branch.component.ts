@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators';
     selector: 'app-add-office-branch',
     templateUrl: './add-office-branch.component.html',
     styleUrls: ['./add-office-branch.component.scss'],
+    standalone: false,
 })
 export class AddOfficeBranchComponent implements OnInit {
     public form: UntypedFormGroup;

@@ -11,6 +11,7 @@ import { routePaths } from '@app/app.routing';
     selector: 'app-repair-selected-details',
     templateUrl: './repair-selected-details.component.html',
     styleUrls: ['./repair-selected-details.component.scss', '../repair-manage.component.scss'],
+    standalone: false,
 })
 export class RepairSelectedDetailsComponent implements OnInit {
     constructor(

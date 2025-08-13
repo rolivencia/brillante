@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
     selector: 'app-left-sidebar',
     templateUrl: './left-sidebar.component.html',
     styleUrls: ['./left-sidebar.component.scss'],
+    standalone: false,
 })
 export class LeftSidebarComponent implements OnInit, AfterViewInit {
     @Output() hide: EventEmitter<boolean> = new EventEmitter<boolean>();

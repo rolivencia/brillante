@@ -19,6 +19,7 @@ import { DateTimeService } from '@services/date-time.service';
     templateUrl: './repair-grid-results.component.html',
     styleUrls: ['./repair-grid-results.component.scss', '../repair-manage.component.scss'],
     providers: [FilterService, PageService, SortService],
+    standalone: false,
 })
 export class RepairGridResultsComponent implements OnInit {
     @ViewChild('grid', { static: false }) grid: GridComponent;

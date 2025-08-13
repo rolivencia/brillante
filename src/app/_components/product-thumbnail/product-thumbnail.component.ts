@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
     selector: 'app-product-thumbnail',
     templateUrl: './product-thumbnail.component.html',
     styleUrls: ['./product-thumbnail.component.scss'],
+    standalone: false,
 })
 export class ProductThumbnailComponent implements OnInit {
     @Input() product: Product;

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-products-dashboard',
     templateUrl: './products-dashboard.component.html',
     styleUrls: ['./products-dashboard.component.scss'],
+    standalone: false,
 })
 export class ProductsDashboardComponent implements OnInit {
     constructor() {}

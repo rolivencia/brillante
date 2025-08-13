@@ -24,6 +24,7 @@ export type NavigationLinkType = 'Internal' | 'External';
     selector: 'app-main-header',
     templateUrl: './main-header.component.html',
     styleUrls: ['./main-header.component.scss'],
+    standalone: false,
 })
 export class MainHeaderComponent implements OnInit {
     @Input() showToggler: boolean = false;

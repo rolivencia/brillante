@@ -11,6 +11,7 @@ import { TransactionConcept } from '@models/cash-transaction';
     selector: 'app-cash-update',
     templateUrl: './cash-update.component.html',
     styleUrls: ['./cash-update.component.scss'],
+    standalone: false,
 })
 export class CashUpdateComponent implements OnDestroy, OnInit {
     get parentConceptIsUserAssignable(): boolean {

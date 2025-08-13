@@ -13,6 +13,7 @@ import { getYear, getMonth, getDate, format } from 'date-fns';
     selector: 'app-cash-report',
     templateUrl: './cash-report.component.html',
     styleUrls: ['./cash-report.component.scss'],
+    standalone: false,
 })
 export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
     loading: boolean = false;

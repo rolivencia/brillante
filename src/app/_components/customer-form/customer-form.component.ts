@@ -12,6 +12,7 @@ import { Customer } from '@models/customer';
     templateUrl: './customer-form.component.html',
     styleUrls: ['./customer-form.component.scss'],
     providers: [MaskedDateTimeService],
+    standalone: false,
 })
 export class CustomerFormComponent extends FormComponent<Customer> implements OnInit {
     @Input() customerExists: boolean = false;

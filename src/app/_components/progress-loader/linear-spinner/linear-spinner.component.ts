@@ -5,6 +5,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
     templateUrl: './linear-spinner.html',
     styleUrls: ['./linear-spinner.scss'],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class LinearSpinnerComponent {
     constructor() {}

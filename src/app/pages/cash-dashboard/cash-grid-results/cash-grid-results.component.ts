@@ -13,6 +13,7 @@ import { RowSelectEventArgs, SortService, SortSettingsModel } from '@syncfusion/
     styleUrls: ['./cash-grid-results.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [SortService],
+    standalone: false,
 })
 export class CashGridResultsComponent implements OnInit, AfterViewInit, OnDestroy {
     public displayMonths = 1;

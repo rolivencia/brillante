@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     selector: 'app-repair-dashboard',
     templateUrl: './repair-dashboard.component.html',
     styleUrls: ['./repair-dashboard.component.scss'],
+    standalone: false,
 })
 export class RepairDashboardComponent implements OnInit {
     constructor(

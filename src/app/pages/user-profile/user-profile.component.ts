@@ -21,6 +21,7 @@ import { FormValidators } from '@syncfusion/ej2-angular-inputs';
     selector: 'app-register',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.scss'],
+    standalone: false,
 })
 export class UserProfileComponent implements OnInit {
     public avatarUrl: string = '';

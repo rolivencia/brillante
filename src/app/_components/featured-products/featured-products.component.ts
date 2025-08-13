@@ -6,6 +6,7 @@ import { Product } from '@models/product';
     selector: 'app-featured-products',
     templateUrl: './featured-products.component.html',
     styleUrls: ['./featured-products.component.scss'],
+    standalone: false,
 })
 export class FeaturedProductsComponent implements OnInit {
     @Input() products: Product[] = [];

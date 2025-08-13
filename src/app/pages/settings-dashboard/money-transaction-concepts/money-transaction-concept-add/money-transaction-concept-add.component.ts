@@ -11,6 +11,7 @@ import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dro
     templateUrl: './money-transaction-concept-add.component.html',
     styleUrls: ['./money-transaction-concept-add.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class MoneyTransactionConceptAddComponent implements OnInit {
     @Input() label: string = '';

@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './money-transaction-concept-update.component.html',
     styleUrls: ['./money-transaction-concept-update.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false,
 })
 export class MoneyTransactionConceptUpdateComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;

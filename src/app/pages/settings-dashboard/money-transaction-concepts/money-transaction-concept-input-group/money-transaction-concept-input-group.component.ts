@@ -8,6 +8,7 @@ import { RowSelectEventArgs } from '@syncfusion/ej2-angular-grids';
     selector: 'app-cash-transaction-concept-input-group',
     templateUrl: './money-transaction-concept-input-group.component.html',
     styleUrls: ['./money-transaction-concept-input-group.component.scss'],
+    standalone: false,
 })
 export class MoneyTransactionConceptInputGroupComponent implements OnInit, OnDestroy {
     @Input() concept: TransactionConcept;

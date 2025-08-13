@@ -22,6 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     selector: 'app-brillante',
     templateUrl: 'app.component.html',
     styleUrls: ['./app.component.scss'],
+    standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
     @ViewChild('sidebar') sidebar: SidebarComponent;

@@ -15,6 +15,7 @@ import { TransactionConcept } from '@models/cash-transaction';
     selector: 'app-cash-add-new',
     templateUrl: './cash-add-new.component.html',
     styleUrls: ['./cash-add-new.component.scss'],
+    standalone: false,
 })
 export class CashAddNewComponent implements AfterViewInit, OnDestroy, OnInit {
     public currentDateTime: string;
