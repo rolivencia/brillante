@@ -7,13 +7,9 @@
 	"scripts": {
 		"build": "ng build --configuration production",
 		"dev": "concurrently -p=\"{name}\" -n=\"NodeJS,Angular\" -c=\"red,green\" \"npm run serve:be\" \"npm run serve:fe\"",
-		"format:fix": "pretty-quick --staged",
-		"lint": "ng lint",
 		"format:check": "prettier --config prettier.config.js --list-different \\\"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\\\"",
 		"serve:fe": "ng serve --ssl --ssl-key ./src/assets/certificates/localhost.key  --ssl-cert ./src/assets/certificates/localhost.crt",
-		"serve:be": "nodemon --env-file=.env server.js",
-		"build-serve": "npm run-script build && npm run-script start",
-		"build-prod": "npm run-script build --configuration production --aot && npm run-script start"
+		"serve:be": "nodemon --env-file=.env server.js"
 	},
 	"private": true,
 	"dependencies": {
