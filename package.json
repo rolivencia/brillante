@@ -7,9 +7,7 @@
 	"scripts": {
 		"build": "ng build --aot --configuration production",
 		"dev": "concurrently -p=\"{name}\" -n=\"NodeJS,Angular\" -c=\"red,green\" \"npm run serve:be\" \"npm run serve:fe\"",
-		"test": "ng test",
 		"format:fix": "pretty-quick --staged",
-		"precommit": "run-s format:fix",
 		"lint": "ng lint",
 		"format:check": "prettier --config prettier.config.js --list-different \\\"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\\\"",
 		"serve:fe": "ng serve --ssl --ssl-key ./src/assets/certificates/localhost.key  --ssl-cert ./src/assets/certificates/localhost.crt",
