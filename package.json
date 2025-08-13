@@ -6,7 +6,6 @@
 	},
 	"scripts": {
 		"build": "ng build --configuration production",
-		"dev": "concurrently -p=\"{name}\" -n=\"NodeJS,Angular\" -c=\"red,green\" \"npm run serve:be\" \"npm run serve:fe\"",
 		"format:check": "prettier --config prettier.config.js --list-different \\\"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\\\"",
 		"serve:fe": "ng serve --ssl --ssl-key ./src/assets/certificates/localhost.key  --ssl-cert ./src/assets/certificates/localhost.crt",
 		"serve:be": "nodemon --env-file=.env server.js"
