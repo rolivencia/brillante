@@ -98,7 +98,7 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
     public exportToXls() {
         const from = format(formatDate(this.cashDashboardService.ngbDateFrom), 'yyyy-MM-dd');
         const to = format(formatDate(this.cashDashboardService.ngbDateTo), 'yyyy-MM-dd');
-        this.cashGrid.excelExport({ fileName: `Reporte Monetario Brillante (${from} - ${to})` });
+        this.cashGrid.excelExport({ fileName: `Reporte Monetario Brillante (${from} - ${to}).xlsx` });
     }
 
     public back() {
