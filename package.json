@@ -14,7 +14,6 @@
         "precommit": "run-s format:fix",
         "lint": "ng lint",
         "format:check": "prettier --config prettier.config.js --list-different \\\"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\\\"",
-        "e2e": "ng e2e",
         "serve:fe": "ng serve --ssl --ssl-key ./src/assets/certificates/localhost.key  --ssl-cert ./src/assets/certificates/localhost.crt",
         "serve:be": "nodemon --env-file=.env server.js",
         "build-serve": "npm run-script build && npm run-script start",
