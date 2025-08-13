@@ -205,7 +205,7 @@
                         [allowFiltering]="true"
                     >
                         <ng-template #template let-data>
-                            {{ data.date.format('YYYY-MM-DD HH:mm') }}
+                            {{ data.date | date: 'YYYY-MM-dd HH:mm' }}
                         </ng-template>
                     </e-column>
                 </e-columns>

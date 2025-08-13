@@ -5,7 +5,6 @@ import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } fr
 import { FormHandler } from '@interfaces/form-handler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import * as moment from 'moment';
 import { AuthenticationService } from '@services/authentication.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 
@@ -146,7 +145,7 @@ export class CashFormHandlerService implements FormHandler<UntypedFormGroup, Cas
         this.cashTransaction = this.assign();
         this.patch();
 
-        this.cashTransaction.date = moment();
+        this.cashTransaction.date = new Date();
 
         const result = await this.cashService
             .create(this.cashTransaction, this.authenticationService.currentUserValue)

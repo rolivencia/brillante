@@ -1,10 +1,9 @@
 import { CashDashboardService } from '@pages/cash-dashboard/cash-dashboard.service';
-import { CashFormHandlerService } from '@pages/cash-dashboard/cash-form-handler.service';
-import { Component, OnInit } from '@angular/core';
-import { DateHandlerService } from '@services/date-handler.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EUserRole } from '@enums/user.enum';
 import { AuthenticationService, hasRoles } from '@services/authentication.service';
+import { DateTimeService } from '@services/date-time.service';
 
 @Component({
     selector: 'app-cash-dashboard',
@@ -15,21 +14,17 @@ export class CashDashboardComponent implements OnInit {
     editMode: boolean;
     displayManagementHeader: boolean = false;
 
+    private dateTimeService = inject(DateTimeService);
+
     constructor(
         public authenticationService: AuthenticationService,
         public cashDashboardService: CashDashboardService,
-        public cashFormHandlerService: CashFormHandlerService,
-        private dateHandlerService: DateHandlerService,
         private router: Router
     ) {}
 
     ngOnInit(): void {
-        this.cashDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(
-            this.cashDashboardService.date
-        );
-        this.cashDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(
-            this.cashDashboardService.date
-        );
+        this.cashDashboardService.ngbDateFrom = this.dateTimeService.formatDateToObject(this.cashDashboardService.date);
+        this.cashDashboardService.ngbDateTo = this.dateTimeService.formatDateToObject(this.cashDashboardService.date);
 
         this.cashDashboardService.editMode.subscribe((value) => {
             this.editMode = value;

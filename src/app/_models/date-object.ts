@@ -1,10 +1,7 @@
-import * as moment from 'moment';
-import { Moment } from 'moment';
-
 export class DateObject {
     year: number;
     month: number;
     day: number;
 }
 
-export const toMoment = (date: DateObject): Moment => moment(`${date.year}-${date.month}-${date.day}`);
+export const toDate = (date: DateObject): Date => new Date(date.year, date.month - 1, date.day);

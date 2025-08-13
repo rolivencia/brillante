@@ -1,14 +1,13 @@
-import { Moment } from 'moment';
-import { User } from '@models/user';
+import { User } from './user';
 
 export class Audit {
     public deleted: boolean;
     public enabled: boolean;
-    public createdAt: Moment;
-    public updatedAt: Moment;
+    public createdAt: Date;
+    public updatedAt: Date;
     public createdBy: User;
 
-    constructor(createdBy?: User, deleted?: boolean, enabled?: boolean, createdAt?: Moment, updatedAt?: Moment) {
+    constructor(createdBy?: User, deleted?: boolean, enabled?: boolean, createdAt?: Date, updatedAt?: Date) {
         this.createdBy = createdBy;
         this.deleted = false;
         this.enabled = true;

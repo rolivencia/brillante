@@ -1,11 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Moment } from 'moment';
 import { RepairService } from '@services/repair.service';
 import { DateObject } from '@models/date-object';
-import * as moment from 'moment';
 import { ProgressLoaderService } from '@components/progress-loader/progress-loader.service';
 import { Repair } from '@models/repair';
+import { getYear, getMonth, getDate } from 'date-fns';
 
 @Injectable()
 export class RepairDashboardService {
@@ -20,21 +19,21 @@ export class RepairDashboardService {
     //FIXME: Generar getters y setters para variables de servicio
     public gridData: Repair[] = [];
 
-    public date: Moment = moment();
+    public date: Date = new Date();
 
     public ngbDateFrom: DateObject;
     public ngbDateTo: DateObject;
 
     public ngbMinDate: DateObject = { year: 2020, month: 1, day: 1 };
     public ngbMaxDate: DateObject = {
-        year: this.date.year(),
-        month: (this.date.month() + 1) % 13,
-        day: this.date.date(),
+        year: getYear(this.date),
+        month: (getMonth(this.date) + 1) % 13,
+        day: getDate(this.date),
     };
 
     public _showFinished = false;
-    _dateFrom: Moment;
-    _dateTo: Moment;
+    _dateFrom: Date;
+    _dateTo: Date;
 
     private _selectedRepair: Repair;
 

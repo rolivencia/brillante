@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import jsPDF from 'jspdf';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -71,22 +70,20 @@ export class RepairVoucherGeneratorService {
 
             doc.text('SERVICIO TÉCNICO', 15, lastLine);
 
-            moment.locale('es'); //Colocamos fechas para que vayan con el locale español
+            const fechaActual = new Date();
 
-            const fechaActual = moment(new Date());
-
-            const fechaIngreso = moment(repair.checkIn.toDate());
+            const fechaIngreso = repair.checkIn;
 
             doc.setFontSize(14);
 
             doc.text(
-                this.capitalize(fechaActual.format('dddd')) +
+                this.capitalize(fechaActual.toLocaleDateString('es-ES', { weekday: 'long' })) +
                     ' ' +
-                    fechaActual.format('DD') +
+                    fechaActual.toLocaleDateString('es-ES', { day: '2-digit' }) +
                     ' de ' +
-                    this.capitalize(fechaActual.format('MMMM')) +
+                    this.capitalize(fechaActual.toLocaleDateString('es-ES', { month: 'long' })) +
                     ' de ' +
-                    fechaActual.format('YYYY'),
+                    fechaActual.toLocaleDateString('es-ES', { year: 'numeric' }),
                 130,
                 lastLine - 1
             );
@@ -164,11 +161,25 @@ export class RepairVoucherGeneratorService {
 
             lastLine += 15;
 
-            doc.text('Fecha de ingreso:  ' + fechaIngreso.format('DD/MM/YYYY - HH:mm'), 15, lastLine);
+            doc.text(
+                'Fecha de ingreso:  ' +
+                    fechaIngreso.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+                    ' - ' +
+                    fechaIngreso.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+                15,
+                lastLine
+            );
 
             lastLine += 10;
 
-            doc.text('Fecha de entrega:  ' + fechaActual.format('DD/MM/YYYY - HH:mm'), 15, lastLine);
+            doc.text(
+                'Fecha de entrega:  ' +
+                    fechaActual.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+                    ' - ' +
+                    fechaActual.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+                15,
+                lastLine
+            );
 
             lastLine += 10;
 

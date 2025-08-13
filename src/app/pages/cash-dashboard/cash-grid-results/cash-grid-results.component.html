@@ -96,7 +96,7 @@
                         </e-column>
                         <e-column field="date" headerText="Hora" width="80">
                             <ng-template #template let-data>
-                                {{ data.date.format('HH:mm') }}
+                                {{ data.date | date: 'HH:mm' }}
                             </ng-template>
                         </e-column>
                     </e-columns>

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '@models/product';
-import { Moment } from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root',
@@ -49,7 +47,7 @@ export class CartService {
     //TODO: Finish implementation for checkout
 
     public checkout() {
-        this.order = { details: this.cart.value, date: moment() };
+        this.order = { details: this.cart.value, date: new Date() };
         this.cart.next([]);
         localStorage.removeItem('cart');
     }
@@ -63,7 +61,7 @@ export class CartService {
 // TODO: Move these interface declarations to their own file.
 export interface Order {
     details: OrderDetail[];
-    date: Moment; // TODO: Change for day.js before final implementation
+    date: Date;
 }
 
 export interface OrderDetail {

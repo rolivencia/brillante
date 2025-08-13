@@ -1,8 +1,6 @@
-import * as moment from 'moment';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RepairDashboardService } from '@pages/repair-dashboard/repair-dashboard.service';
 import { DateObject } from '@models/date-object';
-import { DateHandlerService } from '@services/date-handler.service';
 import {
     FilterService,
     GridComponent,
@@ -13,6 +11,8 @@ import {
 } from '@syncfusion/ej2-angular-grids';
 import { Repair } from '@models/repair';
 import { RepairService } from '@services/repair.service';
+import { subMonths, parseISO } from 'date-fns';
+import { DateTimeService } from '@services/date-time.service';
 
 @Component({
     selector: 'app-repair-grid-results',
@@ -23,11 +23,9 @@ import { RepairService } from '@services/repair.service';
 export class RepairGridResultsComponent implements OnInit {
     @ViewChild('grid', { static: false }) grid: GridComponent;
 
-    constructor(
-        private dateHandlerService: DateHandlerService,
-        private repairService: RepairService,
-        public repairDashboardService: RepairDashboardService
-    ) {}
+    private dateTimeService = inject(DateTimeService);
+
+    constructor(private repairService: RepairService, public repairDashboardService: RepairDashboardService) {}
 
     public displayMonths = 1;
     public navigation = 'select';
@@ -39,16 +37,16 @@ export class RepairGridResultsComponent implements OnInit {
     public filterDropdownData = { status: [] };
 
     async ngOnInit() {
-        this.repairDashboardService._dateTo = moment();
-        this.repairDashboardService._dateFrom = moment().subtract(1, 'month');
+        this.repairDashboardService._dateTo = new Date();
+        this.repairDashboardService._dateFrom = subMonths(new Date(), 1);
 
-        this.repairDashboardService.ngbDateTo = this.dateHandlerService.formatMomentToObject(
+        this.repairDashboardService.ngbDateTo = this.dateTimeService.formatDateToObject(
             this.repairDashboardService._dateTo
         );
-        this.repairDashboardService.ngbDateFrom = this.dateHandlerService.formatMomentToObject(
+        this.repairDashboardService.ngbDateFrom = this.dateTimeService.formatDateToObject(
             this.repairDashboardService._dateFrom
         );
-        this.repairDashboardService.ngbMaxDate = this.dateHandlerService.formatMomentToObject(
+        this.repairDashboardService.ngbMaxDate = this.dateTimeService.formatDateToObject(
             this.repairDashboardService._dateTo
         );
 
@@ -56,18 +54,6 @@ export class RepairGridResultsComponent implements OnInit {
         this.filterDropdownData = {
             status: this.repairService.repairStatuses.map((status) => status.description).sort(),
         };
-    }
-
-    //FIXME: Move this methods to a service
-    formatDate(date: DateObject, fromOrTo: string) {
-        const dateString = `${date.year}-${date.month}-${date.day}`;
-
-        if (fromOrTo === 'from') {
-            this.repairDashboardService._dateFrom = moment(dateString);
-        }
-        if (fromOrTo === 'to') {
-            this.repairDashboardService._dateTo = moment(dateString);
-        }
     }
 
     getRepairDetails(event: RowSelectEventArgs) {
