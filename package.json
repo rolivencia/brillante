@@ -2,12 +2,12 @@
 	"name": "brillante",
 	"version": "2.0.0",
 	"engines": {
-		"node": "22.x"
+		"node": "^22.12.0"
 	},
 	"scripts": {
 		"ng": "ng",
 		"start": "node server.js",
-		"build": "npx ng build --aot --configuration production",
+		"build": "ng build --aot --configuration production",
 		"dev": "concurrently -p=\"{name}\" -n=\"NodeJS,Angular\" -c=\"red,green\" \"npm run serve:be\" \"npm run serve:fe\"",
 		"test": "ng test",
 		"format:fix": "pretty-quick --staged",
