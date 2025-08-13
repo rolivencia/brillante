@@ -1,4 +1,4 @@
-@import './bootstrap-colors';
+@use './bootstrap-colors';
 
 // Add xxl
 $grid-breakpoints: (
@@ -20,4 +20,4 @@ $container-max-widths: (
 
 /* You can add global styles to this file, and also import other style files */
 
-@import 'bootstrap/scss/bootstrap';
+@use 'bootstrap/scss/bootstrap';
