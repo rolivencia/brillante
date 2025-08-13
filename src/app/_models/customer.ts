@@ -1,5 +1,4 @@
 import { User } from '@models/user';
-import { Moment } from 'moment';
 
 export class Customer {
     public id?: number;
@@ -7,7 +6,7 @@ export class Customer {
     public firstName: string;
     public lastName: string;
     public email: string;
-    public birthDate: Moment | string | Date;
+    public birthDate: Date | string;
     public address: string;
     public telephone: string;
     public user: User;

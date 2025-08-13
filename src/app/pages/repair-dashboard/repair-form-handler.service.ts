@@ -17,6 +17,7 @@ import { PaymentMethodsService } from '@services/payment-methods.service';
 import { RepairService } from '@services/repair.service';
 import { ToastrService } from 'ngx-toastr';
 import { isFinishedStatus } from '@functions/repair.functions';
+import { format } from 'date-fns';
 
 @Injectable({
     providedIn: 'root',
@@ -193,7 +194,7 @@ export class RepairFormHandlerService {
                     id: [transaction.id],
                     paymentMethod: [transaction.paymentMethod.id],
                     amount: [transaction.amount],
-                    date: [transaction.date.format('DD-MM-YYYY HH:mm')],
+                    date: [format(transaction.date, 'dd-MM-yyyy HH:mm')],
                 });
                 paymentsFormArray.push(paymentGroup);
             }

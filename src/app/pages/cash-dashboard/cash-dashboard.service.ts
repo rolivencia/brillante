@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-import { Moment } from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { CashService } from '@services/cash.service';
 import { CashTransaction } from '@models/cash-transaction';
@@ -11,6 +9,7 @@ import { OfficeBranchService } from '@services/office-branch.service';
 import { Role } from '@models/user';
 import { decimalsSeparator } from '@functions/numeric-utils';
 import { AuthenticationService } from '@services/authentication.service';
+import { subDays, getYear, getMonth, getDate } from 'date-fns';
 
 @Injectable({
     providedIn: 'root',
@@ -21,29 +20,29 @@ export class CashDashboardService {
     public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     // TODO: Issue #98 - Limit how many days can an employee with access to the cash register can see in the past. Make it configurable.
-    public date: Moment = moment();
-    public minimumGridDate: Moment = moment().subtract(14, 'days');
+    public date: Date = new Date();
+    public minimumGridDate: Date = subDays(new Date(), 14);
 
     public ngbDateFrom: DateObject;
     public ngbDateTo: DateObject;
 
     public ngbMinDate: DateObject = {
-        year: this.minimumGridDate.year(),
-        month: (this.minimumGridDate.month() + 1) % 13,
-        day: this.minimumGridDate.date(),
+        year: getYear(this.minimumGridDate),
+        month: (getMonth(this.minimumGridDate) + 1) % 13,
+        day: getDate(this.minimumGridDate),
     };
 
     public ngbMaxDate: DateObject = {
-        year: this.date.year(),
-        month: (this.date.month() + 1) % 13,
-        day: this.date.date(),
+        year: getYear(this.date),
+        month: (getMonth(this.date) + 1) % 13,
+        day: getDate(this.date),
     };
 
     public ngbSystemInitialDate: DateObject = { year: 2020, month: 8, day: 1 };
     public ngbSystemMaxDate: DateObject = {
-        year: this.date.year(),
-        month: (this.date.month() + 1) % 13,
-        day: this.date.date(),
+        year: getYear(this.date),
+        month: (getMonth(this.date) + 1) % 13,
+        day: getDate(this.date),
     };
 
     public transactions: CashTransaction[] = [];
@@ -59,20 +58,20 @@ export class CashDashboardService {
     ) {}
 
     isToday() {
-        const currentDateTime = moment();
+        const currentDateTime = new Date();
         return (
-            currentDateTime.year() === this.date.year() &&
-            currentDateTime.month() === this.date.month() &&
-            currentDateTime.date() === this.date.date()
+            getYear(currentDateTime) === getYear(this.date) &&
+            getMonth(currentDateTime) === getMonth(this.date) &&
+            getDate(currentDateTime) === getDate(this.date)
         );
     }
 
     ngbMinDateByRole(): DateObject {
         const userRoles: any = this.authenticationService.currentUserValue.roles;
         let minimumGridDate: DateObject = {
-            year: this.minimumGridDate.year(),
-            month: (this.minimumGridDate.month() + 1) % 13,
-            day: this.minimumGridDate.date(),
+            year: getYear(this.minimumGridDate),
+            month: (getMonth(this.minimumGridDate) + 1) % 13,
+            day: getDate(this.minimumGridDate),
         };
         if (isAdministrator(userRoles)) {
             minimumGridDate = {
@@ -92,24 +91,24 @@ export class CashDashboardService {
         // TODO: Replace for new NodeJS API
         const result = await this.cashService.openCashRegister(this.authenticationService.currentUserValue).toPromise();
         if (result && result.id) {
-            this.loadData(moment());
+            this.loadData(new Date());
         }
     }
 
     // FIXME: Restructure this to get rid of coupling. Think of two methods: one for single date, other for starting and ending
     async refreshGrid(date?: DateObject) {
-        this.date = date ? formatDate(date) : moment();
+        this.date = date ? formatDate(date) : new Date();
         await this.loadData(this.date, this.date, [], this.officeBranchService.current.value);
         this.selectedTransaction = null;
     }
 
-    async loadData(from: Moment, to?: Moment, filterConcepts: any[] = [], officeBranch: OfficeBranch = null) {
+    async loadData(from: Date, to?: Date, filterConcepts: any[] = [], officeBranch: OfficeBranch = null) {
         // TODO: Return transactions to display them where desired
         this.loading.next(true);
         this.progressLoaderService.showWithOverlay();
 
-        const dateFrom = moment(from);
-        const dateTo = to ? moment(to) : moment(from);
+        const dateFrom = from;
+        const dateTo = to ? to : from;
 
         const transactions = await this.cashService.getAll(dateFrom, dateTo, officeBranch).toPromise();
         this.transactions = transactions.map((Transaction) => mapTransactionType(Transaction));
@@ -127,8 +126,9 @@ export class CashDashboardService {
     }
 
     setTodayDate() {
-        this.ngbDateFrom = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
-        this.ngbDateTo = { year: moment().year(), month: (moment().month() + 1) % 13, day: moment().date() };
+        const today = new Date();
+        this.ngbDateFrom = { year: getYear(today), month: (getMonth(today) + 1) % 13, day: getDate(today) };
+        this.ngbDateTo = { year: getYear(today), month: (getMonth(today) + 1) % 13, day: getDate(today) };
     }
 
     // TODO: Refactor import
@@ -148,9 +148,9 @@ export function mapTransactionType(transaction: CashTransaction) {
     };
 }
 
-export function formatDate(date: DateObject) {
+export function formatDate(date: DateObject): Date {
     const dateString = `${date.year}-${date.month}-${date.day}`;
-    return moment(dateString);
+    return new Date(dateString);
 }
 
 export const isAdministrator = (roles: Role[]): boolean => roles.filter((role) => role.id === 1).length > 0;

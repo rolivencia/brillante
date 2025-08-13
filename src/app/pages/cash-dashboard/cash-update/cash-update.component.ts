@@ -1,8 +1,7 @@
-import * as moment from 'moment';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CashDashboardService } from '@pages/cash-dashboard/cash-dashboard.service';
 import { CashFormHandlerService } from '@pages/cash-dashboard/cash-form-handler.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MoneyTransactionConceptsService } from '@pages/settings-dashboard/money-transaction-concepts/money-transaction-concepts.service';
 import { PaymentMethodsService } from '@services/payment-methods.service';
 import { ChangeEventArgs, FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
@@ -58,7 +57,7 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
             )[0];
 
             // Assign date
-            this.dateTime = this.cashFormHandlerService.cashTransaction.date.toDate();
+            this.dateTime = this.cashFormHandlerService.cashTransaction.date;
             this.cashFormHandlerService.formGroup = this.cashFormHandlerService.load();
             this.cashFormHandlerService.patch();
         }
@@ -69,8 +68,8 @@ export class CashUpdateComponent implements OnDestroy, OnInit {
     }
 
     async update() {
-        this.cashFormHandlerService.cashTransaction.audit.createdAt = moment(this.dateTime);
-        this.cashFormHandlerService.formGroup.patchValue({ date: moment(this.dateTime) });
+        this.cashFormHandlerService.cashTransaction.audit.createdAt = new Date(this.dateTime);
+        this.cashFormHandlerService.formGroup.patchValue({ date: new Date(this.dateTime) });
         const result = await this.cashFormHandlerService.update();
         if (result) {
             await this.cashDashboardService.refreshGrid();

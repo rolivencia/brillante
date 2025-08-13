@@ -1,13 +1,11 @@
-import * as moment from 'moment';
 import { Audit } from '@models/audit';
-import { Moment } from 'moment';
 import { OfficeBranch } from '@models/office-branch';
 
 export class CashTransaction {
     public id: number;
     public concept: TransactionConcept;
     public amount: number;
-    public date: Moment;
+    public date: Date;
     public note: string;
     public audit: Audit;
     public operation?: Operation;
@@ -19,7 +17,7 @@ export class CashTransaction {
         id?: number,
         concept?: TransactionConcept,
         amount?: number,
-        date?: Moment,
+        date?: Date,
         note?: string,
         audit?: Audit,
         operation?: Operation,
@@ -30,7 +28,7 @@ export class CashTransaction {
         this.id = id;
         this.concept = concept ? concept : new TransactionConcept();
         this.amount = amount ? amount : 0;
-        this.date = date ? date : moment();
+        this.date = date ? date : new Date();
         this.audit = audit ? audit : new Audit();
         this.operation = operation ? operation : new Operation();
         this.paymentMethod = paymentMethod ? paymentMethod : new PaymentMethod();

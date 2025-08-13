@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import { CashDashboardService, formatDate } from '@pages/cash-dashboard/cash-dashboard.service';
 import { CashReportService } from '@pages/reports-dashboard/cash-report/cash-report.service';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -8,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { LayoutService } from '@services/layout.service';
 import { GridComponent, ToolbarItems } from '@syncfusion/ej2-angular-grids';
 import { DataUtil } from '@syncfusion/ej2-data';
+import { getYear, getMonth, getDate, format } from 'date-fns';
 
 @Component({
     selector: 'app-cash-report',
@@ -47,14 +47,14 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
             this.changeDetectorRef.detectChanges();
         });
         this.cashDashboardService.ngbDateFrom = {
-            year: moment().year(),
-            month: moment().month() % 13,
-            day: moment().date(),
+            year: getYear(new Date()),
+            month: getMonth(new Date()) + 1,
+            day: getDate(new Date()),
         };
         this.cashDashboardService.ngbDateTo = {
-            year: moment().year(),
-            month: (moment().month() + 1) % 13,
-            day: moment().date(),
+            year: getYear(new Date()),
+            month: (getMonth(new Date()) + 1) % 13,
+            day: getDate(new Date()),
         };
         this.refreshGrid(this.cashDashboardService.ngbDateFrom, this.cashDashboardService.ngbDateTo);
 
@@ -95,8 +95,8 @@ export class CashReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     //TODO: Migrate to SyncFusion version
     public exportToXls() {
-        const from = formatDate(this.cashDashboardService.ngbDateFrom).format('YYYY-MM-DD');
-        const to = formatDate(this.cashDashboardService.ngbDateTo).format('YYYY-MM-DD');
+        const from = format(formatDate(this.cashDashboardService.ngbDateFrom), 'yyyy-MM-dd');
+        const to = format(formatDate(this.cashDashboardService.ngbDateTo), 'yyyy-MM-dd');
         this.cashGrid.excelExport({ fileName: `Reporte Monetario Brillante (${from} - ${to})` });
     }
 

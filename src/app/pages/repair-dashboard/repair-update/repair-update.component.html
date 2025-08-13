@@ -207,9 +207,8 @@
                                                     <p><strong>Fecha y Hora de Ingreso: </strong></p>
                                                     <p>
                                                         {{
-                                                            repairFormHandlerService.repair.checkIn.format(
-                                                                'YYYY/MM/DD HH:mm'
-                                                            )
+                                                            repairFormHandlerService.repair.checkIn
+                                                                | date: 'YYYY-MM-dd HH:mm'
                                                         }}
                                                     </p>
                                                 </div>
@@ -376,9 +375,8 @@
                                                         <p><strong>Usuario a Cargo: </strong></p>
                                                         <p>
                                                             {{
-                                                                repairFormHandlerService.repair.checkIn.format(
-                                                                    'YYYY/MM/DD HH:mm'
-                                                                )
+                                                                repairFormHandlerService.repair.checkIn
+                                                                    | date: 'YYYY-MM-dd HH:mm'
                                                             }}
                                                         </p>
                                                     </div>
