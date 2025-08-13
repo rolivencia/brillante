@@ -1,9 +1,7 @@
-<ng-container *ngIf="show">
-    <div class="loader-overlay" *ngIf="showOverlay" [ngStyle]="{'z-index': (zIndex)}"></div>
-    <div
-        class="loader"
-        [ngStyle]="{'margin-top': (marginTop + 'px'), 'height': (height + 'px'), 'z-index': (zIndex+1)}"
-    >
-        <app-linear-spinner> </app-linear-spinner>
-    </div>
-</ng-container>
+@if (show) { @if (showOverlay) {
+<div class="loader-overlay" [ngStyle]="{'z-index': (zIndex)}"></div>
+}
+<div class="loader" [ngStyle]="{'margin-top': (marginTop + 'px'), 'height': (height + 'px'), 'z-index': (zIndex+1)}">
+    <app-linear-spinner> </app-linear-spinner>
+</div>
+}

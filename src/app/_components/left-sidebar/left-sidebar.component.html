@@ -1,60 +1,56 @@
 <section id="sidebar-content">
-    <ng-container *ngIf="currentUser$ | async as currentUser">
-        <div *ngIf="currentUser.welcomeName" id="user-info" class="m-3">
-            <div class="d-flex align-items-center">
-                <img *ngIf="currentUser.avatar" class="me-2" height="24px" width="24px" [src]="currentUser.avatar" />
-                <strong>{{ currentUser.welcomeName }}</strong>
-            </div>
-            <div *ngIf="adminLinks.length !== 0">
-                Sucursal:
-                <strong>
-                    {{ officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna' }}</strong
+    @if (currentUser$ | async; as currentUser) { @if (currentUser.welcomeName) {
+    <div id="user-info" class="m-3">
+        <div class="d-flex align-items-center">
+            @if (currentUser.avatar) {
+            <img class="me-2" height="24px" width="24px" [src]="currentUser.avatar" />
+            }
+            <strong>{{ currentUser.welcomeName }}</strong>
+        </div>
+        @if (adminLinks.length !== 0) {
+        <div>
+            Sucursal:
+            <strong>
+                {{ officeBranchService.current.value ? officeBranchService.current.value.name : 'Ninguna' }}</strong
+            >
+        </div>
+        }
+    </div>
+    } @if (adminLinks.length !== 0) {
+    <ejs-listview id="internal-management" [dataSource]="adminLinks" cssClass="e-list-template" [fields]="fields">
+        <ng-template #template let-route="">
+            @if (route.visible) {
+            <div class="e-list-wrapper">
+                @if (route.type === 'Internal') {
+                <a
+                    class="nav-link"
+                    [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                    [routerLink]="route.route"
+                    (click)="onHide()"
                 >
+                    <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
+                    {{ route.text }}</a
+                >
+                } @if (route.type === 'External') {
+                <a
+                    class="nav-link"
+                    target="_blank"
+                    [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
+                    [href]="route.route"
+                >
+                    <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
+                    {{ route.text }}</a
+                >
+                }
             </div>
-        </div>
-
-        <ng-container *ngIf="adminLinks.length !== 0">
-            <ejs-listview
-                id="internal-management"
-                [dataSource]="adminLinks"
-                cssClass="e-list-template"
-                [fields]="fields"
-            >
-                <ng-template #template let-route="">
-                    <ng-container *ngIf="route.visible">
-                        <div class="e-list-wrapper">
-                            <a
-                                *ngIf="route.type === 'Internal'"
-                                class="nav-link"
-                                [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                                [routerLink]="route.route"
-                                (click)="onHide()"
-                            >
-                                <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
-                                {{ route.text }}</a
-                            >
-                            <a
-                                *ngIf="route.type === 'External'"
-                                class="nav-link"
-                                target="_blank"
-                                [ngClass]="{ disabled: !route.enabled, active: route.enabled }"
-                                [href]="route.route"
-                            >
-                                <fa-icon class="me-3" [icon]="route.icon"></fa-icon>
-                                {{ route.text }}</a
-                            >
-                        </div>
-                    </ng-container>
-                </ng-template>
-            </ejs-listview>
-        </ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="currentUser$ | async as currentUser">
-        <div *ngIf="currentUser" class="p-3">
-            <a (click)="onLogout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
-                >CERRAR SESIÓN</a
-            >
-        </div>
-    </ng-container>
+            }
+        </ng-template>
+    </ejs-listview>
+    } } @if (currentUser$ | async; as currentUser) { @if (currentUser) {
+    <div class="p-3">
+        <a (click)="onLogout()" data-effect="mfp-move-from-top" class="btn btn-sm btn-light popup-text"
+            >CERRAR SESIÓN</a
+        >
+    </div>
+    } }
 </section>

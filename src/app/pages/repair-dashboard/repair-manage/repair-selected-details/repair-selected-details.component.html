@@ -2,84 +2,70 @@
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-sm btn-outline-success" (click)="add()">➕ Agregar</button>
+            @if (repairDashboardService.selectedRepair) {
             <button
                 type="button"
                 class="btn btn-sm btn-outline-primary"
-                *ngIf="repairDashboardService.selectedRepair"
                 (click)="update(repairDashboardService.selectedRepair)"
             >
                 🛠️ Actualizar
             </button>
-            <button
-                type="button"
-                class="btn btn-sm btn-outline-danger"
-                *ngIf="repairDashboardService.selectedRepair"
-                (click)="open(deleteModal)"
-            >
-                ❌ Eliminar
-            </button>
+            } @if (repairDashboardService.selectedRepair) {
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(deleteModal)">❌ Eliminar</button>
+            }
         </div>
     </div>
     <div class="card-body">
-        <ng-container *ngIf="repairDashboardService.selectedRepair">
-            <p class="mb-0">
-                <strong>ID Reparación: </strong>
-                {{ repairDashboardService.selectedRepair.id }}
-            </p>
-            <hr />
-            <p>
-                <strong>Cliente: </strong>
-                {{ repairDashboardService.selectedRepair.customer['fullName'] }}
-            </p>
-            <p><strong>eMail: </strong> {{ repairDashboardService.selectedRepair.customer.email }}</p>
-            <p><strong>Teléfono: </strong> {{ repairDashboardService.selectedRepair.customer.telephone }}</p>
-            <hr />
-            <p><strong>Modelo: </strong> {{ repairDashboardService.selectedRepair.device.model }}</p>
-            <p><strong>Estado: </strong>{{ repairDashboardService.selectedRepair.status.description }}</p>
-            <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.device.deviceId }}</p>
-
-            <label>
-                <ng-container *ngIf="repairDashboardService.selectedRepair.device.turnedOn"
-                    >El equipo llegó encendido</ng-container
-                >
-                <ng-container *ngIf="!repairDashboardService.selectedRepair.device.turnedOn"
-                    >El equipo llegó apagado</ng-container
-                >
-            </label>
-
-            <hr />
-            <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.issue }}</p>
-            <hr />
-            <p>
-                <strong>Fecha de Ingreso: </strong
-                >{{ repairDashboardService.selectedRepair.checkIn | date: 'YYYY-MM-dd HH:mm' }}
-            </p>
-            <p>
-                <strong>Última Actualización: </strong
-                >{{ repairDashboardService.selectedRepair.lastUpdate | date: 'YYYY-MM-dd HH:mm' }}
-            </p>
-            <p *ngIf="repairDashboardService.selectedRepair.checkOut">
-                <strong>Fecha de Término: </strong
-                >{{ repairDashboardService.selectedRepair.checkOut | date: 'YYYY-MM-dd HH:mm' }}
-            </p>
-            <hr />
-            <p *ngIf="repairDashboardService.selectedRepair.cost">
-                <strong>Costo de Reparación: </strong>$ {{ repairDashboardService.selectedRepair.cost }}
-            </p>
-            <p *ngIf="repairDashboardService.selectedRepair.price">
-                <strong>Precio de Reparación: </strong>$ {{ repairDashboardService.selectedRepair.price }}
-            </p>
-            <p *ngIf="repairDashboardService.selectedRepair.warrantyTerm">
-                <strong>Período de garantía: </strong>{{ repairDashboardService.selectedRepair.warrantyTerm }} meses
-            </p>
-            <p *ngIf="repairDashboardService.selectedRepair.audit.createdBy">
-                <strong>Usuario creador: </strong>{{ repairDashboardService.selectedRepair.audit.createdBy.userName }}
-            </p>
-        </ng-container>
-        <ng-container *ngIf="!repairDashboardService.selectedRepair">
-            <p>Para ver los detalles, seleccione una reparación de la grilla</p>
-            <hr />
-        </ng-container>
+        @if (repairDashboardService.selectedRepair) {
+        <p class="mb-0">
+            <strong>ID Reparación: </strong>
+            {{ repairDashboardService.selectedRepair.id }}
+        </p>
+        <hr />
+        <p>
+            <strong>Cliente: </strong>
+            {{ repairDashboardService.selectedRepair.customer['fullName'] }}
+        </p>
+        <p><strong>eMail: </strong> {{ repairDashboardService.selectedRepair.customer.email }}</p>
+        <p><strong>Teléfono: </strong> {{ repairDashboardService.selectedRepair.customer.telephone }}</p>
+        <hr />
+        <p><strong>Modelo: </strong> {{ repairDashboardService.selectedRepair.device.model }}</p>
+        <p><strong>Estado: </strong>{{ repairDashboardService.selectedRepair.status.description }}</p>
+        <p><strong>IMEI: </strong>{{ repairDashboardService.selectedRepair.device.deviceId }}</p>
+        <label>
+            @if (repairDashboardService.selectedRepair.device.turnedOn) { El equipo llegó encendido } @if
+            (!repairDashboardService.selectedRepair.device.turnedOn) { El equipo llegó apagado }
+        </label>
+        <hr />
+        <p><strong>Problema: </strong>{{ repairDashboardService.selectedRepair.issue }}</p>
+        <hr />
+        <p>
+            <strong>Fecha de Ingreso: </strong
+            >{{ repairDashboardService.selectedRepair.checkIn | date: 'YYYY-MM-dd HH:mm' }}
+        </p>
+        <p>
+            <strong>Última Actualización: </strong
+            >{{ repairDashboardService.selectedRepair.lastUpdate | date: 'YYYY-MM-dd HH:mm' }}
+        </p>
+        @if (repairDashboardService.selectedRepair.checkOut) {
+        <p>
+            <strong>Fecha de Término: </strong
+            >{{ repairDashboardService.selectedRepair.checkOut | date: 'YYYY-MM-dd HH:mm' }}
+        </p>
+        }
+        <hr />
+        @if (repairDashboardService.selectedRepair.cost) {
+        <p><strong>Costo de Reparación: </strong>$ {{ repairDashboardService.selectedRepair.cost }}</p>
+        } @if (repairDashboardService.selectedRepair.price) {
+        <p><strong>Precio de Reparación: </strong>$ {{ repairDashboardService.selectedRepair.price }}</p>
+        } @if (repairDashboardService.selectedRepair.warrantyTerm) {
+        <p><strong>Período de garantía: </strong>{{ repairDashboardService.selectedRepair.warrantyTerm }} meses</p>
+        } @if (repairDashboardService.selectedRepair.audit.createdBy) {
+        <p><strong>Usuario creador: </strong>{{ repairDashboardService.selectedRepair.audit.createdBy.userName }}</p>
+        } } @if (!repairDashboardService.selectedRepair) {
+        <p>Para ver los detalles, seleccione una reparación de la grilla</p>
+        <hr />
+        }
     </div>
 </div>
 

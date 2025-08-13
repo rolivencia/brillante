@@ -1,37 +1,30 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        Nueva Reparación
-        <ng-container *ngIf="repairFormHandlerService.saved">
-            <span class="badge badge-info p-2"
-                >Reparación guardada. Elija "Volver" o "Cargar Nueva" para dar de alta otra reparación</span
-            >
-        </ng-container>
+        Nueva Reparación @if (repairFormHandlerService.saved) {
+        <span class="badge badge-info p-2"
+            >Reparación guardada. Elija "Volver" o "Cargar Nueva" para dar de alta otra reparación</span
+        >
+        }
         <div>
-            <ng-container *ngIf="repairFormHandlerService.customerExists">
-                <button
-                    class="btn btn-sm btn-outline-info me-5"
-                    (click)="goToCustomerUpdate(repairFormHandlerService.customer)"
-                >
-                    🔄 Actualizar datos de cliente
-                </button>
-            </ng-container>
-            <ng-container *ngIf="!repairFormHandlerService.saved">
-                <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.save()">
-                    💾 Guardar reparación
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                    (click)="repairFormHandlerService.clean()"
-                >
-                    🗑️ Limpiar datos
-                </button>
-            </ng-container>
-            <ng-container *ngIf="repairFormHandlerService.saved">
-                <button type="button" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.clean()">
-                    🔄 Cargar nueva
-                </button>
-            </ng-container>
+            @if (repairFormHandlerService.customerExists) {
+            <button
+                class="btn btn-sm btn-outline-info me-5"
+                (click)="goToCustomerUpdate(repairFormHandlerService.customer)"
+            >
+                🔄 Actualizar datos de cliente
+            </button>
+            } @if (!repairFormHandlerService.saved) {
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.save()">
+                💾 Guardar reparación
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="repairFormHandlerService.clean()">
+                🗑️ Limpiar datos
+            </button>
+            } @if (repairFormHandlerService.saved) {
+            <button type="button" class="btn btn-sm btn-outline-success" (click)="repairFormHandlerService.clean()">
+                🔄 Cargar nueva
+            </button>
+            }
             <button type="button" class="btn btn-sm btn-outline-secondary" (click)="location.back()">⬅️ Volver</button>
         </div>
     </div>
@@ -79,15 +72,12 @@
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <label for="manufacturer">Marca</label>
-                                        <div
-                                            class="text-danger"
-                                            *ngIf="
-                                                this.repairFormHandlerService.submitted &&
-                                                repairFormHandlerService.deviceControl['manufacturer'].errors?.required
-                                            "
-                                        >
+                                        @if ( this.repairFormHandlerService.submitted &&
+                                        repairFormHandlerService.deviceControl['manufacturer'].errors?.required ) {
+                                        <div class="text-danger">
                                             <small>Se requiere la marca del dispositivo</small>
                                         </div>
+                                        }
                                     </div>
                                     <input
                                         name="manufacturer"
@@ -101,15 +91,12 @@
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <label for="model">Modelo</label>
-                                        <div
-                                            class="text-danger"
-                                            *ngIf="
-                                                this.repairFormHandlerService.submitted &&
-                                                repairFormHandlerService.deviceControl['model'].errors?.required
-                                            "
-                                        >
+                                        @if ( this.repairFormHandlerService.submitted &&
+                                        repairFormHandlerService.deviceControl['model'].errors?.required ) {
+                                        <div class="text-danger">
                                             <small>Se requiere el modelo del dispositivo</small>
                                         </div>
+                                        }
                                     </div>
                                     <input
                                         name="model"
@@ -135,15 +122,12 @@
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="paymentInAdvance">Seña</label>
-                                    <div
-                                        class="text-danger"
-                                        *ngIf="
-                                            this.repairFormHandlerService.submitted &&
-                                            repairFormHandlerService.repairControl['paymentInAdvance'].errors?.required
-                                        "
-                                    >
+                                    @if ( this.repairFormHandlerService.submitted &&
+                                    repairFormHandlerService.repairControl['paymentInAdvance'].errors?.required ) {
+                                    <div class="text-danger">
                                         <small>No puede ser vacío. Si no hay seña, ingrese 0</small>
                                     </div>
+                                    }
                                 </div>
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-append">
@@ -163,15 +147,12 @@
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="issue">Descripción del problema</label>
-                                    <div
-                                        class="text-danger"
-                                        *ngIf="
-                                            this.repairFormHandlerService.submitted &&
-                                            repairFormHandlerService.repairControl['issue'].errors?.required
-                                        "
-                                    >
+                                    @if ( this.repairFormHandlerService.submitted &&
+                                    repairFormHandlerService.repairControl['issue'].errors?.required ) {
+                                    <div class="text-danger">
                                         <small>Se requiere la descripción del problema</small>
                                     </div>
+                                    }
                                 </div>
                                 <textarea
                                     id="issue"

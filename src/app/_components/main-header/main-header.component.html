@@ -11,17 +11,17 @@
         <ng-container [ngTemplateOutlet]="navTemplate"></ng-container>
 
         <ul class="nav justify-content-end align-items-center nav-sup">
-            <ng-container *ngIf="currentUser$ | async as currentUser">
-                <li *ngIf="currentUser">
-                    <a (click)="logout()" class="btn btn-sm btn-light d-none d-sm-block popup-text">CERRAR SESIÓN</a>
-                </li>
-
-                <li>
-                    <a *ngIf="showCart" [routerLink]="'products/cart'" class="btn btn-default ms-2"
-                        ><fa-icon [icon]="cartIcon"></fa-icon
-                    ></a>
-                </li>
-            </ng-container>
+            @if (currentUser$ | async; as currentUser) { @if (currentUser) {
+            <li>
+                <a (click)="logout()" class="btn btn-sm btn-light d-none d-sm-block popup-text">CERRAR SESIÓN</a>
+            </li>
+            }
+            <li>
+                @if (showCart) {
+                <a [routerLink]="'products/cart'" class="btn btn-default ms-2"><fa-icon [icon]="cartIcon"></fa-icon></a>
+                }
+            </li>
+            }
             <li class="ps-3">
                 <a (click)="login()" class="btn btn-default"><fa-icon [icon]="userIcon"></fa-icon></a>
             </li>

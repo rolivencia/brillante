@@ -5,13 +5,17 @@
             <div class="d-flex justify-content-between">
                 <label for="dni">DNI</label>
                 <div>
-                    <span *ngIf="customerExists" class="badge badge-info p-2">Cliente ya registrado</span>
-                    <div class="text-danger" *ngIf="!customerExists && submitted && controls['dni'].errors?.required">
+                    @if (customerExists) {
+                    <span class="badge badge-info p-2">Cliente ya registrado</span>
+                    } @if (!customerExists && submitted && controls['dni'].errors?.required) {
+                    <div class="text-danger">
                         <small>Se requiere el DNI del cliente</small>
                     </div>
-                    <div class="text-danger" *ngIf="!customerExists && submitted && controls['dni'].errors?.minLength">
+                    } @if (!customerExists && submitted && controls['dni'].errors?.minLength) {
+                    <div class="text-danger">
                         <small>Ingrese un DNI válido - 7 números o más</small>
                     </div>
+                    }
                 </div>
             </div>
             <input
@@ -29,9 +33,11 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="firstName">Nombre</label>
-                <div class="text-danger" *ngIf="submitted && controls['firstName'].errors?.required">
+                @if (submitted && controls['firstName'].errors?.required) {
+                <div class="text-danger">
                     <small>Se requiere el nombre del cliente</small>
                 </div>
+                }
             </div>
             <input
                 name="firstName"
@@ -45,9 +51,11 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="lastName">Apellido</label>
-                <div class="text-danger" *ngIf="submitted && controls['firstName'].errors?.required">
+                @if (submitted && controls['firstName'].errors?.required) {
+                <div class="text-danger">
                     <small>Se requiere el apellido del cliente</small>
                 </div>
+                }
             </div>
             <input
                 name="lastName"
@@ -61,12 +69,15 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="email">Email</label>
-                <div class="text-danger" *ngIf="submitted && controls['email'].errors?.required">
+                @if (submitted && controls['email'].errors?.required) {
+                <div class="text-danger">
                     <small>Se requiere un email del cliente</small>
                 </div>
-                <div class="text-danger" *ngIf="submitted && controls['email'].errors?.email">
+                } @if (submitted && controls['email'].errors?.email) {
+                <div class="text-danger">
                     <small>Ingrese un email válido</small>
                 </div>
+                }
             </div>
             <input
                 name="email"
@@ -81,12 +92,14 @@
             <div class="d-flex justify-content-between">
                 <label for="birthDate">Fecha de Nacimiento</label>
             </div>
-            <div class="text-danger" *ngIf="submitted && controls['birthDate'].errors?.required">
+            @if (submitted && controls['birthDate'].errors?.required) {
+            <div class="text-danger">
                 <small
                     >Ingrese fecha de nacimiento válida. Para clientes ya registrados, proceda a editar datos del
                     cliente accediendo desde el botón superior.</small
                 >
             </div>
+            }
             <div class="input-group input-group-sm">
                 <ejs-datepicker
                     aria-describedby="birthDate"
@@ -103,9 +116,11 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="telephone">Teléfono</label>
-                <div class="text-danger" *ngIf="submitted && controls['telephone'].errors?.required">
+                @if (submitted && controls['telephone'].errors?.required) {
+                <div class="text-danger">
                     <small>Se requiere un teléfono del cliente</small>
                 </div>
+                }
             </div>
             <input
                 name="telephone"
@@ -122,9 +137,11 @@
         <div class="form-group">
             <div class="d-flex justify-content-between">
                 <label for="address">Dirección</label>
-                <div class="text-danger" *ngIf="submitted && controls['address'].errors?.required">
+                @if (submitted && controls['address'].errors?.required) {
+                <div class="text-danger">
                     <small>Se requiere una dirección para el cliente</small>
                 </div>
+                }
             </div>
             <input
                 name="address"

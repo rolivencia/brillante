@@ -10,11 +10,14 @@
         </div>
         <!-- TODO: See Issue #80 for creation of a price pipe -->
         <div class="price-container">
-            <p class="price" *ngIf="$fullPrice | async as fullPrice">$ {{ fullPrice }}</p>
-            <p class="installments" *ngIf="$installmentsPrice | async as installmentsPrice">
+            @if ($fullPrice | async; as fullPrice) {
+            <p class="price">$ {{ fullPrice }}</p>
+            } @if ($installmentsPrice | async; as installmentsPrice) {
+            <p class="installments">
                 12 cuotas de
                 <span class="installment-price">${{ installmentsPrice }}</span>
             </p>
+            }
             <!--                    <a class="add-to-cart">AGREGAR AL CARRITO</a>-->
         </div>
     </div>

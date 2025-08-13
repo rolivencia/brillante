@@ -1,7 +1,9 @@
 <div class="row">
     <div id="main-card" class="col-12">
         <div class="card">
-            <div class="card-header" *ngIf="cardsLayoutService.topCardTitle"></div>
+            @if (cardsLayoutService.topCardTitle) {
+            <div class="card-header"></div>
+            }
             <div class="card-body">
                 <!--FULL LENGTH COMPONENT-->
                 <router-outlet name="main-outlet"></router-outlet>
@@ -12,9 +14,11 @@
 <div class="row">
     <div id="left-card" class="col-8">
         <div class="card">
-            <div class="card-header" *ngIf="cardsLayoutService.leftCardTitle">
+            @if (cardsLayoutService.leftCardTitle) {
+            <div class="card-header">
                 <div class="row"></div>
             </div>
+            }
             <div class="card-body">
                 <router-outlet name="left-outlet"></router-outlet>
                 <!--SELECT FROM GRID COMPONENT-->
@@ -23,7 +27,9 @@
     </div>
     <div id="right-card" class="col-4">
         <div class="card">
-            <div class="card-header" *ngIf="cardsLayoutService.rightCardTitle"></div>
+            @if (cardsLayoutService.rightCardTitle) {
+            <div class="card-header"></div>
+            }
             <div class="card-body">
                 <router-outlet name="right-outlet"></router-outlet>
                 <!--DETAILED VIEW COMPONENT-->

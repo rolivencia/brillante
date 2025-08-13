@@ -11,16 +11,17 @@
     <div class="px-2 flex-grow-1">
         <label><b>Tipo:</b></label>
         <div class="input-group input-group-sm">
+            @if (!concept.parent) {
             <ejs-dropdownlist
-                *ngIf="!concept.parent"
                 [(ngModel)]="typeId"
                 [contentEditable]="false"
                 [dataSource]="cashTransactionConceptsService.transactionTypes"
                 [fields]="moneyTransactionFields"
                 (change)="onTypeChange($event)"
             ></ejs-dropdownlist>
-
-            <div *ngIf="!!concept.parent">{{ concept.parent.transactionType.description }}</div>
+            } @if (!!concept.parent) {
+            <div>{{ concept.parent.transactionType.description }}</div>
+            }
         </div>
     </div>
     <div class="px-2 flex-grow-1">
@@ -72,11 +73,13 @@
     </div>
 </div>
 
-<div *ngIf="!parent" class="mt-2">
+@if (!parent) {
+<div class="mt-2">
     Este concepto será agregado en el primer nivel jerárquico. Deberán agregarse luego subconceptos hijos para este
     concepto.
 </div>
-
-<div *ngIf="parent" class="mt-2">
+} @if (parent) {
+<div class="mt-2">
     Este subconcepto será agregado como hijo del concepto <b>{{ parent.description }}</b>
 </div>
+}
