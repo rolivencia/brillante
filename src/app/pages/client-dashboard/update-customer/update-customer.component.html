@@ -11,11 +11,8 @@
         </div>
     </div>
     <div class="card-body">
-        <app-customer-form
-            *ngIf="customer"
-            [formGroup]="form"
-            [submitted]="submitted"
-            [saved]="saved"
-        ></app-customer-form>
+        @if (customer) {
+        <app-customer-form [formGroup]="form" [submitted]="submitted" [saved]="saved"></app-customer-form>
+        }
     </div>
 </div>

@@ -1,17 +1,18 @@
 ﻿<div id="header-container">
     <app-progress-loader [marginTop]="0" [zIndex]="2003"></app-progress-loader>
+    @if ((isDesktop && !isInternalUser) || !isDesktop) {
     <app-main-header
-        *ngIf="(isDesktop && !isInternalUser) || !isDesktop"
         [showToggler]="!isDesktop"
         [sidebarOpen]="sidebarOpen"
         (toggleSidebar)="onToggleSidebar($event)"
     ></app-main-header>
+    }
 </div>
 <div id="main-container" class="w-100">
     <div [ngClass]="{ container: isMainOutlerContainerized, 'container-fluid': !isMainOutlerContainerized }">
+        @if (!isDesktop || isInternalUser) {
         <ejs-sidebar
             id="default-sidebar"
-            *ngIf="!isDesktop || isInternalUser"
             [ngClass]="{ 'add-header-margin': !isDesktop || !isInternalUser }"
             [closeOnDocumentClick]="false"
             [enableGestures]="!isDesktop"
@@ -24,10 +25,13 @@
         >
             <div class="p-3">
                 <!-- TODO: Dock the sidebar and show only icons -->
-                <app-brand-container *ngIf="isDesktop && isInternalUser" [showToggler]="false"></app-brand-container>
+                @if (isDesktop && isInternalUser) {
+                <app-brand-container [showToggler]="false"></app-brand-container>
+                }
                 <app-left-sidebar (hide)="hideSidebar()" (logout)="onLogout($event)"></app-left-sidebar>
             </div>
         </ejs-sidebar>
+        }
         <div
             id="outlet-container"
             class="py-3 d-flex justify-content-center align-items-center"

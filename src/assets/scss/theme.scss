@@ -1,10 +1,10 @@
-@import 'src/assets/scss/bootstrap-colors';
+@use 'src/assets/scss/bootstrap-colors' as colors;
 
 html,
 body {
     width: 100%;
     height: 100%;
-    background-color: $background-color;
+    background-color: colors.$background-color;
     font-family: 'Barlow', sans-serif;
     color: #999999;
     font-size: 17px;

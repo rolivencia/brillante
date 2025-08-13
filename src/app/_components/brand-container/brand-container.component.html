@@ -1,8 +1,13 @@
 <div class="mx-3 brand-container">
-    <button id="burger-menu" type="button" (click)="onToggleSidebar()" *ngIf="showToggler">
-        <fa-icon *ngIf="!sidebarOpen" [icon]="barsIcon"></fa-icon>
-        <fa-icon *ngIf="sidebarOpen" [icon]="closeIcon"></fa-icon>
+    @if (showToggler) {
+    <button id="burger-menu" type="button" (click)="onToggleSidebar()">
+        @if (!sidebarOpen) {
+        <fa-icon [icon]="barsIcon"></fa-icon>
+        } @if (sidebarOpen) {
+        <fa-icon [icon]="closeIcon"></fa-icon>
+        }
     </button>
+    }
     <a class="navbar-brand" href="">
         <img src="/assets/imagenes/tema/logo_brillante.png" alt="image" />
     </a>

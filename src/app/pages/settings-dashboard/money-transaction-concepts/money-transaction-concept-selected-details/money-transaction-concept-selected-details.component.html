@@ -1,36 +1,36 @@
 <div class="d-flex justify-content-between align-items-center">
-    <ng-container *ngIf="!concept || itemsSource.length === 0">
-        <label
-            >El concepto de primera jerarquía no tiene subconceptos hijos. Pueden agregarse clickeando
-            <b>"Agregar"</b> a la derecha.</label
-        >
-    </ng-container>
-    <ng-container *ngIf="concept && itemsSource.length > 0" [formGroup]="form">
+    @if (!concept || itemsSource.length === 0) {
+    <label
+        >El concepto de primera jerarquía no tiene subconceptos hijos. Pueden agregarse clickeando <b>"Agregar"</b> a la
+        derecha.</label
+    >
+    } @if (concept && itemsSource.length > 0) {
+    <ng-container [formGroup]="form">
         <div class="pe-2">
             <label
                 ><b>{{ label }}:</b></label
             >
             <div class="input-group input-group-sm">
+                @if (!showSiblingsGrid && !editMode && !addMode) {
                 <ejs-dropdownlist
                     formControlName="idSelectedConcept"
-                    *ngIf="!showSiblingsGrid && !editMode && !addMode"
                     [contentEditable]="false"
                     [fields]="moneyTransactionFields"
                     [dataSource]="itemsSource"
                     (change)="onSelectionChange($event)"
                 >
                 </ejs-dropdownlist>
-                <label *ngIf="showSiblingsGrid || editMode || addMode" class="mb-0">{{ concept.description }}</label>
+                } @if (showSiblingsGrid || editMode || addMode) {
+                <label class="mb-0">{{ concept.description }}</label>
+                }
             </div>
         </div>
-
         <div class="px-2">
             <label><b>ID:</b></label>
             <div class="input-group input-group-sm">
                 <label class="mb-0">{{ concept.id }}</label>
             </div>
         </div>
-
         <div class="px-2">
             <label><b>Tipo:</b></label>
             <div class="input-group input-group-sm">
@@ -56,29 +56,28 @@
             </div>
         </div>
     </ng-container>
-
-    <div *ngIf="!addMode && !editMode" class="d-block">
+    } @if (!addMode && !editMode) {
+    <div class="d-block">
         <!-- Agregado de nuevas -->
         <button class="btn btn-block btn-sm btn-outline-success" type="button" (click)="enableAddMode()">
             Agregar
         </button>
-
-        <ng-container *ngIf="concept && itemsSource.length > 0 && concept?.modifiable">
-            <button class="btn btn-block btn-sm btn-outline-primary mx-3" type="button" (click)="enableEditMode()">
-                Editar
-            </button>
-
-            <!-- Habilitar/Deshabilitar -->
-            <!-- TODO: Enable the trigger status feature -->
-            <button
-                *ngIf="concept.modifiable"
-                [ngClass]="{ 'btn-outline-danger': concept.enabled, 'btn-outline-info': !concept.enabled }"
-                class="btn btn-block btn-sm"
-                type="button"
-                (click)="toggleStatus()"
-            >
-                {{ concept.enabled ? 'Deshabilitar' : 'Habilitar' }}
-            </button>
-        </ng-container>
+        @if (concept && itemsSource.length > 0 && concept?.modifiable) {
+        <button class="btn btn-block btn-sm btn-outline-primary mx-3" type="button" (click)="enableEditMode()">
+            Editar
+        </button>
+        <!-- Habilitar/Deshabilitar -->
+        <!-- TODO: Enable the trigger status feature -->
+        @if (concept.modifiable) {
+        <button
+            [ngClass]="{ 'btn-outline-danger': concept.enabled, 'btn-outline-info': !concept.enabled }"
+            class="btn btn-block btn-sm"
+            type="button"
+            (click)="toggleStatus()"
+        >
+            {{ concept.enabled ? 'Deshabilitar' : 'Habilitar' }}
+        </button>
+        } }
     </div>
+    }
 </div>
