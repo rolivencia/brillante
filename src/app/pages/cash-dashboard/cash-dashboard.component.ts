@@ -9,6 +9,7 @@ import { DateTimeService } from '@services/date-time.service';
     selector: 'app-cash-dashboard',
     templateUrl: './cash-dashboard.component.html',
     styleUrls: ['./cash-dashboard.component.scss'],
+    standalone: false,
 })
 export class CashDashboardComponent implements OnInit {
     editMode: boolean;

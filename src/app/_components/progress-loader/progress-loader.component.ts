@@ -8,6 +8,7 @@ import { ProgressLoaderService } from './progress-loader.service';
     templateUrl: './progress-loader.html',
     styleUrls: ['./progress-loader.scss'],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class ProgressLoaderComponent implements OnInit, OnDestroy {
     @Input() marginTop: number = 0; // Amount of pixels, counting from the top container, to display the progress bar
@@ -23,10 +24,12 @@ export class ProgressLoaderComponent implements OnInit, OnDestroy {
     constructor(private progressLoaderService: ProgressLoaderService) {}
 
     ngOnInit(): void {
-        this.subscription = this.progressLoaderService.loaderState.pipe(auditTime(this.delay)).subscribe((state: LoaderState) => {
-            this.show = state.show;
-            this.showOverlay = state.showWithOverlay;
-        });
+        this.subscription = this.progressLoaderService.loaderState
+            .pipe(auditTime(this.delay))
+            .subscribe((state: LoaderState) => {
+                this.show = state.show;
+                this.showOverlay = state.showWithOverlay;
+            });
     }
 
     ngOnDestroy(): void {

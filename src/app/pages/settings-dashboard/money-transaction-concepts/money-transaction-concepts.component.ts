@@ -6,6 +6,7 @@ import { MoneyTransactionConceptsService } from '@pages/settings-dashboard/money
     selector: 'app-cash-categories',
     templateUrl: './money-transaction-concepts.component.html',
     styleUrls: ['./money-transaction-concepts.component.scss'],
+    standalone: false,
 })
 export class MoneyTransactionConceptsComponent implements OnInit {
     constructor(public moneyTransactionConceptsService: MoneyTransactionConceptsService) {}

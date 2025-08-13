@@ -10,6 +10,7 @@ import { routePaths } from '@app/app.routing';
     selector: 'app-cash-selected-details',
     templateUrl: './cash-selected-details.component.html',
     styleUrls: ['./cash-selected-details.component.scss'],
+    standalone: false,
 })
 export class CashSelectedDetailsComponent implements OnInit, OnDestroy {
     constructor(

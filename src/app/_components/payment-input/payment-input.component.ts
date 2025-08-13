@@ -8,6 +8,7 @@ import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
     selector: 'app-payment-input',
     templateUrl: './payment-input.component.html',
     styleUrls: ['./payment-input.component.scss'],
+    standalone: false,
 })
 export class PaymentInputComponent implements OnInit {
     @Input() index: number = 0;

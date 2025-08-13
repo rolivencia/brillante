@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
     selector: 'app-reports-dashboard',
     templateUrl: './reports-dashboard.component.html',
     styleUrls: ['./reports-dashboard.component.scss'],
+    standalone: false,
 })
 export class ReportsDashboardComponent implements OnInit {
     constructor(private router: Router) {}

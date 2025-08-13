@@ -10,6 +10,7 @@ import { first } from 'rxjs/operators';
     selector: 'app-select-office-branch',
     templateUrl: './select-office-branch.component.html',
     styleUrls: ['./select-office-branch.component.scss'],
+    standalone: false,
 })
 export class SelectOfficeBranchComponent implements OnInit {
     public form: UntypedFormGroup;

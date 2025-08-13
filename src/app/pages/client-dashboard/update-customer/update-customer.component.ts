@@ -11,6 +11,7 @@ import { CustomerService } from '@services/customer.service';
     selector: 'app-update-customer',
     templateUrl: './update-customer.component.html',
     styleUrls: ['./update-customer.component.scss'],
+    standalone: false,
 })
 export class UpdateCustomerComponent implements OnInit {
     get customer(): Customer {

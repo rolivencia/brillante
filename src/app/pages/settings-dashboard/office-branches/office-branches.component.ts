@@ -8,6 +8,7 @@ import { OfficeBranchService } from '@services/office-branch.service';
     selector: 'app-office-branches',
     templateUrl: './office-branches.component.html',
     styleUrls: ['./office-branches.component.scss'],
+    standalone: false,
 })
 export class OfficeBranchesComponent implements OnInit {
     public officeBranches$: Observable<OfficeBranch[]> = of();

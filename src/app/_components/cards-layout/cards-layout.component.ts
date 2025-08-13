@@ -5,6 +5,7 @@ import { CardsLayoutService } from '@components/cards-layout/cards-layout.servic
     selector: 'app-cards-layout',
     templateUrl: './cards-layout.component.html',
     styleUrls: ['./cards-layout.component.scss'],
+    standalone: false,
 })
 export class CardsLayoutComponent implements OnInit {
     constructor(public cardsLayoutService: CardsLayoutService) {}

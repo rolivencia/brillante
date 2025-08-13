@@ -1,4 +1,4 @@
-﻿import { APP_INITIALIZER, NgModule } from '@angular/core';
+﻿import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -38,31 +38,28 @@ import { errorInterceptor, jwtInterceptor } from '@app/_helpers';
     ],
     declarations: [AppComponent],
     providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (cartService: CartService) => () => cartService.loadFromStorage(),
-            deps: [CartService],
-            multi: true,
-        },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (officeBranchService: OfficeBranchService) => () => officeBranchService.load(),
-            deps: [OfficeBranchService],
-            multi: true,
-        },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (paymentMethodsService: PaymentMethodsService) => () => paymentMethodsService.load(),
-            deps: [PaymentMethodsService],
-            multi: true,
-        },
+        provideAppInitializer(() => {
+            const initializerFn = ((cartService: CartService) => () => cartService.loadFromStorage())(
+                inject(CartService)
+            );
+            return initializerFn();
+        }),
+        provideAppInitializer(() => {
+            const initializerFn = ((officeBranchService: OfficeBranchService) => () => officeBranchService.load())(
+                inject(OfficeBranchService)
+            );
+            return initializerFn();
+        }),
+        provideAppInitializer(() => {
+            const initializerFn = ((paymentMethodsService: PaymentMethodsService) => () =>
+                paymentMethodsService.load())(inject(PaymentMethodsService));
+            return initializerFn();
+        }),
 
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (repairService: RepairService) => () => repairService.load(),
-            deps: [RepairService],
-            multi: true,
-        },
+        provideAppInitializer(() => {
+            const initializerFn = ((repairService: RepairService) => () => repairService.load())(inject(RepairService));
+            return initializerFn();
+        }),
         provideAuth0({
             domain: environment.auth0.domain,
             clientId: environment.auth0.clientId,

@@ -5,6 +5,7 @@ import { faBars, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-ico
     selector: 'app-brand-container',
     templateUrl: './brand-container.component.html',
     styleUrls: ['./brand-container.component.scss'],
+    standalone: false,
 })
 export class BrandContainerComponent implements OnInit {
     @Input() sidebarOpen: boolean = false;

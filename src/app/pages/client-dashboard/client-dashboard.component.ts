@@ -14,6 +14,7 @@ import { routePaths } from '@app/app.routing';
     templateUrl: './client-dashboard.component.html',
     styleUrls: ['./client-dashboard.component.scss'],
     providers: [PageService],
+    standalone: false,
 })
 export class ClientDashboardComponent implements OnInit {
     get selectedClientData() {

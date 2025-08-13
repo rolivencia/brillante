@@ -7,6 +7,7 @@ import { FieldSettingsModel } from '@syncfusion/ej2-angular-dropdowns';
     selector: 'app-payment-method-selector',
     templateUrl: './payment-method-selector.component.html',
     styleUrls: ['./payment-method-selector.component.scss'],
+    standalone: false,
 })
 export class PaymentMethodSelectorComponent {
     @Input() id: string;

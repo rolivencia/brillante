@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
     selector: 'app-settings-dashboard',
     templateUrl: './settings-dashboard.component.html',
     styleUrls: ['./settings-dashboard.component.scss'],
+    standalone: false,
 })
 export class SettingsDashboardComponent implements OnInit {
     constructor(private router: Router) {}

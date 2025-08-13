@@ -10,6 +10,7 @@ import { UntypedFormGroup } from '@angular/forms';
     selector: 'app-repair-add-new',
     templateUrl: './repair-add-new.component.html',
     styleUrls: ['./repair-add-new.component.scss', '../repair-dashboard.component.scss'],
+    standalone: false,
 })
 export class RepairAddNewComponent implements OnInit {
     get customerGroup(): UntypedFormGroup {

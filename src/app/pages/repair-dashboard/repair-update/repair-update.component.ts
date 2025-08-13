@@ -16,6 +16,7 @@ import { isFinishedStatus } from '@functions/repair.functions';
     selector: 'app-repair-update',
     templateUrl: './repair-update.component.html',
     styleUrls: ['./repair-update.component.scss', '../repair-dashboard.component.scss'],
+    standalone: false,
 })
 export class RepairUpdateComponent implements OnInit {
     public deviceTypeFields: FieldSettingsModel = { text: 'description', value: 'id' };

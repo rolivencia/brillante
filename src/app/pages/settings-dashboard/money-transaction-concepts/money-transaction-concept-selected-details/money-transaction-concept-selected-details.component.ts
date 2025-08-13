@@ -10,6 +10,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
     selector: 'app-cash-transaction-concept-details',
     templateUrl: './money-transaction-concept-selected-details.component.html',
     styleUrls: ['./money-transaction-concept-selected-details.component.scss'],
+    standalone: false,
 })
 export class MoneyTransactionConceptSelectedDetailsComponent implements OnInit {
     @Input() concept: TransactionConcept;
