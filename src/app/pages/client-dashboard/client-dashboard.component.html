@@ -81,7 +81,7 @@
                                 <e-column field="device.model" headerText="Modelo"></e-column>
                                 <e-column field="lastUpdate" headerText="Última Act." width="100">
                                     <ng-template #template let-data>
-                                        {{ data.lastUpdate.format('YYYY-MM-DD') }}
+                                        {{ data.lastUpdate | date: 'YYYY-MM-dd HH:mm' }}
                                     </ng-template>
                                 </e-column>
                                 <e-column field="status.description" headerText="Estado"></e-column>

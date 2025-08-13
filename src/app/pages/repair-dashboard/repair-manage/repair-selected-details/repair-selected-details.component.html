@@ -52,15 +52,15 @@
             <hr />
             <p>
                 <strong>Fecha de Ingreso: </strong
-                >{{ repairDashboardService.selectedRepair.checkIn.format('YYYY-MM-DD HH:mm') }}
+                >{{ repairDashboardService.selectedRepair.checkIn | date: 'YYYY-MM-dd HH:mm' }}
             </p>
             <p>
                 <strong>Última Actualización: </strong
-                >{{ repairDashboardService.selectedRepair.lastUpdate.format('YYYY-MM-DD HH:mm') }}
+                >{{ repairDashboardService.selectedRepair.lastUpdate | date: 'YYYY-MM-dd HH:mm' }}
             </p>
             <p *ngIf="repairDashboardService.selectedRepair.checkOut">
                 <strong>Fecha de Término: </strong
-                >{{ repairDashboardService.selectedRepair.checkOut.format('YYYY-MM-DD HH:mm') }}
+                >{{ repairDashboardService.selectedRepair.checkOut | date: 'YYYY-MM-dd HH:mm' }}
             </p>
             <hr />
             <p *ngIf="repairDashboardService.selectedRepair.cost">
