@@ -26,7 +26,7 @@ function app() {
     server.use(errorHandler);
 
     // Serve only the static files form the dist directory
-    server.use(express.static('./dist/brillante'));
+    server.use(express.static('./dist/brillante/browser'));
 
     const apiRoutes = [
         { path: '/users', controller: './server/users/users.controller' },
