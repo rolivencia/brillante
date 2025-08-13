@@ -2,8 +2,7 @@ import { environment } from '@environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import { format, parseISO } from 'date-fns';
 import { map } from 'rxjs/operators';
 import { DeviceType, Repair, RepairStatus } from '@models/repair';
 import { User } from '@models/user';
@@ -60,11 +59,11 @@ export class RepairService {
             .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
     }
 
-    public getAllByDate(showFinished: boolean, dateFrom: Moment, dateTo: Moment): Observable<Repair[]> {
+    public getAllByDate(dateFrom: Date, dateTo: Date, showFinished: boolean = false): Observable<Repair[]> {
         const params = new HttpParams()
             .set('showFinished', showFinished.toString())
-            .append('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
-            .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
+            .append('startDate', `${format(dateFrom, 'yyyy-MM-dd')} 00:00:00`)
+            .append('endDate', `${format(dateTo, 'yyyy-MM-dd')} 23:59:59`);
         return this.http
             .get<Repair[]>(`${environment.apiUrl}/repair/byDate`, { headers: headers, params: params })
             .pipe(map((repairsDTO): Repair[] => repairsDTO.map((repairDTO): Repair => toRepair(repairDTO))));
@@ -78,10 +77,10 @@ export class RepairService {
                     historical.map((register) => ({
                         ...register,
                         createdAt: register.createdAt
-                            ? moment(register.createdAt).format('YYYY/MM/DD HH:mm')
+                            ? format(parseISO(register.createdAt), 'yyyy/MM/dd HH:mm')
                             : register.createdAt,
                         updatedAt: register.updatedAt
-                            ? moment(register.updatedAt).format('YYYY/MM/DD HH:mm')
+                            ? format(parseISO(register.updatedAt), 'yyyy/MM/dd HH:mm')
                             : register.updatedAt,
                     }))
                 )
@@ -136,14 +135,14 @@ export function toRepair(repairDTO): Repair {
         audit: {
             ...repairDTO.audit,
             createdBy: repairDTO.user,
-            createdAt: moment(repairDTO.audit.createdAt),
-            updatedAt: moment(repairDTO.audit.createdAt),
+            createdAt: repairDTO.audit.createdAt ? parseISO(repairDTO.audit.createdAt) : null,
+            updatedAt: repairDTO.audit.createdAt ? parseISO(repairDTO.audit.createdAt) : null,
         },
-        checkIn: moment(repairDTO.checkIn),
-        lastUpdate: moment(repairDTO.lastUpdate),
-        checkOut: repairDTO.checkOut ? moment(repairDTO.checkOut) : repairDTO.checkOut,
+        checkIn: repairDTO.checkIn ? parseISO(repairDTO.checkIn) : null,
+        lastUpdate: repairDTO.lastUpdate ? parseISO(repairDTO.lastUpdate) : null,
+        checkOut: repairDTO.checkOut ? parseISO(repairDTO.checkOut) : null,
         moneyTransactions: repairDTO.moneyTransactions
-            ? repairDTO.moneyTransactions.map((x) => ({ ...x, date: moment(x.date) }))
+            ? repairDTO.moneyTransactions.map((x) => ({ ...x, date: x.date ? parseISO(x.date) : null }))
             : [],
     };
 }
@@ -153,11 +152,11 @@ export function toRepairDTO(repair: Repair) {
         ...repair,
         audit: {
             ...repair.audit,
-            createdAt: repair.audit.createdAt ? repair.audit.createdAt.toISOString() : moment().toISOString(),
-            updatedAt: repair.audit.updatedAt ? repair.audit.updatedAt.toISOString() : moment().toISOString(),
+            createdAt: repair.audit.createdAt ? repair.audit.createdAt.toISOString() : new Date().toISOString(),
+            updatedAt: repair.audit.updatedAt ? repair.audit.updatedAt.toISOString() : new Date().toISOString(),
         },
-        checkIn: repair.checkIn ? repair.checkIn.toISOString() : moment().toISOString(),
-        lastUpdate: repair.checkOut ? repair.checkOut.toISOString() : moment().toISOString(),
-        checkOut: repair.checkOut ? repair.checkOut.toISOString : null,
+        checkIn: repair.checkIn ? repair.checkIn.toISOString() : new Date().toISOString(),
+        lastUpdate: repair.lastUpdate ? repair.lastUpdate.toISOString() : new Date().toISOString(),
+        checkOut: repair.checkOut ? repair.checkOut.toISOString() : null,
     };
 }

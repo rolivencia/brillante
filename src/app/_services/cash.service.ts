@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
-import { Moment } from 'moment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '@services/authentication.service';
-import { environment } from '@environments/environment';
+import { format, parseISO } from 'date-fns';
 import { map } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 import { CashTransaction } from '@models/cash-transaction';
 import { OfficeBranch } from '@models/office-branch';
 import { OfficeBranchService } from '@services/office-branch.service';
@@ -17,16 +15,12 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlenc
     providedIn: 'root',
 })
 export class CashService {
-    constructor(
-        private authenticationService: AuthenticationService,
-        private http: HttpClient,
-        private officeBranchService: OfficeBranchService
-    ) {}
+    constructor(private http: HttpClient, private officeBranchService: OfficeBranchService) {}
 
-    public getAll(dateFrom: Moment, dateTo: Moment, branch?: OfficeBranch): Observable<any> {
+    public getAll(dateFrom: Date, dateTo: Date, branch?: OfficeBranch): Observable<any> {
         let params = new HttpParams()
-            .set('startDate', `${dateFrom.format('YYYY-MM-DD')} 00:00:00`)
-            .append('endDate', `${dateTo.format('YYYY-MM-DD')} 23:59:59`);
+            .set('startDate', `${format(dateFrom.toISOString(), 'yyyy-MM-dd')} 00:00:00`)
+            .append('endDate', `${format(dateTo.toISOString(), 'yyyy-MM-dd')} 23:59:59`);
 
         if (branch) {
             params = params.append('idBranch', `${branch.id}`);
@@ -86,14 +80,14 @@ export class CashService {
 export function toCashTransaction(cashTransactionDTO): CashTransaction {
     return {
         ...cashTransactionDTO,
-        date: moment(cashTransactionDTO.date),
+        date: parseISO(cashTransactionDTO.date),
         amount: parseFloat(cashTransactionDTO.amount),
         paymentMethod: cashTransactionDTO.paymentMethod,
         payments: cashTransactionDTO.payments.map((payment) => ({ ...payment, amount: parseFloat(payment.amount) })),
         audit: {
             ...cashTransactionDTO.audit,
-            createdAt: moment(cashTransactionDTO.audit.createdAt),
-            updatedAt: moment(cashTransactionDTO.audit.updatedAt),
+            createdAt: parseISO(cashTransactionDTO.audit.createdAt),
+            updatedAt: parseISO(cashTransactionDTO.audit.updatedAt),
         },
     };
 }
