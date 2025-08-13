@@ -64,7 +64,6 @@
         "jspdf": "^2.4.0",
         "jszip": "^2.5.0",
         "lodash": "^4.17.20",
-        "moment": "^2.24.0",
         "mysql2": "^2.3.3",
         "ngx-device-detector": "^7.0.0",
         "ngx-toastr": "^16.2.0",
