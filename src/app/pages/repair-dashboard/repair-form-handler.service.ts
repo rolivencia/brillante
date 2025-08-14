@@ -9,7 +9,6 @@ import {
 import { AuthenticationService } from '@services/authentication.service';
 import { Customer } from '@models/customer';
 import { CustomerService } from '@services/customer.service';
-import { DateTimeService } from '@services/date-time.service';
 import { DeviceType, Repair, RepairStatus } from '@models/repair';
 import { Injectable } from '@angular/core';
 import { PaymentMethod } from '@models/cash-transaction';
@@ -116,7 +115,6 @@ export class RepairFormHandlerService {
     constructor(
         private authenticationService: AuthenticationService,
         private customerService: CustomerService,
-        private dateTimeService: DateTimeService,
         private formBuilder: UntypedFormBuilder,
         private paymentMethodsService: PaymentMethodsService,
         private repairService: RepairService,
@@ -229,7 +227,7 @@ export class RepairFormHandlerService {
                 dni: customer.dni,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
-                birthDate: customer.birthDate ? this.dateTimeService.toDate(customer.birthDate as string) : null,
+                birthDate: customer.birthDate ? customer.birthDate : null,
                 email: customer.email,
                 address: customer.address,
                 telephone: customer.telephone,
