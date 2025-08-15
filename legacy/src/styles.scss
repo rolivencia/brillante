@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'ngx-toastr/toastr';
+
+/* SyncFusion theming */
+$theme-name: 'material';
+$accent: #003164;
+$primary: #999;
+@use 'ej2-base/styles/material.scss' as ej2-base;
+@use 'ej2-icons/styles/material.scss' as ej2-icons;
+@use 'ej2-angular-base/styles/material.scss' as ej2-angular-base;
+@use 'ej2-angular-calendars/styles/material.scss' as ej2-angular-calendars;
+@use 'ej2-angular-dropdowns/styles/material.scss' as ej2-angular-dropdowns;
+@use 'ej2-angular-grids/styles/material.scss' as ej2-angular-grids;
+@use 'ej2-angular-inputs/styles/material.scss' as ej2-angular-inputs;
+@use 'ej2-angular-lists/styles/material.scss' as ej2-angular-lists;
+@use 'ej2-angular-navigations/styles/material.scss' as ej2-angular-navigations;
+@use 'ej2-buttons/styles/material.scss' as ej2-buttons;
+@use 'ej2-dropdowns/styles/material.scss' as ej2-dropdowns;
+@use 'ej2-popups/styles/material.scss' as ej2-popups;
+@use 'ej2-lists/styles/material.scss' as ej2-lists;
+@use 'ej2-splitbuttons/styles/material.scss' as ej2-splitbuttons;
+
+@use 'assets/scss/bootstrap-theming' as bootstrap-theming;
+
+:root {
+    --progress-loader-color: #00ffff;
+}
+
+@font-face {
+    font-family: 'BariolRegular';
+    src: url('assets/fonts/Bariol_Regular.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadProLight';
+    src: url('assets/fonts/MyriadPro-Light.ttf');
+}
+
+@font-face {
+    font-family: 'MyriadProRegular';
+    src: url('assets/fonts/MyriadPro-Regular.ttf');
+}
+
+.e-grid {
+    .e-headercelldiv {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .e-gridheader {
+        //border: 2px solid green;
+    }
+    .e-headercell {
+        //color: darkblue;
+        padding: 0.25rem;
+    }
+    .e-filterbarcell {
+        padding: 0.25rem;
+    }
+    .e-summarycell {
+        padding: 0;
+    }
+    .e-rowcell {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+}
