@@ -2,8 +2,6 @@
     "version": 2,
     "public": true,
     "name": "brillante",
-    "installCommand": "npm install",
-    "devCommand": "npm run dev",
     "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
     "functions": {
       "api/index.mjs": {
