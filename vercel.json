@@ -6,8 +6,8 @@
     "devCommand": "npm run dev",
     "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
     "functions": {
-        "api/index.mjs": {
-            "includeFiles": "dist/brillante/**"
-        }
+      "api/index.mjs": {
+        "includeFiles": "dist/brillante/**"
+      }
     }
 }
