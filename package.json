@@ -33,6 +33,7 @@
     "express": "^5.1.0",
     "express-jwt": "^8.5.1",
     "rxjs": "~7.8.0",
+    "sequelize": "^6.37.7",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
