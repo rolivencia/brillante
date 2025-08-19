@@ -7,6 +7,10 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import routes from './api/routes';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import errorHandler from './api/_helpers/error-handler';
+import jwt from './api/_helpers/jwt';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -15,6 +19,18 @@ export function app() {
   const server = express();
   const angularApp = new AngularNodeAppEngine();
 
+  // Set up middleware
+  server.use(bodyParser.urlencoded({ extended: false }));
+  server.use(bodyParser.json());
+  server.use(cors());
+
+  // global error handler
+  server.use(errorHandler);
+
+  // use JWT auth to secure the api
+  server.use(jwt());
+
+  // api routes
   for (const route of routes) {
     server.use(`/api${route.path}`, route.controller);
   }
