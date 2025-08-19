@@ -11,6 +11,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import errorHandler from './api/_helpers/error-handler';
 import jwt from './api/_helpers/jwt';
+import environment from './api/_helpers/environment';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -28,7 +29,10 @@ export function app() {
   server.use(errorHandler);
 
   // use JWT auth to secure the api
-  server.use(jwt());
+  // TODO: Recheck how this is achieved to easier testing
+  if (environment.environment !== 'development'){
+    server.use(jwt());
+  }
 
   // api routes
   for (const route of routes) {
