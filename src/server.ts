@@ -10,7 +10,7 @@ import routes from './api/routes';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
-export function app(): express.Express {
+export function app() {
 
   const server = express();
   const angularApp = new AngularNodeAppEngine();
