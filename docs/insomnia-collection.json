@@ -1,0 +1,297 @@
+type: collection.insomnia.rest/5.0
+name: Brillante API
+meta:
+  id: wrk_bb015f8751924ae6a8ef42d1600a584e
+  created: 1755722223391
+  modified: 1755722223391
+  description: ""
+collection:
+  - name: Customer
+    meta:
+      id: fld_ba2ab762b0e147e7be091d4ef92e2819
+      created: 1723000000000
+      modified: 1723000000000
+      sortKey: -1722000000000
+      description: Customer management endpoints
+    children:
+      - url: "{{ _.base_url }}/api/customer"
+        name: Create Customer
+        meta:
+          id: req_043dd88fc216444cb9acaed3d7bea8a1
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Create a new customer
+          sortKey: -1723000000000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "firstName": "John",
+              "lastName": "Doe",
+              "dni": 12345678,
+              "telephone": 555123456789,
+              "address": "123 Main Street, City, Country",
+              "email": "john.doe@example.com",
+              "birthDate": "1990-01-15",
+              "idUser": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer/1"
+        name: Update Customer
+        meta:
+          id: req_35a9949755534ea88b0fb575ef48a31a
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Update an existing customer
+          sortKey: -1723000000000
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "firstName": "Jane",
+              "lastName": "Doe",
+              "telephone": 555987654321,
+              "address": "456 Oak Avenue, City, Country",
+              "email": "jane.doe@example.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer/1"
+        name: Delete Customer
+        meta:
+          id: req_926ea987296042eebc2459ba79056254
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Soft delete a customer
+          sortKey: -1723000000000
+        method: DELETE
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer/getByEmail/customer@example.com"
+        name: Get Customer by Email
+        meta:
+          id: req_9f214cb53e9e4a6d8063e78d4a9e270e
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Retrieve customer by email address
+          sortKey: -1723000000000
+        method: GET
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer"
+        name: Get All Customers
+        meta:
+          id: req_b7ddd9461840486e809d10fde4f35f95
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Retrieve all customers with pagination
+          sortKey: -1723000000000
+        method: GET
+        parameters:
+          - name: offset
+            value: "0"
+            description: Pagination offset
+          - name: limit
+            value: "20"
+            description: Pagination limit
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer/getById/1"
+        name: Get Customer by ID
+        meta:
+          id: req_d69633d87f434aa58f5cd95e75ad04b3
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Retrieve customer by ID
+          sortKey: -1723000000000
+        method: GET
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer/getByDni/35215045"
+        name: Get Customer by DNI
+        meta:
+          id: req_ef207e6391a34ae98dd2ee809b16809e
+          created: 1723000000000
+          modified: 1755722485592
+          isPrivate: false
+          description: Retrieve customer by DNI number
+          sortKey: -1723000000000
+        method: GET
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/customer/countAll"
+        name: Count All Customers
+        meta:
+          id: req_f240054a2c754d258d5e01fc1233cf7d
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Get total count of all customers
+          sortKey: -1723000000000
+        method: GET
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Office Branch
+    meta:
+      id: fld_f50162ff3bb54f5784075a823a8e5199
+      created: 1723000000000
+      modified: 1723000000000
+      sortKey: -1723000000000
+      description: Office Branch management endpoints
+    children:
+      - url: "{{ _.base_url }}/api/office-branch"
+        name: Create Office Branch
+        meta:
+          id: req_449f1f270119497f8161c19d49ba776d
+          created: 1723000000000
+          modified: 1723000000000
+          isPrivate: false
+          description: Create a new office branch
+          sortKey: -1723000000000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "name": "Main Branch",
+              "address": "123 Main Street, City, Country"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/api/office-branch"
+        name: Get All Office Branches
+        meta:
+          id: req_9094db97ff914d6c977bc92d195c5d26
+          created: 1723000000000
+          modified: 1755722379207
+          isPrivate: false
+          description: Retrieve all office branches
+          sortKey: -1723000000000
+        method: GET
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_d75c6c4a82abb68701aa0e8523821fa9e8017f76
+    created: 1755722223402
+    modified: 1755722223402
+environments:
+  name: Production
+  meta:
+    id: env_32f0c4ef0a0d441e805c8eb9988f6f47
+    created: 1723000000000
+    modified: 1755722453250
+    isPrivate: false
+  data:
+    base_url: ""
+  color: "#d50000"
+  subEnvironments:
+    - name: Local
+      meta:
+        id: env_ca6b0bd12e984957826e32635fe2f58c
+        created: 1755722403274
+        modified: 1755722438352
+        isPrivate: false
+        sortKey: 1755722403274
+      data:
+        base_url: http://localhost:4200
