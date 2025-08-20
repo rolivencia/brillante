@@ -30,10 +30,12 @@
     "@angular/router": "^20.1.0",
     "@angular/ssr": "^20.1.5",
     "@types/express-jwt": "^6.0.4",
+    "drizzle-kit": "^0.31.4",
+    "drizzle-orm": "^0.44.4",
     "express": "^5.1.0",
     "express-jwt": "^8.5.1",
+    "mysql2": "^3.14.3",
     "rxjs": "~7.8.0",
-    "sequelize": "^6.37.7",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
