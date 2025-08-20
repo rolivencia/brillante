@@ -7,7 +7,7 @@ interface Environment {
 }
 
 export default {
-  secret: process.env["SECRET"] || '',
-  mySqlDatabase: process.env["MYSQL_DATABASE"] || '',
+  secret: process.env['SECRET'] || '',
+  mySqlDatabase: process.env['MYSQL_DATABASE'] || '',
   environment: process.env['ENVIRONMENT'] as EnvironmentType || 'development'
 } satisfies Environment;
