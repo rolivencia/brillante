@@ -6,7 +6,13 @@
     "outDir": "./out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@helpers/*": ["src/api/_helpers/*"],
+      "@schemas/*": ["src/api/db/schema/*"],
+      "@models/*": ["src/api/models/*"]
+    }
   },
   "include": [
     "src/**/*.ts"
