@@ -14,8 +14,7 @@ export const customer = mysqlTable('sh_fix_customer', {
   updatedBy: bigint('updated_by', { mode: 'number' }),
   enabled: boolean('enabled').notNull().default(true),
   deleted: boolean('deleted').notNull().default(false),
-  birthDate: date('birth_date'),
-  idUser: int('id_user').notNull(),
+  birthDate: date('birth_date')
 });
 
 export type Customer = typeof customer.$inferSelect;
