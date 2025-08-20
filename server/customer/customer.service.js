@@ -75,7 +75,6 @@ function parseCustomer(dataValues) {
         id: dataValues.id,
         lastName: dataValues.lastName,
         telephone: dataValues.telephone,
-        user: {},
         audit: {
             createdAt: dataValues.createdAt,
             updatedAt: dataValues.updatedAt,
